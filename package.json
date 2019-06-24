@@ -1,6 +1,7 @@
 {
   "scripts":{
-    "build": "magicbook build"
+    "build": "magicbook build",
+    "watch": "magicbook build --watch"
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
