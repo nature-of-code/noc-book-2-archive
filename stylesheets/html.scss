@@ -1,6 +1,5 @@
-@import 'shared';
-
-.container {
-  max-width: 700px;
-  margin: 0 auto;
-}
+@import 'shared/vars-and-mixins';
+@import 'shared/fonts';
+@import 'shared/codesplit';
+@import 'html/html';
+@import 'html/code';

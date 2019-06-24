@@ -19,7 +19,9 @@
       },
       "layout": "layouts/pdf.html",
       "stylesheets": {
-        "files": ["stylesheets/pdf.scss"]
+        "files": [
+          "stylesheets/pdf.scss"
+        ]
       },
       "images": {
         "files": "context/noc_pdf/imgs/**/*.*"
@@ -32,11 +34,15 @@
       "format":"html",
        "layout":"layouts/html.html",
        "stylesheets":{
-          "files": [ "context/noc_html/stylesheets/*.css" ],
+          "files": [ 
+            "stylesheets/html.scss"
+          ],
           "destination" : "stylesheets/"
        },
        "javascripts" : {
-         "files" : [ "context/noc_html/javascripts/*.js", "noc_html/processingjs/*.js" ],
+         "files" : [ 
+           "context/noc_html/javascripts/*.js"
+          ],
          "destination" : "javascripts/"
        },
        "images" : {
