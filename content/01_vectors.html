@@ -191,18 +191,18 @@ function draw() {
 
     <p>Instead of:</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-float x;
-float y;
-float xspeed;
-float yspeed;</pre
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+let x;
+let y;
+let xspeed;
+let yspeed;</pre
     >
 
     <p>We could simply have…</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-Vector position;
-Vector speed;</pre
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+let position;
+let speed;</pre
     >
 
     <p>
@@ -217,14 +217,14 @@ Vector speed;</pre
       As an introduction to vectors, we’re going to live in two dimensions for
       quite some time (at least until we get through the first several
       chapters). All of these examples can be fairly easily extended to three
-      dimensions (and the class we will use—<code>PVector</code
+      dimensions (and the class we will use—<code>p5.Vector</code
       ><code>—</code>allows for three dimensions.) However, it’s easier to start
       with just two.
     </p>
   </section>
 
   <section data-type="sect1" id="chapter01_section2">
-    <h2>1.2 Vectors for Processing Programmers</h2>
+    <h2>1.2 Vectors for p5.js Programmers</h2>
 
     <a
       data-primary="Processing"
@@ -354,39 +354,35 @@ Vector speed;</pre
       vector class ourselves, we’d start with something rather basic:
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-class PVector {
-
-  float x;
-  float y;
-
-  PVector(float x_, float y_) {
-    x = x_;
-    y = y_;
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+class Vector {
+  constructor(x_, y_) {
+    this.x = x_;
+    this.y = y_;
   }
 
 }</pre
     >
 
     <p>
-      At its core, a <code>PVector</code> is just a convenient way to store two
+      At its core, a <code>Vector</code> is just a convenient way to store two
       values (or three, as we’ll see in 3D examples).
     </p>
 
     <p>And so this …</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-float x = 100;
-float y = 100;
-float xspeed = 1;
-float yspeed = 3.3;</pre
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+let x = 100;
+let y = 100;
+let xspeed = 1;
+let yspeed = 3.3;</pre
     >
 
     <p>becomes …</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-PVector position = new PVector(100,100);
-PVector velocity = new PVector(1,3.3);</pre
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+let position = createVector(100,100);
+let velocity = createVector(1,3.3);</pre
     >
 
     <a
@@ -403,7 +399,7 @@ PVector velocity = new PVector(1,3.3);</pre
       >. In Example 1.1, without vectors, we had:
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 // Add each speed to each position.
 x = x + xspeed;
 y = y + yspeed;</pre
@@ -435,9 +431,9 @@ position = position + velocity;</pre
     <a data-primary="vectors" data-secondary="adding" data-type="indexterm"></a>
 
     <p>
-      Before we continue looking at the <code>PVector</code> class and its
+      Before we continue looking at the <code>p5.Vector</code> class and its
       <code>add()</code> method (purely for the sake of learning since it’s
-      already implemented for us in Processing itself), let’s examine vector
+      already implemented for us in p5.js itself), let’s examine vector
       addition using the notation found in math and physics textbooks.
     </p>
 
@@ -537,21 +533,18 @@ position = position + velocity;</pre
       <code>PVector</code> object as its argument.
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-class PVector {
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+class Vector {
 
-  float x;
-  float y;
-
-  PVector(float x_, float y_) {
-    x = x_;
-    y = y_;
+  constructor(x_, y_) {
+    this.x = x_;
+    this.y = y_;
   }
 
-  //{!4 .bold} New! A function to add another PVector to this PVector.  Simply add the <em>x</em> components and the <em>y</em>; components together.
-  void add(PVector v) {
-    y = y + v.y;
-    x = x + v.x;
+  //{!4 .bold} New! A function to add another Vector to this Vector.  Simply add the <em>x</em> components and the <em>y</em>; components together.
+  add(v) {
+    this.y = this.y + v.y;
+    this.x = this.x + v.x;
   }
 }</pre
     >
@@ -594,12 +587,12 @@ class PVector {
 
     <p>
       Now that we see how <code>add()</code> is written inside of
-      <code>PVector</code>, we can return to our bouncing ball example with its
+      <code>p5.Vector</code>, we can return to our bouncing ball example with its
       <strong><em>position + velocity</em></strong> algorithm and implement
       vector addition:
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 //{!1 .line-through}Add the current velocity to the position.
 position = position + velocity;
 position.add(velocity);</pre
@@ -623,17 +616,17 @@ position.add(velocity);</pre
 
     <pre data-code-language="java" data-type="programlisting" class="codesplit">
 //{!2 .bold} Instead of a bunch of floats, we now just have two PVector variables.
-PVector position;
-PVector velocity;
+let position;
+let velocity;
 
-void setup() {
+function setup() {
   size(640,360);
   //{!2 .bold .no-comment}
-  position = new PVector(100, 100);
-  velocity = new PVector(2.5, 5);
+  position = createVector(100, 100);
+  velocity = createVector(2.5, 5);
 }
 
-void draw() {
+function draw() {
   background(255);
   //{!1 .bold .no-comment}
   position.add(velocity);
@@ -667,24 +660,24 @@ void draw() {
     <p>
       We should, however, note an important aspect of the above transition to
       programming with vectors. Even though we are using
-      <code>PVector</code> objects to describe two values—the <code>x</code> and
+      <code>p5.Vector</code> objects to describe two values—the <code>x</code> and
       <code>y</code> of position and the <code>x</code> and <code>y</code> of
       velocity—we still often need to refer to the <em>x</em> and
       <em>y</em> components of each <code>PVector</code> individually. When we
       go to draw an object in Processing, there’s no means for us to say:
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 //{.line-through .no-comment}
 ellipse(position, 16, 16);</pre
     >
 
     <p>
       The <code>ellipse()</code> function does not allow for a
-      <code>PVector</code> as an argument. An ellipse can only be drawn with two
+      <code>p5.Vector</code> as an argument. An ellipse can only be drawn with two
       scalar values, an <code>x</code>-coordinate and a
       <code>y</code>-coordinate. And so we must dig into the
-      <code>PVector</code> object and pull out the <em>x</em> and
+      <code>p5.Vector</code> object and pull out the <em>x</em> and
       <em>y</em> components using object-oriented dot syntax.
     </p>
 
@@ -698,8 +691,8 @@ ellipse(position.x, position.y, 16, 16);</pre
       vectors: <code>position</code> and <code>velocity</code>.
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-if ((position.x &gt; width) || (position.x &lt; 0)) {
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+if ((position.x > width) || (position.x < 0)) {
   velocity.x = velocity.x * -1;
 }</pre
     >
