@@ -1815,7 +1815,7 @@ class Mover {
 
     <p>
       OK. At this point, we should feel comfortable with two things: (1) what a
-      <code>PVector</code> is and (2) how we use <code>PVector</code
+      <code>p5.Vector</code> is and (2) how we use <code>p5.Vector</code
       ><code>s</code> inside of an object to keep track of its position and
       movement. This is an excellent first step and deserves a mild round of
       applause. Before standing ovations and screaming fans, however, we need to
@@ -1838,7 +1838,7 @@ class Mover {
       code, this reads:
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 velocity.add(acceleration);
 position.add(velocity);</pre
     >
@@ -1890,16 +1890,19 @@ position.add(velocity);</pre
       </p>
 
       <pre
-        data-code-language="java"
+        data-code-language="javascript"
         data-type="programlisting"
         class="codesplit"
       >
 class Mover {
 
-  PVector position;
-  PVector velocity;
-  //{.bold} A new PVector for acceleration
-  PVector acceleration;</pre
+  constructor(){
+    this.position = createVector();
+    this.velocity = createVector();
+    //{.bold} A new PVector for acceleration
+    this.acceleration = createVector();
+  }
+    </pre
       >
 
       <p>
@@ -1907,14 +1910,14 @@ class Mover {
       </p>
 
       <pre
-        data-code-language="java"
+        data-code-language="javascript"
         data-type="programlisting"
         class="codesplit"
       >
- void update() {
+ update() {
     //{!2 .bold} Our motion algorithm is now two lines of code!
-    velocity.add(acceleration);
-    position.add(velocity);
+    this.velocity.add(this.acceleration);
+    this.position.add(this.velocity);
  }</pre
       >
 
@@ -1924,11 +1927,11 @@ class Mover {
       </p>
 
       <pre
-        data-code-language="java"
+        data-code-language="javascript"
         data-type="programlisting"
         class="codesplit"
       >
-  Mover() {</pre
+  constructor() {</pre
       >
 
       <p>
@@ -1936,21 +1939,21 @@ class Mover {
       </p>
 
       <pre
-        data-code-language="java"
+        data-code-language="javascript"
         data-type="programlisting"
         class="codesplit"
       >
-    position = new PVector(width/2,height/2);</pre
+    this.position = createVector(width/2,height/2);</pre
       >
 
       <p>…with an initial velocity of zero.</p>
 
       <pre
-        data-code-language="java"
+        data-code-language="javascript"
         data-type="programlisting"
         class="codesplit"
       >
-    velocity = new PVector(0,0);</pre
+    this.velocity = createVector(0,0);</pre
       >
 
       <p>
@@ -1966,7 +1969,7 @@ class Mover {
         data-type="programlisting"
         class="codesplit"
       >
-    acceleration = new PVector(-0.001, 0.01);
+    this.acceleration = createVector(-0.001, 0.01);
   }</pre
       >
 
@@ -1978,7 +1981,7 @@ class Mover {
         rate. And so to keep the magnitude of the velocity vector within a
         reasonable range, our acceleration values should remain quite small. We
         can also help this cause by incorporating the
-        <code>PVector</code> function <code>limit()</code>.
+        <code>p5.Vector</code> function <code>limit()</code>.
       </p>
 
       <a
@@ -2007,7 +2010,7 @@ class Mover {
         class="codesplit"
       >
 // The limit() function constrains the magnitude of a vector.
-velocity.limit(10);</pre
+this.velocity.limit(10);</pre
       >
 
       <p>This translates to the following:</p>
@@ -2033,8 +2036,8 @@ velocity.limit(10);</pre
           data-type="programlisting"
           class="codesplit"
         >
-  void limit(float max) {
-    if (_______ &gt; _______) {
+  limit(max) {
+    if (_______ > _______) {
       _________();
       ____(max);
     }
@@ -2060,39 +2063,33 @@ velocity.limit(10);</pre
       </div>
 
       <pre
-        data-code-language="java"
+        data-code-language="javascript"
         data-type="programlisting"
         class="codesplit"
       >
 class Mover {
 
-  PVector position;
-  PVector velocity;
-  // Acceleration is the key!
-  PVector acceleration;
-
-  //{!1} The variable topspeed will limit the magnitude of velocity.
-  float topspeed;
-
-  Mover() {
-    position = new PVector(width/2, height/2);
-    velocity = new PVector(0, 0);
-    acceleration = new PVector(-0.001, 0.01);
-    topspeed = 10;
+  constructor() {
+    this.position = createVector(width/2, height/2);
+    this.velocity = createVector(0, 0);
+    // Acceleration is the key!
+    this.acceleration = createVector(-0.001, 0.01);
+    //{!1} The variable topspeed will limit the magnitude of velocity.
+    this.topspeed = 10;
   }
 
-  void update() {
+  update() {
     //{!2} Velocity changes by acceleration and is limited by topspeed.
-    velocity.add(acceleration);
-    velocity.limit(topspeed);
-    position.add(velocity);
+    this.velocity.add(this.acceleration);
+    this.velocity.limit(this.topspeed);
+    this.position.add(this.velocity);
   }
 
   // display() is the same.
-  void display() {}
+  display() {}
 
   //{!1} checkEdges() is the same.
-  void checkEdges() {}
+  checkEdges() {}
 }</pre
       >
 
@@ -2131,18 +2128,18 @@ class Mover {
       </div>
 
       <pre
-        data-code-language="java"
+        data-code-language="javascript"
         data-type="programlisting"
         class="codesplit"
       >
-  void update() {
+  update() {
 
     //{!1} The random2D() function will give us a PVector of length 1 pointing in a random direction.
-    acceleration = PVector.random2D();
+    this.acceleration = p5.Vector.random2D();
 
-    velocity.add(acceleration);
-    velocity.limit(topspeed);
-    position.add(velocity);
+    this.velocity.add(this.acceleration);
+    this.velocity.limit(this.topspeed);
+    this.position.add(this.velocity);
   }</pre
       >
 
@@ -2153,13 +2150,13 @@ class Mover {
       <p>(a) scaling the acceleration to a constant value</p>
 
       <pre
-        data-code-language="java"
+        data-code-language="javascript"
         data-type="programlisting"
         class="codesplit"
       >
-acceleration = PVector.random2D();
+this.acceleration = p5.Vector.random2D();
 //{.bold} Constant
-acceleration.mult(0.5);</pre
+this.acceleration.mult(0.5);</pre
       >
 
       <p>(b) scaling the acceleration to a random value</p>
@@ -2169,9 +2166,9 @@ acceleration.mult(0.5);</pre
         data-type="programlisting"
         class="codesplit"
       >
-acceleration = PVector.random2D();
+this.acceleration = p5.Vector.random2D();
 //{.bold} Random
-acceleration.mult(random(2));</pre
+this.acceleration.mult(random(2));</pre
       >
 
       <p>
@@ -2217,7 +2214,7 @@ acceleration.mult(random(2));</pre
     <p>
       Before we get to Algorithm #3 (<em>accelerate towards the mouse</em>), we
       need to cover one more rather important aspect of working with vectors and
-      the <code>PVector</code> class: the difference between using
+      the <code>p5.Vector</code> class: the difference between using
       <strong><em>static</em></strong> methods and
       <strong><em>non-static</em></strong> methods.
     </p>
@@ -2226,9 +2223,9 @@ acceleration.mult(random(2));</pre
       Forgetting about vectors for a moment, take a look at the following code:
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-float x = 0;
-float y = 5;
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+let x = 0;
+let y = 5;
 
 x = x + y;</pre
     >
@@ -2240,9 +2237,9 @@ x = x + y;</pre
       <code>PVector</code>.
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-PVector v = new PVector(0, 0);
-PVector u = new PVector(4, 5);
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+const v = createVector(0, 0);
+const u = createVector(4, 5);
 v.add(u);</pre
     >
 
@@ -2255,11 +2252,11 @@ v.add(u);</pre
       Let’s take a look at another example of some simple floating point math:
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-float x = 0;
-float y = 5;
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+const x = 0;
+const y = 5;
 
-float z = x + y;</pre
+const z = x + y;</pre
     >
 
     <p>
@@ -2268,36 +2265,36 @@ float z = x + y;</pre
       <code>x</code> does not change in this example (neither does
       <code>y</code>)! This may seem like a trivial point, and one that is quite
       intuitive when it comes to mathematical operations with floats. However,
-      it’s not so obvious with mathematical operations in <code>PVector</code>.
+      it’s not so obvious with mathematical operations in <code>p5.Vector</code>.
       Let’s try to write the code based on what we know so far.
     </p>
 
     <pre data-code-language="java" data-type="programlisting" class="codesplit">
-PVector v = new PVector(0,0);
-PVector u = new PVector(4,5);
+const v = createVector(0,0);
+const u = createVector(4,5);
 //{.line-through} Don’t be fooled; this is incorrect!!!
-PVector w = v.add(u);</pre
+const w = v.add(u);</pre
     >
 
     <p>
       The above might seem like a good guess, but it’s just not the way the
-      <code>PVector</code> class works. If we look at the definition of
+      <code>p5.Vector</code> class works. If we look at the definition of
       <code>add()</code> . . .
     </p>
 
     <pre data-code-language="java" data-type="programlisting" class="codesplit">
-void add(PVector v) {
-  x = x + v.x;
-  y = y + v.y;
+add(v) {
+  this.x = this.x + v.x;
+  this.y = this.y + v.y;
 }</pre
     >
 
     <p>
       we see that this code does not accomplish our goal. First, it does not
-      return a new <code>PVector</code> (the return type is “void”) and second,
-      it changes the value of the <code>PVector</code> upon which it is called.
-      In order to add two <code>PVector</code> objects together and return the
-      result as a new <code>PVector</code>, we must use the static
+      return a new <code>p5.Vector</code> and second,
+      it changes the value of the <code>p5.Vector</code> upon which it is called.
+      In order to add two <code>p5.Vector</code> objects together and return the
+      result as a new <code>p5.Vector</code>, we must use the static
       <code>add()</code> function.
     </p>
 
@@ -2308,12 +2305,12 @@ void add(PVector v) {
       speciﬁc object instance) are known as
       <strong><em>static functions</em></strong
       >. Here are two examples of function calls that assume two
-      <code>PVector</code> objects, <code>v</code> and <code>u</code>:
+      <code>p5.Vector</code> objects, <code>v</code> and <code>u</code>:
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 // Static: called from the class name.
-PVector.add(v, u);
+p5.Vector.add(v, u);
 
 // Not static: called from an object instance.
 v.add(u);</pre
@@ -2321,61 +2318,41 @@ v.add(u);</pre
 
     <p>
       Since you can’t write static functions yourself in Processing, you might
-      not have encountered them before. <code>PVector</code>'s static functions
+      not have encountered them before. <code>p5.Vector</code>'s static functions
       allow us to perform generic mathematical operations on
-      <code>PVector</code> objects without having to adjust the value of one of
-      the input <code>PVector</code><code>s</code>. Let’s look at how we might
+      <code>p5.Vector</code> objects without having to adjust the value of one of
+      the input <code>p5.Vector</code><code>s</code>. Let’s look at how we might
       write the static version of <code>add()</code>:
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   //{!1} The static version of add allows us to add two PVectors together and assign the result to a new PVector while leaving the original PVectors (v and u above) intact.
-  static PVector add(PVector v1, PVector v2) {
-    PVector v3 = new PVector(v1.x + v2.x, v1.y + v2.y);
+  function add(v1, v2) {
+    const v3 = createVector(v1.x + v2.x, v1.y + v2.y);
     return v3;
   }</pre
     >
 
-    <p>There are several differences here:</p>
-
-    <ul>
-      <li>
-        <p>
-          The function is labeled as <strong><em>static</em></strong
-          >.
-        </p>
-      </li>
-      <li>
-        <p>
-          The function does not have a <strong><em>void</em></strong> return
-          type, but rather returns a <code>PVector</code>.
-        </p>
-      </li>
-      <li>
-        <p>
-          The function creates a new <code>PVector</code> (<code>v3</code>) and
-          returns the sum of the components of <code>v1</code> and
-          <code>v2</code> in that new <code>PVector</code>.
-        </p>
-      </li>
-    </ul>
+    <p>The key difference here is that the function creates a new <code>p5.Vector</code> (<code>v3</code>) and
+      returns the sum of the components of <code>v1</code> and
+      <code>v2</code> in that new <code>p5.Vector</code>.</p>
 
     <p>
       When you call a static function, instead of referencing an actual object
       instance, you simply reference the name of the class itself.
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-PVector v = new PVector(0, 0);
-PVector u = new PVector(4, 5);
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+const v = createVector(0, 0);
+const u = createVector(4, 5);
 //{.line-through .no-comment}
-PVector w = v.add(u);
+const w = v.add(u);
 //{.bold .no-comment}
-PVector w = PVector.add(v, u);</pre
+const w = p5.Vector.add(v, u);</pre
     >
 
     <p>
-      The <code>PVector</code> class has static versions of <code>add()</code>,
+      The <code>p5.Vector</code> class has static versions of <code>add()</code>,
       <code>sub()</code>, <code>mult()</code>, and <code>div()</code>.
     </p>
 
@@ -2389,33 +2366,33 @@ PVector w = PVector.add(v, u);</pre
 
       <ul>
         <li>
-          <p>The <code>PVector</code> <code>v</code> equals (1,5).</p>
+          <p>The <code>p5.Vector</code> <code>v</code> equals (1,5).</p>
         </li>
         <li>
           <p>
-            The <code>PVector</code> <code>u</code> equals
+            The <code>p5.Vector</code> <code>u</code> equals
             <code>v</code> multiplied by 2.
           </p>
         </li>
         <li>
           <p>
-            The <code>PVector</code> <code>w</code> equals <code>v</code> minus
+            The <code>p5.Vector</code> <code>w</code> equals <code>v</code> minus
             <code>u</code>.
           </p>
         </li>
         <li>
-          <p>Divide the <code>PVector</code> w by 3.</p>
+          <p>Divide the <code>p5.Vector</code> w by 3.</p>
         </li>
       </ul>
 
       <pre
-        data-code-language="java"
+        data-code-language="javascript"
         data-type="programlisting"
         class="codesplit"
       >
-PVector v = new PVector(1, 5);
-PVector u = ________._____(__,__);
-PVector w = ________._____(__,__);
+const v = createVector(1, 5);
+const u = ________._____(__,__);
+const w = ________._____(__,__);
 ___________;</pre
       >
     </div>
@@ -2473,19 +2450,19 @@ ___________;</pre
     </ul>
 
     <p>
-      Let’s rewrite the above using <code>PVector</code> syntax. Assuming we are
+      Let’s rewrite the above using <code>p5.Vector</code> syntax. Assuming we are
       in the <code>Mover</code> class and thus have access to the object’s
-      <code>PVector position</code>, we then have:
+      <code>position</code>, we then have:
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-PVector mouse = new PVector(mouseX,mouseY);
-// Look! We’re using the static reference to sub() because we want a new PVector pointing from one point to another.
-PVector dir = PVector.sub(mouse, position);</pre
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+const mouse = createVector(mouseX,mouseY);
+// Look! We’re using the static reference to sub() because we want a new p5.Vector pointing from one point to another.
+const dir = p5.Vector.sub(mouse, position);</pre
     >
 
     <p>
-      We now have a <code>PVector</code> that points from the mover’s position
+      We now have a <code>p5.Vector</code> that points from the mover’s position
       all the way to the mouse. If the object were to actually accelerate using
       that vector, it would appear instantaneously at the mouse position. This
       does not make for good animation, of course, and what we want to do now is
@@ -2494,15 +2471,15 @@ PVector dir = PVector.sub(mouse, position);</pre
 
     <p>
       In order to set the magnitude (whatever it may be) of our acceleration
-      <code>PVector</code>, we must first <em>_</em> that direction vector.
+      <code>p5.Vector</code>, we must first <em>_</em> that direction vector.
       That’s right, you said it. <em>Normalize</em>. If we can shrink the vector
       down to its unit vector (of length one) then we have a vector that tells
       us the direction and can easily be scaled to any value. One multiplied by
       anything equals anything.
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-float anything = ?????
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+let anything = ?????
 dir.normalize();
 dir.mult(anything);</pre
     >
@@ -2546,12 +2523,12 @@ dir.mult(anything);</pre
       <h5>Example 1.10: Accelerating towards the mouse</h5>
     </div>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
- void update() {
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+ update() {
 
-    PVector mouse = new PVector(mouseX, mouseY);
+    const mouse = createVector(mouseX, mouseY);
     // Step 1: Compute direction
-    PVector dir = PVector.sub(mouse, position);
+    const dir = p5.Vector.sub(mouse, position);
 
     // Step 2: Normalize
     dir.normalize();
@@ -2560,11 +2537,11 @@ dir.mult(anything);</pre
     dir.mult(0.5);
 
     //{!1} Step 4: Accelerate
-    acceleration = dir;
+    this.acceleration = dir;
 
-    velocity.add(acceleration);
-    velocity.limit(topspeed);
-    position.add(velocity);
+    this.velocity.add(this.acceleration);
+    this.velocity.limit(this.topspeed);
+    this.position.add(this.velocity);
 
   }</pre
     >
@@ -2617,7 +2594,7 @@ dir.mult(anything);</pre
       <h5>Example 1.11: Array of movers accelerating towards the mouse</h5>
     </div>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 //{!1} An array of objects
 Mover[] movers = new Mover[20];
 
