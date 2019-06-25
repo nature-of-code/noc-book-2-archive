@@ -1,4 +1,18 @@
 {
+  "version":"2.0",
+  "name": "noc-book-2",
+  "description": "Repository for The Nature of Code book with p5.js",
+  "author": "shiffman",
+  "license": "cc-by-3.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nature-of-code/noc-book-2.git"
+  },
+  "keywords": ["nature of code", "creative coding", "magicbook", "p5"],
+  "bugs": {
+    "url": "https://github.com/nature-of-code/noc-book-2/issues"
+  },
+  "homepage": "http://natureofcode.com/",
   "scripts": {
     "build": "magicbook build",
     "watch": "magicbook build --watch"
