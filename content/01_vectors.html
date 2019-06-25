@@ -2596,49 +2596,44 @@ dir.mult(anything);</pre
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 //{!1} An array of objects
-Mover[] movers = new Mover[20];
+const movers = [];
 
-void setup() {
-  size(640, 360);
+function setup() {
+  createCanvas(640, 360);
   background(255);
-  for (int i = 0; i &lt; movers.length; i++) {
+  for (let i = 0; i < 20; i++) {
     //{!1} Initialize each object in the array.
     movers[i] = new Mover();
   }
 }
 
-void draw() {
+function draw() {
   background(255);
 
-  for (int i = 0; i &lt; movers.length; i++) {
+  for (int i = 0; i < movers.length; i++) {
     //{!3} Calling functions on all the objects in the array
     movers[i].update();
-    movers[i].checkEdges();
     movers[i].display();
   }
 }</pre
     >
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Mover {
 
-  PVector position;
-  PVector velocity;
-  PVector acceleration;
-  float topspeed;
-
-  Mover() {
-    position = new PVector(random(width), random(height));
-    velocity = new PVector(0, 0);
-    topspeed = 4;
+  constructor() {
+    this.position = createVector(random(width),random(height));
+    this.velocity = createVector();
+    this.acceleration = createVector();
+    this.topspeed = 5;
   }
 
-  void update() {
+  update() {
 
     //{.comment-header} Our algorithm for calculating acceleration:
 
     //{!2} Find the vector pointing towards the mouse.
-    PVector mouse = new PVector(mouseX, mouseY);
-    PVector dir = PVector.sub(mouse, position);
+    const mouse = createVector(mouseX, mouseY);
+    const dir = p5.Vector.sub(mouse, this.position);
 
 
     // Normalize.
@@ -2646,33 +2641,33 @@ class Mover {
     // Scale.
     dir.mult(0.5);
     // Set to acceleration.
-    acceleration = dir;
+    this.acceleration = dir;
 
     //{!3} Motion 101! Velocity changes by acceleration.  position changes by velocity.
-    velocity.add(acceleration);
-    velocity.limit(topspeed);
-    position.add(velocity);
+    this.velocity.add(this.acceleration);
+    this.velocity.limit(this.topspeed);
+    this.position.add(this.velocity);
     }
 
   // Display the Mover
-  void display() {
+  display() {
     stroke(0);
     fill(175);
-    ellipse(position.x,position.y,16,16);
+    ellipse(this.position.x,this.position.y,16,16);
   }
 
   //{!13} What to do at the edges
-  void checkEdges() {
-    if (position.x &gt; width) {
-      position.x = 0;
-    } else if (position.x &lt; 0) {
-      position.x = width;
+  checkEdges() {
+    if (this.position.x > width) {
+      this.position.x = 0;
+    } else if (this.position.x > 0) {
+      this.position.x = width;
     }
 
-    if (position.y &gt; height) {
-      position.y = 0;
-    }  else if (position.y &lt; 0) {
-      position.y = height;
+    if (this.position.y > height) {
+      this.position.y = 0;
+    }  else if (this.position.y < 0) {
+      this.position.y = height;
     }
   }
 }</pre
