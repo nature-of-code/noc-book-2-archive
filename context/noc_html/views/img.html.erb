@@ -1,0 +1,14 @@
+<div class="image-container <%= @attributes["classname"] if @attributes["classname"] %>" >
+	<% if @attributes["canvas"] %>
+	<canvas data-processing-sources="<%= @attributes["canvas"].to_s.split(" ").map{|a| "/book/#{a}"}.join(" ") %>" <%= att("classname", "class") %>>
+		<p>Your browser does not support the canvas tag.</p>
+	</canvas>
+  <div class="sketch-controls">
+    <button class="reset">RESET</button>
+    <button class="pause">PAUSE</button>
+  </div>
+	<% else %>
+	<img src="/book/<%= @src %>" alt="Nature of Code Image" />
+	<% end %>
+	<% if @alt && @alt != @src.content %><p class="caption"><%= @alt %></p><% end %>
+</div>

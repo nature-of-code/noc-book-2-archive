@@ -2,7 +2,7 @@
   "title": "The Nature of Code",
   "destination": "build/:build",
   "files": [
-    "content/*/*.html"
+    "content/*.html"
   ],
   "addPlugins": [
     "./plugins/addP5.js",
