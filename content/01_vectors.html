@@ -1441,10 +1441,10 @@ function draw() {
       function as follows:
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-void normalize() {
-  float m = mag();
-  div(m);
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+normalize() {
+  const m = this.mag();
+  this.div(m);
 }</pre
     >
 
@@ -1454,10 +1454,10 @@ void normalize() {
     </p>
 
     <pre data-code-language="java" data-type="programlisting" class="codesplit">
-void normalize() {
- float m = mag();
+normalize() {
+ const m = this.mag();
  if (m != 0) {
-   div(m);
+   this.div(m);
  }
 }</pre
     >
@@ -1473,11 +1473,11 @@ void normalize() {
     <div data-type="example"><h5>Example 1.6: Normalizing a vector</h5></div>
 
     <pre data-code-language="java" data-type="programlisting" class="codesplit">
-void draw() {
+function draw() {
   background(255);
 
-  PVector mouse = new PVector(mouseX, mouseY);
-  PVector center = new PVector(width/2, height/2);
+  const mouse = createVector(mouseX, mouseY);
+  const center = createVector(width/2, height/2);
   mouse.sub(center);
 
   //{!2} In this example, after the vector is normalized, it is multiplied by 50 so that it is viewable onscreen. Note that no matter where the mouse is, the vector will have the same length (50) due to the normalization process.
@@ -1505,13 +1505,13 @@ void draw() {
       All this vector math stuff sounds like something we should know about, but
       why? How will it actually help us write code? The truth of the matter is
       that we need to have some patience. It will take some time before the
-      awesomeness of using the <code>PVector</code> class fully comes to light.
+      awesomeness of using the <code>p5.Vector</code> class fully comes to light.
       This is actually a common occurrence when first learning a new data
       structure. For example, when you first learn about an array, it might seem
       like much more work to use an array than to just have several variables
       stand for multiple things. But that plan quickly breaks down when you need
       a hundred, or a thousand, or ten thousand things. The same can be true for
-      <code>PVector</code>. What might seem like more work now will pay off
+      <code>p5.Vector</code>. What might seem like more work now will pay off
       later, and pay off quite nicely. And you don’t have to wait too long, as
       your reward will come in the next chapter.
     </p>
@@ -1599,12 +1599,14 @@ ellipse(position.x,position.y,16,16);</pre
       <code>PVector</code> objects.
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Mover {
 
-  PVector position;
-  PVector velocity;</pre
-    >
+  constructor(){
+    this.position = createVector();
+    this.velocity = createVector();
+  }
+  </pre>
 
     <p>
       Its functionality is just about as simple. The <code>Mover</code> needs to
@@ -1615,16 +1617,16 @@ class Mover {
     </p>
 
     <pre data-code-language="java" data-type="programlisting" class="codesplit">
-  void update() {
+  update() {
     //{!1} The Mover moves.
-    position.add(velocity);
+    this.position.add(this.velocity);
   }
 
-  void display() {
+  display() {
     stroke(0);
     fill(175);
     //{!1} The Mover is displayed.
-    ellipse(position.x, position.y, 16, 16);
+    ellipse(this.position.x, this.position.y, 16, 16);
   }
 }</pre
     >
@@ -1645,8 +1647,8 @@ class Mover {
       called by invoking the <strong><em>new</em></strong> operator:
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-  Mover m = new Mover();</pre
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+  const m = new Mover();</pre
     >
 
     <p>
@@ -1655,17 +1657,17 @@ class Mover {
       velocity.
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-  Mover() {
-    position = new PVector(random(width), random(height));
-    velocity = new PVector(random(-2,2), random(-2,2));
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+  constructor() {
+    this.position = createVector(random(width), random(height));
+    this.velocity = createVector(random(-2,2), random(-2,2));
   }</pre
     >
 
     <p>
       If object-oriented programming is at all new to you, one aspect here may
       seem a bit confusing. After all, we spent the beginning of this chapter
-      discussing the <code>PVector</code> class. The <code>PVector</code> class
+      discussing the <code>p5.Vector</code> class. The <code>p5.Vector</code> class
       is the template for making the <code>position</code> object and the
       <code>velocity</code> object. So what are they doing inside of yet another
       object, the <code>Mover</code> object? In fact, this is just about the
@@ -1676,7 +1678,7 @@ class Mover {
       describe a system of particles. That <code>ParticleSystem</code> object
       will have as its data a list of <code>Particle</code> objects…and each
       <code>Particle</code> object will have as its data several
-      <code>PVector</code> objects!
+      <code>p5.Vector</code> objects!
     </p>
 
     <p>
@@ -1686,19 +1688,19 @@ class Mover {
       the edges.
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-  void checkEdges() {
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+  checkEdges() {
     //{!11} When it reaches one edge, set position to the other.
-    if (position.x &gt; width) {
-      position.x = 0;
-    } else if (position.x &lt; 0) {
-      position.x = width;
+    if (this.position.x > width) {
+      this.position.x = 0;
+    } else if (this.position.x < 0) {
+      this.position.x = width;
     }
 
-    if (position.y &gt; height) {
-      position.y = 0;
-    } else if (position.y &lt; 0) {
-      position.y = height;
+    if (this.position.y > height) {
+      this.position.y = 0;
+    } else if (this.position.y < 0) {
+      this.position.y = height;
     }
   }</pre
     >
@@ -1710,7 +1712,7 @@ class Mover {
     </p>
 
     <pre data-code-language="java" data-type="programlisting" class="codesplit">
-Mover mover;</pre
+let mover;</pre
     >
 
     <p>Then create and initialize the mover in <code>setup()</code>:</p>
@@ -1741,15 +1743,15 @@ mover.display();</pre
 
     <pre data-code-language="java" data-type="programlisting" class="codesplit">
 //{!1} Declare Mover object.
-Mover mover;
+let mover;
 
-void setup() {
-  size(640, 360);
+function setup() {
+  createCanvas(640, 360);
   //{!1} Create Mover object.
   mover = new Mover();
 }
 
-void draw() {
+function draw() {
   background(255);
 
   //{!3} Call functions on Mover object.
@@ -1762,37 +1764,34 @@ void draw() {
     <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Mover {
 
-  //{!2} Our object has two PVectors: position and velocity.
-  PVector position;
-  PVector velocity;
-
-  Mover() {
-    position = new PVector(random(width), random(height));
-    velocity = new PVector(random(-2, 2), random(-2, 2));
+  constructor() {
+    //{!2} Our object has two PVectors: position and velocity.
+    this.position = createVector(random(width), random(height));
+    this.velocity = createVector(random(-2, 2), random(-2, 2));
   }
 
-  void update() {
+  update() {
     //{!1} Motion 101: position changes by velocity.
-    position.add(velocity);
+    this.position.add(this.velocity);
   }
 
-  void display() {
+  display() {
     stroke(0);
     fill(175);
-    ellipse(position.x, position.y, 16, 16);
+    ellipse(this.position.x, this.position.y, 16, 16);
   }
 
-  void checkEdges() {
-    if (position.x &gt; width) {
-      position.x = 0;
-    } else if (position.x &lt; 0) {
-      position.x = width;
+  checkEdges() {
+    if (this.position.x > width) {
+      this.position.x = 0;
+    } else if (this.position.x < 0) {
+      this.position.x = width;
     }
 
-    if (position.y &gt; height) {
-      position.y = 0;
-    } else if (position.y &lt; 0) {
-      position.y = height;
+    if (this.position.y > height) {
+      this.position.y = 0;
+    } else if (this.position.y < 0) {
+      this.position.y = height;
     }
   }
 }</pre
