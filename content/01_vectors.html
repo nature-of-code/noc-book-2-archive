@@ -880,13 +880,13 @@ if ((position.x > width) || (position.x < 0)) {
       <p>and so the function inside <code>PVector</code> looks like:</p>
 
       <pre
-        data-code-language="java"
+        data-code-language="javascript"
         data-type="programlisting"
         class="codesplit"
       >
-  void sub(PVector v) {
-    x = x - v.x;
-    y = y - v.y;
+  sub(v) {
+    this.x = this.x - v.x;
+    this.y = this.y - v.y;
   }</pre
       >
 
@@ -908,19 +908,19 @@ if ((position.x > width) || (position.x < 0)) {
       <div data-type="example"><h5>Example 1.3: Vector subtraction</h5></div>
 
       <pre
-        data-code-language="java"
+        data-code-language="javascript"
         data-type="programlisting"
         class="codesplit"
       >
-void setup() {
-  size(640, 360);
+function setup() {
+  createCanvas(640, 360);
 }
 
-void draw() {
+function draw() {
   background(255);
-  // Two PVectors, one for the mouse location and one for the center of the window
-  PVector mouse  = new PVector(mouseX, mouseY);
-  PVector center = new PVector(width/2, height/2);
+  // Two p5.Vector, one for the mouse location and one for the center of the window
+  const mouse  = createVector(mouseX, mouseY);
+  const center = createVector(width/2, height/2);
 
   //{!3} Draw the original two vectors
   stroke(200);
@@ -1018,14 +1018,14 @@ void draw() {
       </p>
 
       <pre
-        data-code-language="java"
+        data-code-language="javascript"
         data-type="programlisting"
         class="codesplit"
       >
-void mult(float n) {
+mult(n) {
    //{!2} With multiplication, the components of the vector are multiplied by a number.
-   x = x * n;
-   y = y * n;
+   this.x = this.x * n;
+   this.y = this.y * n;
  }</pre
       >
 
@@ -1038,11 +1038,11 @@ void mult(float n) {
       ></a>
 
       <pre
-        data-code-language="java"
+        data-code-language="javascript"
         data-type="programlisting"
         class="codesplit"
       >
-PVector u = new PVector(-3, 7);
+const u = createVector(-3, 7);
 // This PVector is now three times the size and is equal to (-9,21).
 u.mult(3);</pre
       >
@@ -1058,19 +1058,19 @@ u.mult(3);</pre
       <div data-type="example"><h5>Example 1.4: Multiplying a vector</h5></div>
 
       <pre
-        data-code-language="java"
+        data-code-language="javascript"
         data-type="programlisting"
         class="codesplit"
       >
-void setup() {
-  size(640, 360);
+function setup() {
+  createCanvas(640, 360);
 }
 
-void draw() {
+function draw() {
   background(255);
 
-  PVector mouse = new PVector(mouseX, mouseY);
-  PVector center = new PVector(width/2, height/2);
+  const mouse = createVector(mouseX, mouseY);
+  const center = createVector(width/2, height/2);
   mouse.sub(center);
   //{!1} Multiplying a vector!  The vector is now half its original size (multiplied by 0.5).
   mouse.mult(0.5);
@@ -1105,12 +1105,12 @@ void draw() {
         data-type="programlisting"
         class="codesplit"
       >
-void div(float n) {
-  x = x / n;
-  y = y / n;
+div(n) {
+  this.x = this.x / n;
+  this.y = this.y / n;
 }
 
-PVector u = new PVector(8, -4);
+const u = createVector(8, -4);
 // Dividing a vector!  The vector is now half its original size (divided by 2).
 u.div(2);</pre
       >
@@ -1319,8 +1319,8 @@ u.div(2);</pre
     <p>or in <code>PVector</code>:</p>
 
     <pre data-code-language="java" data-type="programlisting" class="codesplit">
-float mag() {
-  return sqrt(x*x + y*y);
+mag() {
+  return sqrt(this.x*this.x + this.y*this.y);
 }</pre
     >
 
@@ -1342,19 +1342,19 @@ float mag() {
     ></a>
 
     <pre data-code-language="java" data-type="programlisting" class="codesplit">
-void setup() {
-  size(640, 360);
+function setup() {
+  createCanvas(640, 360);
 }
 
-void draw() {
+function draw() {
   background(255);
 
-  PVector mouse = new PVector(mouseX, mouseY);
-  PVector center = new PVector(width/2, height/2);
+  const mouse = createVector(mouseX, mouseY);
+  const center = createVector(width/2, height/2);
   mouse.sub(center);
 
   //{!3} The magnitude (i.e. length) of a vector can be accessed via the mag() function.  Here it is used as the width of a rectangle drawn at the top of the window.
-  float m = mouse.mag();
+  const m = mouse.mag();
   fill(0);
   rect(0, 0, m, 10);
 
