@@ -35,7 +35,7 @@
        "layout":"layouts/html.html",
        "stylesheets":{
           "files": [ 
-            "context/noc_html/stylesheets/*.css" 
+            "stylesheets/html.scss"
           ],
           "destination" : "stylesheets/"
        },
