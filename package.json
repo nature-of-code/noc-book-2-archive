@@ -2,7 +2,7 @@
   "version":"2.0",
   "name": "noc-book-2",
   "description": "Repository for The Nature of Code book with p5.js",
-  "author": "shiffman",
+  "author": "Daniel Shiffman",
   "license": "cc-by-3.0",
   "repository": {
     "type": "git",
