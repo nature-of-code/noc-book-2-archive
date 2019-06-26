@@ -2655,7 +2655,7 @@ class Mover {
   //{!1} The Mover now knows how to attract another Mover.
   attract(m) {
 
-    const force = p5.Vector.sub(position,m.position);
+    const force = p5.Vector.sub(this.position,m.position);
     const distance = force.mag();
     distance = constrain(distance,5.0,25.0);
     force.normalize();
