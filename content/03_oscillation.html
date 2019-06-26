@@ -29,7 +29,7 @@
 
   <p>
     So this chapter is a bit of a mishmash. We’ll start with the basics of
-    angles in Processing and cover many trigonometric topics, tying it all into
+    angles in p5 and cover many trigonometric topics, tying it all into
     forces at the end. And by taking this break now, we’ll also pave the way for
     more advanced examples that require trig later in this book.
   </p>
@@ -41,8 +41,8 @@
 
     <p>
       OK. Before we can do any of this stuff, we need to make sure we understand
-      what it means to be an angle in Processing. If you have experience with
-      Processing, you’ve undoubtedly encountered this issue while using the
+      what it means to be an angle in p5. If you have experience with
+      p5, you’ve undoubtedly encountered this issue while using the
       <code>rotate()</code> function to rotate and spin objects.
     </p>
 
@@ -91,7 +91,7 @@
     <a data-primary="radians" data-type="indexterm"></a>
 
     <p>
-      Processing, however, requires angles to be specified in
+      p5, however, requires angles to be specified in
       <strong><em>radians</em></strong
       >. A radian is a unit of measurement for angles defined by the ratio of
       the length of the arc of a circle to the radius of that circle. One radian
@@ -129,7 +129,7 @@
 
     <p>
       Thankfully, if we prefer to think in degrees but code with radians,
-      Processing makes this easy. The <code>radians()</code> function will
+      p5 makes this easy. The <code>radians()</code> function will
       automatically convert values from degrees to radians, and the constants
       <code>PI</code> and <code>TWO_PI</code> provide convenient access to these
       commonly used numbers (equivalent to 180 and 360 degrees, respectively).
@@ -148,10 +148,10 @@ rotate(angle);</pre
     ></a>
 
     <p>
-      If you are not familiar with how rotation is implemented in Processing, I
+      If you are not familiar with how rotation is implemented in p5, I
       would suggest this tutorial:
       <a href="http://www.processing.org/learning/transform2d/"
-        >Processing — Transform 2D</a
+        >p5 — Transform 2D</a
       >.
     </p>
 
@@ -165,7 +165,7 @@ rotate(angle);</pre
         The mathematical constant pi (or &pi;) is a real number defined as the
         ratio of a circle’s circumference (the distance around the perimeter) to
         its diameter (a straight line that passes through the circle’s center).
-        It is equal to approximately 3.14159 and can be accessed in Processing
+        It is equal to approximately 3.14159 and can be accessed in p5
         with the built-in variable <code>PI</code>.
       </p>
     </div>
@@ -231,7 +231,7 @@ rotate(angle);</pre
 
     <p>
       Using the answer from Exercise 3.1 above, let’s say we wanted to rotate a
-      baton in Processing by some angle. We would have code like:
+      baton in p5 by some angle. We would have code like:
     </p>
 
     <pre data-code-language="java" data-type="programlisting" class="codesplit">
@@ -560,7 +560,7 @@ float aAcceleration = 0.01;</pre
       or a car, or a spaceship. And when we say "point in the direction of
       movement," what we are really saying is “rotate according to the velocity
       vector.” Velocity is a vector, with an <code>x</code> and a
-      <code>y</code> component, but to rotate in Processing we need an angle, in
+      <code>y</code> component, but to rotate in p5 we need an angle, in
       radians. Let’s draw our trigonometry diagram one more time, with an
       object’s velocity vector (Figure 3.6).
     </p>
@@ -657,7 +657,7 @@ float aAcceleration = 0.01;</pre
 
     <p>
       Now that we have the formula, let’s see where it should go in our mover’s
-      <code>display()</code> function. Notice that in Processing, the function
+      <code>display()</code> function. Notice that in p5, the function
       for arctangent is called <code>atan()</code>.
     </p>
 
@@ -723,7 +723,7 @@ float aAcceleration = 0.01;</pre
       vectors point in opposite directions! The thing is, this is a pretty
       common problem in computer graphics. Rather than simply using
       <code>atan()</code> along with a bunch of conditional statements to
-      account for positive/negative scenarios, Processing (along with pretty
+      account for positive/negative scenarios, p5 (along with pretty
       much all programming environments) has a nice function called
       <code>atan2()</code> that does it for you.
     </p>
@@ -781,7 +781,7 @@ float aAcceleration = 0.01;</pre
       To simplify this even further, the <code>PVector</code> class itself
       provides a function called <code>heading()</code>, which takes care of
       calling <code>atan2()</code> for you so you can get the 2D direction
-      angle, in radians, for any Processing <code>PVector</code>.
+      angle, in radians, for any p5 <code>PVector</code>.
     </p>
 
     <pre data-code-language="java" data-type="programlisting" class="codesplit">
@@ -819,7 +819,7 @@ float aAcceleration = 0.01;</pre
     ></a>
 
     <p>
-      Any time we display a shape in Processing, we have to specify a pixel
+      Any time we display a shape in p5, we have to specify a pixel
       position, a set of <code>x</code> and <code>y</code> coordinates. These
       coordinates are known as <strong><em>Cartesian coordinates</em></strong
       >, named for René Descartes, the French mathematician who developed the
@@ -857,8 +857,8 @@ float aAcceleration = 0.01;</pre
     ></a>
 
     <p>
-      Processing’s drawing functions, however, don’t understand polar
-      coordinates. Whenever we want to display something in Processing, we have
+      p5’s drawing functions, however, don’t understand polar
+      coordinates. Whenever we want to display something in p5, we have
       to specify positions as <em>(x,y)</em> Cartesian coordinates. However,
       sometimes it is a great deal more convenient for us to think in polar
       coordinates when designing. Happily for us, with trigonometry we can
@@ -925,7 +925,7 @@ float aAcceleration = 0.01;</pre
     <p>
       For example, if <code>r</code> is 75 and <code>theta</code> is 45 degrees
       (or PI/4 radians), we can calculate <code>x</code> and <code>y</code> as
-      below. The functions for sine and cosine in Processing are
+      below. The functions for sine and cosine in p5 are
       <code>sin()</code> and <code>cos()</code>, respectively. They each take
       one argument, an angle measured in radians.
     </p>
@@ -1067,14 +1067,14 @@ void draw() {
 
     <p>
       And so we happily discover that we can simulate oscillation in a
-      Processing sketch by assigning the output of the sine function to an
+      p5 sketch by assigning the output of the sine function to an
       object’s position. Note that this will follow the same methodology we
       applied to Perlin noise in the <a href="#intro_section6">Introduction</a>.
     </p>
 
     <p>
       Let’s begin with a really basic scenario. We want a circle to oscillate
-      from the left side to the right side of a Processing window.
+      from the left side to the right side of a p5 window.
     </p>
 
     <figure
@@ -1142,7 +1142,7 @@ void draw() {
     </p>
 
     <p>
-      Now, in the Processing world we live in, what is amplitude and what is
+      Now, in the p5 world we live in, what is amplitude and what is
       period? Amplitude can be measured rather easily in pixels. In the case of
       a window 200 pixels wide, we would oscillate from the center 100 pixels to
       the right and 100 pixels to the left. Therefore:
@@ -1169,12 +1169,12 @@ float amplitude = 100;</pre
 
     <p>
       <em>Period</em> is the amount of time it takes for one cycle, but what is
-      time in our Processing world? I mean, certainly we could say we want the
+      time in our p5 world? I mean, certainly we could say we want the
       circle to oscillate every three seconds. And we could track the
-      milliseconds—using <code>millis()</code> —in Processing and come up with
+      milliseconds—using <code>millis()</code> —in p5 and come up with
       an elaborate algorithm for oscillating an object according to real-world
       time. But for us, real-world time doesn’t really matter. The real measure
-      of time in Processing is in frames. The oscillating motion should repeat
+      of time in p5 is in frames. The oscillating motion should repeat
       every 30 frames, or 50 frames, or 1000 frames, etc.
     </p>
 
@@ -1205,7 +1205,7 @@ float x = amplitude * sin(TWO_PI * frameCount / period);</pre
       we multiply by amplitude. We know that sine will oscillate between -1 and
       1. If we take that value and multiply it by amplitude then we’ll get the
       desired result: a value oscillating between -amplitude and amplitude.
-      (Note: this is also a place where we could use Processing’s
+      (Note: this is also a place where we could use p5’s
       <code>map()</code> function to map the output of sine to a custom range.)
     </p>
 
@@ -1297,7 +1297,7 @@ float x = amplitude * sin(TWO_PI * frameCount / period);</pre
     </p>
 
     <p>
-      Wrapping this all up, here’s the Processing example that oscillates the
+      Wrapping this all up, here’s the p5 example that oscillates the
       <code>x</code> position of a circle with an amplitude of 100 pixels and a
       period of 120 frames.
     </p>
@@ -1846,7 +1846,7 @@ void draw() {
     <p>
       A pendulum is a bob suspended from a pivot. Obviously a real-world
       pendulum would live in a 3D space, but we’re going to look at a simpler
-      scenario, a pendulum in a 2D space—a Processing window (see Figure 3.10).
+      scenario, a pendulum in a 2D space—a p5 window (see Figure 3.10).
     </p>
 
     <a
@@ -1956,7 +1956,7 @@ void draw() {
     ></a>
 
     <p>
-      This is a good time to remind ourselves that we’re Processing programmers
+      This is a good time to remind ourselves that we’re p5 programmers
       and not physicists. Yes, we know that the acceleration due to gravity on
       earth is 9.8 meters per second squared. But this number isn’t relevant to
       us. What we have here is just an arbitrary constant (we’ll call it
@@ -2398,7 +2398,7 @@ class Pendulum  {
     <p>
       Now remember, force is a vector, so we need to calculate both magnitude
       and direction. Let’s look at one more diagram of the spring and label all
-      the givens we might have in a Processing sketch.
+      the givens we might have in a p5 sketch.
     </p>
 
     <figure id="chapter03_figure16">
