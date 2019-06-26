@@ -52,7 +52,7 @@
     <p>
       The good news here is that we recognize the first part of the definition:
       <em>a force is a vector</em>. Thank goodness we just spent a whole chapter
-      learning what a vector is and how to program with <code>PVector</code
+      learning what a vector is and how to program with <code>p5.Vector</code
       ><code>s</code>!
     </p>
 
@@ -135,7 +135,7 @@
       </figure>
 
       <p>
-        In our Processing world, we could restate Newton’s first law as follows:
+        In our p5 world, we could restate Newton’s first law as follows:
       </p>
 
       <a
@@ -151,7 +151,7 @@
 
       <p>
         <span class="highlight"
-          >An object’s PVector velocity will remain constant if it is in a state
+          >An object’s p5.Vector velocity will remain constant if it is in a state
           of equilibrium.</span
         >
       </p>
@@ -237,7 +237,7 @@
       data-type="sect2"
       id="_newton_s_third_law_as_seen_through_the_eyes_of_processing"
     >
-      <h3>Newton’s Third Law (as seen through the eyes of Processing)</h3>
+      <h3>Newton’s Third Law (as seen through the eyes of p5)</h3>
 
       <a
         data-primary="Newton's third law"
@@ -252,8 +252,8 @@
 
       <p>
         <span class="highlight"
-          >If we calculate a PVector f that is a force of object A on object B,
-          we must also apply the force—PVector.mult(f,-1);—that B exerts on
+          >If we calculate a p5.Vector f that is a force of object A on object B,
+          we must also apply the force—p5.Vector.mult(f,-1);—that B exerts on
           object A.</span
         >
       </p>
@@ -388,14 +388,16 @@
       </p>
 
       <pre
-        data-code-language="java"
+        data-code-language="javascript"
         data-type="programlisting"
         class="codesplit"
       >
 class Mover {
-  PVector position;
-  PVector velocity;
-  PVector acceleration;
+  constructor(){
+    this.position = createVector();
+    this.velocity = createVector();
+    this.acceleration = createVector();
+  }
 }</pre
       >
 
@@ -404,7 +406,7 @@ class Mover {
       </p>
 
       <pre
-        data-code-language="java"
+        data-code-language="javascript"
         data-type="programlisting"
         class="codesplit"
       >
@@ -414,7 +416,7 @@ mover.applyForce(wind);</pre
       <p>or:</p>
 
       <pre
-        data-code-language="java"
+        data-code-language="javascript"
         data-type="programlisting"
         class="codesplit"
       >
@@ -422,18 +424,18 @@ mover.applyForce(gravity);</pre
       >
 
       <p>
-        where wind and gravity are <code>PVector</code> objects. According to
+        where wind and gravity are <code>p5.Vector</code> objects. According to
         Newton’s second law, we could implement this function as follows.
       </p>
 
       <pre
-        data-code-language="java"
+        data-code-language="javascript"
         data-type="programlisting"
         class="codesplit"
       >
-void applyForce(PVector force) {
+applyForce(force) {
   //{!1} Newton's second law at its simplest.
-  acceleration = force;
+  this.acceleration = force;
 }</pre
       >
     </section>
@@ -456,7 +458,7 @@ void applyForce(PVector force) {
       and gravity.
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 mover.applyForce(wind);
 mover.applyForce(gravity);
 mover.update();
@@ -474,12 +476,12 @@ mover.display();</pre
       in <code>update()</code>? Acceleration is added to velocity.
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-velocity.add(acceleration);</pre
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+this.velocity.add(this.acceleration);</pre
     >
 
     <p>
-      We’re not going to see any error in Processing, but zoinks! We’ve got a
+      We’re not going to see any error in p5, but zoinks! We’ve got a
       major problem. What is the value of acceleration when it is added to
       velocity? It is equal to the gravity force. Wind has been left out! If we
       call <code>applyForce()</code> more than once, it overrides each previous
@@ -510,9 +512,9 @@ velocity.add(acceleration);</pre
     </p>
 
     <pre data-code-language="java" data-type="programlisting" class="codesplit">
-void applyForce(PVector force) {
+applyForce(force) {
   //{!1} Newton's second law, but with force accumulation. We now add each force to acceleration, one at a time.
-  acceleration.add(force);
+  this.acceleration.add(force);
 }</pre
     >
 
@@ -526,9 +528,9 @@ void applyForce(PVector force) {
       wind, say, when the user holds down the mouse.
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 if (mousePressed) {
-  PVector wind = new PVector(0.5, 0);
+  const wind = createVector(0.5, 0);
   mover.applyForce(wind);
 }</pre
     >
@@ -557,11 +559,11 @@ if (mousePressed) {
       <code>update()</code>.
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-void update() {
-  velocity.add(acceleration);
-  position.add(velocity);
-  acceleration.mult(0);
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+update() {
+  this.velocity.add(this.acceleration);
+  this.position.add(this.velocity);
+  this.acceleration.mult(0);
 }</pre
     >
 
@@ -599,13 +601,15 @@ void update() {
 
     <p>First we just need to add mass.</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Mover {
-  PVector position;
-  PVector velocity;
-  PVector acceleration;
-  //{!1} Adding mass as a float
-  float mass;
+  constructor(){
+    this.position = createVector();
+    this.velocity = createVector();
+    this.acceleration = createVector();
+    //{!1} Adding mass as a float
+    this.mass = ????;
+  }
 }</pre
     >
 
@@ -649,12 +653,12 @@ class Mover {
       saying, “Hey, the mass of this object is…um, I dunno…how about 10?”
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-Mover() {
-  position = new PVector(random(width), random(height));
-  velocity = new PVector(0, 0);
-  acceleration = new PVector(0, 0);
-  mass = 10.0;
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+constructor() {
+  this.position = createVector(random(width), random(height));
+  this.velocity = createVector(0, 0);
+  this.acceleration = createVector(0, 0);
+  this.mass = 10.0;
 }</pre
     >
 
@@ -670,11 +674,11 @@ Mover() {
       in? We use it while applying Newton’s second law to our object.
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-void applyForce(PVector force) {
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+applyForce(force) {
   //{!2} Newton's second law (with force accumulation and mass)
   force.div(mass);
-  acceleration.add(force);
+  this.acceleration.add(force);
 }</pre
     >
 
@@ -731,11 +735,11 @@ m2.applyForce(wind);</pre
     </p>
 
     <pre data-code-language="java" data-type="programlisting" class="codesplit">
-void applyForce(PVector force) {
+applyForce(force) {
   //{!1} Making a copy of the PVector before using it!
-  PVector f = force.copy();
-  f.div(mass);
-  acceleration.add(f);
+  const f = force.copy();
+  f.div(this.mass);
+  this.acceleration.add(f);
 }</pre
     >
 
@@ -758,9 +762,9 @@ void applyForce(PVector force) {
         data-type="programlisting"
         class="codesplit"
       >
-void applyForce(PVector force) {
-  PVector f = _______.___(_____,____);
-  acceleration.add(f);
+applyForce(force) {
+  const f = _______.___(_____,____);
+  this.acceleration.add(f);
 }</pre
       >
     </div>
@@ -785,7 +789,7 @@ void applyForce(PVector force) {
 
     <p>
       In this chapter, we’ll look at two methods for creating forces in our
-      Processing world.
+      p5 world.
     </p>
 
     <a
@@ -808,7 +812,7 @@ void applyForce(PVector force) {
           <strong>Model a force!</strong> Yes, forces exist in the real world.
           And physics textbooks often contain formulas for these forces. We can
           take these formulas, translate them into source code, and model
-          real-world forces in Processing.
+          real-world forces in p5.
         </p>
       </li>
     </ol>
@@ -820,14 +824,14 @@ void applyForce(PVector force) {
       code would look like:
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-PVector wind = new PVector(0.01,0);
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+const wind = createVector(0.01,0);
 m.applyForce(wind);</pre
     >
 
     <p>
       The result isn’t terribly interesting, but it is a good place to start. We
-      create a <code>PVector</code> object, initialize it, and pass it into an
+      create a <code>p5.Vector</code> object, initialize it, and pass it into an
       object (which in turn will apply it to its own acceleration). If we wanted
       to have two forces, perhaps wind and gravity (a bit stronger, pointing
       down), we might write the following:
@@ -845,9 +849,9 @@ m.applyForce(wind);</pre
       <h5>Example 2.1: Forces</h5>
     </div>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-PVector wind = new PVector(0.01, 0);
-PVector gravity = new PVector(0, 0.1);
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+const wind = createVector(0.01, 0);
+const gravity = createVector(0, 0.1);
 m.applyForce(wind);
 m.applyForce(gravity);</pre
     >
@@ -855,7 +859,7 @@ m.applyForce(gravity);</pre
     <p>
       Now we have two forces, pointing in different directions with different
       magnitudes, both applied to object <code>m</code>. We’re beginning to get
-      somewhere. We’ve now built a world for our objects in Processing, an
+      somewhere. We’ve now built a world for our objects in p5, an
       environment to which they can actually respond.
     </p>
 
@@ -863,7 +867,7 @@ m.applyForce(gravity);</pre
       Let’s look at how we could make this example a bit more exciting with many
       objects of varying mass. To do this, we’ll need a quick review of
       object-oriented programming. Again, we’re not covering all the basics of
-      programming here (for that you can check out any of the intro Processing
+      programming here (for that you can check out any of the intro p5
       books listed in the introduction). However, since the idea of creating a
       world filled with objects is pretty fundamental to all the examples in
       this book, it’s worth taking a moment to walk through the steps of going
@@ -877,60 +881,54 @@ m.applyForce(gravity);</pre
       <code>applyForce()</code> function.
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Mover {
 
-  PVector position;
-  PVector velocity;
-  PVector acceleration;
-  //{!1} The object now has mass!
-  float mass;
-
-  Mover() {
+  constructor() {
     //{!1} And for now, we'll just set the mass equal to 1 for simplicity.
-    mass = 1;
-    position = new PVector(30, 30);
-    velocity = new PVector(0, 0);
-    acceleration = new PVector(0, 0);
+    this.mass = 1;
+    this.position = createVector(30, 30);
+    this.velocity = createVector(0, 0);
+    this.acceleration = createVector(0, 0);
   }
 
   // Newton's second law.
-  void applyForce(PVector force) {
+  applyForce(force) {
     //{!2} Receive a force, divide by mass, and add to acceleration.
-    PVector f = PVector.div(force,mass);
-    acceleration.add(f);
+    const f = PVector.div(force,this.mass);
+    this.acceleration.add(f);
   }
 
-  void update() {
+  update() {
     //{!2} Motion 101 from Chapter 1
-    velocity.add(acceleration);
-    position.add(velocity);
+    this.velocity.add(this.acceleration);
+    this.position.add(this.velocity);
 
     // Now add clearing the acceleration each time!
-    acceleration.mult(0);
+    this.acceleration.mult(0);
   }
 
-  void display() {
+  display() {
     stroke(0);
     fill(175);
     //{!1} Scaling the size according to mass.
-    ellipse(position.x, position.y, mass*16, mass*16);
+    ellipse(this.position.x, this.position.y, this.mass*16, this.mass*16);
   }
 
   // Somewhat arbitrarily, we are deciding that an object bounces when it hits the edges of a window.
-  void checkEdges() {
-    if (position.x &gt; width) {
-      position.x = width;
-      velocity.x *= -1;
-    } else if (position.x &lt; 0) {
-      velocity.x *= -1;
-      position.x = 0;
+  checkEdges() {
+    if (this.position.x > width) {
+      this.position.x = width;
+      this.velocity.x *= -1;
+    } else if (this.position.x < 0) {
+      this.velocity.x *= -1;
+      this.position.x = 0;
     }
 
-    if (position.y &gt; height) {
+    if (this.position.y > height) {
       //{!2} Even though we said we shouldn't touch position and velocity directly, there are some exceptions. Here we are doing so as a quick and easy way to reverse the direction of our object when it reaches the edge.
-      velocity.y *= -1;
-      position.y = height;
+      this.velocity.y *= -1;
+      this.position.y = height;
     }
   }
 }</pre
@@ -941,8 +939,8 @@ class Mover {
       <code>Mover</code> objects with an array.
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-Mover[] movers = new Mover[100];</pre
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+const movers = [];</pre
     >
 
     <p>
@@ -951,8 +949,8 @@ Mover[] movers = new Mover[100];</pre
     </p>
 
     <pre data-code-language="java" data-type="programlisting" class="codesplit">
-void setup() {
-  for (int i = 0; i &lt; movers.length; i++) {
+function setup() {
+  for (let i = 0; i < movers.length; i++) {
     movers[i] = new Mover();
   }
 }</pre
@@ -963,13 +961,13 @@ void setup() {
       <code>Mover</code> object’s constructor…
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-  Mover() {
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+  constructor() {
     //{!2} Every object has a mass of 1 and a position of (30, 30).
-    mass = 1;
-    position = new PVector(30, 30);
-    velocity = new PVector(0, 0);
-    acceleration = new PVector(0, 0);
+    this.mass = 1;
+    this.position = createVector(30, 30);
+    this.velocity = createVector(0, 0);
+    this.acceleration = createVector(0, 0);
   }</pre
     >
 
@@ -988,12 +986,12 @@ void setup() {
     </p>
 
     <pre data-code-language="java" data-type="programlisting" class="codesplit">
-  Mover(float m, float x , float y) {
+  Mover(m, x, y) {
     //{!2} Now setting these variables with arguments
-    mass = m;
-    position = new PVector(x, y);
-    velocity = new PVector(0, 0);
-    acceleration = new PVector(0, 0);
+    this.mass = m;
+    this.position = createVector(x, y);
+    this.velocity = createVector(0, 0);
+    this.acceleration = createVector(0, 0);
   }</pre
     >
 
@@ -1005,11 +1003,11 @@ void setup() {
       start on the right, etc.
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 // A big Mover on the left side of the window
-Mover m1 = new Mover(10, 0, height/2);
+const m1 = new Mover(10, 0, height/2);
 // A small Mover on the right side of the window
-Mover m1 = new Mover(0.1, width, height/2);</pre
+const m1 = new Mover(0.1, width, height/2);</pre
     >
 
     <p>
@@ -1017,9 +1015,9 @@ Mover m1 = new Mover(0.1, width, height/2);</pre
       loop.
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-void setup() {
-  for (int i = 0; i &lt; movers.length; i++) {
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+function setup() {
+  for (int i = 0; i < movers.length; i++) {
     // Initializing many Mover objects, all with random mass (and all starting at 0,0)
     movers[i] = new Mover(random(0.1, 5), i * 20, 0);
   }
@@ -1051,16 +1049,16 @@ void setup() {
       <h5>Example 2.2: Forces acting on many objects</h5>
     </div>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-void draw() {
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+function draw() {
   background(255);
 
-  PVector wind = new PVector(0.01,0);
+  const wind = createVector(0.01,0);
   //{!1} Make up two forces.
-  PVector gravity = new PVector(0,0.1);
+  const gravity = createVector(0,0.1);
 
   //{!3} Loop through all objects and apply both forces to each object.
-  for (int i = 0; i &lt; movers.length; i++) {
+  for (int i = 0; i < movers.length; i++) {
     movers[i].applyForce(wind);
     movers[i].applyForce(gravity);
     movers[i].update();
@@ -1135,12 +1133,12 @@ void draw() {
     </div>
 
     <pre data-code-language="java" data-type="programlisting" class="codesplit">
-for (int i = 0; i &lt; movers.length; i++) {
+for (int i = 0; i < movers.length; i++) {
 
-    PVector wind = new PVector(0.001,0);
-    float m = movers[i].mass;
+    const wind = createVector(0.001,0);
+    const m = movers[i].mass;
     //{!1} Scaling gravity by mass to be more accurate
-    PVector gravity = new PVector(0, 0.1*m);
+    const gravity = createVector(0, 0.1*m);
     movers[i].applyForce(wind);
     movers[i].applyForce(gravity);
 
@@ -1157,8 +1155,8 @@ for (int i = 0; i &lt; movers.length; i++) {
     </p>
 
     <p>
-      Making up forces will actually get us quite far. The world of Processing
-      is a pretend world of pixels and you are its master. So whatever you deem
+      Making up forces will actually get us quite far. The world of p5
+      is an orchestra of pixels and you are its conductor. So whatever you deem
       appropriate to be a force, well by golly, that’s the force it should be.
       Nevertheless, there may come a time where you find yourself wondering:
       “But how does it really all work?”
@@ -1210,8 +1208,8 @@ for (int i = 0; i &lt; movers.length; i++) {
       </li>
       <li>
         <p>
-          Translating that formula into Processing code that calculates a
-          <code>PVector</code> to be sent through our <code>Mover</code
+          Translating that formula into p5 code that calculates a
+          <code>p5.Vector</code> to be sent through our <code>Mover</code
           ><code>'s</code> <code>applyForce()</code> function
         </p>
       </li>
@@ -1221,7 +1219,7 @@ for (int i = 0; i &lt; movers.length; i++) {
       If we can follow the above steps with two forces, then hopefully if you
       ever find yourself Googling “atomic nuclei weak nuclear force” at 3 a.m.,
       you will have the skills to take what you find and adapt it for
-      Processing.
+      p5.
     </p>
 
     <a
@@ -1379,8 +1377,8 @@ for (int i = 0; i &lt; movers.length; i++) {
       normalizing it, and multiplying by -1.
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-PVector friction = velocity.copy();
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+const friction = this.velocity.copy();
 friction.normalize();
 // Let’s figure out the direction of the friction force
 // (a unit vector in the opposite direction of velocity).
@@ -1427,8 +1425,8 @@ friction.mult(-1);</pre
       how much friction we want to simulate.
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-float c = 0.01;</pre
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+const c = 0.01;</pre
     >
 
     <a
@@ -1456,7 +1454,7 @@ float c = 0.01;</pre
     </p>
 
     <p>
-      All of these specifics are important; however, in Processing, a “good
+      All of these specifics are important; however, in p5, a “good
       enough” simulation can be achieved without them. We can, for example, make
       friction work with the assumption that the normal force will always have a
       magnitude of 1. When we get into trigonometry in the next chapter, we’ll
@@ -1464,8 +1462,8 @@ float c = 0.01;</pre
       more sophisticated. Therefore:
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-float normal = 1;</pre
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+const normal = 1;</pre
     >
 
     <p>
@@ -1473,13 +1471,13 @@ float normal = 1;</pre
       it all together…
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-float c = 0.01;
-float normal = 1;
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+const c = 0.01;
+const normal = 1;
 //{!1} Let's figure out the magnitude of friction (really just an arbitrary constant).
-float frictionMag = c * normal;
+const frictionMag = c * normal;
 
-PVector friction = velocity.copy();
+const friction = this.velocity.copy();
 friction.mult(-1);
 friction.normalize();
 
@@ -1512,18 +1510,18 @@ friction.mult(frictionMag);</pre
       <h5>Example 2.4: Including friction</h5>
     </div>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-void draw() {
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+function draw() {
   background(255);
 
-  PVector wind = new PVector(0.001, 0);
+  const wind = createVector(0.001, 0);
   //{!1} We could scale by mass to be more accurate.
-  PVector gravity = new PVector(0, 0.1);
+  const gravity = createVector(0, 0.1);
 
-  for (int i = 0; i &lt; movers.length; i++) {
+  for (int i = 0; i < movers.length; i++) {
 		//{!5 .bold}
-		float c = 0.01;
-    PVector friction = movers[i].velocity.copy();
+		const c = 0.01;
+    const friction = movers[i].velocity.copy();
     friction.mult(-1);
     friction.normalize();
     friction.mult(c);
