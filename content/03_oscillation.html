@@ -29,7 +29,7 @@
 
   <p>
     So this chapter is a bit of a mishmash. We’ll start with the basics of
-    angles in Processing and cover many trigonometric topics, tying it all into
+    angles in p5 and cover many trigonometric topics, tying it all into
     forces at the end. And by taking this break now, we’ll also pave the way for
     more advanced examples that require trig later in this book.
   </p>
@@ -41,8 +41,8 @@
 
     <p>
       OK. Before we can do any of this stuff, we need to make sure we understand
-      what it means to be an angle in Processing. If you have experience with
-      Processing, you’ve undoubtedly encountered this issue while using the
+      what it means to be an angle in p5. If you have experience with
+      p5, you’ve undoubtedly encountered this issue while using the
       <code>rotate()</code> function to rotate and spin objects.
     </p>
 
@@ -91,7 +91,7 @@
     <a data-primary="radians" data-type="indexterm"></a>
 
     <p>
-      Processing, however, requires angles to be specified in
+      p5, however, requires angles to be specified in
       <strong><em>radians</em></strong
       >. A radian is a unit of measurement for angles defined by the ratio of
       the length of the arc of a circle to the radius of that circle. One radian
@@ -129,14 +129,14 @@
 
     <p>
       Thankfully, if we prefer to think in degrees but code with radians,
-      Processing makes this easy. The <code>radians()</code> function will
+      p5 makes this easy. The <code>radians()</code> function will
       automatically convert values from degrees to radians, and the constants
       <code>PI</code> and <code>TWO_PI</code> provide convenient access to these
       commonly used numbers (equivalent to 180 and 360 degrees, respectively).
       The following code, for example, will rotate shapes by 60 degrees.
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 float angle = radians(60);
 rotate(angle);</pre
     >
@@ -147,11 +147,12 @@ rotate(angle);</pre
       data-type="indexterm"
     ></a>
 
+    <!-- TODO: add a new reference to 2D transforms in p5 -->
     <p>
-      If you are not familiar with how rotation is implemented in Processing, I
+      If you are not familiar with how rotation is implemented in p5, I
       would suggest this tutorial:
       <a href="http://www.processing.org/learning/transform2d/"
-        >Processing — Transform 2D</a
+        >p5 — Transform 2D</a
       >.
     </p>
 
@@ -165,7 +166,7 @@ rotate(angle);</pre
         The mathematical constant pi (or &pi;) is a real number defined as the
         ratio of a circle’s circumference (the distance around the perimeter) to
         its diameter (a straight line that passes through the circle’s center).
-        It is equal to approximately 3.14159 and can be accessed in Processing
+        It is equal to approximately 3.14159 and can be accessed in p5
         with the built-in variable <code>PI</code>.
       </p>
     </div>
@@ -231,10 +232,10 @@ rotate(angle);</pre
 
     <p>
       Using the answer from Exercise 3.1 above, let’s say we wanted to rotate a
-      baton in Processing by some angle. We would have code like:
+      baton in p5 by some angle. We would have code like:
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 translate(width/2, height/2);
 rotate(angle);
 line(-50, 0, 50, 0);
@@ -258,19 +259,19 @@ ellipse(-50, 0, 8, 8);</pre
       <h5>Example 3.1: Angular motion using rotate()</h5>
     </div>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 // position
-float angle = 0;
+let angle = 0;
 // Velocity
-float aVelocity = 0;
+let aVelocity = 0;
 //{!1} Acceleration
-float aAcceleration = 0.001;
+let aAcceleration = 0.001;
 
-void setup() {
-  size(640, 360);
+function setup() {
+  createCanvas(640, 360);
 }
 
-void draw() {
+function draw() {
   background(255);
 
   fill(175);
@@ -300,16 +301,20 @@ void draw() {
       <code>Mover</code>.
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Mover {
-  PVector position;
-  PVector velocity;
-  PVector acceleration;
-  float mass;
 
-  float angle = 0;
-  float aVelocity = 0;
-  float aAcceleration = 0;
+  constructor(){
+    this.position = createVector();
+    this.velocity = createVector();
+    this.acceleration = createVector();
+    this.mass = 1.0;
+
+    this.angle = 0;
+    this.aVelocity = 0;
+    this.aAcceleration = 0;
+  }  
+
 }</pre
     >
 
@@ -318,17 +323,17 @@ class Mover {
       according to the same algorithm!
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-void update() {
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+update() {
   //{!2} Regular old-fashioned motion
-  velocity.add(acceleration);
-  position.add(velocity);
+  this.velocity.add(this.acceleration);
+  this.position.add(this.velocity);
 
   //{!2} Newfangled angular motion
-  aVelocity += aAcceleration;
-  angle += aVelocity;
+  this.aVelocity += this.aAcceleration;
+  this.angle += this.aVelocity;
 
-  acceleration.mult(0);
+  this.acceleration.mult(0);
 }</pre
     >
 
@@ -337,33 +342,33 @@ void update() {
       object when displaying it.
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-void display() {
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+display() {
   stroke(0);
   fill(175,200);
   rectMode(CENTER);
-  //{!1} pushMatrix() and popMatrix() are necessary so that the rotation of this shape doesn’t affect the rest of our world.
-  pushMatrix();
+  //{!1} push() and pop() are necessary so that the rotation of this shape doesn’t affect the rest of our world.
+  push();
 
   // Set the origin at the shape’s position.
-  translate(position.x, position.y);
+  translate(this.position.x, this.position.y);
   //{!1} Rotate by the angle.
-  rotate(angle);
-  rect(0, 0, mass * 16, mass * 16);
-  popMatrix();
+  rotate(this.angle);
+  rect(0, 0, this.mass * 16, this.mass * 16);
+  pop();
 }</pre
     >
 
     <p>
       Now, if we were to actually go ahead and run the above code, we wouldn’t
       see anything new. This is because the angular acceleration (<code
-        >float aAcceleration = 0;</code
+        >this.aAcceleration = 0;</code
       >) is initialized to zero. For the object to rotate, we need to give it an
       acceleration! Certainly, we could hard-code in a different number.
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-float aAcceleration = 0.01;</pre
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+this.aAcceleration = 0.01;</pre
     >
 
     <p>
@@ -386,8 +391,8 @@ float aAcceleration = 0.01;</pre
       object’s acceleration vector. Here’s one such example:
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-    aAcceleration = acceleration.x;</pre
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    this.aAcceleration = this.acceleration.x;</pre
     >
 
     <p>
@@ -416,19 +421,19 @@ float aAcceleration = 0.01;</pre
     </div>
 
     <pre data-code-language="java" data-type="programlisting" class="codesplit">
-  void update() {
+  update() {
 
-    velocity.add(acceleration);
-    position.add(velocity);
+    this.velocity.add(this.acceleration);
+    this.position.add(this.velocity);
 
     //{!1} Calculate angular acceleration according to acceleration’s horizontal direction and magnitude.
-    aAcceleration = acceleration.x / 10.0;
-    aVelocity += aAcceleration;
+    this.aAcceleration = this.acceleration.x / 10.0;
+    this.aVelocity += this.aAcceleration;
     //{!1} Use constrain() to ensure that angular velocity doesn’t spin out of control.
-    aVelocity = constrain(aVelocity, -0.1, 0.1);
-    angle += aVelocity;
+    this.aVelocity = constrain(this.aVelocity, -0.1, 0.1);
+    this.angle += this.aVelocity;
 
-    acceleration.mult(0);
+    this.acceleration.mult(0);
   }</pre
     >
 
@@ -560,7 +565,7 @@ float aAcceleration = 0.01;</pre
       or a car, or a spaceship. And when we say "point in the direction of
       movement," what we are really saying is “rotate according to the velocity
       vector.” Velocity is a vector, with an <code>x</code> and a
-      <code>y</code> component, but to rotate in Processing we need an angle, in
+      <code>y</code> component, but to rotate in p5 we need an angle, in
       radians. Let’s draw our trigonometry diagram one more time, with an
       object’s velocity vector (Figure 3.6).
     </p>
@@ -657,24 +662,24 @@ float aAcceleration = 0.01;</pre
 
     <p>
       Now that we have the formula, let’s see where it should go in our mover’s
-      <code>display()</code> function. Notice that in Processing, the function
+      <code>display()</code> function. Notice that in p5, the function
       for arctangent is called <code>atan()</code>.
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-  void display() {
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+  display() {
     //{!1} Solve for angle by using atan().
-    float angle = atan(velocity.y / velocity.x);
+    this.angle = atan(this.velocity.y / this.velocity.x);
 
     stroke(0);
     fill(175);
-    pushMatrix();
+    push();
     rectMode(CENTER);
-    translate(position.x, position.y);
+    translate(this.position.x, this.position.y);
     //{!1} Rotate according to that angle.
-    rotate(angle);
+    rotate(this.angle);
     rect(0, 0, 30, 10);
-    popMatrix();
+    pop();
   }</pre
     >
 
@@ -723,7 +728,7 @@ float aAcceleration = 0.01;</pre
       vectors point in opposite directions! The thing is, this is a pretty
       common problem in computer graphics. Rather than simply using
       <code>atan()</code> along with a bunch of conditional statements to
-      account for positive/negative scenarios, Processing (along with pretty
+      account for positive/negative scenarios, p5 (along with pretty
       much all programming environments) has a nice function called
       <code>atan2()</code> that does it for you.
     </p>
@@ -740,20 +745,20 @@ float aAcceleration = 0.01;</pre
       <h5>Example 3.3: Pointing in the direction of motion</h5>
     </div>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-  void display() {
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+  display() {
     //{!1} Using atan2() to account for all possible directions
-    float angle = atan2(velocity.y, velocity.x);
+    this.angle = atan2(this.velocity.y, this.velocity.x);
 
     stroke(0);
     fill(175);
-    pushMatrix();
+    push();
     rectMode(CENTER);
-    translate(position.x, position.y);
+    translate(this.position.x, this.position.y);
     //{!1} Rotate according to that angle.
-    rotate(angle);
+    rotate(this.angle);
     rect(0, 0, 30, 10);
-    popMatrix();
+    pop();
   }</pre
     >
 
@@ -778,15 +783,15 @@ float aAcceleration = 0.01;</pre
     ></a>
 
     <p>
-      To simplify this even further, the <code>PVector</code> class itself
+      To simplify this even further, the <code>p5.Vector</code> class itself
       provides a function called <code>heading()</code>, which takes care of
       calling <code>atan2()</code> for you so you can get the 2D direction
-      angle, in radians, for any Processing <code>PVector</code>.
+      angle, in radians, for any p5 <code>p5.Vector</code>.
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
     // The easiest way to do this!
-    float angle = velocity.heading();</pre
+    this.angle = this.velocity.heading();</pre
     >
 
     <div data-type="exercise" id="chapter03_exercise3">
@@ -819,7 +824,7 @@ float aAcceleration = 0.01;</pre
     ></a>
 
     <p>
-      Any time we display a shape in Processing, we have to specify a pixel
+      Any time we display a shape in p5, we have to specify a pixel
       position, a set of <code>x</code> and <code>y</code> coordinates. These
       coordinates are known as <strong><em>Cartesian coordinates</em></strong
       >, named for René Descartes, the French mathematician who developed the
@@ -857,8 +862,8 @@ float aAcceleration = 0.01;</pre
     ></a>
 
     <p>
-      Processing’s drawing functions, however, don’t understand polar
-      coordinates. Whenever we want to display something in Processing, we have
+      p5’s drawing functions, however, don’t understand polar
+      coordinates. Whenever we want to display something in p5, we have
       to specify positions as <em>(x,y)</em> Cartesian coordinates. However,
       sometimes it is a great deal more convenient for us to think in polar
       coordinates when designing. Happily for us, with trigonometry we can
@@ -925,17 +930,17 @@ float aAcceleration = 0.01;</pre
     <p>
       For example, if <code>r</code> is 75 and <code>theta</code> is 45 degrees
       (or PI/4 radians), we can calculate <code>x</code> and <code>y</code> as
-      below. The functions for sine and cosine in Processing are
+      below. The functions for sine and cosine in p5 are
       <code>sin()</code> and <code>cos()</code>, respectively. They each take
       one argument, an angle measured in radians.
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-float r = 75;
-float theta = PI / 4;
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+const r = 75;
+const theta = PI / 4;
 // Converting from polar (r,theta) to Cartesian (x,y)
-float x = r * cos(theta);
-float y = r * sin(theta);</pre
+const x = r * cos(theta);
+const y = r * sin(theta);</pre
     >
 
     <a
@@ -966,20 +971,20 @@ float y = r * sin(theta);</pre
 
     <div data-type="example"><h5>Example 3.4: Polar to Cartesian</h5></div>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-float r = 75;
-float theta = 0;
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+const r = 75;
+let theta = 0;
 
-void setup() {
-  size(640, 360);
+function setup() {
+  createCanvas(640, 360);
   background(255);
 }
 
-void draw() {
+function draw() {
 
   //{!2} Polar coordinates (r,theta) are converted to Cartesian (x,y) for use in the ellipse() function.
-  float x = r * cos(theta);
-  float y = r * sin(theta);
+  const x = r * cos(theta);
+  const y = r * sin(theta);
 
   noStroke();
   fill(0);
@@ -1067,14 +1072,14 @@ void draw() {
 
     <p>
       And so we happily discover that we can simulate oscillation in a
-      Processing sketch by assigning the output of the sine function to an
+      p5 sketch by assigning the output of the sine function to an
       object’s position. Note that this will follow the same methodology we
       applied to Perlin noise in the <a href="#intro_section6">Introduction</a>.
     </p>
 
     <p>
       Let’s begin with a really basic scenario. We want a circle to oscillate
-      from the left side to the right side of a Processing window.
+      from the left side to the right side of a p5 window.
     </p>
 
     <figure
@@ -1142,15 +1147,15 @@ void draw() {
     </p>
 
     <p>
-      Now, in the Processing world we live in, what is amplitude and what is
+      Now, in the p5 world we live in, what is amplitude and what is
       period? Amplitude can be measured rather easily in pixels. In the case of
       a window 200 pixels wide, we would oscillate from the center 100 pixels to
       the right and 100 pixels to the left. Therefore:
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 // Our amplitude is measured in pixels.
-float amplitude = 100;</pre
+const amplitude = 100;</pre
     >
 
     <a data-primary="millis() function (Processing)" data-type="indexterm"></a>
@@ -1169,18 +1174,18 @@ float amplitude = 100;</pre
 
     <p>
       <em>Period</em> is the amount of time it takes for one cycle, but what is
-      time in our Processing world? I mean, certainly we could say we want the
+      time in our p5 world? I mean, certainly we could say we want the
       circle to oscillate every three seconds. And we could track the
-      milliseconds—using <code>millis()</code> —in Processing and come up with
+      milliseconds—using <code>millis()</code> —in p5 and come up with
       an elaborate algorithm for oscillating an object according to real-world
       time. But for us, real-world time doesn’t really matter. The real measure
-      of time in Processing is in frames. The oscillating motion should repeat
+      of time in p5 is in frames. The oscillating motion should repeat
       every 30 frames, or 50 frames, or 1000 frames, etc.
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 // Period is measured in frames (the unit of time for animation).
-float period = 120;</pre
+const period = 120;</pre
     >
 
     <p>
@@ -1190,7 +1195,7 @@ float period = 120;</pre
     </p>
 
     <pre data-code-language="java" data-type="programlisting" class="codesplit">
-float x = amplitude * sin(TWO_PI * frameCount / period);</pre
+const x = amplitude * sin(TWO_PI * frameCount / period);</pre
     >
 
     <a
@@ -1205,7 +1210,7 @@ float x = amplitude * sin(TWO_PI * frameCount / period);</pre
       we multiply by amplitude. We know that sine will oscillate between -1 and
       1. If we take that value and multiply it by amplitude then we’ll get the
       desired result: a value oscillating between -amplitude and amplitude.
-      (Note: this is also a place where we could use Processing’s
+      (Note: this is also a place where we could use p5’s
       <code>map()</code> function to map the output of sine to a custom range.)
     </p>
 
@@ -1297,25 +1302,25 @@ float x = amplitude * sin(TWO_PI * frameCount / period);</pre
     </p>
 
     <p>
-      Wrapping this all up, here’s the Processing example that oscillates the
+      Wrapping this all up, here’s the p5 example that oscillates the
       <code>x</code> position of a circle with an amplitude of 100 pixels and a
       period of 120 frames.
     </p>
 
     <div data-type="example"><h5>Example 3.5: Simple Harmonic Motion</h5></div>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-void setup() {
-  size(640, 360);
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+function setup() {
+  createCanvas(640, 360);
 }
 
-void draw() {
+function draw() {
   background(255);
 
-  float period = 120;
-  float amplitude = 100;
+  const period = 120;
+  const amplitude = 100;
   //{!1 .offset} Calculating horizontal position according to the formula for simple harmonic motion
-  float x = amplitude * sin(TWO_PI * frameCount / period);
+  const x = amplitude * sin(TWO_PI * frameCount / period);
   stroke(0);
   fill(175);
   translate(width/2, height/2);
@@ -1376,14 +1381,14 @@ void draw() {
       formula:
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-float x = amplitude * sin(TWO_PI * frameCount / period);</pre
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+const x = amplitude * sin(TWO_PI * frameCount / period);</pre
     >
 
     <p>And let’s rewrite it a slightly different way:</p>
 
     <pre data-code-language="java" data-type="programlisting" class="codesplit">
-float x = amplitude * sin ( some value that increments slowly );</pre
+const x = amplitude * sin ( some value that increments slowly );</pre
     >
 
     <p>
@@ -1394,16 +1399,16 @@ float x = amplitude * sin ( some value that increments slowly );</pre
       <a href="#chapter03_section2">section 3.2</a>. Assuming:
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-float angle = 0;
-float aVelocity = 0.05;</pre
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+let angle = 0;
+const aVelocity = 0.05;</pre
     >
 
     <p>in <code>draw()</code>, we can simply say:</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 angle += aVelocity;
-float x = amplitude * sin(angle);</pre
+const x = amplitude * sin(angle);</pre
     >
 
     <p><code>angle</code> is our “some value that increments slowly.”</p>
@@ -1412,19 +1417,19 @@ float x = amplitude * sin(angle);</pre
       <h5>Example 3.6: Simple Harmonic Motion II</h5>
     </div>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-float angle = 0;
-float aVelocity = 0.05;
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+let angle = 0;
+const aVelocity = 0.05;
 
-void setup() {
-  size(640, 360);
+function setup() {
+  createCanvas(640, 360);
 }
 
-void draw() {
+function draw() {
   background(255);
 
-  float amplitude = 100;
-  float x = amplitude * sin(angle);
+  const amplitude = 100;
+  const x = amplitude * sin(angle);
   //{!1} Using the concept of angular velocity to increment an angle variable
   angle += aVelocity;
 
@@ -1458,7 +1463,7 @@ void draw() {
       <code>Oscillator</code> class. And let’s assume we want the oscillation to
       happen along both the x-axis (as above) and the y-axis. To do this, we’ll
       need two angles, two angular velocities, and two amplitudes (one for each
-      axis). Another perfect opportunity for <code>PVector</code>!
+      axis). Another perfect opportunity for <code>p5.Vector</code>!
     </p>
 
     <figure
@@ -1471,39 +1476,35 @@ void draw() {
 
     <div data-type="example"><h5>Example 3.7: Oscillator objects</h5></div>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Oscillator  {
 
-  //{!3} Using a PVector to track two angles!
-  PVector angle;
-  PVector velocity;
-  PVector amplitude;
-
-  Oscillator()  {
-    angle = new PVector();
-    velocity = new PVector(random(-0.05,0.05),random(-0.05,0.05));
+  constructor()  {
+    //{!3} Using a p5.Vector to track two angles!
+    this.angle = createVector();
+    this.velocity = createVector(random(-0.05,0.05),random(-0.05,0.05));
     //{!1 .offset} Random velocities and amplitudes
-    amplitude = new PVector(random(width/2), random(height/2));
+    this.amplitude = createVector(random(width/2), random(height/2));
   }
 
-  void oscillate()  {
-    angle.add(velocity);
+  oscillate()  {
+    this.angle.add(this.velocity);
   }
 
-  void display()  {
+  display()  {
     // Oscillating on the x-axis
-    float x = sin(angle.x) * amplitude.x;
+    const x = sin(this.angle.x) * this.amplitude.x;
     //{!1} Oscillating on the y-axis
-    float y = sin(angle.y) * amplitude.y;
+    const y = sin(this.angle.y) * this.amplitude.y;
 
-    pushMatrix();
+    push();
     translate(width/2, height/2);
     stroke(0);
     fill(175);
     // Drawing the Oscillator as a line connecting a circle
     line(0, 0, x, y);
     ellipse(x, y, 16, 16);
-    popMatrix();
+    pop();
   }
 }</pre
     >
@@ -1588,10 +1589,10 @@ class Oscillator  {
       with an angle, an angular velocity, and an amplitude:
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-float angle = 0;
-float angleVel = 0.2;
-float amplitude = 100;</pre
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+let angle = 0;
+const angleVel = 0.2;
+const amplitude = 100;</pre
     >
 
     <p>
@@ -1614,10 +1615,10 @@ float amplitude = 100;</pre
       </li>
     </ol>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-  for (int x = 0; x &lt;= width; x += 24) {
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+  for (let x = 0; x <= width; x += 24) {
     // 1) Calculate the y position according to amplitude and sine of the angle.
-    float y = amplitude * sin(angle);
+    const y = amplitude * sin(angle);
     // 2) Draw a circle at the (x,y) position.
     ellipse(x, y + height/2, 48, 48);
     // 3) Increment the angle according to angular velocity.
@@ -1675,29 +1676,31 @@ float amplitude = 100;</pre
       <h5>Example 3.8: Static wave drawn as a continuous line</h5>
     </div>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-float angle = 0;
-float angleVel = 0.2;
-float amplitude = 100;
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+let angle = 0;
+const angleVel = 0.2;
+const amplitude = 100;
 
-size(400, 200);
-background(255);
+function setup(){
+  createCanvas(400, 200);
+  background(255);
 
-stroke(0);
-strokeWeight(2);
-noFill();
+  stroke(0);
+  strokeWeight(2);
+  noFill();
 
-beginShape();
-for (int x = 0; x &lt;= width; x += 5) {
-  // Here’s an example of using the map() function
-  // instead.
-  float y = map(sin(angle), -1, 1, 0, height);
-  // With beginShape() and endShape(), you call
-  // vertex() to set all the vertices of your shape.
-  vertex(x, y);
-  angle += angleVel;
-}
-endShape();</pre
+  beginShape();
+  for (let x = 0; x <= width; x += 5) {
+    // Here’s an example of using the map() function
+    // instead.
+    const y = map(sin(angle), -1, 1, 0, height);
+    // With beginShape() and endShape(), you call
+    // vertex() to set all the vertices of your shape.
+    vertex(x, y);
+    angle += angleVel;
+  }
+  endShape();
+}</pre
     >
 
     <a
@@ -1734,23 +1737,23 @@ endShape();</pre
 
     <div data-type="example"><h5>Example 3.9: The Wave</h5></div>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-float startAngle = 0;
-float angleVel = 0.1;
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+let startAngle = 0;
+const angleVel = 0.1;
 
-void setup() {
-  size(400, 200);
+function setup() {
+  createCanvas(400, 200);
 }
 
-void draw() {
+function draw() {
   background(255);
 
   //{!2} In order to move the wave, we start at a different theta value each frame.
-  float angle = startAngle;
+  let angle = startAngle;
   startAngle += 0.02;
 
-  for (int x = 0; x &lt;= width; x += 24) {
-    float y = map(sin(angle),-1,1,0,height);
+  for (let x = 0; x <= width; x += 24) {
+    const y = map(sin(angle),-1,1,0,height);
     stroke(0);
     fill(0,50);
     ellipse(x,y,48,48);
@@ -1846,7 +1849,7 @@ void draw() {
     <p>
       A pendulum is a bob suspended from a pivot. Obviously a real-world
       pendulum would live in a 3D space, but we’re going to look at a simpler
-      scenario, a pendulum in a 2D space—a Processing window (see Figure 3.10).
+      scenario, a pendulum in a 2D space—a p5 window (see Figure 3.10).
     </p>
 
     <a
@@ -1956,7 +1959,7 @@ void draw() {
     ></a>
 
     <p>
-      This is a good time to remind ourselves that we’re Processing programmers
+      This is a good time to remind ourselves that we’re p5 programmers
       and not physicists. Yes, we know that the acceleration due to gravity on
       earth is 9.8 meters per second squared. But this number isn’t relevant to
       us. What we have here is just an arbitrary constant (we’ll call it
@@ -2008,17 +2011,19 @@ void draw() {
       </li>
     </ul>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Pendulum  {
 
-  // Length of arm
-  float r;
-  // Pendulum arm angle
-  float angle;
-  // Angular velocity
-  float aVelocity;
-  // Angular acceleration
-  float aAcceleration;</pre
+  constructor(){
+    // Length of arm
+    this.r = ????;
+    // Pendulum arm angle
+    this.angle = ????;
+    // Angular velocity
+    this.aVelocity = ????;
+    // Angular acceleration
+    this.aAcceleration = ????;
+  } </pre
     >
 
     <p>
@@ -2026,16 +2031,16 @@ class Pendulum  {
       pendulum’s angle according to our formula…
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-  void update() {
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+  update() {
     // Arbitrary constant
-    float gravity = 0.4;
+    const gravity = 0.4;
     // Calculate acceleration according to our formula.
-    aAcceleration = -1 * gravity * sin(angle);
+    this.aAcceleration = -1 * gravity * sin(this.angle);
     // Increment velocity.
-    aVelocity += aAcceleration;
+    this.aVelocity += this.aAcceleration;
     //{!1} Increment angle.
-    angle += aVelocity;
+    this.angle += this.aVelocity;
   }</pre
     >
 
@@ -2057,9 +2062,9 @@ class Pendulum  {
       The origin is just something we make up, as is the arm length. Let’s say:
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-PVector origin = new PVector(100,10);
-float r = 125;</pre
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+this.origin = createVector(100,10);
+this.r = 125;</pre
     >
 
     <p>
@@ -2070,8 +2075,8 @@ float r = 125;</pre
       from polar to Cartesian. And so:
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-PVector position = new PVector(r * sin(angle), r* cos(angle));</pre
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+const position = createVector(r * sin(this.angle), r* cos(this.angle));</pre
     >
 
     <p>
@@ -2084,11 +2089,11 @@ PVector position = new PVector(r * sin(angle), r* cos(angle));</pre
 
     <p>
       Since the position is relative to wherever the origin happens to be, we
-      can just add origin to the position <code>PVector</code>:
+      can just add origin to the position <code>p5.Vector</code>:
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-position.add(origin);</pre
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+this.position.add(this.origin);</pre
     >
 
     <p>
@@ -2096,11 +2101,11 @@ position.add(origin);</pre
       (you should be more creative, of course).
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 stroke(0);
 fill(175);
-line(origin.x, origin.y, position.x, position.y);
-ellipse(position.x, position.y, 16, 16);</pre
+line(this.origin.x, this.origin.y, this.position.x, this.position.y);
+ellipse(this.position.x, this.position.y, 16, 16);</pre
     >
 
     <p>
@@ -2125,8 +2130,8 @@ ellipse(position.x, position.y, 16, 16);</pre
       >.
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-aAcceleration = (-1 * G * sin(angle)) / r;</pre
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+this.aAcceleration = (-1 * G * sin(this.angle)) / r;</pre
     >
 
     <a
@@ -2153,8 +2158,8 @@ aAcceleration = (-1 * G * sin(angle)) / r;</pre
       multiplies it by 99%) during each frame of animation:
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-aVelocity *= 0.99;</pre
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+this.aVelocity *= 0.99;</pre
     >
 
     <p>
@@ -2172,72 +2177,63 @@ aVelocity *= 0.99;</pre
 
     <div data-type="example"><h5>Example 3.10: Swinging pendulum</h5></div>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-Pendulum p;
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+let p;
 
-void setup() {
-  size(640, 360);
+function setup() {
+  createCanvas(640, 360);
   //{!1} We make a new Pendulum object with an origin position and arm length.
-  p = new Pendulum(new PVector(width/2,10),125);
+  p = new Pendulum(createVector(width/2,10),125);
 }
 
-void draw() {
+function draw() {
   background(255);
   p.go();
 }</pre
     >
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Pendulum  {
-  //{!7} Many, many variables to keep track of the Pendulum’s various properties
-  PVector position;    // position of bob
-  PVector origin;      // position of arm origin
-  float r;             // Length of arm
-  float angle;         // Pendulum arm angle
-  float aVelocity;     // Angle velocity
-  float aAcceleration; // Angle acceleration
-  float damping;       // Arbitrary damping amount
-
-  Pendulum(PVector origin_, float r_) {
-    origin = origin_.copy();
-    position = new PVector();
-    r = r_;
-    angle = PI/4;
-
-    aVelocity = 0.0;
-    aAcceleration = 0.0;
-    // An arbitrary damping so that the Pendulum slows over time
-    damping = 0.995;
+     
+  constructor( origin_, r_) {
+    //{!7} Many, many variables to keep track of the Pendulum’s various properties
+    this.origin = origin_.copy(); // position of arm origin
+    this.position = createVector(); // position of bob
+    this.r = r_; // Length of arm
+    this.angle = PI/4; // Pendulum arm angle
+    this.aVelocity = 0.0; // Angle velocity
+    this.aAcceleration = 0.0; // Angle acceleration
+    this.damping = 0.995; // Arbitrary damping
   }
 
-  void go() {
-    update();
-    display();
+  go() {
+    this.update();
+    this.display();
   }
 
-  void update() {
-    float gravity = 0.4;
+  update() {
+    const gravity = 0.4;
     //{!1 .code-wide} Formula we worked out for angular acceleration
-    aAcceleration = (-1 * gravity / r) * sin(angle);
+    this.aAcceleration = (-1 * gravity / this.r) * sin(this.angle);
 
     //{!2} Standard angular motion algorithm
-    aVelocity += aAcceleration;
-    angle += aVelocity;
+    this.aVelocity += this.aAcceleration;
+    this.angle += this.aVelocity;
 
     // Apply some damping.
-    aVelocity *= damping;
+    this.aVelocity *= this.damping;
   }
 
-  void display() {
+  display() {
     //{!1} Where is the bob relative to the origin? Polar to Cartesian coordinates will tell us!
-    position.set(r * sin(angle), r * cos(angle));
-    position.add(origin);
+    this.position.set(this.r * sin(this.angle), this.r * cos(this.angle));
+    this.position.add(this.origin);
 
     stroke(0);
     //{!1 .code-wide} The arm
-    line(origin.x, origin.y, position.x, position.y);
+    line(this.origin.x, this.origin.y, this.position.x, this.position.y);
     fill(175);
     //{!1 .code-wide} The bob
-    ellipse(position.x, position.y, 16, 16);
+    ellipse(this.position.x, this.position.y, 16, 16);
   }
 }</pre
     >
@@ -2317,7 +2313,7 @@ class Pendulum  {
       (wind, gravity, etc.) To accomplish a simulation like this (one that is
       identical to the pendulum example, only now the arm is a springy
       connection), we need to model the forces of a spring using
-      <code>PVector</code>.
+      <code>p5.Vector</code>.
     </p>
 
     <figure id="chapter03_figure14">
@@ -2398,7 +2394,7 @@ class Pendulum  {
     <p>
       Now remember, force is a vector, so we need to calculate both magnitude
       and direction. Let’s look at one more diagram of the spring and label all
-      the givens we might have in a Processing sketch.
+      the givens we might have in a p5 sketch.
     </p>
 
     <figure id="chapter03_figure16">
@@ -2410,10 +2406,10 @@ class Pendulum  {
       Let’s establish the following three variables as shown in Figure 3.16.
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-PVector anchor;
-PVector position;
-float restLength;</pre
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+const anchor = createVector();
+const position = createVector();
+const restLength = ????;</pre
     >
 
     <a
@@ -2429,8 +2425,8 @@ float restLength;</pre
       it’s just a constant, so let’s make something up.
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-float k = 0.1;</pre
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+const k = 0.1;</pre
     >
 
     <a
@@ -2450,11 +2446,11 @@ float k = 0.1;</pre
       gravitational attraction.)
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 //{!1} A vector pointing from anchor to bob gives us the current length of the spring.
-PVector dir = PVector.sub(bob, anchor);
-float currentLength = dir.mag();
-float x = currentLength - restLength;</pre
+const dir = p5.Vector.sub(bob, anchor);
+const currentLength = dir.mag();
+const x = currentLength - restLength;</pre
     >
 
     <a
@@ -2484,17 +2480,17 @@ float x = currentLength - restLength;</pre
       length, there should be a force pulling it back towards the anchor. And if
       it shrinks below its rest length, the force should push it away from the
       anchor. This reversal of direction is accounted for in the formula with
-      the -1. And so all we need to do is normalize the <code>PVector</code> we
+      the -1. And so all we need to do is normalize the <code>p5.Vector</code> we
       used for the distance calculation! Let’s take a look at the code and
-      rename that <code>PVector</code> variable as “force.”
+      rename that <code>p5.Vector</code> variable as “force.”
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 //{!4} Magnitude of spring force according to Hooke’s law
-float k = 0.1;
-PVector force = PVector.sub(bob, anchor);
-float currentLength = force.mag();
-float x = currentLength - restLength;
+const k = 0.1;
+const force = p5.Vector.sub(bob, anchor);
+const currentLength = force.mag();
+const x = currentLength - restLength;
 
 //{!1} Direction of spring force (unit vector)
 force.normalize();
@@ -2526,19 +2522,19 @@ force.mult(-1 * k * x);</pre
       the spring force:
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-Bob bob;
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+let bob;
 
-void setup() {
+function setup() {
   bob = new Bob();
 }
 
-void draw()  {
+function draw()  {
   //{!1} Our Chapter 2 “make-up-a-gravity force”
-  PVector gravity = new PVector(0, 1);
+  const gravity = createVector(0, 1);
   bob.applyForce(gravity);
   //{!2 .bold} We need to also calculate and apply a spring force!
-  PVector springForce = _______________????
+  const springForce = _______________????
   bob.applyForce(spring);
 
   //{!2} Our standard update() and display() functions
@@ -2564,18 +2560,18 @@ void draw()  {
 
     <p>This allows us to write a lovely main program as follows:</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-Bob bob;
+    <pre data-code-language="javascript data-type="programlisting" class="codesplit">
+let bob;
 //{!1 .bold} Adding a Spring object
-Spring spring;
+let spring;
 
-void setup() {
+function setup() {
   bob = new Bob();
   spring = new Spring();
 }
 
-void draw()  {
-  PVector gravity = new PVector(0,1);
+function draw()  {
+  const gravity = createVector(0,1);
   bob.applyForce(gravity);
 
   //{!1 .bold} This new function in the Spring class will take care of computing the force of the spring on the bob.
@@ -2593,21 +2589,21 @@ void draw()  {
       said something like:
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-  PVector force = attractor.attract(mover);
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+  const force = attractor.attract(mover);
   mover.applyForce(force);</pre
     >
 
     <p>The analogous situation here with a spring would be:</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-  PVector force = spring.connect(bob);
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+  const force = spring.connect(bob);
   bob.applyForce(force);</pre
     >
 
     <p>Nevertheless, in this example all we said was:</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   spring.connect(bob);</pre
     >
 
@@ -2621,9 +2617,9 @@ void draw()  {
       <code>applyForce()</code> on the bob.
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-  void connect(Bob b) {
-    PVector force = some fancy calculations
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+  connect(b) {
+    const force = some fancy calculations
 
     //{!1} The function connect() takes care of calling applyForce() and therefore doesn’t have to return a vector to the calling area.
     b.applyForce(force);
@@ -2654,50 +2650,46 @@ void draw()  {
 
     <div data-type="example"><h5>Example 3.11: A Spring connection</h5></div>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Spring {
 
-  //{!1} We need to keep track of the spring’s anchor position.
-  PVector anchor;
-
-  //{!2} Rest length and spring constant variables
-  float len;
-  float k = 0.1;
-
-  //{!4} The constructor initializes the anchor point and rest length.
-  Spring(float x, float y, int l) {
-    anchor = new PVector(x,y);
-    len = l;
+  //{!1} The constructor initializes the anchor point and rest length.
+  constructor( x_, y_, l_) {
+    //{!1} We need to keep track of the spring’s anchor position.
+    this.anchor = createVector(x_,y_);
+    //{!2} Rest length and spring constant variables
+    this.len = l_;
+    this.k = 0.1;
   }
 
   //{!1} Calculate spring force—our implementation of Hooke’s Law.
-  void connect(Bob b) {
+  connect(b) {
 
     //{!1 .bold .code-wide} Get a vector pointing from anchor to Bob position.
-    PVector force = PVector.sub(b.position, anchor);
+    const force = p5.Vector.sub(b.position, this.anchor);
     //{!2 .bold} Calculate the displacement between distance and rest length.
-    float d = force.mag();
-    float stretch = d - len;
+    const d = force.mag();
+    const stretch = d - this.len;
 
     //{!2 .bold} Direction and magnitude together!
     force.normalize();
-    force.mult(-1 * k * stretch);
+    force.mult(-1 * this.k * stretch);
 
     //{!1} Call applyForce() right here!
     b.applyForce(force);
   }
 
   //{!5} Draw the anchor.
-  void display() {
+  display() {
     fill(100);
     rectMode(CENTER);
-    rect(anchor.x,anchor.y,10,10);
+    rect(this.anchor.x,this.anchor.y,10,10);
   }
 
   //{!4} Draw the spring connection between Bob position and anchor.
-  void displayLine(Bob b) {
+  displayLine(b) {
     stroke(255);
-    line(b.position.x,b.position.y,anchor.x,anchor.y);
+    line(b.position.x,b.position.y,this.anchor.x,this.anchor.y);
   }
 }</pre
     >
@@ -2720,28 +2712,28 @@ class Spring {
       </p>
 
       <pre
-        data-code-language="java"
+        data-code-language="javascript"
         data-type="programlisting"
         class="codesplit"
       >
-void constrainLength(Bob b, float minlen, float maxlen) {
+constrainLength(b, minlen, maxlen) {
   //{!1} Vector pointing from Bob to Anchor
-  PVector dir = PVector.sub(______,______);
-  float d = dir.mag();
+  const dir = p5.Vector.sub(______,______);
+  const d = dir.mag();
 
   //{!1} Is it too short?
-  if (d &lt; minlen) {
+  if (d < minlen) {
     dir.normalize();
     dir.mult(________);
     //{!1} Keep position within constraint.
-    b.position = PVector.add(______,______);
+    b.position = p5.Vector.add(______,______);
     b.velocity.mult(0);
   //{!1} Is it too long?
   } else if (____________) {
     dir.normalize();
     dir.mult(_________);
     //{!1} Keep position within constraint.
-    b.position = PVector.add(______,______);
+    b.position = p5.Vector.add(______,______);
     b.velocity.mult(0);
   }
 }</pre
