@@ -136,7 +136,7 @@
       The following code, for example, will rotate shapes by 60 degrees.
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 float angle = radians(60);
 rotate(angle);</pre
     >
@@ -147,6 +147,7 @@ rotate(angle);</pre
       data-type="indexterm"
     ></a>
 
+    <!-- TODO: add a new reference to 2D transforms in p5 -->
     <p>
       If you are not familiar with how rotation is implemented in p5, I
       would suggest this tutorial:
@@ -234,7 +235,7 @@ rotate(angle);</pre
       baton in p5 by some angle. We would have code like:
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 translate(width/2, height/2);
 rotate(angle);
 line(-50, 0, 50, 0);
@@ -258,19 +259,19 @@ ellipse(-50, 0, 8, 8);</pre
       <h5>Example 3.1: Angular motion using rotate()</h5>
     </div>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 // position
-float angle = 0;
+let angle = 0;
 // Velocity
-float aVelocity = 0;
+let aVelocity = 0;
 //{!1} Acceleration
-float aAcceleration = 0.001;
+let aAcceleration = 0.001;
 
-void setup() {
-  size(640, 360);
+function setup() {
+  createCanvas(640, 360);
 }
 
-void draw() {
+function draw() {
   background(255);
 
   fill(175);
@@ -300,16 +301,20 @@ void draw() {
       <code>Mover</code>.
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Mover {
-  PVector position;
-  PVector velocity;
-  PVector acceleration;
-  float mass;
 
-  float angle = 0;
-  float aVelocity = 0;
-  float aAcceleration = 0;
+  constructor(){
+    this.position = createVector();
+    this.velocity = createVector();
+    this.acceleration = createVector();
+    this.mass = 1.0;
+
+    this.angle = 0;
+    this.aVelocity = 0;
+    this.aAcceleration = 0;
+  }  
+
 }</pre
     >
 
@@ -318,17 +323,17 @@ class Mover {
       according to the same algorithm!
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-void update() {
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+update() {
   //{!2} Regular old-fashioned motion
-  velocity.add(acceleration);
-  position.add(velocity);
+  this.velocity.add(this.acceleration);
+  this.position.add(this.velocity);
 
   //{!2} Newfangled angular motion
-  aVelocity += aAcceleration;
-  angle += aVelocity;
+  this.aVelocity += this.aAcceleration;
+  this.angle += this.aVelocity;
 
-  acceleration.mult(0);
+  this.acceleration.mult(0);
 }</pre
     >
 
@@ -337,33 +342,33 @@ void update() {
       object when displaying it.
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-void display() {
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+display() {
   stroke(0);
   fill(175,200);
   rectMode(CENTER);
-  //{!1} pushMatrix() and popMatrix() are necessary so that the rotation of this shape doesn’t affect the rest of our world.
-  pushMatrix();
+  //{!1} push() and pop() are necessary so that the rotation of this shape doesn’t affect the rest of our world.
+  push();
 
   // Set the origin at the shape’s position.
-  translate(position.x, position.y);
+  translate(this.position.x, this.position.y);
   //{!1} Rotate by the angle.
-  rotate(angle);
-  rect(0, 0, mass * 16, mass * 16);
-  popMatrix();
+  rotate(this.angle);
+  rect(0, 0, this.mass * 16, this.mass * 16);
+  pop();
 }</pre
     >
 
     <p>
       Now, if we were to actually go ahead and run the above code, we wouldn’t
       see anything new. This is because the angular acceleration (<code
-        >float aAcceleration = 0;</code
+        >this.aAcceleration = 0;</code
       >) is initialized to zero. For the object to rotate, we need to give it an
       acceleration! Certainly, we could hard-code in a different number.
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-float aAcceleration = 0.01;</pre
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+this.aAcceleration = 0.01;</pre
     >
 
     <p>
@@ -386,8 +391,8 @@ float aAcceleration = 0.01;</pre
       object’s acceleration vector. Here’s one such example:
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-    aAcceleration = acceleration.x;</pre
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    this.aAcceleration = this.acceleration.x;</pre
     >
 
     <p>
@@ -416,19 +421,19 @@ float aAcceleration = 0.01;</pre
     </div>
 
     <pre data-code-language="java" data-type="programlisting" class="codesplit">
-  void update() {
+  update() {
 
-    velocity.add(acceleration);
-    position.add(velocity);
+    this.velocity.add(this.acceleration);
+    this.position.add(this.velocity);
 
     //{!1} Calculate angular acceleration according to acceleration’s horizontal direction and magnitude.
-    aAcceleration = acceleration.x / 10.0;
-    aVelocity += aAcceleration;
+    this.aAcceleration = this.acceleration.x / 10.0;
+    this.aVelocity += this.aAcceleration;
     //{!1} Use constrain() to ensure that angular velocity doesn’t spin out of control.
-    aVelocity = constrain(aVelocity, -0.1, 0.1);
-    angle += aVelocity;
+    this.aVelocity = constrain(this.aVelocity, -0.1, 0.1);
+    this.angle += this.aVelocity;
 
-    acceleration.mult(0);
+    this.acceleration.mult(0);
   }</pre
     >
 
@@ -661,20 +666,20 @@ float aAcceleration = 0.01;</pre
       for arctangent is called <code>atan()</code>.
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-  void display() {
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+  display() {
     //{!1} Solve for angle by using atan().
-    float angle = atan(velocity.y / velocity.x);
+    this.angle = atan(this.velocity.y / this.velocity.x);
 
     stroke(0);
     fill(175);
-    pushMatrix();
+    push();
     rectMode(CENTER);
-    translate(position.x, position.y);
+    translate(this.position.x, this.position.y);
     //{!1} Rotate according to that angle.
-    rotate(angle);
+    rotate(this.angle);
     rect(0, 0, 30, 10);
-    popMatrix();
+    pop();
   }</pre
     >
 
@@ -740,20 +745,20 @@ float aAcceleration = 0.01;</pre
       <h5>Example 3.3: Pointing in the direction of motion</h5>
     </div>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-  void display() {
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+  display() {
     //{!1} Using atan2() to account for all possible directions
-    float angle = atan2(velocity.y, velocity.x);
+    this.angle = atan2(this.velocity.y, this.velocity.x);
 
     stroke(0);
     fill(175);
-    pushMatrix();
+    push();
     rectMode(CENTER);
-    translate(position.x, position.y);
+    translate(this.position.x, this.position.y);
     //{!1} Rotate according to that angle.
-    rotate(angle);
+    rotate(this.angle);
     rect(0, 0, 30, 10);
-    popMatrix();
+    pop();
   }</pre
     >
 
@@ -778,15 +783,15 @@ float aAcceleration = 0.01;</pre
     ></a>
 
     <p>
-      To simplify this even further, the <code>PVector</code> class itself
+      To simplify this even further, the <code>p5.Vector</code> class itself
       provides a function called <code>heading()</code>, which takes care of
       calling <code>atan2()</code> for you so you can get the 2D direction
       angle, in radians, for any p5 <code>PVector</code>.
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
     // The easiest way to do this!
-    float angle = velocity.heading();</pre
+    this.angle = this.velocity.heading();</pre
     >
 
     <div data-type="exercise" id="chapter03_exercise3">
@@ -930,12 +935,12 @@ float aAcceleration = 0.01;</pre
       one argument, an angle measured in radians.
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-float r = 75;
-float theta = PI / 4;
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+const r = 75;
+const theta = PI / 4;
 // Converting from polar (r,theta) to Cartesian (x,y)
-float x = r * cos(theta);
-float y = r * sin(theta);</pre
+const x = r * cos(theta);
+const y = r * sin(theta);</pre
     >
 
     <a
@@ -966,20 +971,20 @@ float y = r * sin(theta);</pre
 
     <div data-type="example"><h5>Example 3.4: Polar to Cartesian</h5></div>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-float r = 75;
-float theta = 0;
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+const r = 75;
+let theta = 0;
 
-void setup() {
-  size(640, 360);
+function setup() {
+  createCanvas(640, 360);
   background(255);
 }
 
-void draw() {
+function draw() {
 
   //{!2} Polar coordinates (r,theta) are converted to Cartesian (x,y) for use in the ellipse() function.
-  float x = r * cos(theta);
-  float y = r * sin(theta);
+  const x = r * cos(theta);
+  const y = r * sin(theta);
 
   noStroke();
   fill(0);
@@ -1148,9 +1153,9 @@ void draw() {
       the right and 100 pixels to the left. Therefore:
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 // Our amplitude is measured in pixels.
-float amplitude = 100;</pre
+const amplitude = 100;</pre
     >
 
     <a data-primary="millis() function (Processing)" data-type="indexterm"></a>
@@ -1178,9 +1183,9 @@ float amplitude = 100;</pre
       every 30 frames, or 50 frames, or 1000 frames, etc.
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 // Period is measured in frames (the unit of time for animation).
-float period = 120;</pre
+const period = 120;</pre
     >
 
     <p>
@@ -1190,7 +1195,7 @@ float period = 120;</pre
     </p>
 
     <pre data-code-language="java" data-type="programlisting" class="codesplit">
-float x = amplitude * sin(TWO_PI * frameCount / period);</pre
+const x = amplitude * sin(TWO_PI * frameCount / period);</pre
     >
 
     <a
@@ -1304,18 +1309,18 @@ float x = amplitude * sin(TWO_PI * frameCount / period);</pre
 
     <div data-type="example"><h5>Example 3.5: Simple Harmonic Motion</h5></div>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-void setup() {
-  size(640, 360);
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+function setup() {
+  createCanvas(640, 360);
 }
 
-void draw() {
+function draw() {
   background(255);
 
-  float period = 120;
-  float amplitude = 100;
+  const period = 120;
+  const amplitude = 100;
   //{!1 .offset} Calculating horizontal position according to the formula for simple harmonic motion
-  float x = amplitude * sin(TWO_PI * frameCount / period);
+  const x = amplitude * sin(TWO_PI * frameCount / period);
   stroke(0);
   fill(175);
   translate(width/2, height/2);
@@ -1376,14 +1381,14 @@ void draw() {
       formula:
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-float x = amplitude * sin(TWO_PI * frameCount / period);</pre
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+const x = amplitude * sin(TWO_PI * frameCount / period);</pre
     >
 
     <p>And let’s rewrite it a slightly different way:</p>
 
     <pre data-code-language="java" data-type="programlisting" class="codesplit">
-float x = amplitude * sin ( some value that increments slowly );</pre
+const x = amplitude * sin ( some value that increments slowly );</pre
     >
 
     <p>
@@ -1394,16 +1399,16 @@ float x = amplitude * sin ( some value that increments slowly );</pre
       <a href="#chapter03_section2">section 3.2</a>. Assuming:
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-float angle = 0;
-float aVelocity = 0.05;</pre
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+let angle = 0;
+const aVelocity = 0.05;</pre
     >
 
     <p>in <code>draw()</code>, we can simply say:</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 angle += aVelocity;
-float x = amplitude * sin(angle);</pre
+const x = amplitude * sin(angle);</pre
     >
 
     <p><code>angle</code> is our “some value that increments slowly.”</p>
@@ -1412,19 +1417,19 @@ float x = amplitude * sin(angle);</pre
       <h5>Example 3.6: Simple Harmonic Motion II</h5>
     </div>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-float angle = 0;
-float aVelocity = 0.05;
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+let angle = 0;
+const aVelocity = 0.05;
 
-void setup() {
-  size(640, 360);
+function setup() {
+  createCanvas(640, 360);
 }
 
-void draw() {
+function draw() {
   background(255);
 
-  float amplitude = 100;
-  float x = amplitude * sin(angle);
+  const amplitude = 100;
+  const x = amplitude * sin(angle);
   //{!1} Using the concept of angular velocity to increment an angle variable
   angle += aVelocity;
 
@@ -1471,39 +1476,35 @@ void draw() {
 
     <div data-type="example"><h5>Example 3.7: Oscillator objects</h5></div>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Oscillator  {
 
-  //{!3} Using a PVector to track two angles!
-  PVector angle;
-  PVector velocity;
-  PVector amplitude;
-
-  Oscillator()  {
-    angle = new PVector();
-    velocity = new PVector(random(-0.05,0.05),random(-0.05,0.05));
+  constructor()  {
+    //{!3} Using a p5.Vector to track two angles!
+    this.angle = createVector();
+    this.velocity = createVector(random(-0.05,0.05),random(-0.05,0.05));
     //{!1 .offset} Random velocities and amplitudes
-    amplitude = new PVector(random(width/2), random(height/2));
+    this.amplitude = createVector(random(width/2), random(height/2));
   }
 
-  void oscillate()  {
-    angle.add(velocity);
+  oscillate()  {
+    this.angle.add(this.velocity);
   }
 
-  void display()  {
+  display()  {
     // Oscillating on the x-axis
-    float x = sin(angle.x) * amplitude.x;
+    const x = sin(this.angle.x) * this.amplitude.x;
     //{!1} Oscillating on the y-axis
-    float y = sin(angle.y) * amplitude.y;
+    const y = sin(this.angle.y) * this.amplitude.y;
 
-    pushMatrix();
+    push();
     translate(width/2, height/2);
     stroke(0);
     fill(175);
     // Drawing the Oscillator as a line connecting a circle
     line(0, 0, x, y);
     ellipse(x, y, 16, 16);
-    popMatrix();
+    pop();
   }
 }</pre
     >
@@ -1588,10 +1589,10 @@ class Oscillator  {
       with an angle, an angular velocity, and an amplitude:
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-float angle = 0;
-float angleVel = 0.2;
-float amplitude = 100;</pre
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+let angle = 0;
+const angleVel = 0.2;
+const amplitude = 100;</pre
     >
 
     <p>
@@ -1614,10 +1615,10 @@ float amplitude = 100;</pre
       </li>
     </ol>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-  for (int x = 0; x &lt;= width; x += 24) {
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+  for (let x = 0; x <= width; x += 24) {
     // 1) Calculate the y position according to amplitude and sine of the angle.
-    float y = amplitude * sin(angle);
+    const y = amplitude * sin(angle);
     // 2) Draw a circle at the (x,y) position.
     ellipse(x, y + height/2, 48, 48);
     // 3) Increment the angle according to angular velocity.
@@ -1675,29 +1676,31 @@ float amplitude = 100;</pre
       <h5>Example 3.8: Static wave drawn as a continuous line</h5>
     </div>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-float angle = 0;
-float angleVel = 0.2;
-float amplitude = 100;
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+let angle = 0;
+const angleVel = 0.2;
+const amplitude = 100;
 
-size(400, 200);
-background(255);
+function setup(){
+  createCanvas(400, 200);
+  background(255);
 
-stroke(0);
-strokeWeight(2);
-noFill();
+  stroke(0);
+  strokeWeight(2);
+  noFill();
 
-beginShape();
-for (int x = 0; x &lt;= width; x += 5) {
-  // Here’s an example of using the map() function
-  // instead.
-  float y = map(sin(angle), -1, 1, 0, height);
-  // With beginShape() and endShape(), you call
-  // vertex() to set all the vertices of your shape.
-  vertex(x, y);
-  angle += angleVel;
-}
-endShape();</pre
+  beginShape();
+  for (let x = 0; x <= width; x += 5) {
+    // Here’s an example of using the map() function
+    // instead.
+    const y = map(sin(angle), -1, 1, 0, height);
+    // With beginShape() and endShape(), you call
+    // vertex() to set all the vertices of your shape.
+    vertex(x, y);
+    angle += angleVel;
+  }
+  endShape();
+}</pre
     >
 
     <a
@@ -1734,23 +1737,23 @@ endShape();</pre
 
     <div data-type="example"><h5>Example 3.9: The Wave</h5></div>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-float startAngle = 0;
-float angleVel = 0.1;
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+let startAngle = 0;
+const angleVel = 0.1;
 
-void setup() {
-  size(400, 200);
+function setup() {
+  createCanvas(400, 200);
 }
 
-void draw() {
+function draw() {
   background(255);
 
   //{!2} In order to move the wave, we start at a different theta value each frame.
-  float angle = startAngle;
+  let angle = startAngle;
   startAngle += 0.02;
 
-  for (int x = 0; x &lt;= width; x += 24) {
-    float y = map(sin(angle),-1,1,0,height);
+  for (let x = 0; x <= width; x += 24) {
+    const y = map(sin(angle),-1,1,0,height);
     stroke(0);
     fill(0,50);
     ellipse(x,y,48,48);
