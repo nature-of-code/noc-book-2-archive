@@ -786,7 +786,7 @@ this.aAcceleration = 0.01;</pre
       To simplify this even further, the <code>p5.Vector</code> class itself
       provides a function called <code>heading()</code>, which takes care of
       calling <code>atan2()</code> for you so you can get the 2D direction
-      angle, in radians, for any p5 <code>PVector</code>.
+      angle, in radians, for any p5 <code>p5.Vector</code>.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
@@ -1463,7 +1463,7 @@ function draw() {
       <code>Oscillator</code> class. And let’s assume we want the oscillation to
       happen along both the x-axis (as above) and the y-axis. To do this, we’ll
       need two angles, two angular velocities, and two amplitudes (one for each
-      axis). Another perfect opportunity for <code>PVector</code>!
+      axis). Another perfect opportunity for <code>p5.Vector</code>!
     </p>
 
     <figure
@@ -2011,17 +2011,19 @@ function draw() {
       </li>
     </ul>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Pendulum  {
 
-  // Length of arm
-  float r;
-  // Pendulum arm angle
-  float angle;
-  // Angular velocity
-  float aVelocity;
-  // Angular acceleration
-  float aAcceleration;</pre
+  constructor(){
+    // Length of arm
+    this.r = ????;
+    // Pendulum arm angle
+    this.angle = ????;
+    // Angular velocity
+    this.aVelocity = ????;
+    // Angular acceleration
+    this.aAcceleration = ????;
+  } </pre
     >
 
     <p>
@@ -2029,16 +2031,16 @@ class Pendulum  {
       pendulum’s angle according to our formula…
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-  void update() {
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+  update() {
     // Arbitrary constant
-    float gravity = 0.4;
+    const gravity = 0.4;
     // Calculate acceleration according to our formula.
-    aAcceleration = -1 * gravity * sin(angle);
+    this.aAcceleration = -1 * gravity * sin(this.angle);
     // Increment velocity.
-    aVelocity += aAcceleration;
+    this.aVelocity += this.aAcceleration;
     //{!1} Increment angle.
-    angle += aVelocity;
+    this.angle += this.aVelocity;
   }</pre
     >
 
@@ -2060,9 +2062,9 @@ class Pendulum  {
       The origin is just something we make up, as is the arm length. Let’s say:
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-PVector origin = new PVector(100,10);
-float r = 125;</pre
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+this.origin = createVector(100,10);
+this.r = 125;</pre
     >
 
     <p>
@@ -2073,8 +2075,8 @@ float r = 125;</pre
       from polar to Cartesian. And so:
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-PVector position = new PVector(r * sin(angle), r* cos(angle));</pre
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+const position = createVector(r * sin(this.angle), r* cos(this.angle));</pre
     >
 
     <p>
@@ -2087,11 +2089,11 @@ PVector position = new PVector(r * sin(angle), r* cos(angle));</pre
 
     <p>
       Since the position is relative to wherever the origin happens to be, we
-      can just add origin to the position <code>PVector</code>:
+      can just add origin to the position <code>p5.Vector</code>:
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-position.add(origin);</pre
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+this.position.add(this.origin);</pre
     >
 
     <p>
@@ -2099,11 +2101,11 @@ position.add(origin);</pre
       (you should be more creative, of course).
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 stroke(0);
 fill(175);
-line(origin.x, origin.y, position.x, position.y);
-ellipse(position.x, position.y, 16, 16);</pre
+line(this.origin.x, this.origin.y, this.position.x, this.position.y);
+ellipse(this.position.x, this.position.y, 16, 16);</pre
     >
 
     <p>
@@ -2128,8 +2130,8 @@ ellipse(position.x, position.y, 16, 16);</pre
       >.
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-aAcceleration = (-1 * G * sin(angle)) / r;</pre
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+this.aAcceleration = (-1 * G * sin(this.angle)) / r;</pre
     >
 
     <a
@@ -2156,8 +2158,8 @@ aAcceleration = (-1 * G * sin(angle)) / r;</pre
       multiplies it by 99%) during each frame of animation:
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-aVelocity *= 0.99;</pre
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+this.aVelocity *= 0.99;</pre
     >
 
     <p>
@@ -2175,72 +2177,63 @@ aVelocity *= 0.99;</pre
 
     <div data-type="example"><h5>Example 3.10: Swinging pendulum</h5></div>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-Pendulum p;
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+let p;
 
-void setup() {
-  size(640, 360);
+function setup() {
+  createCanvas(640, 360);
   //{!1} We make a new Pendulum object with an origin position and arm length.
-  p = new Pendulum(new PVector(width/2,10),125);
+  p = new Pendulum(createVector(width/2,10),125);
 }
 
-void draw() {
+function draw() {
   background(255);
   p.go();
 }</pre
     >
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Pendulum  {
-  //{!7} Many, many variables to keep track of the Pendulum’s various properties
-  PVector position;    // position of bob
-  PVector origin;      // position of arm origin
-  float r;             // Length of arm
-  float angle;         // Pendulum arm angle
-  float aVelocity;     // Angle velocity
-  float aAcceleration; // Angle acceleration
-  float damping;       // Arbitrary damping amount
-
-  Pendulum(PVector origin_, float r_) {
-    origin = origin_.copy();
-    position = new PVector();
-    r = r_;
-    angle = PI/4;
-
-    aVelocity = 0.0;
-    aAcceleration = 0.0;
-    // An arbitrary damping so that the Pendulum slows over time
-    damping = 0.995;
+     
+  constructor( origin_, r_) {
+    //{!7} Many, many variables to keep track of the Pendulum’s various properties
+    this.origin = origin_.copy(); // position of arm origin
+    this.position = createVector(); // position of bob
+    this.r = r_; // Length of arm
+    this.angle = PI/4; // Pendulum arm angle
+    this.aVelocity = 0.0; // Angle velocity
+    this.aAcceleration = 0.0; // Angle acceleration
+    this.damping = 0.995; // Arbitrary damping
   }
 
-  void go() {
-    update();
-    display();
+  go() {
+    this.update();
+    this.display();
   }
 
-  void update() {
-    float gravity = 0.4;
+  update() {
+    const gravity = 0.4;
     //{!1 .code-wide} Formula we worked out for angular acceleration
-    aAcceleration = (-1 * gravity / r) * sin(angle);
+    this.aAcceleration = (-1 * gravity / this.r) * sin(this.angle);
 
     //{!2} Standard angular motion algorithm
-    aVelocity += aAcceleration;
-    angle += aVelocity;
+    this.aVelocity += this.aAcceleration;
+    this.angle += this.aVelocity;
 
     // Apply some damping.
-    aVelocity *= damping;
+    this.aVelocity *= this.damping;
   }
 
-  void display() {
+  display() {
     //{!1} Where is the bob relative to the origin? Polar to Cartesian coordinates will tell us!
-    position.set(r * sin(angle), r * cos(angle));
-    position.add(origin);
+    this.position.set(this.r * sin(this.angle), this.r * cos(this.angle));
+    this.position.add(this.origin);
 
     stroke(0);
     //{!1 .code-wide} The arm
-    line(origin.x, origin.y, position.x, position.y);
+    line(this.origin.x, this.origin.y, this.position.x, this.position.y);
     fill(175);
     //{!1 .code-wide} The bob
-    ellipse(position.x, position.y, 16, 16);
+    ellipse(this.position.x, this.position.y, 16, 16);
   }
 }</pre
     >
@@ -2320,7 +2313,7 @@ class Pendulum  {
       (wind, gravity, etc.) To accomplish a simulation like this (one that is
       identical to the pendulum example, only now the arm is a springy
       connection), we need to model the forces of a spring using
-      <code>PVector</code>.
+      <code>p5.Vector</code>.
     </p>
 
     <figure id="chapter03_figure14">
@@ -2413,10 +2406,10 @@ class Pendulum  {
       Let’s establish the following three variables as shown in Figure 3.16.
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-PVector anchor;
-PVector position;
-float restLength;</pre
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+const anchor = createVector();
+const position = createVector();
+const restLength = ????;</pre
     >
 
     <a
@@ -2432,8 +2425,8 @@ float restLength;</pre
       it’s just a constant, so let’s make something up.
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-float k = 0.1;</pre
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+const k = 0.1;</pre
     >
 
     <a
@@ -2453,11 +2446,11 @@ float k = 0.1;</pre
       gravitational attraction.)
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 //{!1} A vector pointing from anchor to bob gives us the current length of the spring.
-PVector dir = PVector.sub(bob, anchor);
-float currentLength = dir.mag();
-float x = currentLength - restLength;</pre
+const dir = p5.Vector.sub(bob, anchor);
+const currentLength = dir.mag();
+const x = currentLength - restLength;</pre
     >
 
     <a
@@ -2487,17 +2480,17 @@ float x = currentLength - restLength;</pre
       length, there should be a force pulling it back towards the anchor. And if
       it shrinks below its rest length, the force should push it away from the
       anchor. This reversal of direction is accounted for in the formula with
-      the -1. And so all we need to do is normalize the <code>PVector</code> we
+      the -1. And so all we need to do is normalize the <code>p5.Vector</code> we
       used for the distance calculation! Let’s take a look at the code and
-      rename that <code>PVector</code> variable as “force.”
+      rename that <code>p5.Vector</code> variable as “force.”
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 //{!4} Magnitude of spring force according to Hooke’s law
-float k = 0.1;
-PVector force = PVector.sub(bob, anchor);
-float currentLength = force.mag();
-float x = currentLength - restLength;
+const k = 0.1;
+const force = p5.Vector.sub(bob, anchor);
+const currentLength = force.mag();
+const x = currentLength - restLength;
 
 //{!1} Direction of spring force (unit vector)
 force.normalize();
@@ -2529,19 +2522,19 @@ force.mult(-1 * k * x);</pre
       the spring force:
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-Bob bob;
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+let bob;
 
-void setup() {
+function setup() {
   bob = new Bob();
 }
 
-void draw()  {
+function draw()  {
   //{!1} Our Chapter 2 “make-up-a-gravity force”
-  PVector gravity = new PVector(0, 1);
+  const gravity = createVector(0, 1);
   bob.applyForce(gravity);
   //{!2 .bold} We need to also calculate and apply a spring force!
-  PVector springForce = _______________????
+  const springForce = _______________????
   bob.applyForce(spring);
 
   //{!2} Our standard update() and display() functions
@@ -2567,18 +2560,18 @@ void draw()  {
 
     <p>This allows us to write a lovely main program as follows:</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-Bob bob;
+    <pre data-code-language="javascript data-type="programlisting" class="codesplit">
+let bob;
 //{!1 .bold} Adding a Spring object
-Spring spring;
+let spring;
 
-void setup() {
+function setup() {
   bob = new Bob();
   spring = new Spring();
 }
 
-void draw()  {
-  PVector gravity = new PVector(0,1);
+function draw()  {
+  const gravity = createVector(0,1);
   bob.applyForce(gravity);
 
   //{!1 .bold} This new function in the Spring class will take care of computing the force of the spring on the bob.
@@ -2596,21 +2589,21 @@ void draw()  {
       said something like:
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-  PVector force = attractor.attract(mover);
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+  const force = attractor.attract(mover);
   mover.applyForce(force);</pre
     >
 
     <p>The analogous situation here with a spring would be:</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-  PVector force = spring.connect(bob);
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+  const force = spring.connect(bob);
   bob.applyForce(force);</pre
     >
 
     <p>Nevertheless, in this example all we said was:</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   spring.connect(bob);</pre
     >
 
@@ -2624,9 +2617,9 @@ void draw()  {
       <code>applyForce()</code> on the bob.
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-  void connect(Bob b) {
-    PVector force = some fancy calculations
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+  connect(b) {
+    const force = some fancy calculations
 
     //{!1} The function connect() takes care of calling applyForce() and therefore doesn’t have to return a vector to the calling area.
     b.applyForce(force);
@@ -2657,50 +2650,46 @@ void draw()  {
 
     <div data-type="example"><h5>Example 3.11: A Spring connection</h5></div>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Spring {
 
-  //{!1} We need to keep track of the spring’s anchor position.
-  PVector anchor;
-
-  //{!2} Rest length and spring constant variables
-  float len;
-  float k = 0.1;
-
-  //{!4} The constructor initializes the anchor point and rest length.
-  Spring(float x, float y, int l) {
-    anchor = new PVector(x,y);
-    len = l;
+  //{!1} The constructor initializes the anchor point and rest length.
+  constructor( x_, y_, l_) {
+    //{!1} We need to keep track of the spring’s anchor position.
+    this.anchor = createVector(x_,y_);
+    //{!2} Rest length and spring constant variables
+    this.len = l_;
+    this.k = 0.1;
   }
 
   //{!1} Calculate spring force—our implementation of Hooke’s Law.
-  void connect(Bob b) {
+  connect(b) {
 
     //{!1 .bold .code-wide} Get a vector pointing from anchor to Bob position.
-    PVector force = PVector.sub(b.position, anchor);
+    const force = p5.Vector.sub(b.position, this.anchor);
     //{!2 .bold} Calculate the displacement between distance and rest length.
-    float d = force.mag();
-    float stretch = d - len;
+    const d = force.mag();
+    const stretch = d - this.len;
 
     //{!2 .bold} Direction and magnitude together!
     force.normalize();
-    force.mult(-1 * k * stretch);
+    force.mult(-1 * this.k * stretch);
 
     //{!1} Call applyForce() right here!
     b.applyForce(force);
   }
 
   //{!5} Draw the anchor.
-  void display() {
+  display() {
     fill(100);
     rectMode(CENTER);
-    rect(anchor.x,anchor.y,10,10);
+    rect(this.anchor.x,this.anchor.y,10,10);
   }
 
   //{!4} Draw the spring connection between Bob position and anchor.
-  void displayLine(Bob b) {
+  displayLine(b) {
     stroke(255);
-    line(b.position.x,b.position.y,anchor.x,anchor.y);
+    line(b.position.x,b.position.y,this.anchor.x,this.anchor.y);
   }
 }</pre
     >
@@ -2723,28 +2712,28 @@ class Spring {
       </p>
 
       <pre
-        data-code-language="java"
+        data-code-language="javascript"
         data-type="programlisting"
         class="codesplit"
       >
-void constrainLength(Bob b, float minlen, float maxlen) {
+constrainLength(b, minlen, maxlen) {
   //{!1} Vector pointing from Bob to Anchor
-  PVector dir = PVector.sub(______,______);
-  float d = dir.mag();
+  const dir = p5.Vector.sub(______,______);
+  const d = dir.mag();
 
   //{!1} Is it too short?
-  if (d &lt; minlen) {
+  if (d < minlen) {
     dir.normalize();
     dir.mult(________);
     //{!1} Keep position within constraint.
-    b.position = PVector.add(______,______);
+    b.position = p5.Vector.add(______,______);
     b.velocity.mult(0);
   //{!1} Is it too long?
   } else if (____________) {
     dir.normalize();
     dir.mult(_________);
     //{!1} Keep position within constraint.
-    b.position = PVector.add(______,______);
+    b.position = p5.Vector.add(______,______);
     b.velocity.mult(0);
   }
 }</pre
