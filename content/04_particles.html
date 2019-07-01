@@ -105,14 +105,14 @@
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 // Ah, isn’t this main program so simple and lovely?
-ParticleSystem ps;
+let ps;
 
-void setup() {
-  size(640, 360);
+function setup() {
+  createCanvas(640, 360);
   ps = new ParticleSystem();
 }
 
-void draw() {
+function draw() {
   background(255);
   ps.run();
 }</pre
@@ -190,25 +190,21 @@ void draw() {
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Particle {
   //{!3} A “Particle” object is just another name for our “Mover.” It has position, velocity, and acceleration.
-  PVector position;
-  PVector velocity;
-  PVector acceleration;
-
-  Particle(PVector l) {
-    position = l.copy();
-    acceleration = new PVector();
-    velocity = new PVector();
+  Particle(l) {
+    this.position = l.copy();
+    this.acceleration = createVector();
+    this.velocity = createVector();
   }
 
-  void update() {
-    velocity.add(acceleration);
-    position.add(velocity);
+  update() {
+    this.velocity.add(this.acceleration);
+    this.position.add(this.velocity);
   }
 
-  void display() {
+  display() {
     stroke(0);
     fill(175);
-    ellipse(position.x, position.y, 8, 8);
+    ellipse(this.position.x, this.position.y, 8, 8);
   }
 }</pre
     >
@@ -264,32 +260,27 @@ class Particle {
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Particle {
-  PVector position;
-  PVector velocity;
-  PVector acceleration;
-  //{!1 .bold} A new variable to keep track of how long the particle has been “alive”
-  float lifespan;
 
-  Particle(PVector l) {
-    position = l.copy();
-    acceleration = new PVector();
-    velocity = new PVector();
-    //{!1 .bold} We start at 255 and count down for convenience
-    lifespan = 255;
+  constructor(l) {
+    this.position = l.copy();
+    this.acceleration = createVector();
+    this.velocity = createVector();
+    //{!1 .bold} A new variable to keep track of how long the particle has been “alive”. We start at 255 and count down for convenience
+    this.lifespan = 255;
   }
 
-  void update() {
-    velocity.add(acceleration);
-    position.add(velocity);
+  update() {
+    this.velocity.add(this.acceleration);
+    this.position.add(this.velocity);
     //{!1 .bold}  Lifespan decreases
-    lifespan -= 2.0;
+    this.lifespan -= 2.0;
   }
 
-  void display() {
+  display() {
     //{!2 .bold}  Since our life ranges from 255 to 0 we can use it for alpha
-    stroke(0, lifespan);
-    fill(175, lifespan);
-    ellipse(position.x, position.y, 8, 8);
+    stroke(0, this.lifespan);
+    fill(175, this.lifespan);
+    ellipse(this.position.x, this.position.y, 8, 8);
   }
 }</pre
     >
@@ -326,9 +317,9 @@ class Particle {
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-  boolean isDead() {
+  isDead() {
     //{!4} Is the particle still alive?
-    if (lifespan &lt; 0.0) {
+    if (this.lifespan < 0.0) {
       return true;
     } else {
       return false;
@@ -363,14 +354,14 @@ class Particle {
     <div data-type="example"><h5>Example 4.1: A single particle</h5></div>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-Particle p;
+let p;
 
-void setup() {
-  size(640, 360);
-  p = new Particle(new PVector(width / 2, 10));
+function setup() {
+  createCanvas(640, 360);
+  p = new Particle(createVector(width / 2, 10));
 }
 
-void draw() {
+function draw() {
   background(255);
   //{!4} Operating the single Particle
   p.run();
@@ -380,40 +371,36 @@ void draw() {
 }
 
 class Particle {
-  PVector position;
-  PVector velocity;
-  PVector acceleration;
-  float lifespan;
-
-  Particle(PVector l) {
+  
+  constructor(l) {
     //{!2 .offset-top} For demonstration purposes we assign the Particle a random velocity and constant acceleration.
-    acceleration = new PVector(0, 0.05);
-    velocity = new PVector(random(-1, 1), random(-2, 0));
-    position = l.copy();
-    lifespan = 255.0;
+    this.acceleration = createVector(0, 0.05);
+    this.velocity = createVector(random(-1, 1), random(-2, 0));
+    this.position = l.copy();
+    this.lifespan = 255.0;
   }
 
   //{!4} Sometimes it’s convenient to have a “run” function that calls all the other functions we need.
-  void run() {
-    update();
-    display();
+  run() {
+    this.update();
+    this.display();
   }
 
-  void update() {
-    velocity.add(acceleration);
-    position.add(velocity);
-    lifespan -= 2.0;
+  update() {
+    this.velocity.add(this.acceleration);
+    this.position.add(this.velocity);
+    this.lifespan -= 2.0;
   }
 
-  void display() {
-    stroke(0, lifespan);
-    fill(0, lifespan);
-    ellipse(position.x,l ocation.y, 8, 8);
+  display() {
+    stroke(0, this.lifespan);
+    fill(0, this.lifespan);
+    ellipse(this.position.x, this.position.y, 8, 8);
   }
 
   //{!7} Is the Particle alive or dead?
-  boolean isDead() {
-    if (lifespan &lt; 0.0) {
+  isDead() {
+    if (this.lifespan < 0.0) {
       return true;
     } else {
       return false;
