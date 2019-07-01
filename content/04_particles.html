@@ -121,7 +121,7 @@ void draw() {
     <p>
       No single particle is ever referenced in the above code, yet the result
       will be full of particles flying all over the screen. Getting used to
-      writing Processing sketches with multiple classes, and classes that keep
+      writing p5 sketches with multiple classes, and classes that keep
       lists of instances of other classes, will prove very useful as we get to
       more advanced chapters in this book.
     </p>
@@ -249,7 +249,7 @@ class Particle {
       a single burst of particles, or a continuous stream of particles, or both.
       The point is that for a typical implementation such as this, a particle is
       born at the emitter but does not live forever. If it were to live forever,
-      our Processing sketch would eventually grind to a halt as the number of
+      our p5 sketch would eventually grind to a halt as the number of
       particles increases to an unwieldy number over time. As new particles are
       born, we need old particles to die. This creates the illusion of an
       infinite stream of particles, and the performance of our program does not
@@ -452,24 +452,24 @@ class Particle {
 
     <a data-primary="ArrayList class (Java)" data-type="indexterm"></a>
     <a
-      data-primary="contract() function (Processing)"
+      data-primary="contract() function (p5)"
       data-type="indexterm"
     ></a>
-    <a data-primary="expand() function (Processing)" data-type="indexterm"></a>
+    <a data-primary="expand() function (p5)" data-type="indexterm"></a>
     <a
       data-primary="particle systems"
       data-secondary="ArrayList"
       data-tertiary="using"
       data-type="indexterm"
     ></a>
-    <a data-primary="splice() function (Processing)" data-type="indexterm"></a>
-    <a data-primary="subset() function (Processing)" data-type="indexterm"></a>
+    <a data-primary="splice() function (p5)" data-type="indexterm"></a>
+    <a data-primary="subset() function (p5)" data-type="indexterm"></a>
 
     <p>
       In truth, we could use a simple array to manage our
       <code>Particle</code> objects. Some particle systems might have a fixed
       number of particles, and arrays are magnificently efficient in those
-      instances. Processing also offers <code>expand()</code>,
+      instances. p5 also offers <code>expand()</code>,
       <code>contract()</code>, <code>subset()</code>, <code>splice()</code>, and
       other methods for resizing arrays. However, for these examples, we’re
       going to take a more sophisticated approach and use the Java class
@@ -551,7 +551,7 @@ void draw() {
       variable called <code>i</code> to 0 and count up by 1, accessing each
       element of the <code>ArrayList</code> until we get to the end. However,
       this is a good time to mention the “enhanced <code>for</code> loop”
-      available in Java (and Processing), which is a bit more concise. The
+      available in Java (and p5), which is a bit more concise. The
       enhanced loop works with both <code>ArrayList</code><code>s</code> and
       regular arrays and looks like this:
     </p>
@@ -841,7 +841,7 @@ Iterator&lt;Particle&gt; it = particles.iterator();</pre
 
     <p>
       Because the <code>Iterator</code> object is specific to Java and requires
-      an additional import statement in your Processing code, I'm choosing to
+      an additional import statement in your p5 code, I'm choosing to
       use the backwards loop style in this book's examples.
     </p>
 
@@ -1091,7 +1091,7 @@ class ParticleSystem {
       body is a system of organs, a neighborhood is a system of human bodies, a
       city is a system of neighborhoods, and so on and so forth. While this is
       an interesting road to travel down, it’s a bit beyond where we need to be
-      right now. It is, however, quite useful to know how to write a Processing
+      right now. It is, however, quite useful to know how to write a p5
       sketch that keeps track of many particle systems, each of which keep track
       of many particles. Let’s take the following scenario.
     </p>
@@ -1227,7 +1227,7 @@ void draw() {
     <h2>4.6 Inheritance and Polymorphism: An Introduction</h2>
 
     <a
-      data-primary="&lt;em&gt;Learning Processing&lt;/em&gt; (Shiffman)"
+      data-primary="&lt;em&gt;Learning p5&lt;/em&gt; (Shiffman)"
       data-type="indexterm"
     ></a>
     <a data-primary="inheritance" data-type="indexterm"></a>
@@ -1248,8 +1248,8 @@ void draw() {
       <em>polymorphism</em> in your programming life before this book. After
       all, they are two of the three fundamental principles behind the theory of
       object-oriented programming (the other being <em>encapsulation</em>). If
-      you’ve read other Processing or Java programming books, chances are it’s
-      been covered. My beginner text, <em>Learning Processing</em>, has close to
+      you’ve read other p5 or Java programming books, chances are it’s
+      been covered. My beginner text, <em>Learning p5</em>, has close to
       an entire chapter (#22) dedicated to these two topics.
     </p>
 
@@ -1267,7 +1267,7 @@ void draw() {
       lovely jog, had a delicious bowl of cereal, and are sitting quietly at
       your computer with a cup of warm chamomile tea. It’s your old friend So
       and So’s birthday and you’ve decided you’d like to make a greeting card in
-      Processing. How about some confetti for a birthday? Purple confetti, pink
+      p5. How about some confetti for a birthday? Purple confetti, pink
       confetti, star-shaped confetti, square confetti, fast confetti, fluttery
       confetti, etc. All of these pieces of confetti with different appearances
       and different behaviors explode onto the screen at once.
@@ -1511,7 +1511,7 @@ class Cat {
       data-type="indexterm"
     ></a>
     <a
-      data-primary="Processing"
+      data-primary="p5"
       data-secondary="class inheritance"
       data-tertiary="syntax for"
       data-type="indexterm"
@@ -1563,18 +1563,18 @@ class Cat extends Animal {
 
     <p>This brings up two new terms:</p>
 
-    <a data-primary="extends keyword (Processing)" data-type="indexterm"></a>
+    <a data-primary="extends keyword (p5)" data-type="indexterm"></a>
     <a
       data-primary="inheritance"
-      data-secondary="extends keyword (Processing)"
+      data-secondary="extends keyword (p5)"
       data-type="indexterm"
     ></a>
     <a
       data-primary="inheritance"
-      data-secondary="super() function (Processing)"
+      data-secondary="super() function (p5)"
       data-type="indexterm"
     ></a>
-    <a data-primary="super() function(Processing)" data-type="indexterm"></a>
+    <a data-primary="super() function(p5)" data-type="indexterm"></a>
 
     <ul>
       <li>
@@ -1719,7 +1719,7 @@ class Dog extends Animal {
 
     <p>
       Now that we’ve had an introduction to the theory of inheritance and its
-      syntax, we can develop a working example in Processing based on our
+      syntax, we can develop a working example in p5 based on our
       <code>Particle</code> class.
     </p>
 
@@ -1800,7 +1800,7 @@ class Confetti extends Particle {
       <em>x</em> position is 0, its rotation should be 0; when its
       <em>x</em> position is equal to the width, its rotation should be equal to
       <code>TWO_PI</code>? Does this ring a bell? Whenever we have a value with
-      one range that we want to map to another range, we can use Processing’s
+      one range that we want to map to another range, we can use p5’s
       <code>map()</code> function, which we learned about in the
       <a href="#intro_section6">Introduction</a>!
     </p>
@@ -1822,7 +1822,7 @@ float angle = map(position.x,0,width,0,TWO_PI);</pre
     rectMode(CENTER);
     fill(0,lifespan);
     stroke(0,lifespan);
-    //{!5} If we rotate() a shape in Processing, we need to familiarize ourselves with transformations. For more, visit: http://processing.org/learning/transform2d/
+    //{!5} If we rotate() a shape in p5, we need to familiarize ourselves with transformations. For more, visit: http://p5.org/learning/transform2d/
     pushMatrix();
     translate(position.x, position.y);
     rotate(theta);
@@ -2269,7 +2269,7 @@ class Particle {
       <code>applyForce()</code> function? Where in the code is it appropriate to
       apply a force to a particle? The truth of the matter is that there’s no
       right or wrong answer; it really depends on the exact functionality and
-      goals of a particular Processing sketch. Still, we can create a generic
+      goals of a particular p5 sketch. Still, we can create a generic
       situation that would likely apply to most cases and craft a model for
       applying forces to individual particles in a system.
     </p>
@@ -2766,7 +2766,7 @@ class Repeller {
 
     <a data-primary="image textures" data-type="indexterm"></a>
     <a
-      data-primary="Processing"
+      data-primary="p5"
       data-secondary="incorporating images into projects"
       data-type="indexterm"
     ></a>
@@ -2781,7 +2781,7 @@ class Repeller {
     </p>
 
     <p>
-      Let’s try to create a smoke simulation in Processing. Take a look at the
+      Let’s try to create a smoke simulation in p5. Take a look at the
       following two images:
     </p>
 
@@ -2825,7 +2825,7 @@ class Repeller {
     <p>
       The good news here is that you get a lot of bang for very little buck.
       Before you write any code, however, you’ve got to make your image texture!
-      I recommend using PNG format, as Processing will retain the alpha channel
+      I recommend using PNG format, as p5 will retain the alpha channel
       (i.e. transparency) when drawing the image, which is needed for blending
       the texture as particles layer on top of each other. Once you’ve made your
       PNG and deposited it in your sketch’s “data” folder, you are on your way
@@ -2834,12 +2834,12 @@ class Repeller {
 
     <a
       data-primary="image textures"
-      data-secondary="PImage objects (Processing)"
+      data-secondary="PImage objects (p5)"
       data-type="indexterm"
     ></a>
-    <a data-primary="PImage objects (Processing)" data-type="indexterm"></a>
+    <a data-primary="PImage objects (p5)" data-type="indexterm"></a>
     <a
-      data-primary="Processing"
+      data-primary="p5"
       data-secondary="PImage objects"
       data-type="indexterm"
     ></a>
@@ -2963,9 +2963,9 @@ void draw() {
       Finally, it’s worth noting that there are many different algorithms for
       blending colors in computer graphics. These are often referred to as
       “blend modes.” By default, when we draw something on top of something else
-      in Processing, we only see the top layer—this is commonly referred to as a
+      in p5, we only see the top layer—this is commonly referred to as a
       “normal” blend mode. When the pixels have alpha transparency (as they do
-      in the smoke example), Processing uses an alpha compositing algorithm that
+      in the smoke example), p5 uses an alpha compositing algorithm that
       combines a percentage of the background pixels with the new foreground
       pixels based on the alpha values.
     </p>
@@ -2983,7 +2983,7 @@ void draw() {
     <p>
       However, it’s possible to draw using other blend modes, and a much loved
       blend mode for particle systems is “additive.” Additive blending in
-      Processing was pioneered by
+      p5 was pioneered by
       <a href="http://roberthodgin.com/">Robert Hodgin</a> in his famous
       particle system and forces exploration, Magnetosphere, which later became
       the iTunes visualizer. For more see:
@@ -3003,7 +3003,7 @@ void draw() {
     </figure>
 
     <p>
-      To achieve additive blending in Processing, you’ll need to use the
+      To achieve additive blending in p5, you’ll need to use the
       <code>P2D</code> or <code>P3D</code> renderer.
     </p>
 
