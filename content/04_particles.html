@@ -222,7 +222,7 @@ class Particle {
       our particle in several directions. We could add an
       <code>applyForce()</code> function to affect the particle’s behavior
       (we’ll do precisely this in a future example). We could add variables to
-      describe color and shape, or reference a <code>PImage</code> to draw the
+      describe color and shape, or reference a <code>p5.Image</code> to draw the
       particle. For now, however, let’s focus on adding just one additional
       detail: <strong><em>lifespan</em></strong
       >.
@@ -385,7 +385,7 @@ function draw() {
   //{!4} Operating the single Particle
   p.run();
   if (p.isDead()) {
-    println("Particle dead!");
+    print("Particle dead!");
   }
 }
 
@@ -648,7 +648,7 @@ function draw() {
       data-type="programlisting"
       class="codesplit"
     >
-  for (int i = 0; i < particles.length; i++) {
+  for (let i = 0; i < particles.length; i++) {
     const p = particles[i];
     p.run();
   }
@@ -674,7 +674,7 @@ function draw() {
       data-type="programlisting"
       class="codesplit"
     >
-  for (int i = 0; i < particles.length; i++) {
+  for (let i = 0; i < particles.length; i++) {
     const p = particles[i];
     p.run();
     //{!1 .offset-top} Adding a new Particle to the list while iterating?
@@ -690,8 +690,8 @@ function draw() {
     <p>
       This is a somewhat extreme example (with flawed logic), but it proves the
       point. In the above case, for each particle in the list, we add a new
-      particle to the list (manipulating the <code>size()</code> of the
-      <code>ArrayList</code>). This will result in an infinite loop, as
+      particle to the list (manipulating the <code>length</code> of the
+      <code>Array</code>). This will result in an infinite loop, as
       <code>i</code> can never increment past the size of the
       <code>Array</code>.
     </p>
@@ -791,17 +791,17 @@ function draw() {
     >
 let particles = [];
 
-void setup() {
-  size(640, 360);
+function setup() {
+  createCanvas(640, 360);
 }
 
-void draw() {
+function draw() {
   background(255);
 
   particles.push(new Particle(createVector(width / 2, 50)));
 
   //{!1} Looping through the array backwards for deletion
-  for (int i = particles.size()-1; i >= 0; i--) {
+  for (let i = particles.length-1; i >= 0; i--) {
     const p = particles[i];
     p.run();
   }
@@ -856,12 +856,12 @@ void draw() {
 //{!1} Just one wee ParticleSystem!
 let ps;
 
-void setup() {
-  size(640, 360);
+function setup() {
+  createCanvas(640, 360);
   ps = new ParticleSystem();
 }
 
-void draw() {
+function draw() {
   background(255);
   ps.run();
 }</pre
@@ -895,7 +895,7 @@ function draw() {
 
 
 
-  <b>for (let i = particles.size()-1; i >= 0; i--) {
+  <b>for (let i = particles.length-1; i >= 0; i--) {
     const p = particles[i];
     p.run();
   }
@@ -918,7 +918,7 @@ class ParticleSystem {
   }
 
   run() {
-    <b>for (let i = this.particles.size()-1; i >= 0; i--) {
+    <b>for (let i = this.particles.length-1; i >= 0; i--) {
       const p = this.particles[i];
       p.run();
     }
@@ -1344,11 +1344,11 @@ class Dog {
   }
 
   eat() {
-    println("Yum!");
+    print("Yum!");
   }
 
   sleep() {
-    println("Zzzzzz");
+    print("Zzzzzz");
   }
 
   //{!3} A unique function for barking.
@@ -1372,15 +1372,15 @@ class Cat {
   }
 
   eat() {
-    println("Yum!");
+    print("Yum!");
   }
 
   sleep() {
-    println("Zzzzzz");
+    print("Zzzzzz");
   }
 
   meow() {
-    println("MEOW!");
+    print("MEOW!");
   }
 }</pre
     >
@@ -2471,7 +2471,7 @@ class ParticleSystem {
     this.particles.add(new Particle(this.origin));
   }
 
-  //{!4} Applying a force as a PVector
+  //{!4} Applying a force as a p5.Vector
   applyForce(f) {
     for (let p of this.particles) {
       p.applyForce(f);
@@ -2647,7 +2647,7 @@ let img;</pre
       data-type="programlisting"
       class="codesplit"
     >
-void setup() {
+function setup() {
   //{!1} Loading the PNG
   img = loadImage("texture.png");
 }</pre
@@ -2812,7 +2812,7 @@ function draw() {
       class="codesplit"
     >
 function setup() {
-  size(640, 360);
+  createCanvas(640, 360);
 }</pre
     >
 
