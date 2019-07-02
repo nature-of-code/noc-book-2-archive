@@ -2605,7 +2605,7 @@ function setup() {
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-void draw(){
+function draw(){
   for (Vehicle v : vehicles) {
     v.update();
     v.display();
@@ -2681,7 +2681,7 @@ function setup() {
   }
 }
 
-void draw() {
+function draw() {
   background(255);
 
   for (Vehicle v : vehicles) {
@@ -3453,7 +3453,7 @@ function setup() {
   }
 }
 
-void draw() {
+function draw() {
   background(255);
   flock.run();
 }</pre
@@ -3899,7 +3899,7 @@ float magSq() {
         data-type="programlisting"
         class="codesplit"
       >
-void draw() {
+function draw() {
   for (int i = 0; i < 10000; i++) {
     println(sin(PI));
   }
@@ -3986,7 +3986,7 @@ float answer = sinvalues[angle];</pre
         data-type="programlisting"
         class="codesplit"
       >
-void draw() {
+function draw() {
   for (Vehicle v : vehicles) {
    PVector mouse = new PVector(mouseX, mouseY);
    v.seek(mouse);
@@ -4018,7 +4018,7 @@ void draw() {
         data-type="programlisting"
         class="codesplit"
       >
-void draw() {
+function draw() {
   PVector mouse = new PVector(mouseX, mouseY);
   for (Vehicle v : vehicles) {
    v.seek(mouse);
@@ -4039,7 +4039,7 @@ void draw() {
       >
 PVector mouse = new PVector();
 
-void draw() {
+function draw() {
   mouse.x = mouseX;
   mouse.y = mouseY;
   for (Vehicle v : vehicles) {
