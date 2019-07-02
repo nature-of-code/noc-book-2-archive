@@ -2588,7 +2588,7 @@ if (normalPoint.x < ____(____,____) || normalPoint.x > ____(____,____)) {
 // Declare an ArrayList of Vehicle objects.
 ArrayList&lt;PVector&gt; vehicles;
 
-void setup() {
+function setup() {
   //{!3} Initialize and fill the ArrayList
   // with a bunch of Vehicles.
   vehicles = new ArrayList&lt;PVector&gt;;
@@ -2673,7 +2673,7 @@ void draw(){
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 ArrayList&lt;Vehicle&gt; vehicles;
 
-void setup() {
+function setup() {
   size(320, 240);
   vehicles = new ArrayList&lt;PVector&gt;();
   for (int i = 0; i < 100; i++) {
@@ -3443,7 +3443,7 @@ class Flock {
 // entire group.
 Flock flock;
 
-void setup() {
+function setup() {
   size(300, 200);
   flock = new Flock();
   for (int i = 0; i < 100; i++) {
