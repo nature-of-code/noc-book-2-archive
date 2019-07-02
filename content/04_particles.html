@@ -767,98 +767,10 @@ function draw() {
     const p = particles[i];
     p.run();
   }
-  
+
   particles = particles.filter(particle => !particle.isDead());
   </pre
     >
-
-    <a
-      data-primary="ArrayList class (Java)"
-      data-secondary="Iterator class and"
-      data-type="indexterm"
-    ></a>
-    <a
-      data-primary="iterating"
-      data-secondary="Iterator class (Java)"
-      data-type="indexterm"
-    ></a>
-    <a data-primary="Iterator class (Java)" data-type="indexterm"></a>
-
-    <p>
-      This is a perfectly fine solution in ninety-nine cases out of a hundred.
-      But sometimes, the order in which the elements are drawn could be
-      important and you may not want to iterate backwards. Java provides a
-      special class—<code>Iterator</code><code>—</code>that takes care of all of
-      the details of iteration for you. You get to say:
-    </p>
-
-    <p>
-      <em
-        >Hey, I’d like to iterate through this <code>ArrayList</code>. Could you
-        continue to give me the next element in the list one at a time until we
-        get to the end? And if I remove elements or move them around in the list
-        while we’re iterating, will you make sure I don’t look at any elements
-        twice or skip any by accident?</em
-      >
-    </p>
-
-    <p>
-      An <code>ArrayList</code> can produce an <code>Iterator</code> object for
-      you.
-    </p>
-
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
-// Note that with the Iterator object, we can also use the new &lt;ClassName&gt; generics syntax and specify the type that the Iterator will reference.
-Iterator&lt;Particle&gt; it = particles.iterator();</pre
-    >
-
-    <p>
-      Once you’ve got the iterator, the <code>hasNext()</code> function will
-      tell us whether there is a <code>Particle</code> for us to run and the
-      <code>next()</code> function will grab that <code>Particle</code> object
-      itself.
-    </p>
-
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
-  // An Iterator object doing the iterating for you
-  while (it.hasNext()) {
-    Particle p = it.next();
-    p.run();
-  }</pre
-    >
-
-    <p>
-      And if you call the <code>remove()</code> function on the
-      <code>Iterator</code> object during the loop, it will delete the current
-      <code>Particle</code> object (and not skip ahead past the next one, as we
-      saw with counting forward through the <code>ArrayList</code>).
-    </p>
-
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
-    if (p.isDead()) {
-      //{!1} An Iterator object doing the deleting for you
-      it.remove();
-    }
-  }</pre
-    >
-
-    <p>
-      Because the <code>Iterator</code> object is specific to Java and requires
-      an additional import statement in your p5 code, I'm choosing to use the
-      backwards loop style in this book's examples.
-    </p>
 
     <figure
       class="screenshot"
@@ -869,7 +781,7 @@ Iterator&lt;Particle&gt; it = particles.iterator();</pre
     </figure>
 
     <div data-type="example">
-      <h5>Example 4.2: ArrayList of particles with Iterator</h5>
+      <h5>Example 4.2: Array of particles</h5>
     </div>
 
     <pre
@@ -877,26 +789,24 @@ Iterator&lt;Particle&gt; it = particles.iterator();</pre
       data-type="programlisting"
       class="codesplit"
     >
-ArrayList&lt;Particle&gt; particles;
+let particles = [];
 
 void setup() {
   size(640, 360);
-  particles = new ArrayList&lt;Particle&gt;();
 }
 
 void draw() {
   background(255);
 
-  particles.add(new Particle(new PVector(width / 2, 50)));
+  particles.push(new Particle(createVector(width / 2, 50)));
 
   //{!1} Looping through the array backwards for deletion
   for (int i = particles.size()-1; i >= 0; i--) {
-    Particle p = particles.get(i);
+    const p = particles[i];
     p.run();
-    if (p.isDead()) {
-      particles.remove(i);
-    }
   }
+
+  particles = particles.filter(particle => !particle.isDead());
 }</pre
     >
   </section>
@@ -920,7 +830,7 @@ void draw() {
     <p>
       OK. Now we’ve done two things. We’ve written a class to describe an
       individual <code>Particle</code> object. We’ve conquered the
-      <code>ArrayList</code> and used it to manage a list of many
+      <code>Array</code> and used it to manage a list of many
       <code>Particle</code> objects (with the ability to add and delete at
       will).
     </p>
@@ -935,7 +845,7 @@ void draw() {
 
     <p>
       If you recall the goal we set at the beginning of this chapter, we wanted
-      our main tab to look like this:
+      our main javascript file to look like this:
     </p>
 
     <pre
@@ -944,7 +854,7 @@ void draw() {
       class="codesplit"
     >
 //{!1} Just one wee ParticleSystem!
-ParticleSystem ps;
+let ps;
 
 void setup() {
   size(640, 360);
@@ -966,60 +876,55 @@ void draw() {
     <table class="code">
       <tbody>
         <tr>
-          <th>ArrayList in the main tab</th>
-          <th>ArrayList in the ParticleSystem class</th>
+          <th>Array in the main javascript file</th>
+          <th>Array in the ParticleSystem class</th>
         </tr>
         <tr>
           <td>
             <pre>
-<b>ArrayList&lt;Particle&gt; particles;</b>
+<b>let particles = [];</b>
 
-void setup() {
-  size(640, 360);
-  <b>particles = new ArrayList&lt;Particle&gt;();</b>
+function setup() {
+  createVector(640, 360);
 }
 
-void draw() {
+function draw() {
   background(255);
 
-  <b>particles.add(new Particle());</b>
+  <b>particles.push(new Particle());</b>
 
 
 
-  <b>for (int i = particles.size()-1; i >= 0; i--) {
-    Particle p = particles.get(i);
+  <b>for (let i = particles.size()-1; i >= 0; i--) {
+    const p = particles[i];
     p.run();
-    if (p.isDead()) {
-      particles.remove(i);
-    }
-  }</b>
+  }
+
+  particles = particles.filter(particle => !particle.isDead());  
+</b>
 }
 </pre>
           </td>
           <td>
             <pre>
 class ParticleSystem {
-  <b>ArrayList&lt;Particle&gt; particles;</b>
 
-
-  ParticleSystem() {
-    <b>particles = new ArrayList&lt;Particle&gt;();</b>
+  constructor() {
+    <b>this.particles = [];</b>
   }
 
-
-
-  void addParticle() {
-    <b>particles.add(new Particle());</b>
+  addParticle() {
+    <b>this.particles.push(new Particle());</b>
   }
 
-  void run() {
-    <b>for (int i = particles.size()-1; i >= 0; i--) {
-      Particle p = particles.get(i);
+  run() {
+    <b>for (let i = this.particles.size()-1; i >= 0; i--) {
+      const p = this.particles[i];
       p.run();
-      if (p.isDead()) {
-        particles.remove(i);
-      }
-    }</b>
+    }
+
+    this.particles = this.particles.filter(particle => !particle.isDead());  
+  </b>
   }
 }
 </pre>
@@ -1053,18 +958,16 @@ class ParticleSystem {
       class="codesplit"
     >
 class ParticleSystem {
-  ArrayList particles;
-  //{!1 .bold} This particular ParticleSystem implementation includes an origin point where each Particle begins.
-  PVector origin;
 
-  ParticleSystem(PVector position) {
-    origin = position.copy();
-    particles = new ArrayList();
+  ParticleSystem(position) {
+    //{!1 .bold} This particular ParticleSystem implementation includes an origin point where each Particle begins.
+    this.origin = position.copy();
+    this.particles = [];
   }
 
-  void addParticle() {
+  addParticle() {
     //{!1 .bold}  The origin is passed to each Particle when it is added.
-    particles.add(new Particle(origin));
+    this.particles.add(new Particle(this.origin));
   }</pre
     >
 
