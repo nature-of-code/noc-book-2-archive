@@ -1596,7 +1596,7 @@ void separate (ArrayList&lt;PVector&gt; vehicles) {
 <p>We might begin by adding a function to the <code>Vehicle</code> class that manages all of the behaviors. Let’s call it <code>applyBehaviors()</code>.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-void applyBehaviors(ArrayList&lt;PVector&gt; vehicles) {
+void applyBehaviors(ArrayList&lt;Vehicle&gt; vehicles) {
   separate(vehicles);
   seek(new PVector(mouseX, mouseY));
 }</pre>
@@ -1812,7 +1812,7 @@ void applyBehaviors(ArrayList&lt;Vehicle&gt; vehicles) {
 <p>Finally, we are ready for cohesion. Here our code is virtually identical to that for alignment—only instead of calculating the average velocity of the boid’s neighbors, we want to calculate the average position of the boid’s neighbors (and use that as a target to seek).</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-  PVector cohesion (ArrayList<Boid> boids) {
+  PVector cohesion (ArrayList&lt;Boid&gt; boids) {
     float neighbordist = 50;
     PVector sum = new PVector(0, 0);
     int count = 0;
@@ -1840,10 +1840,10 @@ void applyBehaviors(ArrayList&lt;Vehicle&gt; vehicles) {
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 class Flock {
-  ArrayList<Boid> boids;
+  ArrayList&lt;Boid&gt; boids;
 
   Flock() {
-    boids = new ArrayList<Boid>();
+    boids = new ArrayList&lt;Boid&gt;();
   }
 
   void run() {
@@ -1966,12 +1966,12 @@ void draw() {
 <p>This technique is known as “bin-lattice spatial subdivision” and is outlined in more detail in (surprise, surprise) Reynolds’s 2000 paper, <a href="http://www.red3d.com/cwr/papers/2000/pip.pdf">“Interaction with Groups of Autonomous Characters”</a>. How do we implement such an algorithm in Processing? One way is to keep multiple <code>ArrayList</code><code>s</code>. One <code>ArrayList</code> would keep track of all the boids, just like in our flocking example.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-ArrayList<Boid> boids;</pre>
+ArrayList&lt;Boid&gt; boids;</pre>
 
 <p>In addition to that <code>ArrayList</code>, we store an additional reference to each <code>Boid</code> object in a two-dimensional <code>ArrayList</code>. For each cell in the grid, there is an <code>ArrayList</code> that tracks the objects in that cell.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-ArrayList<Boid>[][] grid;</pre>
+ArrayList&lt;Boid&gt;[][] grid;</pre>
 
 <p>In the main <code>draw()</code> loop, each <code>Boid</code> object then registers itself in the appropriate cell according to its position.</p>
 
