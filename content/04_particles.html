@@ -1073,14 +1073,14 @@ class ParticleSystem {
       data-type="programlisting"
       class="codesplit"
     >
-ParticleSystem ps;
+let ps;
 
-void setup() {
-  size(640, 360);
-  ps = new ParticleSystem(1, new PVector(width/2, 50));
+function setup() {
+  createCanvas(640, 360);
+  ps = new ParticleSystem(1, createVector(width/2, 50));
 }
 
-void draw() {
+function draw() {
   background(255);
   ps.run();
   ps.addParticle();
@@ -1089,9 +1089,9 @@ void draw() {
 
     <p>
       For this new example, what we want to do instead is create an
-      <code>ArrayList</code> to keep track of multiple instances of particle
+      <code>Array</code> to keep track of multiple instances of particle
       systems. When the program starts, i.e. in <code>setup()</code>, the
-      <code>ArrayList</code> is empty.
+      <code>Array</code> is empty.
     </p>
 
     <div data-type="example"><h5>Example 4.4: System of systems</h5></div>
@@ -1102,17 +1102,16 @@ void draw() {
       class="codesplit"
     >
 //{!1} This time, the type of thing we are putting in the ArrayList is a ParticleSystem itself!
-ArrayList&lt;ParticleSystem&gt; systems;
+let systems = [];
 
-void setup() {
-  size(600, 200);
-  systems = new ArrayList&lt;ParticleSystem&gt;();
+function setup() {
+  createCanvas(600, 200);
 }</pre
     >
 
     <p>
       Whenever the mouse is pressed, a new <code>ParticleSystem</code> object is
-      created and placed into the <code>ArrayList</code>.
+      created and placed into the <code>Array</code>.
     </p>
 
     <pre
@@ -1120,15 +1119,15 @@ void setup() {
       data-type="programlisting"
       class="codesplit"
     >
-void mousePressed() {
-  systems.add(new ParticleSystem(new PVector(mouseX, mouseY)));
+function mousePressed() {
+  systems.push(new ParticleSystem(createVector(mouseX, mouseY)));
 }</pre
     >
 
     <p>
       And in <code>draw()</code>, instead of referencing a single
       <code>ParticleSystem</code> object, we now look through all the systems in
-      the <code>ArrayList</code> and call <code>run()</code> on each of them.
+      the <code>Array</code> and call <code>run()</code> on each of them.
     </p>
 
     <pre
@@ -1136,10 +1135,10 @@ void mousePressed() {
       data-type="programlisting"
       class="codesplit"
     >
-void draw() {
+function draw() {
   background(255);
-  //{!4} Since we aren’t deleting elements, we can use the enhanced loop!
-  for (ParticleSystem ps: systems) {
+  //{!4} Since we aren’t deleting elements, we can use the for of loop!
+  for (let ps of systems) {
     ps.run();
     ps.addParticle();
   }
@@ -1264,17 +1263,18 @@ class WackyConfetti {
       class="codesplit"
     >
 class ParticleSystem {
-  ParticleSystem(int num) {
-    particles = new ArrayList();
-    for (int i = 0; i < num; i++) {
-      float r = random(1);
+  constructor(num) {
+    this.particles = [];
+    
+    for (let i = 0; i < num; i++) {
+      const r = random(1);
       //{!7} Randomly picking a "kind" of particle
       if (r < 0.33) {
-        particles.add(new HappyConfetti());
+        this.particles.add(new HappyConfetti());
       } else if (r < 0.67) {
-        particles.add(new FunConfetti());
+        this.particles.add(new FunConfetti());
       } else {
-        particles.add(new WackyConfetti());
+        this.particles.add(new WackyConfetti());
       }
     }
   }</pre
@@ -1284,7 +1284,7 @@ class ParticleSystem {
       OK, we now need to pause for a moment. We’ve done nothing wrong. All we
       wanted to do was wish our friend a happy birthday and enjoy writing some
       code. But while the reasoning behind the above approach is quite sound,
-      we’ve opened up two major problems.
+      we’ve opened up one major problem.
     </p>
 
     <p>
@@ -1303,7 +1303,7 @@ class ParticleSystem {
     <p>
       Yes. Even though our kinds of particles are different enough to merit our
       breaking them out into separate classes, there is still a ton of code that
-      they will likely share. They’ll all have <code>PVector</code
+      they will likely share. They’ll all have <code>p5.Vector</code
       ><code>s</code> to keep track of position, velocity, and acceleration; an
       <code>update()</code> function that implements our motion algorithm; etc.
     </p>
@@ -1315,41 +1315,8 @@ class ParticleSystem {
     </p>
 
     <p>
-      <span class="highlight"
-        >Problem #2: How will the ArrayList know which objects are which
-        type?</span
-      >
-    </p>
-
-    <p>
-      This is a pretty serious problem. Remember, we were using generics to tell
-      the <code>ArrayList</code> what type of objects we’re going to put inside
-      it. Are we suddenly going to need three different <code>ArrayList</code
-      ><code>s</code>?
-    </p>
-
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
-ArrayList&lt;HappyConfetti&gt; a1 = new ArrayList&lt;HappyConfetti&gt;();
-ArrayList&lt;FunConfetti&gt;   a2 = new ArrayList&lt;FunConfetti&gt;();
-ArrayList&lt;WackyConfetti&gt; a3 = new ArrayList&lt;WackyConfetti&gt;();</pre
-    >
-
-    <p>
-      This seems awfully inconvenient, given that we really just want one list
-      to keep track of all the stuff in the particle system. That can be made
-      possible with polymorphism. Polymorphism will allow us to consider objects
-      of different types as the same type and store them in a single
-      <code>ArrayList</code>.
-    </p>
-
-    <p>
-      Now that we understand the problem, let’s look at these two concepts in a
-      bit more detail and then create a particle system example that implements
-      both inheritance and polymorphism.
+      Now that we understand the problem, let’s look at this concept in a
+      bit more detail and then create a particle system example that implements inheritance.
     </p>
   </section>
 
@@ -1370,23 +1337,23 @@ ArrayList&lt;WackyConfetti&gt; a3 = new ArrayList&lt;WackyConfetti&gt;();</pre
       class="codesplit"
     >
 class Dog {
-  int age;
-  // Dogs and cats have the same variables (age) and functions (eat, sleep).
-  Dog() {
-    age = 0;
+  
+  constructor() {
+    // Dogs and cats have the same variables (age) and functions (eat, sleep).
+    this.age = 0;
   }
 
-  void eat() {
+  eat() {
     println("Yum!");
   }
 
-  void sleep() {
+  sleep() {
     println("Zzzzzz");
   }
 
   //{!3} A unique function for barking.
-  void bark() {
-    println("WOOF");
+  bark() {
+    print("WOOF");
   }
 }</pre
     >
@@ -1399,21 +1366,20 @@ class Dog {
       class="codesplit"
     >
 class Cat {
-  int age;
-
-  Cat() {
-    age = 0;
+  
+  constructor() {
+    this.age = 0;
   }
 
-  void eat() {
+  eat() {
     println("Yum!");
   }
 
-  void sleep() {
+  sleep() {
     println("Zzzzzz");
   }
 
-  void meow() {
+  meow() {
     println("MEOW!");
   }
 }</pre
@@ -1492,41 +1458,40 @@ class Cat {
     >
 // The Animal class is the parent (or super) class.
 class Animal {
-  //{!1} Dog and Cat inherit the variable age.
-  int age;
-
-  Animal() {
-    age = 0;
+  
+  constructor() {
+    //{!1} Dog and Cat inherit the variable age.
+    this.age = 0;
   }
 
   //{!7} Dog and Cat inherit the functions eat() and sleep().
-  void eat() {
-    println("Yum!");
+  eat() {
+    print("Yum!");
   }
 
-  void sleep() {
-    println("Zzzzzz");
+  sleep() {
+    print("Zzzzzz");
   }
 }
 
 //{!1 .bold} The Dog class is the child (or sub) class, indicated by the code "extends Animal".
 class Dog extends Animal {
-  Dog() {
+  constructor() {
     //{!1 .bold}  super() executes code found in the parent class.
     super();
   }
   //{!3} We define bark() in the child class, since it isn't part of the parent class.
-  void bark() {
-    println("WOOF!");
+  bark() {
+    print("WOOF!");
   }
 }
 
 class Cat extends Animal {
-  Cat() {
+  constructor() {
     super();
   }
-  void meow() {
-    println("MEOW!");
+  meow() {
+    print("MEOW!");
   }
 }</pre
     >
@@ -1583,16 +1548,15 @@ class Cat extends Animal {
       class="codesplit"
     >
 class Dog extends Animal {
-  //{!1} A child class can introduce new variables not included in the parent.
-  color haircolor;
-
-  Dog() {
+  
+  constructor() {
     super();
-    haircolor = color(random(255));
+    //{!1} A child class can introduce new variables not included in the parent.
+    this.haircolor = color(random(255));
   }
 
-  void bark() {
-    println("WOOF!");
+  bark() {
+    print("WOOF!");
   }
 }</pre
     >
@@ -1622,21 +1586,20 @@ class Dog extends Animal {
       class="codesplit"
     >
 class Dog extends Animal {
-  color haircolor;
 
-  Dog() {
+  constructor() {
      super();
-     haircolor = color(random(255));
+     this.haircolor = color(random(255));
   }
 
   // A child can override a parent function if necessary.
-  void eat() {
+  eat() {
     //{!1} A Dog's specific eating characteristics
-    println("Woof! Woof! Slurp.")
+    print("Woof! Woof! Slurp.")
   }
 
-  void bark() {
-    println("WOOF!");
+  bark() {
+    print("WOOF!");
   }
 }</pre
     >
@@ -1669,22 +1632,21 @@ class Dog extends Animal {
       class="codesplit"
     >
 class Dog extends Animal {
-   color haircolor;
 
-   Dog() {
+   constructor() {
      super();
-     haircolor = color(random(255));
+     this.haircolor = color(random(255));
    }
 
-   void eat() {
+   eat() {
      //{!1 .bold} Call eat() from Animal. A child can execute a function from the parent while adding its own code.
      super.eat();
      //{!1 .bold} Add some additional code for a Dog's specific eating characteristics.
-     println("Woof!!!");
+     print("Woof!!!");
    }
 
-   void bark() {
-    println("WOOF!");
+   bark() {
+    print("WOOF!");
   }
 }</pre
     >
@@ -1716,29 +1678,26 @@ class Dog extends Animal {
       class="codesplit"
     >
 class Particle {
-  PVector position;
-  PVector velocity;
-  PVector acceleration;
 
-  Particle(PVector l) {
-    acceleration = new PVector(0, 0.05);
-    velocity = new PVector(random(-1, 1), random(-2, 0));
-    position = l.copy();
+  Particle(l) {
+    this.acceleration = createVector(0, 0.05);
+    this.velocity = createVector(random(-1, 1), random(-2, 0));
+    this.position = l.copy();
   }
 
-  void run() {
-    update();
-    display();
+  run() {
+    this.update();
+    this.display();
   }
 
-  void update() {
-    velocity.add(acceleration);
-    position.add(velocity);
+  update() {
+    this.velocity.add(this.acceleration);
+    this.position.add(this.velocity);
   }
 
-  void display() {
+  display() {
     fill(0);
-    ellipse(position.x, position.y, 8, 8);
+    ellipse(this.position.x, this.position.y, 8, 8);
   }
 }</pre
     >
@@ -1760,7 +1719,7 @@ class Confetti extends Particle {
 
   // We could add variables for only Confetti here.
 
-  Confetti(PVector l) {
+  constructor(l) {
     super(l);
   }
 
@@ -1768,11 +1727,11 @@ class Confetti extends Particle {
 
 
   //{!6} Override the display method.
-  void display() {
+  display() {
     rectMode(CENTER);
     fill(175);
     stroke(0);
-    rect(position.x, position.y, 8, 8);
+    rect(this.position.x, this.position.y, 8, 8);
   }
 }</pre
     >
@@ -1800,7 +1759,7 @@ class Confetti extends Particle {
       data-type="programlisting"
       class="codesplit"
     >
-float angle = map(position.x,0,width,0,TWO_PI);</pre
+const angle = map(this.position.x,0,width,0,TWO_PI);</pre
     >
 
     <p>
@@ -1814,18 +1773,18 @@ float angle = map(position.x,0,width,0,TWO_PI);</pre
       data-type="programlisting"
       class="codesplit"
     >
-  void display() {
-    float theta = map(position.x, 0, width, 0, TWO_PI*2);
+  display() {
+    const theta = map(this.position.x, 0, width, 0, TWO_PI*2);
 
     rectMode(CENTER);
-    fill(0,lifespan);
-    stroke(0,lifespan);
+    fill(0,this.lifespan);
+    stroke(0,this.lifespan);
     //{!5} If we rotate() a shape in p5, we need to familiarize ourselves with transformations. For more, visit: http://p5.org/learning/transform2d/
-    pushMatrix();
-    translate(position.x, position.y);
+    push();
+    translate(this.position.x, this.position.y);
     rotate(theta);
     rect(0, 0, 8, 8);
-    popMatrix();
+    pop();
   }</pre
     >
 
@@ -1839,249 +1798,14 @@ float angle = map(position.x,0,width,0,TWO_PI);</pre
     </div>
 
     <p>
-      Now that we have a <code>Confetti</code> class that extends our base
-      <code>Particle</code> class, we need to figure out how our
-      <code>ParticleSystem</code> class can manage particles of different types
-      within the same system. To accomplish this goal, let’s return to the
-      animal kingdom inheritance example and see how the concept extends into
-      the world of polymorphism.
-    </p>
-  </section>
-
-  <section data-type="sect1" id="chapter04_section9">
-    <h2>4.9 Polymorphism Basics</h2>
-
-    <a
-      data-primary="object-oriented programming"
-      data-secondary="instances of subclasses"
-      data-tertiary="creating"
-      data-type="indexterm"
-    ></a>
-    <a
-      data-primary="object-oriented programming"
-      data-secondary="polymorphism"
-      data-type="indexterm"
-    ></a>
-    <a data-primary="polymorphism" data-type="indexterm"></a>
-
-    <p>
-      With the concept of inheritance under our belts, we can imagine how we
-      would program a diverse animal kingdom using <code>ArrayList</code
-      ><code>s</code>—an array of dogs, an array of cats, of turtles, of kiwis,
-      etc. frolicking about.
-    </p>
-
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
-//{!4} Separate ArrayLists for each animal
-ArrayList&lt;Dog&gt; dogs = new ArrayList&lt;Dog&gt;();
-ArrayList&lt;Cat&gt; cats = new ArrayList&lt;Cat&gt;();
-ArrayList&lt;Turtle&gt; turtles = new ArrayList&lt;Turtle&gt;();
-ArrayList&lt;Kiwi&gt; kiwis = new ArrayList&lt;Kiwi&gt;();
-
-for (int i = 0; i &lt; 10; i++) {
-  dogs.add(new Dog());
-}
-for (int i = 0; i &lt; 15; i++) {
-  cats.add(new Cat());
-}
-for (int i = 0; i &lt; 6; i++) {
-  turtles.add(new Turtle());
-}
-for (int i = 0; i &lt; 98; i++) {
-  kiwis.add(new Kiwi());
-}</pre
-    >
-
-    <p>
-      As the day begins, the animals are all pretty hungry and are looking to
-      eat. So it’s off to looping time (enhanced looping time!)…
-    </p>
-
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
-// Separate loops for each animal
-for (Dog d: dogs) {
-  d.eat();
-}
-for (Cat c: cats) {
-  c.eat();
-}
-for (Turtle t: turtles) {
-  t.eat();
-}
-for (Kiwi k: kiwis) {
-  k.eat();
-}</pre
-    >
-
-    <a
-      data-primary="superclasses"
-      data-secondary="polymorphism and"
-      data-type="indexterm"
-    ></a>
-
-    <p>
-      This works well, but as our world expands to include many more animal
-      species, we’re going to get stuck writing a lot of individual loops. Is
-      this really necessary? After all, the creatures are all animals, and they
-      all like to eat. Why not just have one <code>ArrayList</code> of
-      <code>Animal</code> objects and fill it with all different
-      <em>kinds</em> of animals?
-    </p>
-
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
-//{!1 .code-wide} Just one ArrayList for all the animals!
-ArrayList&lt;Animal&gt; kingdom = new ArrayList&lt;Animal&gt;();
-
-for (int i = 0; i &lt; 1000; i++) {
-  if (i &lt; 100) kingdom.add(new Dog());
-  else if (i &lt; 400) kingdom.add(new Cat());
-  else if (i &lt; 900) kingdom.add(new Turtle());
-  else kingdom.add(new Kiwi());
-}
-
-for (Animal a: kingdom) {
-  a.eat();
-}</pre
-    >
-
-    <p>
-      The ability to treat a <code>Dog</code> object as either a member of the
-      <code>Dog</code> class or the <code>Animal</code> class (its parent) is an
-      example of polymorphism. <strong><em>Polymorphism</em></strong> (from the
-      Greek <em>polymorphos</em>, meaning many forms) refers to the treatment of
-      a single instance of an object in multiple forms. A dog is certainly a
-      dog, but since <code>Dog extends Animal</code>, it can also be considered
-      an animal. In code, we can refer to it both ways.
-    </p>
-
-    <a
-      data-primary="polymorphism"
-      data-secondary="creating object instances with"
-      data-type="indexterm"
-    ></a>
-
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
-Dog rover = new Dog();
-Animal spot = new Dog();</pre
-    >
-
-    <p>
-      Although the second line of code might initially seem to violate syntax
-      rules, both ways of declaring a <code>Dog</code> object are legal. Even
-      though we declare <code>spot</code> as an <code>Animal</code> object,
-      we’re really making a <code>Dog</code> object and storing it in the
-      <code>spot</code> variable. And we can safely call all of the
-      <code>Animal</code> class methods on spot because the rules of inheritance
-      dictate that a dog can do anything an animal can.
-    </p>
-
-    <a
-      data-primary="superclasses"
-      data-secondary="overriding functions from"
-      data-type="indexterm"
-    ></a>
-
-    <p>
-      What if the <code>Dog</code> class, however, overrides the
-      <code>eat()</code> function in the <code>Animal</code> class? Even if spot
-      is declared as an <code>Animal</code>, Java will determine that its true
-      identity is that of a <code>Dog</code> and run the appropriate version of
-      the <code>eat()</code> function.
-    </p>
-
-    <p>
-      This is particularly useful when we have an array or
-      <code>ArrayList</code>.
+      Now that we have a <code>Confetti</code> subclass that extends our base
+      <code>Particle</code> class, we can add these subclasses to our 
+      <code>ParticleSystem</code> class. We'll see how this works in the next section.
     </p>
   </section>
 
   <section data-type="sect1" id="chapter04_section10">
-    <h2>4.10 Particle Systems with Polymorphism</h2>
-
-    <a
-      data-primary="particle systems"
-      data-secondary="polymorphism"
-      data-tertiary="using"
-      data-type="indexterm"
-    ></a>
-
-    <p>
-      Let’s pretend for a moment that polymorphism doesn’t exist and rewrite a
-      <code>ParticleSystem</code> class to include many
-      <code>Particle</code> objects and many <code>Confetti</code> objects.
-    </p>
-
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
-class ParticleSystem {
-  //{!2 .bold} We’re stuck doing everything twice with two lists!
-  ArrayList&lt;Particle&gt; particles;
-  ArrayList&lt;Confetti&gt; confetti;
-  PVector origin;
-
-  ParticleSystem(PVector position) {
-    origin = position.copy();
-    //{!2 .bold} We’re stuck doing everything twice with two lists!
-    particles = new ArrayList&lt;Particle&gt;();
-    confetti = new ArrayList&lt;Confetti&gt;();
-  }
-
-  void addParticle() {
-    //{!2 .bold} We’re stuck doing everything twice with two lists!
-    particles.add(new Particle(origin));
-    particles.add(new Confetti(origin));
-  }
-
-  void run() {
-    //{!14 .bold} We’re stuck doing everything twice with two lists!
-    for (int i = particles.size()-1; i >= 0; i--) {
-      Particle p = particles.get(i);
-      p.run();
-      if (p.isDead()) {
-        particles.remove(i);
-      }
-    }
-    for (int i = confetti.size()-1; i >= 0; i--) {
-      Confetti c = particles.get(i);
-      c.run();
-      if (c.isDead()) {
-        confetti.remove(i);
-      }
-    }
-  }
-}</pre
-    >
-
-    <p>
-      Notice how we have two separate lists, one for particles and one for
-      confetti. Every action we want to perform we have to do twice!
-      Polymorphism allows us to simplify the above by just making one
-      <code>ArrayList</code> of particles that contains both standard
-      <code>Particle</code> objects as well as <code>Confetti</code> objects. We
-      don’t have to worry about which are which; this will all be taken care of
-      for us! (Also, note that the code for the main program and the classes has
-      not changed, so we aren’t including it here. See the website for the full
-      example.)
-    </p>
+    <h2>4.10 Particle Systems with Inheritance</h2>
 
     <figure
       class="screenshot"
@@ -2092,7 +1816,7 @@ class ParticleSystem {
     </figure>
 
     <div data-type="example">
-      <h5>Example 4.5: Particle system inheritance and polymorphism</h5>
+      <h5>Example 4.5: Particle system inheritance</h5>
     </div>
 
     <pre
@@ -2101,34 +1825,30 @@ class ParticleSystem {
       class="codesplit"
     >
 class ParticleSystem {
-  //{!1 .bold} One list, for anything that is a Particle or extends Particle
-  ArrayList&lt;Particle&gt; particles;
-  PVector origin;
-
-  ParticleSystem(PVector position) {
-    origin = position.copy();
-    particles = new ArrayList&lt;Particle&gt;();
+  
+  constructor(position) {
+    this.origin = this.position.copy();
+    //{!1 .bold} One list, for anything that is a Particle or extends Particle
+    this.particles = [];
   }
 
-  void addParticle() {
-    float r = random(1);
+  addParticle() {
+    const r = random(1);
     //{!5 .bold} We have a 50% chance of adding each kind of Particle.
-    if (r &lt; 0.5) {
-      particles.add(new Particle(origin));
+    if (r < 0.5) {
+      this.particles.add(new Particle(this.origin));
     } else {
-      particles.add(new Confetti(origin));
+      this.particles.add(new Confetti(this.origin));
     }
   }
 
-  void run() {
-    for (int i = particles.size()-1; i >= 0; i--) {
-      //{!1 .bold} Polymorphism allows us to treat everything as a Particle, whether it is a Particle or a Confetti.
-      Particle p = particles.get(i);
+  run() {
+    for (let i = this.particles.length-1; i >= 0; i--) {
+      const p = this.particles[i];
       p.run();
-      if (p.isDead()) {
-        particles.remove(i);
-      }
     }
+
+    this.particles = this.particles.filter(particle => !particle.isDead());
   }
 }</pre
     >
@@ -2171,13 +1891,13 @@ class ParticleSystem {
       data-type="programlisting"
       class="codesplit"
     >
-  Particle(PVector l) {
+  constructor(l) {
     //{!1 .bold} We’re setting acceleration to a constant value!
-    acceleration = new PVector(0,0.05);
+    this.acceleration = createVector(0,0.05);
 
-    velocity = new PVector(random(-1, 1), random(-2, 0));
-    position = l.copy();
-    lifespan = 255.0;
+    this.velocity = createVector(random(-1, 1), random(-2, 0));
+    this.position = l.copy();
+    this.lifespan = 255.0;
   }</pre
     >
 
@@ -2188,13 +1908,13 @@ class ParticleSystem {
       data-type="programlisting"
       class="codesplit"
     >
-  void update() {
-    velocity.add(acceleration);
-    position.add(velocity);
+  update() {
+    this.velocity.add(this.acceleration);
+    this.position.add(this.velocity);
 
     [inline]// Where is the line of code to clear acceleration?
 
-    lifespan -= 2.0;
+    this.lifespan -= 2.0;
   }</pre
     >
 
@@ -2208,7 +1928,7 @@ class ParticleSystem {
 
     <p>
       Step 1 would be to add in the <code>applyForce()</code> function.
-      (Remember, we need to make a copy of the <code>PVector</code> before we
+      (Remember, we need to make a copy of the <code>p5.Vector</code> before we
       divide it by mass.)
     </p>
 
@@ -2217,10 +1937,10 @@ class ParticleSystem {
       data-type="programlisting"
       class="codesplit"
     >
-  void applyForce(PVector force) {
-    PVector f = force.copy();
-    f.div(mass);
-    acceleration.add(f);
+  applyForce(force) {
+    const f = force.copy();
+    f.div(this.mass);
+    this.acceleration.add(f);
   }</pre
     >
 
@@ -2234,12 +1954,12 @@ class ParticleSystem {
       data-type="programlisting"
       class="codesplit"
     >
- void update() {
-   velocity.add(acceleration);
-   position.add(velocity);
+ update() {
+   this.velocity.add(this.acceleration);
+   this.position.add(this.velocity);
    //{!1} There it is!
-   acceleration.mult(0);
-   lifespan -= 2.0;
+   this.acceleration.mult(0);
+   this.lifespan -= 2.0;
   }</pre
     >
 
@@ -2251,52 +1971,47 @@ class ParticleSystem {
       class="codesplit"
     >
 class Particle {
-  PVector position;
-  PVector velocity;
-  PVector acceleration;
-  float lifespan;
-
-  //{!1} We could vary mass for more interesting results.
-  float mass = 1;
-
-  Particle(PVector l) {
+  
+  constructor(l) {
     //{!1} We now start with acceleration of 0.
-    acceleration = new PVector(0, 0);
-    velocity = new PVector(random(-1, 1),random(-2, 0));
-    position = l.copy();
-    lifespan = 255.0;
+    this.acceleration = createVector(0, 0);
+    this.velocity = createVector(random(-1, 1),random(-2, 0));
+    this.position = l.copy();
+    this.lifespan = 255.0;
+    //{!1} We could vary mass for more interesting results.
+    this.mass = 1;
   }
 
-  void run() {
-    update();
-    display();
+  run() {
+    this.update();
+    this.display();
   }
 
   // Newton’s second law &amp; force accumulation
-  void applyForce(PVector force) {
-    PVector f = force.copy();
-    f.div(mass);
-    acceleration.add(f);
+  applyForce(force) {
+    const f = force.copy();
+    f.div(this.mass);
+    this.acceleration.add(f);
   }
 
   // Standard update
-  void update() {
-    velocity.add(acceleration);
-    position.add(velocity);
-    acceleration.mult(0);
-    lifespan -= 2.0;
+  update() {
+    this.velocity.add(this.acceleration);
+    this.position.add(this.velocity);
+    this.acceleration.mult(0);
+    this.lifespan -= 2.0;
   }
 
   // The Particle is a circle.
-  void display() {
-    stroke(255,lifespan);
-    fill(255,lifespan);
-    ellipse(position.x,position.y,8,8);
+  display() {
+    stroke(255,this.lifespan);
+    fill(255,this.lifespan);
+    ellipse(this.position.x,this.position.y,8,8);
   }
 
   //{!7} Should the Particle be deleted?
-  boolean isDead() {
-    if (lifespan &lt; 0.0) {
+  isDead() {
+    if (this.lifespan < 0.0) {
       return true;
     } else {
       return false;
@@ -2327,7 +2042,7 @@ class Particle {
       data-type="programlisting"
       class="codesplit"
     >
-PVector gravity = new PVector(0,0.1);</pre
+const gravity = createVector(0,0.1);</pre
     >
 
     <p>
@@ -2340,7 +2055,7 @@ PVector gravity = new PVector(0,0.1);</pre
       data-type="programlisting"
       class="codesplit"
     >
-void draw() {
+function draw() {
   background(100);
   ps.addParticle();
   ps.run();
@@ -2365,10 +2080,10 @@ void draw() {
       data-type="programlisting"
       class="codesplit"
     >
-void draw() {
+function draw() {
   background(100);
 
-  PVector gravity = new PVector(0, 0.1);
+  const gravity = createVector(0, 0.1);
   //{!1} Applying a force to the system as a whole
   ps.applyForce(gravity);
   ps.addParticle();
@@ -2387,7 +2102,7 @@ void draw() {
       <code>ParticleSystem</code> object in <code>draw()</code>, well, we have
       to write that function in the <code>ParticleSystem</code> class. Let’s
       describe the job that function needs to perform: receive a force as a
-      <code>PVector</code> and apply that force to all the particles.
+      <code>p5.Vector</code> and apply that force to all the particles.
     </p>
 
     <p>Now in code:</p>
@@ -2397,8 +2112,8 @@ void draw() {
       data-type="programlisting"
       class="codesplit"
     >
-  void applyForce(PVector f) {
-    for (Particle p : particles) {
+  applyForce(f) {
+    for (let p of this.particles) {
       p.applyForce(f);
     }
   }</pre
@@ -2437,18 +2152,18 @@ void draw() {
       data-type="programlisting"
       class="codesplit"
     >
-ParticleSystem ps;
+let ps;
 
-void setup() {
-  size(640, 360);
-  ps = new ParticleSystem(new PVector(width/2, 50));
+function setup() {
+  createCanvas(640, 360);
+  ps = new ParticleSystem(createVector(width/2, 50));
 }
 
-void draw() {
+function draw() {
   background(100);
 
   //{!2 .bold} Apply a force to all particles.
-  PVector gravity = new PVector(0, 0.1);
+  const gravity = createVector0, 0.1);
   ps.applyForce(gravity);
 
   ps.addParticle();
@@ -2457,34 +2172,31 @@ void draw() {
 
 
 class ParticleSystem {
-  ArrayList&lt;Particle&gt; particles;
-  PVector origin;
-
-  ParticleSystem(PVector position) {
-    origin = position.copy();
-    particles = new ArrayList&lt;Particle&gt;();
+  
+  constructor(position) {
+    this.origin = this.position.copy();
+    this.particles = [];
   }
 
-  void addParticle() {
-    particles.add(new Particle(origin));
+  addParticle() {
+    this.particles.push(new Particle(this.origin));
   }
 
-  void applyForce(PVector f) {
-    //{!3} Using an enhanced loop to apply the force to all particles
-    for (Particle p: particles) {
+  applyForce(f) {
+    //{!3} Using a for of loop to apply the force to all particles
+    for (let p of this.particles) {
       p.applyForce(f);
     }
   }
 
-  void run() {
+  run() {
     //{!7} Can’t use the enhanced loop because we want to check for particles to delete.
-    for (int i = particles.size()-1; i >= 0; i--) {
-      Particle p = particles.get(i);
+    for (let i = this.particles.length-1; i >= 0; i--) {
+      const p = particles[i];
       p.run();
-      if (p.isDead()) {
-        particles.remove(i);
-      }
     }
+
+    this.particles = this.particles.filter(particle => !particle.isDead());
   }
 }</pre
     >
