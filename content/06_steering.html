@@ -1184,12 +1184,12 @@ if (distance > path.radius) {
  class Path {
 
   //{!1} A Path is now an ArrayList of points (PVector objects).
-  ArrayList<PVector> points;
+  ArrayList&lt;PVector&gt; points;
   float radius;
 
   Path() {
     radius = 20;
-    points = new ArrayList<PVector>();
+    points = new ArrayList&lt;PVector&gt;();
   }
 
   // This function allows us to add points to the path.
@@ -1348,12 +1348,12 @@ if (normalPoint.x < ____(____,____) || normalPoint.x > ____(____,____)) {
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
 // Declare an ArrayList of Vehicle objects.
-ArrayList<Vehicle> vehicles;
+ArrayList&lt;PVector&gt; vehicles;
 
 void setup() {
   //{!3} Initialize and fill the ArrayList
   // with a bunch of Vehicles.
-  vehicles = new ArrayList<Vehicle>;
+  vehicles = new ArrayList&lt;PVector&gt;;
   for (int i = 0; i < 100; i++) {
     vehicles.add(new Vehicle(random(width), random(height)));
   }
@@ -1395,7 +1395,7 @@ ArrayList&lt;Vehicle&gt; vehicles;
 
 void setup() {
   size(320, 240);
-  vehicles = new ArrayList<Vehicle>();
+  vehicles = new ArrayList&lt;PVector&gt;();
   for (int i = 0; i < 100; i++) {
     vehicles.add(new Vehicle(random(width), random(height)));
   }
@@ -1431,7 +1431,7 @@ void draw() {
 <p>Let’s begin to write the code. As we just worked out, we’re writing a function called <code>separate()</code> that receives an <code>ArrayList</code> of Vehicle objects as an argument.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-void separate (ArrayList<Vehicle> vehicles) {
+void separate (ArrayList&lt;PVector&gt; vehicles) {
 
 }</pre>
 
@@ -1596,7 +1596,7 @@ void separate (ArrayList<Vehicle> vehicles) {
 <p>We might begin by adding a function to the <code>Vehicle</code> class that manages all of the behaviors. Let’s call it <code>applyBehaviors()</code>.</p>
 
 <pre data-code-language="java" data-type="programlisting" class="codesplit">
-void applyBehaviors(ArrayList<Vehicle> vehicles) {
+void applyBehaviors(ArrayList&lt;PVector&gt; vehicles) {
   separate(vehicles);
   seek(new PVector(mouseX, mouseY));
 }</pre>
