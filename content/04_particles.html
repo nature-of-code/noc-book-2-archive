@@ -2626,7 +2626,7 @@ class Repeller {
       data-type="indexterm"
     ></a>
 
-    <p>First, we’ll need to declare a <code>PImage</code> object.</p>
+    <p>First, we’ll need to declare a <code>p5.Image</code> object.</p>
 
     <div data-type="example">
       <h5>Example 4.8: Image texture particle system</h5>
@@ -2637,7 +2637,7 @@ class Repeller {
       data-type="programlisting"
       class="codesplit"
     >
-PImage img;</pre
+let img;</pre
     >
 
     <p>Load the image in <code>setup()</code>.</p>
@@ -2663,11 +2663,11 @@ void setup() {
       data-type="programlisting"
       class="codesplit"
     >
-  void render() {
+  årender() {
     imageMode(CENTER);
     //{!1} Note how tint() is the image equivalent of shape’s fill().
-    tint(255, lifespan);
-    image(img, position.x, position.y);
+    tint(255, this.lifespan);
+    image(img, this.position.x, this.position.y);
   }</pre
     >
 
@@ -2704,9 +2704,9 @@ void setup() {
       data-type="programlisting"
       class="codesplit"
     >
-    float vx = randomGaussian() * 0.3;
-    float vy = randomGaussian() * 0.3 - 1.0;
-    vel = new PVector(vx, vy);</pre
+    const vx = randomGaussian() * 0.3;
+    const vy = randomGaussian() * 0.3 - 1.0;
+    const vel = createVector(vx, vy);</pre
     >
 
     <p>
@@ -2719,16 +2719,16 @@ void setup() {
       data-type="programlisting"
       class="codesplit"
     >
-void draw() {
+function draw() {
   background(0);
 
   //{!2} Wind force direction based on mouseX.
-  float dx = map(mouseX, 0, width, -0.2, 0.2);
-  PVector wind = new PVector(dx, 0);
+  const dx = map(mouseX, 0, width, -0.2, 0.2);
+  const wind = createVector(dx, 0);
   ps.applyForce(wind);
   ps.run();
   //{!3} Two particles are added each cycle through draw().
-  for (int i = 0; i &lt; 2; i++) {
+  for (let i = 0; i < 2; i++) {
     ps.addParticle();
   }
 }</pre
@@ -2804,11 +2804,6 @@ void draw() {
       <figcaption>&nbsp;</figcaption>
     </figure>
 
-    <p>
-      To achieve additive blending in p5, you’ll need to use the
-      <code>P2D</code> or <code>P3D</code> renderer.
-    </p>
-
     <div data-type="example"><h5>Example 4.9: Additive blending</h5></div>
 
     <pre
@@ -2816,9 +2811,8 @@ void draw() {
       data-type="programlisting"
       class="codesplit"
     >
-void setup() {
-  //{!1} Using the P2D renderer
-  size(640, 360, P2D);
+function setup() {
+  size(640, 360);
 }</pre
     >
 
@@ -2832,7 +2826,7 @@ void setup() {
       data-type="programlisting"
       class="codesplit"
     >
-void draw() {
+function draw() {
   //{!1} Additive blending
   blendMode(ADD);
 
