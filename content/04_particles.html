@@ -103,7 +103,11 @@
       looks like the following:
     </p>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
 // Ah, isn’t this main program so simple and lovely?
 let ps;
 
@@ -121,9 +125,9 @@ function draw() {
     <p>
       No single particle is ever referenced in the above code, yet the result
       will be full of particles flying all over the screen. Getting used to
-      writing p5 sketches with multiple classes, and classes that keep
-      lists of instances of other classes, will prove very useful as we get to
-      more advanced chapters in this book.
+      writing p5 sketches with multiple classes, and classes that keep lists of
+      instances of other classes, will prove very useful as we get to more
+      advanced chapters in this book.
     </p>
 
     <a data-primary="inheritance" data-type="indexterm"></a>
@@ -187,7 +191,11 @@ function draw() {
       <code>update()</code> its position.
     </p>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
 class Particle {
   //{!3} A “Particle” object is just another name for our “Mover.” It has position, velocity, and acceleration.
   Particle(l) {
@@ -245,20 +253,23 @@ class Particle {
       a single burst of particles, or a continuous stream of particles, or both.
       The point is that for a typical implementation such as this, a particle is
       born at the emitter but does not live forever. If it were to live forever,
-      our p5 sketch would eventually grind to a halt as the number of
-      particles increases to an unwieldy number over time. As new particles are
-      born, we need old particles to die. This creates the illusion of an
-      infinite stream of particles, and the performance of our program does not
-      suffer. There are many different ways to decide when a particle dies. For
-      example, it could come into contact with another object, or it could
-      simply leave the screen. For our first <code>Particle</code> class,
-      however, we’re simply going to add a <code>lifespan</code> variable. The
-      timer will start at 255 and count down to 0, when the particle will be
-      considered “dead.” And so we expand the <code>Particle</code> class as
-      follows:
+      our p5 sketch would eventually grind to a halt as the number of particles
+      increases to an unwieldy number over time. As new particles are born, we
+      need old particles to die. This creates the illusion of an infinite stream
+      of particles, and the performance of our program does not suffer. There
+      are many different ways to decide when a particle dies. For example, it
+      could come into contact with another object, or it could simply leave the
+      screen. For our first <code>Particle</code> class, however, we’re simply
+      going to add a <code>lifespan</code> variable. The timer will start at 255
+      and count down to 0, when the particle will be considered “dead.” And so
+      we expand the <code>Particle</code> class as follows:
     </p>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
 class Particle {
 
   constructor(l) {
@@ -316,7 +327,11 @@ class Particle {
       <code>return true</code>, if not we <code>return false</code>.
     </p>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
   isDead() {
     //{!4} Is the particle still alive?
     if (this.lifespan < 0.0) {
@@ -353,7 +368,11 @@ class Particle {
 
     <div data-type="example"><h5>Example 4.1: A single particle</h5></div>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
 let p;
 
 function setup() {
@@ -435,13 +454,10 @@ class Particle {
   </section>
 
   <section data-type="sect1" id="chapter04_section3">
-    <h2>4.3 The ArrayList</h2>
+    <h2>4.3 The Array</h2>
 
     <a data-primary="ArrayList class (Java)" data-type="indexterm"></a>
-    <a
-      data-primary="contract() function (p5)"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="contract() function (p5)" data-type="indexterm"></a>
     <a data-primary="expand() function (p5)" data-type="indexterm"></a>
     <a
       data-primary="particle systems"
@@ -453,44 +469,39 @@ class Particle {
     <a data-primary="subset() function (p5)" data-type="indexterm"></a>
 
     <p>
-      In truth, we could use a simple array to manage our
+      We will use the wonderful javascript array to hold our
       <code>Particle</code> objects. Some particle systems might have a fixed
       number of particles, and arrays are magnificently efficient in those
-      instances. p5 also offers <code>expand()</code>,
-      <code>contract()</code>, <code>subset()</code>, <code>splice()</code>, and
-      other methods for resizing arrays. However, for these examples, we’re
-      going to take a more sophisticated approach and use the Java class
-      <code>ArrayList</code>, found in the java.util package
+      instances. p5 also offers <code>append()</code>, <code>shorten()</code>,
+      <code>subset()</code>, <code>splice()</code>, and other methods for
+      resizing arrays. However, for these examples, we’re going to take a more
+      plain javascript approach and use the methods directly available in the
+      javascipt class <code>Array</code>.
       <a
-        href="http://download.oracle.com/javase/6/docs/api/java/util/ArrayList.html"
-        >ArrayList Documentation</a
+        href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array"
+        >JavaScript Array Documentation</a
       >.
     </p>
 
-    <p>
-      Using an <code>ArrayList</code> follows the same idea as using a standard
-      array, but with different syntax. The following two code examples (which
-      assume the existence of a generic <code>Particle</code> class) produce the
-      same result: first with an array, and second with an
-      <code>ArrayList</code>.
-    </p>
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
+const total = 10;
+// we use let because later we will reassign the value of the particles array
+let particles = [];
 
-    <p>The standard array way:</p>
-
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-int total = 10;
-Particle[] parray = new Particle[total];
-
-void setup() {
+function setup() {
   //{!3} This is what we’re used to, accessing elements on the array via an index and brackets—[].
-  for (int i = 0; i < parray.length; i++) {
+  for (let i = 0; i < total; i++) {
     parray[i] = new Particle();
   }
 }
 
-void draw() {
-  for (int i = 0; i < parray.length; i++) {
-    Particle p = parray[i];
+function draw() {
+  for (let i = 0; i < parray.length; i++) {
+    const p = parray[i];
     p.run();
   }
 }</pre
@@ -508,58 +519,38 @@ void draw() {
       data-type="indexterm"
     ></a>
 
-    <p>The new <code>ArrayList</code> way:</p>
-
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-int total = 10;
-
-//{!1 .offset-top} Have you ever seen this syntax before? This is a feature in Java (called "generics"). It allows us to specify in advance what type of object we intend to put in the ArrayList.
-ArrayList&lt;Particle&gt; particles = new ArrayList&lt;Particle&gt;();
-void setup() {
-  for (int i = 0; i &lt; total; i++) {
-    //{!1} An object is added to an ArrayList with add().
-    particles.add(new Particle());
-  }
-}
-
-void draw() {
-  //{!1} The size of the ArrayList is returned by size().
-  for (int i = 0; i < particles.size(); i++) {
-    //{!1} An object is accessed from the ArrayList with get().  Because we are using generics, we do not need to specify a type when we pull objects out of the ArrayList.
-    Particle p = particles.get(i);
-    p.run();
-  }
-}</pre
-    >
-
     <p>
       This last <code>for</code> loop looks pretty similar to our code that
       looped through a regular array by accessing each index. We initialize a
       variable called <code>i</code> to 0 and count up by 1, accessing each
-      element of the <code>ArrayList</code> until we get to the end. However,
-      this is a good time to mention the “enhanced <code>for</code> loop”
-      available in Java (and p5), which is a bit more concise. The
-      enhanced loop works with both <code>ArrayList</code><code>s</code> and
-      regular arrays and looks like this:
+      element of the <code>Array</code> until we get to the end. However, this
+      is a good time to mention the "<code>for of</code> loop” javascript, which
+      is a bit more concise. The "for of" loop works with arrays like this:
     </p>
 
     <a
-      data-primary="for loops"
+      data-primary="for of loops"
       data-secondary="enhanced"
       data-type="indexterm"
     ></a>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-ArrayList&lt;Particle&gt; particles = new ArrayList&lt;Particle&gt;();
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
+let particles = [];
 
-for (Particle p: particles) {
+for(let p of particles){
   p.run();
-}</pre
+}
+
+</pre
     >
 
     <p>
       Let’s translate that. Say “for each” instead of “for” and say “in” instead
-      of “:”. Now you have:
+      of “of”. Now you have:
     </p>
 
     <p>“For each Particle p in particles, run that Particle p!”</p>
@@ -569,16 +560,20 @@ for (Particle p: particles) {
       necessary, but I just have to type that again.
     </p>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-// This enhanced loop also works for regular arrays!
-for (Particle p : particles) {
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
+// This for of loop also works for regular arrays!
+for (let p of particles) {
   p.run();
 }</pre
     >
 
     <p>
       Simple, elegant, concise, lovely. Take a moment. Breathe. I have some bad
-      news. Yes, we love that enhanced loop and we will get to use it. But not
+      news. Yes, we love that "for of" loop and we will get to use it. But not
       right now. Our particle system examples will require a feature that makes
       using that loop impossible. Let’s continue.
     </p>
@@ -599,21 +594,25 @@ for (Particle p : particles) {
       <code>Particle</code> class code here, as it doesn’t need to change.
     </p>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-ArrayList&lt;Particle&gt; particles;
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
+let particles = [];
 
-void setup() {
-  size(640, 360);
-  particles = new ArrayList&lt;Particle&gt;();
+function setup() {
+  createCanvas(640, 360);
+  
 }
 
-void draw() {
+function draw() {
   background(255);
-  //{!1 .offset-top} A new Particle object is added to the ArrayList every cycle through draw().
-  particles.add(new Particle(new PVector(width/2, 50)));
+  //{!1 .offset-top} A new Particle object is added to the array every cycle through draw().
+  particles.push(new Particle(createCanvas(width/2, 50)));
 
-  for (int i = 0; i &lt; particles.size(); i++) {
-    Particle p = particles.get(i);
+  for (let i = 0; i < particles.length; i++) {
+    const p = particles[i];
     p.run();
   }
 }</pre
@@ -633,24 +632,33 @@ void draw() {
     ></a>
 
     <p>
-      Fortunately, the <code>ArrayList</code> class has a convenient
-      <code>remove()</code> function that allows us to delete a particle (by
-      referencing its index). This is why we cannot use the new enhanced
-      <code>for</code> loop we just learned; the enhanced loop provides no means
-      for deleting elements while iterating. Here, we want to call
-      <code>remove()</code> when the particle’s <code>isDead()</code> function
-      returns true.
+      Fortunately, we can remove particles from our array using the index
+      position of the particle of interest. This is why we cannot use the new
+      enhanced <code>for of</code> loop we just learned; the enhanced loop
+      provides no means for deleting elements while iterating. Here, we can use
+      the <code>Array</code> class's <code>.filter()</code> function. The
+      <code>.filter()</code> function checks each item in the specified array
+      and removes the item(s) where the given condition is true. In this case,
+      the <code>.filter()</code> function will return the array whose particle’s
+      <code>isDead()</code> function returns false.
     </p>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-  for (int i = 0; i &lt; particles.size(); i++) {
-    Particle p = particles.get(i);
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
+  for (int i = 0; i < particles.length; i++) {
+    const p = particles[i];
     p.run();
-    //{!3} If the particle is “dead,” we can go ahead and delete it from the list.
-    if (p.isDead()) {
-      particles.remove(i);
-    }
-  }</pre
+  }
+  
+  // Filter removes any elements of the array that do not pass the test
+  // I am also using ES6 arrow snytax
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions
+  // https://www.youtube.com/watch?v=mrYMzpbFz18
+  particles = particles.filter(particle => !particle.isDead());
+  </pre
     >
 
     <p>
@@ -661,12 +669,16 @@ void draw() {
       code.
     </p>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-  for (int i = 0; i < particles.size(); i++) {
-    Particle p = particles.get(i);
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
+  for (int i = 0; i < particles.length; i++) {
+    const p = particles[i];
     p.run();
     //{!1 .offset-top} Adding a new Particle to the list while iterating?
-    particles.add(new Particle(new PVector(width/2, 50)));
+    particles.push(new Particle(createVector(width/2, 50)));
   }</pre
     >
 
@@ -681,7 +693,7 @@ void draw() {
       particle to the list (manipulating the <code>size()</code> of the
       <code>ArrayList</code>). This will result in an infinite loop, as
       <code>i</code> can never increment past the size of the
-      <code>ArrayList</code>.
+      <code>Array</code>.
     </p>
 
     <a
@@ -695,7 +707,7 @@ void draw() {
       doesn’t cause the program to crash (as it does with adding), the problem
       is almost more insidious in that it leaves no evidence. To discover the
       problem we must first establish an important fact. When an object is
-      removed from the <code>ArrayList</code>, all elements are shifted one spot
+      removed from the <code>Array</code>, all elements are shifted one spot
       to the left. Note the diagram below where particle C (index 2) is removed.
       Particles A and B keep the same index, while particles D and E shift from
       3 and 4 to 2 and 3, respectively.
@@ -708,7 +720,7 @@ void draw() {
 
     <p>
       Let’s pretend we are <code>i</code> looping through the
-      <code>ArrayList</code>.
+      <code>Array</code>.
     </p>
 
     <p>
@@ -734,26 +746,30 @@ void draw() {
       slot #2, D moved into slot #2, but i has already moved on to slot # 3.
       This is not a disaster, since particle D will get checked the next time
       around. Still, the expectation is that we are writing code to iterate
-      through every single element of the <code>ArrayList</code>. Skipping an
+      through every single element of the <code>Array</code>. Skipping an
       element is unacceptable.
     </p>
 
     <p>
       There are two solutions to this problem. The first solution is to simply
-      iterate through the <code>ArrayList</code> backwards. If you are sliding
+      iterate through the <code>Array</code> backwards. If you are sliding
       elements from right to left as elements are removed, it’s impossible to
       skip an element by accident. Here’s how the code would look:
     </p>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
   //{!1 .bold} Looping through the list backwards
-  for (int i = particles.size()-1; i &gt;= 0; i--) {
-    Particle p = (Particle) particles.get(i);
+  for (let i = particles.length-1; i >= 0; i--) {
+    const p = particles[i];
     p.run();
-    if (p.isDead()) {
-      particles.remove(i);
-    }
-  }</pre
+  }
+  
+  particles = particles.filter(particle => !particle.isDead());
+  </pre
     >
 
     <a
@@ -791,7 +807,11 @@ void draw() {
       you.
     </p>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
 // Note that with the Iterator object, we can also use the new &lt;ClassName&gt; generics syntax and specify the type that the Iterator will reference.
 Iterator&lt;Particle&gt; it = particles.iterator();</pre
     >
@@ -803,7 +823,11 @@ Iterator&lt;Particle&gt; it = particles.iterator();</pre
       itself.
     </p>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
   // An Iterator object doing the iterating for you
   while (it.hasNext()) {
     Particle p = it.next();
@@ -818,7 +842,11 @@ Iterator&lt;Particle&gt; it = particles.iterator();</pre
       saw with counting forward through the <code>ArrayList</code>).
     </p>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
     if (p.isDead()) {
       //{!1} An Iterator object doing the deleting for you
       it.remove();
@@ -828,8 +856,8 @@ Iterator&lt;Particle&gt; it = particles.iterator();</pre
 
     <p>
       Because the <code>Iterator</code> object is specific to Java and requires
-      an additional import statement in your p5 code, I'm choosing to
-      use the backwards loop style in this book's examples.
+      an additional import statement in your p5 code, I'm choosing to use the
+      backwards loop style in this book's examples.
     </p>
 
     <figure
@@ -844,7 +872,11 @@ Iterator&lt;Particle&gt; it = particles.iterator();</pre
       <h5>Example 4.2: ArrayList of particles with Iterator</h5>
     </div>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
 ArrayList&lt;Particle&gt; particles;
 
 void setup() {
@@ -906,7 +938,11 @@ void draw() {
       our main tab to look like this:
     </p>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
 //{!1} Just one wee ParticleSystem!
 ParticleSystem ps;
 
@@ -1011,7 +1047,11 @@ class ParticleSystem {
       <h5>Example 4.3: Simple Single Particle System</h5>
     </div>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
 class ParticleSystem {
   ArrayList particles;
   //{!1 .bold} This particular ParticleSystem implementation includes an origin point where each Particle begins.
@@ -1078,9 +1118,9 @@ class ParticleSystem {
       body is a system of organs, a neighborhood is a system of human bodies, a
       city is a system of neighborhoods, and so on and so forth. While this is
       an interesting road to travel down, it’s a bit beyond where we need to be
-      right now. It is, however, quite useful to know how to write a p5
-      sketch that keeps track of many particle systems, each of which keep track
-      of many particles. Let’s take the following scenario.
+      right now. It is, however, quite useful to know how to write a p5 sketch
+      that keeps track of many particle systems, each of which keep track of
+      many particles. Let’s take the following scenario.
     </p>
 
     <p>You start with a blank screen.</p>
@@ -1125,7 +1165,11 @@ class ParticleSystem {
       <code>ps</code>.
     </p>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
 ParticleSystem ps;
 
 void setup() {
@@ -1149,7 +1193,11 @@ void draw() {
 
     <div data-type="example"><h5>Example 4.4: System of systems</h5></div>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
 //{!1} This time, the type of thing we are putting in the ArrayList is a ParticleSystem itself!
 ArrayList&lt;ParticleSystem&gt; systems;
 
@@ -1164,7 +1212,11 @@ void setup() {
       created and placed into the <code>ArrayList</code>.
     </p>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
 void mousePressed() {
   systems.add(new ParticleSystem(new PVector(mouseX, mouseY)));
 }</pre
@@ -1176,7 +1228,11 @@ void mousePressed() {
       the <code>ArrayList</code> and call <code>run()</code> on each of them.
     </p>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
 void draw() {
   background(255);
   //{!4} Since we aren’t deleting elements, we can use the enhanced loop!
@@ -1235,9 +1291,9 @@ void draw() {
       <em>polymorphism</em> in your programming life before this book. After
       all, they are two of the three fundamental principles behind the theory of
       object-oriented programming (the other being <em>encapsulation</em>). If
-      you’ve read other p5 or Java programming books, chances are it’s
-      been covered. My beginner text, <em>Learning p5</em>, has close to
-      an entire chapter (#22) dedicated to these two topics.
+      you’ve read other p5 or Java programming books, chances are it’s been
+      covered. My beginner text, <em>Learning p5</em>, has close to an entire
+      chapter (#22) dedicated to these two topics.
     </p>
 
     <p>
@@ -1271,7 +1327,11 @@ void draw() {
       might consider doing the following:
     </p>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
 class HappyConfetti {
 
 }
@@ -1295,7 +1355,11 @@ class WackyConfetti {
       <a href="#intro_section2">Introduction</a>.
     </p>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
 class ParticleSystem {
   ParticleSystem(int num) {
     particles = new ArrayList();
@@ -1361,7 +1425,11 @@ class ParticleSystem {
       ><code>s</code>?
     </p>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
 ArrayList&lt;HappyConfetti&gt; a1 = new ArrayList&lt;HappyConfetti&gt;();
 ArrayList&lt;FunConfetti&gt;   a2 = new ArrayList&lt;FunConfetti&gt;();
 ArrayList&lt;WackyConfetti&gt; a3 = new ArrayList&lt;WackyConfetti&gt;();</pre
@@ -1393,7 +1461,11 @@ ArrayList&lt;WackyConfetti&gt; a3 = new ArrayList&lt;WackyConfetti&gt;();</pre
       <code>sleep()</code>, and <code>bark()</code> functions.
     </p>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
 class Dog {
   int age;
   // Dogs and cats have the same variables (age) and functions (eat, sleep).
@@ -1418,7 +1490,11 @@ class Dog {
 
     <p>Now, let’s move on to cats.</p>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
 class Cat {
   int age;
 
@@ -1506,7 +1582,11 @@ class Cat {
 
     <p>Here is how the syntax works with inheritance.</p>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
 // The Animal class is the parent (or super) class.
 class Animal {
   //{!1} Dog and Cat inherit the variable age.
@@ -1594,7 +1674,11 @@ class Cat extends Animal {
       this:
     </p>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
 class Dog extends Animal {
   //{!1} A child class can introduce new variables not included in the parent.
   color haircolor;
@@ -1629,7 +1713,11 @@ class Dog extends Animal {
       can be <em>overridden</em> by rewriting the function inside the subclass.
     </p>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
 class Dog extends Animal {
   color haircolor;
 
@@ -1672,7 +1760,11 @@ class Dog extends Animal {
       and incorporate custom code.
     </p>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
 class Dog extends Animal {
    color haircolor;
 
@@ -1715,7 +1807,11 @@ class Dog extends Animal {
       simplified from <a href="#chapter04_example1">Example 4.1</a>:
     </p>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
 class Particle {
   PVector position;
   PVector velocity;
@@ -1752,7 +1848,11 @@ class Particle {
       calling <code>super()</code>.
     </p>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
 class Confetti extends Particle {
 
   // We could add variables for only Confetti here.
@@ -1792,7 +1892,11 @@ class Confetti extends Particle {
       <a href="#intro_section6">Introduction</a>!
     </p>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
 float angle = map(position.x,0,width,0,TWO_PI);</pre
     >
 
@@ -1802,7 +1906,11 @@ float angle = map(position.x,0,width,0,TWO_PI);</pre
       <code>display()</code> function.
     </p>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
   void display() {
     float theta = map(position.x, 0, width, 0, TWO_PI*2);
 
@@ -1860,7 +1968,11 @@ float angle = map(position.x,0,width,0,TWO_PI);</pre
       etc. frolicking about.
     </p>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
 //{!4} Separate ArrayLists for each animal
 ArrayList&lt;Dog&gt; dogs = new ArrayList&lt;Dog&gt;();
 ArrayList&lt;Cat&gt; cats = new ArrayList&lt;Cat&gt;();
@@ -1886,7 +1998,11 @@ for (int i = 0; i &lt; 98; i++) {
       eat. So it’s off to looping time (enhanced looping time!)…
     </p>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
 // Separate loops for each animal
 for (Dog d: dogs) {
   d.eat();
@@ -1917,7 +2033,11 @@ for (Kiwi k: kiwis) {
       <em>kinds</em> of animals?
     </p>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
 //{!1 .code-wide} Just one ArrayList for all the animals!
 ArrayList&lt;Animal&gt; kingdom = new ArrayList&lt;Animal&gt;();
 
@@ -1949,7 +2069,11 @@ for (Animal a: kingdom) {
       data-type="indexterm"
     ></a>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
 Dog rover = new Dog();
 Animal spot = new Dog();</pre
     >
@@ -2000,7 +2124,11 @@ Animal spot = new Dog();</pre
       <code>Particle</code> objects and many <code>Confetti</code> objects.
     </p>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
 class ParticleSystem {
   //{!2 .bold} We’re stuck doing everything twice with two lists!
   ArrayList&lt;Particle&gt; particles;
@@ -2064,7 +2192,11 @@ class ParticleSystem {
       <h5>Example 4.5: Particle system inheritance and polymorphism</h5>
     </div>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
 class ParticleSystem {
   //{!1 .bold} One list, for anything that is a Particle or extends Particle
   ArrayList&lt;Particle&gt; particles;
@@ -2131,7 +2263,11 @@ class ParticleSystem {
       examine the constructor of our simple <code>Particle</code> class.
     </p>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
   Particle(PVector l) {
     //{!1 .bold} We’re setting acceleration to a constant value!
     acceleration = new PVector(0,0.05);
@@ -2144,7 +2280,11 @@ class ParticleSystem {
 
     <p>And now let’s look at the <code>update()</code> function.</p>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
   void update() {
     velocity.add(acceleration);
     position.add(velocity);
@@ -2169,7 +2309,11 @@ class ParticleSystem {
       divide it by mass.)
     </p>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
   void applyForce(PVector force) {
     PVector f = force.copy();
     f.div(mass);
@@ -2182,7 +2326,11 @@ class ParticleSystem {
       acceleration at the end of <code>update()</code>.
     </p>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
  void update() {
    velocity.add(acceleration);
    position.add(velocity);
@@ -2194,7 +2342,11 @@ class ParticleSystem {
 
     <p>And our <code>Particle</code> class is complete!</p>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
 class Particle {
   PVector position;
   PVector velocity;
@@ -2256,9 +2408,9 @@ class Particle {
       <code>applyForce()</code> function? Where in the code is it appropriate to
       apply a force to a particle? The truth of the matter is that there’s no
       right or wrong answer; it really depends on the exact functionality and
-      goals of a particular p5 sketch. Still, we can create a generic
-      situation that would likely apply to most cases and craft a model for
-      applying forces to individual particles in a system.
+      goals of a particular p5 sketch. Still, we can create a generic situation
+      that would likely apply to most cases and craft a model for applying
+      forces to individual particles in a system.
     </p>
 
     <p>
@@ -2267,7 +2419,11 @@ class Particle {
       now: a force pointing down, like gravity.
     </p>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
 PVector gravity = new PVector(0,0.1);</pre
     >
 
@@ -2276,7 +2432,11 @@ PVector gravity = new PVector(0,0.1);</pre
       take a look at our <code>draw()</code> function as it stands.
     </p>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
 void draw() {
   background(100);
   ps.addParticle();
@@ -2297,7 +2457,11 @@ void draw() {
       force to all the individual particles:
     </p>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
 void draw() {
   background(100);
 
@@ -2325,7 +2489,11 @@ void draw() {
 
     <p>Now in code:</p>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
   void applyForce(PVector f) {
     for (Particle p : particles) {
       p.applyForce(f);
@@ -2361,7 +2529,11 @@ void draw() {
       <h5>Example 4.6: Particle system with forces</h5>
     </div>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
 ParticleSystem ps;
 
 void setup() {
@@ -2485,7 +2657,11 @@ class ParticleSystem {
       </li>
     </ol>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
 ParticleSystem ps;
 //{!1 .bold} New thing: we declare a Repeller object.
 Repeller repeller;
@@ -2518,7 +2694,11 @@ void draw() {
       the <code>Attractor</code> class from Chapter 2, Example 2.6 .
     </p>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
 class Repeller {
   //{!1 .bold} A Repeller doesn’t move, so you just need position.
   PVector position;
@@ -2589,7 +2769,11 @@ void applyRepeller(Repeller r) {
       <code>Attractor</code> class.
     </p>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
   // All the same steps we had to calculate an attractive force, only pointing in the opposite direction.
   PVector repel(Particle p) {
     // 1) Get force direction.
@@ -2633,7 +2817,11 @@ void applyRepeller(Repeller r) {
       <h5>Example 4.7: ParticleSystem with repeller</h5>
     </div>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
 // One ParticleSystem
 ParticleSystem ps;
 //{!1} One repeller
@@ -2768,8 +2956,8 @@ class Repeller {
     </p>
 
     <p>
-      Let’s try to create a smoke simulation in p5. Take a look at the
-      following two images:
+      Let’s try to create a smoke simulation in p5. Take a look at the following
+      two images:
     </p>
 
     <figure
@@ -2812,11 +3000,11 @@ class Repeller {
     <p>
       The good news here is that you get a lot of bang for very little buck.
       Before you write any code, however, you’ve got to make your image texture!
-      I recommend using PNG format, as p5 will retain the alpha channel
-      (i.e. transparency) when drawing the image, which is needed for blending
-      the texture as particles layer on top of each other. Once you’ve made your
-      PNG and deposited it in your sketch’s “data” folder, you are on your way
-      with just a few lines of code.
+      I recommend using PNG format, as p5 will retain the alpha channel (i.e.
+      transparency) when drawing the image, which is needed for blending the
+      texture as particles layer on top of each other. Once you’ve made your PNG
+      and deposited it in your sketch’s “data” folder, you are on your way with
+      just a few lines of code.
     </p>
 
     <a
@@ -2837,13 +3025,21 @@ class Repeller {
       <h5>Example 4.8: Image texture particle system</h5>
     </div>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
 PImage img;</pre
     >
 
     <p>Load the image in <code>setup()</code>.</p>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
 void setup() {
   //{!1} Loading the PNG
   img = loadImage("texture.png");
@@ -2855,7 +3051,11 @@ void setup() {
       instead of drawing an ellipse or rectangle.
     </p>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
   void render() {
     imageMode(CENTER);
     //{!1} Note how tint() is the image equivalent of shape’s fill().
@@ -2892,7 +3092,11 @@ void setup() {
       initial velocities as follows:
     </p>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
     float vx = randomGaussian() * 0.3;
     float vy = randomGaussian() * 0.3 - 1.0;
     vel = new PVector(vx, vy);</pre
@@ -2903,7 +3107,11 @@ void setup() {
       the mouse’s horizontal position.
     </p>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
 void draw() {
   background(0);
 
@@ -2969,8 +3177,8 @@ void draw() {
 
     <p>
       However, it’s possible to draw using other blend modes, and a much loved
-      blend mode for particle systems is “additive.” Additive blending in
-      p5 was pioneered by
+      blend mode for particle systems is “additive.” Additive blending in p5 was
+      pioneered by
       <a href="http://roberthodgin.com/">Robert Hodgin</a> in his famous
       particle system and forces exploration, Magnetosphere, which later became
       the iTunes visualizer. For more see:
@@ -2996,7 +3204,11 @@ void draw() {
 
     <div data-type="example"><h5>Example 4.9: Additive blending</h5></div>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
 void setup() {
   //{!1} Using the P2D renderer
   size(640, 360, P2D);
@@ -3008,7 +3220,11 @@ void setup() {
       <code>blendMode()</code>:
     </p>
 
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    <pre
+      data-code-language="javascript"
+      data-type="programlisting"
+      class="codesplit"
+    >
 void draw() {
   //{!1} Additive blending
   blendMode(ADD);
