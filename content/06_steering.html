@@ -2223,7 +2223,7 @@ if (distance > path.radius) {
 
     <p>
       In order to write the code for this, we’ll have to expand our
-      <code>Path</code> class to have an <code>ArrayList</code> of points
+      <code>Path</code> class to have an <code>Array</code> of points
       (rather than just two, a start and an end).
     </p>
 
@@ -2235,27 +2235,24 @@ if (distance > path.radius) {
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
  class Path {
 
-  //{!1} A Path is now an ArrayList of points (PVector objects).
-  ArrayList&lt;PVector&gt; points;
-  float radius;
-
-  Path() {
-    radius = 20;
-    points = new ArrayList&lt;PVector&gt;();
+  constructor() {
+    this.radius = 20;
+    //{!1} A Path is now an ArrayList of points (PVector objects).
+    this.points = [];
   }
 
   // This function allows us to add points to the path.
-  void addPoint(float x, float y) {   .
-    PVector point = new PVector(x,y);
-    points.add(point);
+  addPoint(x, y) {
+    const point = createVector(x,y);
+    this.points.add(point);
   }
 
   //{!9} Display the path as a series of points.
-  void display() {
+  display() {
     stroke(0);
     noFill();
     beginShape();
-    for (PVector v : points) {
+    for (let v of this.points) {
       vertex(v.x, v.y);
     }
     endShape();
@@ -2271,11 +2268,11 @@ if (distance > path.radius) {
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-for (int i = 0; i < p.points.size()-1; i++) {
-  PVector a = p.points.get(i);
-  PVector b = p.points.get(i+1);
+for (int i = 0; i < p.points.length-1; i++) {
+  const a = p.points[i];
+  const b = p.points[i+1];
   //{!1 .offset-top} Finding the normals for each line segment
-  PVector normalPoint = getNormalPoint(predictLoc, a, b);
+  const normalPoint = this.getNormalPoint(predictLoc, a, b);
 </pre
     >
 
@@ -2323,20 +2320,21 @@ for (int i = 0; i < p.points.size()-1; i++) {
     <div data-type="example"><h5>Example 6.6: Path following</h5></div>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-PVector target = null;
+const target = null;
 //{!1} Start with a very high record
 // that can easily be beaten.
-float worldRecord = 1000000;
+let worldRecord = 1000000;
 
-for (int i = 0; i < p.points.size()-1; i++) {
-  PVector a = p.points.get(i);
-  PVector b = p.points.get(i+1);
-  PVector normalPoint = getNormalPoint(predictLoc, a, b);
+for (int i = 0; i < p.points.length-1; i++) {
+  const a = p.points[i];
+  const b = p.points[i+1];
+  const normalPoint = this.getNormalPoint(predictLoc, a, b);
+
   if (normalPoint.x < a.x || normalPoint.x > b.x) {
     normalPoint = b.copy();
   }
 
-  float distance = PVector.dist(predictLoc, normalPoint);
+  const distance = p5.Vector.dist(predictLoc, normalPoint);
 
   //{!4} If we beat the record, then
   // this should be our target!
@@ -2603,20 +2601,20 @@ if (normalPoint.x < ____(____,____) || normalPoint.x > ____(____,____)) {
       A group is certainly not a new concept. We’ve done this before—in Chapter
       4, where we developed a framework for managing collections of particles in
       a <code>ParticleSystem</code> class. There, we stored a list of particles
-      in an <code>ArrayList</code>. We’ll do the same thing here: store a bunch
-      of <code>Vehicle</code> objects in an <code>ArrayList</code>.
+      in an <code>Array</code>. We’ll do the same thing here: store a bunch
+      of <code>Vehicle</code> objects in an <code>Array</code>.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 // Declare an ArrayList of Vehicle objects.
-ArrayList&lt;PVector&gt; vehicles;
+let vehicles;
 
 function setup() {
   //{!3} Initialize and fill the ArrayList
   // with a bunch of Vehicles.
-  vehicles = new ArrayList&lt;PVector&gt;;
-  for (int i = 0; i < 100; i++) {
-    vehicles.add(new Vehicle(random(width), random(height)));
+  vehicles = [];
+  for (let i = 0; i < 100; i++) {
+    vehicles.push(new Vehicle(random(width), random(height)));
   }
 }</pre
     >
@@ -2629,7 +2627,7 @@ function setup() {
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 function draw(){
-  for (Vehicle v : vehicles) {
+  for (let v of vehicles) {
     v.update();
     v.display();
   }
@@ -2684,7 +2682,7 @@ function draw(){
       Instead of having each element (particle or vehicle) operate on its own,
       we’re now saying, “Hey you, the vehicle! When it comes time for you to
       operate, you need to operate with an awareness of everyone else. So I’m
-      going to go ahead and pass you the <code>ArrayList</code> of everyone
+      going to go ahead and pass you the <code>Array</code> of everyone
       else.”
     </p>
 
@@ -2694,20 +2692,20 @@ function draw(){
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-ArrayList&lt;Vehicle&gt; vehicles;
+let vehicles;
 
 function setup() {
-  size(320, 240);
-  vehicles = new ArrayList&lt;PVector&gt;();
-  for (int i = 0; i < 100; i++) {
-    vehicles.add(new Vehicle(random(width), random(height)));
+  createCanvas(320, 240);
+  vehicles = [];
+  for (let i = 0; i < 100; i++) {
+    vehicles.push(new Vehicle(random(width), random(height)));
   }
 }
 
 function draw() {
   background(255);
 
-  for (Vehicle v : vehicles) {
+  for (let v of vehicles) {
     //{!1 .bold} This is really the only new thing we’re doing in this section.  We’re asking
     // a Vehicle object to examine all the other vehicles in the process of calculating a
     // separation force.
@@ -2757,11 +2755,11 @@ function draw() {
     <p>
       Let’s begin to write the code. As we just worked out, we’re writing a
       function called <code>separate()</code> that receives an
-      <code>ArrayList</code> of Vehicle objects as an argument.
+      <code>Array</code> of Vehicle objects as an argument.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-void separate (ArrayList&lt;PVector&gt; vehicles) {
+separate (vehicles) {
 
 }</pre
     >
@@ -2773,12 +2771,12 @@ void separate (ArrayList&lt;PVector&gt; vehicles) {
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   // This variable specifies how close is too close.
-  float desiredseparation = 20;
+  const desiredseparation = 20;
 
-  for (Vehicle other : vehicles) {
+  for (let other of vehicles) {
 
     //{!1 .offset} What is the distance between me and another Vehicle?
-    float d = PVector.dist(position, other.position);
+    const d = p5.Vector.dist(this.position, other.position);
 
     if ((d > 0) && (d < desiredseparation)) {
       // Any code here will be executed if the Vehicle is within 20 pixels.
@@ -2804,7 +2802,7 @@ void separate (ArrayList&lt;PVector&gt; vehicles) {
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
     if ((d > 0) && (d < desiredseparation)) {
       //{!2 .offset} A PVector pointing away from the other’s position
-      PVector diff = PVector.sub(position, other.position);
+      const diff = p5.Vector.sub(this.position, other.position);
       diff.normalize();
     }</pre
     >
@@ -2818,16 +2816,16 @@ void separate (ArrayList&lt;PVector&gt; vehicles) {
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   //{!1 .bold} Start with an empty PVector.
-  PVector sum = new PVector();
+  let sum = createVector();
 	//{.bold}
-  int count = 0;
+  let count = 0;
   // We have to keep track of how many Vehicles are too close.
-  for (Vehicle other : vehicles) {
+  for (let other of vehicles) {
 
-    float d = PVector.dist(position, other.position);
+    const d = p5.Vector.dist(this.position, other.position);
     if ((d > 0) && (d < desiredseparation)) {
 			//{!1 .bold}
-      PVector diff = PVector.sub(position, other.position);
+      const diff = p5.Vector.sub(this.position, other.position);
       diff.normalize();
       //{!1 .bold} Add all the vectors together and increment the count.
       sum.add(diff);
@@ -2846,8 +2844,8 @@ void separate (ArrayList&lt;PVector&gt; vehicles) {
     >
 
     <p>
-      Once we have the average vector (stored in the <code>PVector</code> object
-      “sum”), that <code>PVector</code> can be scaled to maximum speed and
+      Once we have the average vector (stored in the <code>p5.Vector</code> object
+      “sum”), that <code>p5.Vector</code> can be scaled to maximum speed and
       become our desired velocity—we <em>desire</em> to move in that direction
       at maximum speed! (In fact, we don't have to divide by count anymore since
       we are manually setting the magnitude.) And once we have the desired
@@ -2859,15 +2857,15 @@ void separate (ArrayList&lt;PVector&gt; vehicles) {
   if (count > 0) {
     //{!1} Scale average to maxspeed
     // (this becomes desired).
-    sum.setMag(maxspeed);
+    sum.setMag(this.maxspeed);
 
     //{!1} Reynolds’s steering formula
-    PVector steer = PVector.sub(sum, vel);
-    steer.limit(maxforce);
+    const steer = p5.Vector.sub(sum, vel);
+    steer.limit(this.maxforce);
 
     //{!1} Apply the force to the Vehicle’s
     // acceleration.
-    applyForce(steer);
+    this.applyForce(steer);
   }</pre
     >
 
@@ -2889,18 +2887,18 @@ void separate (ArrayList&lt;PVector&gt; vehicles) {
     </div>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-  void separate (ArrayList&lt;Vehicle&gt; vehicles) {
+  separate (vehicles) {
     //{!1 .bold} Note how the desired separation is based
     // on the Vehicle’s size.
-    float desiredseparation = r*2;
-    PVector sum = new PVector();
-    int count = 0;
-    for (Vehicle other : vehicles) {
-      float d = PVector.dist(position, other.position);
+    const desiredseparation = this.r*2;
+    let sum = createVector();
+    let count = 0;
+    for (let other of vehicles) {
+      const d = p5.Vector.dist(this.position, other.position);
       if ((d > 0) && (d < desiredseparation)) {
-        PVector diff = PVector.sub(position, other.position);
+        const diff = p5.Vector.sub(this.position, other.position);
         diff.normalize();
-        //{!1 .bold} What is the magnitude of the PVector
+        //{!1 .bold} What is the magnitude of the p5.Vector
         // pointing away from the other vehicle?
         // The closer it is, the more we should flee.
         // The farther, the less. So we divide
@@ -2912,10 +2910,10 @@ void separate (ArrayList&lt;PVector&gt; vehicles) {
       }
     }
     if (count > 0) {
-      sum.setMag(maxspeed);
-      PVector steer = PVector.sub(sum, vel);
-      steer.limit(maxforce);
-      applyForce(steer);
+      sum.setMag(this.maxspeed);
+      const steer = p5.Vector.sub(sum, vel);
+      steer.limit(this.maxforce);
+      this.applyForce(steer);
     }
 
   }</pre
