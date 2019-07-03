@@ -1107,13 +1107,18 @@ if (this.position.x > 25) {
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class FlowField {
 
-  // Declaring a 2D array of PVectors
-  PVector[][] field;
-  // How many columns and how many rows in the grid?
-  int cols, rows;
-  // Resolution of grid relative to window
-  // width and height in pixels
-  int resolution;</pre
+  constructor(){
+    // Resolution of grid relative to window
+    // width and height in pixels
+    this.resolution = ????;
+    // How many columns and how many rows in the grid?
+    this.cols = ????;
+    this.rows = ????;
+    this.resolution = ????;
+    // field will be a 2D array of vectors
+    this.field = [];
+  }
+  </pre
     >
 
     <a
@@ -1131,24 +1136,32 @@ class FlowField {
       Notice how we are defining a third variable called
       <code>resolution</code> above. What is this variable? Let’s say we have a
       p5 window that is 200 pixels wide by 200 pixels high. We could
-      make a flow field that has a <code>PVector</code> object for every single
-      pixel, or 40,000 <code>PVector</code><code>s</code> (200 * 200). This
+      make a flow field that has a <code>p5.Vector</code> object for every single
+      pixel, or 40,000 <code>p5.Vector</code><code>s</code> (200 * 200). This
       isn’t terribly unreasonable, but in our case, it’s overkill. We don’t need
-      a <code>PVector</code> for every single pixel; we can achieve the same
+      a <code>p5.Vector</code> for every single pixel; we can achieve the same
       effect by having, say, one every ten pixels (20 * 20 = 400). We use this
       resolution to define the number of columns and rows based on the size of
       the window divided by resolution:
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-  FlowField() {
-    resolution = 10;
+  constructor(){
+    this.resolution = 10;
     // Total columns equals width divided by resolution.
-    cols = width/resolution;
+    this.cols = width/this.resolution;
     //{!1} Total rows equals height divided by resolution.
-    rows = height/resolution;
-    field = new PVector[cols][rows];
-  }</pre
+    this.rows = height/this.resolution;
+    this.resolution = ????;
+    // field will be a 2D array of vectors
+    this.field = [];
+
+    // create a 2D array out of the field
+    for (let i = 0; i < this.cols; i++) {
+      this.field[i] = [];
+    }
+  }
+  </pre
     >
 
     <a
@@ -1173,10 +1186,10 @@ class FlowField {
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 //{!2} Using a nested loop to hit every column
 // and every row of the flow field
-for (int i = 0; i < cols; i++) {
-  for (int j = 0; j < rows; j++) {
+for (let i = 0; i < this.cols; i++) {
+  for (let j = 0; j < this.rows; j++) {
     //{!1} Arbitrary decision to make each vector point to the right
-    field[i][j] = new PVector(1, 0);
+    this.field[i][j] = createVector(1, 0);
   }
 }</pre
     >
@@ -1189,11 +1202,11 @@ for (int i = 0; i < cols; i++) {
     </figure>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-for (int i = 0; i < cols; i++) {
-  for (int j = 0; j < rows; j++) {
+for (let i = 0; i < this.cols; i++) {
+  for (let j = 0; j < this.rows; j++) {
 
     //{!1} A random PVector
-    field[i][j] = PVector.random2D();
+    this.field[i][j] = p5.Vector.random2D();
   }
 }</pre
     >
@@ -1212,13 +1225,13 @@ for (int i = 0; i < cols; i++) {
     </figure>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-float xoff = 0;
-for (int i = 0; i < cols; i++) {
-  float yoff = 0;
-  for (int j = 0; j < rows; j++) {
+let xoff = 0;
+for (let i = 0; i < this.cols; i++) {
+  let yoff = 0;
+  for (let j = 0; j < this.rows; j++) {
     //{!1 .offset-top} 2D Noise
-    float theta = map(noise(xoff, yoff),0, 1, 0, TWO_PI);
-    field[i][j] = new PVector(cos(theta), sin(theta));
+    const theta = map(noise(xoff, yoff),0, 1, 0, TWO_PI);
+    this.field[i][j] = createVector(cos(theta), sin(theta));
     yoff += 0.1;
   }
   xoff += 0.1;
@@ -1238,7 +1251,7 @@ for (int i = 0; i < cols; i++) {
       <h5>Exercise 6.6</h5>
 
       <p>
-        Write the code to calculate a <code>PVector</code> at every position in
+        Write the code to calculate a <code>p5.Vector</code> at every position in
         the flow field that points towards the center of a window.
       </p>
 
@@ -1252,9 +1265,9 @@ for (int i = 0; i < cols; i++) {
         data-type="programlisting"
         class="codesplit"
       >
-PVector v = new PVector(____________,____________);
+const v = createVector(____________,____________);
 v.______________();
-field[i][j] = v;</pre
+this.field[i][j] = v;</pre
       >
     </div>
 
@@ -1262,14 +1275,14 @@ field[i][j] = v;</pre
       Now that we have a two-dimensional array storing all of the flow field
       vectors, we need a way for a vehicle to look up its desired vector in the
       flow field. Let’s say we have a vehicle that lives at a
-      <code>PVector</code>: its position. We first need to divide by the
+      <code>p5.Vector</code>: its position. We first need to divide by the
       resolution of the grid. For example, if the resolution is 10 and the
       vehicle is at <em>(100,50)</em>, we need to look up column 10 and row 5.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-int column = int(position.x/resolution);
-int row = int(position.y/resolution);</pre
+const column = int(this.position.x/this.resolution);
+const row = int(this.position.y/this.resolution);</pre
     >
 
     <a
@@ -1283,18 +1296,19 @@ int row = int(position.y/resolution);</pre
       make sure we don’t look outside of the flow field array. Here is a
       function we’ll call <code>lookup()</code> that goes in the
       <code>FlowField</code> class—it receives a
-      <code>PVector</code> (presumably the position of our vehicle) and returns
-      the corresponding flow field <code>PVector</code> for that position.
+      <code>p5.Vector</code> (presumably the position of our vehicle) and returns
+      the corresponding flow field <code>p5.Vector</code> for that position.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-  PVector lookup(PVector lookup) {
+  lookup(lookup) {
     //{!2 .offset-top} Using constrain()
-    int column = int(constrain(lookup.x/resolution, 0, cols-1));
-    int row = int(constrain(lookup.y/resolution, 0, rows-1));
+    let column = Math.floor(constrain(lookup.x / this.resolution, 0, this.cols - 1));
+    let row = Math.floor(constrain(lookup.y / this.resolution, 0, this.rows - 1));
+    
     //{!1} Note the use of copy() to ensure
     // we return a copy of the PVector.
-    return field[column][row].copy();
+    return this.field[column][row].copy();
   }</pre
     >
 
@@ -1306,41 +1320,53 @@ int row = int(position.y/resolution);</pre
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class FlowField {
 
-  //{!1} A flow field is a two-dimensional array of PVectors.
-  PVector[][] field;
-  int cols, rows;
-  int resolution;
-
-  FlowField(int r) {
-    resolution = r;
+  constructor(r) {
+    this.resolution = r;
     //{!2} Determine the number of columns and rows.
-    cols = width/resolution;
-    rows = height/resolution;
-    field = new PVector[cols][rows];
+    this.cols = width/this.resolution;
+    this.rows = height/this.resolution;
+    //{!1} A flow field is a two-dimensional array of PVectors.
+    this.field = this.make2Darray(this.cols);
     init();
   }
 
-  void init() {
-    float xoff = 0;
-    for (int i = 0; i &lt; cols; i++) {
-      float yoff = 0;
-      for (int j = 0; j &lt; rows; j++) {
+  // we make a function to create our 2D array
+  make2Darray(n) {
+    let array = [];
+    for (let i = 0; i < n; i++) {
+      array[i] = [];
+    }
+    return array;
+  }
+
+  // we use this init() function to fill our 2D array
+  init() {
+    // Reseed noise so we get a new flow field every time
+    // Need to get noise working
+    noiseSeed(Math.floor(random(10000)));
+    let xoff = 0;
+    for (let i = 0; i < this.cols; i++) {
+      let yoff = 0;
+      for (let j = 0; j < this.rows; j++) {
         //{.code-wide} In this example, we use Perlin noise to seed the vectors.
-        float theta = map(noise(xoff, yoff),0, 1, 0, TWO_PI);
-        //{.code-wide} Polar to Cartesian coordinate transformation to get x and y components of the vector
-        field[i][j] = new PVector(cos(theta), sin(theta));
+        let theta = map(noise(xoff, yoff), 0, 1, 0, TWO_PI);
+        //let theta = map(sin(xoff)+cos(yoff),-2,2,0,TWO_PI);
+        // Polar to cartesian coordinate transformation to get x and y components of the vector
+        this.field[i][j] = createVector(cos(theta), sin(theta));
         yoff += 0.1;
       }
       xoff += 0.1;
     }
   }
 
-  //{.code-wide} A function to return a PVector based on a position
-  PVector lookup(PVector lookup) {
-    int column = int(constrain(lookup.x/resolution, 0, cols-1));
-    int row = int(constrain(lookup.y/resolution, 0, rows-1));
-    return field[column][row].copy();
+  //{.code-wide} A function to return a p5.Vector based on a position
+  lookup(lookup) {
+    let column = Math.floor(constrain(lookup.x / this.resolution, 0, this.cols - 1));
+    let row = Math.floor(constrain(lookup.y / this.resolution, 0, this.rows - 1));
+    //println(lookup.x);
+    return this.field[column][row].copy();
   }
+
 }</pre
     >
 
@@ -1364,15 +1390,15 @@ class FlowField {
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Vehicle {
 
-  void follow(FlowField flow) {
+  follow(flow) {
     // What is the vector at that spot in the flow field?
-    PVector desired = flow.lookup(position);
-    desired.mult(maxspeed);
+    const desired = flow.lookup(this.position);
+    desired.mult(this.maxspeed);
 
     //{!3} Steering is desired minus velocity
-    PVector steer = PVector.sub(desired, velocity);
-    steer.limit(maxforce);
-    applyForce(steer);
+    const steer = p5.Vector.sub(desired, this.velocity);
+    steer.limit(this.maxforce);
+    this.applyForce(steer);
   }</pre
     >
 
@@ -1380,7 +1406,7 @@ class Vehicle {
       <h5>Exercise 6.7</h5>
 
       <p>
-        Adapt the flow field example so that the <code>PVector</code
+        Adapt the flow field example so that the <code>p5.Vector</code
         ><code>s</code> change over time. (Hint: try using the third dimension
         of Perlin noise!)
       </p>
@@ -1390,8 +1416,8 @@ class Vehicle {
       <h5>Exercise 6.8</h5>
 
       <p>
-        Can you seed a flow field from a <code>PImage</code>? For example, try
-        having the <code>PVector</code><code>s</code> point from dark to light
+        Can you seed a flow field from a <code>p5.Image</code>? For example, try
+        having the <code>p5.Vector</code><code>s</code> point from dark to light
         colors (or vice versa).
       </p>
     </div>
@@ -1486,22 +1512,22 @@ class Vehicle {
     <p>In p5, this would translate to:</p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-PVector a = new PVector(-3, 5);
-PVector b = new PVector(10, 1);
+const a = createVector(-3, 5);
+const b = createVector(10, 1);
 
-// The PVector class includes a
+// The p5.Vector class includes a
 // function to calculate the dot product.
-float n = a.dot(b);</pre
+const n = a.dot(b);</pre
     >
 
     <p>
-      And if we were to look in the guts of the <code>PVector</code> source,
+      And if we were to look in the guts of the <code>p5.Vector</code> source,
       we’d find a pretty simple implementation of this function:
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-public float dot(PVector v) {
-  return x*v.x + y*v.y + z*v.z;
+function dot(v) {
+  return this.x*v.x + this.y*v.y + this.z*v.z;
 }</pre
     >
 
@@ -1613,9 +1639,9 @@ public float dot(PVector v) {
     <p>The p5 version of this would be:</p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-PVector a = new PVector(10, 2);
-PVector b = new PVector(4, -3);
-float theta = acos(a.dot(b) / (a.mag() * b.mag()));</pre
+const a = createVector(10, 2);
+const b = createVector(4, -3);
+const theta = acos(a.dot(b) / (a.mag() * b.mag()));</pre
     >
 
     <p>
@@ -1624,9 +1650,9 @@ float theta = acos(a.dot(b) / (a.mag() * b.mag()));</pre
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-  static public float angleBetween(PVector v1, PVector v2) {
-    float dot = v1.dot(v2);
-    float theta = (float) Math.acos(dot / (v1.mag() * v2.mag()));
+  function angleBetween(v1, v2) {
+    const dot = v1.dot(v2);
+    const theta = Math.acos(dot / (v1.mag() * v2.mag()));
     return theta;
   }</pre
     >
@@ -1641,7 +1667,7 @@ float theta = acos(a.dot(b) / (a.mag() * b.mag()));</pre
 
       <p>
         Create a sketch that displays the angle between two
-        <code>PVector</code> objects.
+        <code>p5.Vector</code> objects.
       </p>
 
       <figure>
@@ -1754,28 +1780,23 @@ float theta = acos(a.dot(b) / (a.mag() * b.mag()));</pre
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Path {
 
-  //{!2} A path is only two points, start and end.
-  PVector start;
-  PVector end;
-
-  // A path has a radius, i.e. how wide it is.
-  float radius;
-
-  Path() {
+  constructor() {
+    // A path has a radius, i.e. how wide it is.
     //{!3} Picking some arbitrary values to initialize the path
-    radius = 20;
-    start = new PVector(0, height/3);
-    end = new PVector(width, 2*height/3);
+    this.radius = 20;
+    this.start = createVector(0, height/3);
+    //{!2} A path is only two points, start and end.
+    this.end = createVector(width, 2*height/3);
   }
 
   //{!7} Display the path.
-  void display() {
-    strokeWeight(radius*2);
+  display() {
+    strokeWeight(this.radius*2);
     stroke(0, 100);
-    line(start.x, start.y, end.x, end.y);
+    line(this.start.x, this.start.y, this.end.x, this.end.y);
     strokeWeight(1);
     stroke(0);
-    line(start.x, start.y, end.x, end.y);
+    line(this.start.x, this.start.y, this.end.x, this.end.y);
   }
 }</pre
     >
@@ -1797,7 +1818,7 @@ class Path {
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 // Start by making a copy of the velocity.
-PVector predict = vel.copy();
+const predict = vel.copy();
 
 //{!2} Normalize it and look 25 pixels
 // ahead by scaling the vector up.
@@ -1806,7 +1827,7 @@ predict.mult(25);
 
 // Add vector to position to find the
 // predicted position.
-PVector predictLoc = PVector.add(loc, predict);</pre
+const predictLoc = p5.Vector.add(this.position, predict);</pre
     >
 
     <a
@@ -1843,7 +1864,7 @@ PVector predictLoc = PVector.add(loc, predict);</pre
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-PVector a = PVector.sub(predictLoc, path.start);</pre
+const a = p5.Vector.sub(predictLoc, path.start);</pre
     >
 
     <p>
@@ -1853,7 +1874,7 @@ PVector a = PVector.sub(predictLoc, path.start);</pre
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-PVector b = PVector.sub(path.end, path.start);</pre
+const b = p5.Vector.sub(path.end, path.start);</pre
     >
 
     <p>
@@ -1873,14 +1894,14 @@ PVector b = PVector.sub(path.end, path.start);</pre
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 //{!1} The distance from START to NORMAL
-float d = a.mag() * cos(theta);
+const d = a.mag() * cos(theta);
 b.normalize();
 // Scale PVector b to that distance.
 b.mult(d);
 // The normal point can be found by adding
 // the scaled version of b to the path’s
 // starting point.
-PVector normalPoint = PVector.add(path.start, b);</pre
+const normalPoint = p5.Vector.add(path.start, b);</pre
     >
 
     <p>
@@ -1890,10 +1911,10 @@ PVector normalPoint = PVector.add(path.start, b);</pre
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 // What is theta?  The angle between A and B
-float theta = PVector.angleBetween(a, b);
+const theta = p5.Vector.angleBetween(a, b);
 b.normalize();
 b.mult(a.mag() * cos(theta));
-PVector normalPoint = PVector.add(path.start, b);</pre
+const normalPoint = p5.Vector.add(path.start, b);</pre
     >
 
     <p>
@@ -1936,13 +1957,13 @@ b.normalize();</pre
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 //{{!1} .line-through}
-float theta = PVector.angleBetween(a, b);
+const theta = p5.Vector.angleBetween(a, b);
 
 b.normalize();
 // We can use the dot product to scale b’s length.
 b.mult(a.dot(b));
 
-PVector normalPoint = PVector.add(path.start, b);</pre
+const normalPoint = p5.Vector.add(path.start, b);</pre
     >
 
     <a data-primary="scalar projection" data-type="indexterm"></a>
@@ -1980,7 +2001,7 @@ PVector normalPoint = PVector.add(path.start, b);</pre
     </figure>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-float distance = PVector.dist(predictLoc, normalPoint);
+const distance = p5.Vector.dist(predictLoc, normalPoint);
 
 // If the vehicle is outside the path,
 // seek the target.
@@ -1988,7 +2009,7 @@ if (distance > path.radius) {
   //{!1} We don’t have to work out the desired velocity and
   // steering force; all that is taken care of by seek(),
   // which we already wrote in Example 6.1.
-  seek(target);
+  this.seek(target);
 }</pre
     >
 
@@ -2008,10 +2029,10 @@ if (distance > path.radius) {
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-float distance = PVector.dist(predictLoc, normalPoint);
+const distance = p5.Vector.dist(predictLoc, normalPoint);
 if (distance > path.radius) {
   //{!1} Seek the normal point on the path.
-  seek(normalPoint);
+  this.seek(normalPoint);
 }</pre
     >
 
@@ -2027,16 +2048,16 @@ if (distance > path.radius) {
     </figure>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-float distance = PVector.dist(predictLoc, normalPoint);
+const distance = p5.Vector.dist(predictLoc, normalPoint);
 if (distance > path.radius) {
   //{!2} Normalize and scale b (pick 25 pixels arbitrarily).
   b.normalize();
   b.mult(25);
   //{!1} By adding b to normalPoint, we now move
   // 25 pixels ahead on the path.
-  PVector target = PVector.add(normalPoint, b);
+  const target = p5.Vector.add(normalPoint, b);
 
-  seek(target);
+  this.seek(target);
 }</pre
     >
 
@@ -2056,31 +2077,31 @@ if (distance > path.radius) {
     <div data-type="example"><h5>Example 6.5: Simple path following</h5></div>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-  void follow(Path p) {
+  follow(p) {
 
     //{!4} Step 1: Predict the vehicle’s future position.
-    PVector predict = vel.copy();
+    const predict = this.velocity.copy();
     predict.normalize();
     predict.mult(25);
-    PVector predictLoc = PVector.add(loc, predict);
+    const predictLoc = p5.Vector.add(loc, predict);
 
     //{!3} Step 2: Find the normal point along the path.
-    PVector a = p.start;
-    PVector b = p.end;
-    PVector normalPoint = getNormalPoint(predictLoc, a, b);
+    const a = p.start;
+    const b = p.end;
+    const normalPoint = this.getNormalPoint(predictLoc, a, b);
 
     //{!4} Step 3: Move a little further along the path and set a target.
-    PVector dir = PVector.sub(b, a);
+    const dir = p5.Vector.sub(b, a);
     dir.normalize();
     dir.mult(10);
-    PVector target = PVector.add(normalPoint, dir);
+    const target = p5.Vector.add(normalPoint, dir);
 
     //{!5} Step 4: If we are off the path,
     // seek that target in order to stay on the path.
-    float distance =
-      PVector.dist(normalPoint, predictLoc);
+    const distance =
+      p5.Vector.dist(normalPoint, predictLoc);
     if (distance > p.radius) {
-      seek(target);
+      this.seek(target);
     }
   }</pre
     >
@@ -2102,17 +2123,17 @@ if (distance > path.radius) {
     </figure>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-  PVector getNormalPoint(PVector p, PVector a, PVector b) {
-    // PVector that points from a to p
-    PVector ap = PVector.sub(p, a);
-    // PVector that points from a to b
-    PVector ab = PVector.sub(b, a);
+  getNormalPoint(p, a, b) {
+    // p5.Vector that points from a to p
+    const ap = p5.Vector.sub(p, a);
+    // p5.Vector that points from a to b
+    const ab = p5.Vector.sub(b, a);
 
     // Using the dot product for scalar projection
     ab.normalize();
     ab.mult(ap.dot(ab));
     //{!1} Finding the normal point along the line segment
-    PVector normalPoint = PVector.add(a, ab);
+    const normalPoint = p5.Vector.add(a, ab);
 
     return normalPoint;
   }</pre
