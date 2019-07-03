@@ -2979,8 +2979,8 @@ separate (vehicles) {
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-  PVector wind = new PVector(0.001, 0);
-  PVector gravity = new PVector(0, 0.1);
+  const wind = createVector(0.001, 0);
+  const gravity = createVector(0, 0.1);
   mover.applyForce(wind);
   mover.applyForce(gravity);</pre
     >
@@ -3015,9 +3015,9 @@ separate (vehicles) {
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-void applyBehaviors(ArrayList&lt;Vehicle&gt; vehicles) {
-  separate(vehicles);
-  seek(new PVector(mouseX, mouseY));
+applyBehaviors(vehicles) {
+  this.separate(vehicles);
+  this.seek(createVector(mouseX, mouseY));
 }</pre
     >
 
@@ -3032,27 +3032,27 @@ void applyBehaviors(ArrayList&lt;Vehicle&gt; vehicles) {
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-  void applyBehaviors(ArrayList&lt;Vehicle&gt; vehicles) {
-    PVector separate = separate(vehicles);
-    PVector seek = seek(new PVector(mouseX,mouseY));
+  applyBehaviors(vehicles) {
+    const separate = this.separate(vehicles);
+    const seek = this.seek(createVector(mouseX,mouseY));
     //{!2} We have to apply the force here since seek() and separate() no longer do so.
-    applyForce(separate);
-    applyForce(seek);
+    this.applyForce(separate);
+    this.applyForce(seek);
   }</pre
     >
 
     <p>Let’s look at how the seek function changed.</p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-  PVector seek(PVector target) {
-    PVector desired = PVector.sub(target,loc);
+  seek(target) {
+    const desired = p5.Vector.sub(target,loc);
     desired.normalize();
-    desired.mult(maxspeed);
-    PVector steer = PVector.sub(desired,vel);
-    steer.limit(maxforce);
+    desired.mult(this.maxspeed);
+    const steer = p5.Vector.sub(desired,vel);
+    steer.limit(this.maxforce);
 
     //{!1 .line-through}
-    applyForce(steer);
+    this.applyForce(steer);
 		//{!1} Instead of applying the force we return the PVector.
     return steer;
   }</pre
@@ -3076,16 +3076,16 @@ void applyBehaviors(ArrayList&lt;Vehicle&gt; vehicles) {
     </div>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-void applyBehaviors(ArrayList&lt;Vehicle&gt; vehicles) {
-  PVector separate = separate(vehicles);
-  PVector seek = seek(new PVector(mouseX,mouseY));
+applyBehaviors(vehicles) {
+  const separate = this.separate(vehicles);
+  const seek = this.seek(createVector(mouseX,mouseY));
   //{!2 .bold} These values can be whatever you want them to be!
   // They can be variables that are customized for
   // each vehicle, or they can change over time.
   separate.mult(1.5);
   seek.mult(0.5);
-  applyForce(separate);
-  applyForce(seek);
+  this.applyForce(separate);
+  this.applyForce(seek);
 }</pre
     >
 
@@ -3225,11 +3225,11 @@ void applyBehaviors(ArrayList&lt;Vehicle&gt; vehicles) {
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-  void flock(ArrayList&lt;Boid&gt; boids) {
+  flock(boids) {
     //{!3} The three flocking rules
-    PVector sep = separate(boids);
-    PVector ali = align(boids);
-    PVector coh = cohesion(boids);
+    const sep = this.separate(boids);
+    const ali = this.align(boids);
+    const coh = this.cohesion(boids);
 
     //{!3} Arbitrary weights for these forces
     // (Try different ones!)
@@ -3238,9 +3238,9 @@ void applyBehaviors(ArrayList&lt;Vehicle&gt; vehicles) {
     coh.mult(1.0);
 
     //{!3} Applying all the forces
-    applyForce(sep);
-    applyForce(ali);
-    applyForce(coh);
+    this.applyForce(sep);
+    this.applyForce(ali);
+    this.applyForce(coh);
   }</pre
     >
 
@@ -3265,24 +3265,24 @@ void applyBehaviors(ArrayList&lt;Vehicle&gt; vehicles) {
     ></a>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-  PVector align (ArrayList&lt;Boid&gt; boids) {
+  align (boids) {
     // Add up all the velocities
     // and divide by the total
     // to calculate the average velocity.
-    PVector sum = new PVector(0,0);
-    for (Boid other : boids) {
+    const sum = createVector(0,0);
+    for (let other of boids) {
       sum.add(other.velocity);
     }
-    sum.div(boids.size());
+    sum.div(boids.length);
 
     // We desire to go in that
     // direction at maximum speed.
-    sum.setMag(maxspeed);
+    sum.setMag(this.maxspeed);
 
     //{!3} Reynolds’s steering
     // force formula
-    PVector steer = PVector.sub(sum,velocity);
-    steer.limit(maxforce);
+    const steer = p5.Vector.sub(sum,velocity);
+    steer.limit(this.maxforce);
     return steer;
   }</pre
     >
@@ -3330,14 +3330,14 @@ void applyBehaviors(ArrayList&lt;Vehicle&gt; vehicles) {
     ></a>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-  PVector align (ArrayList&lt;Boid&gt; boids) {
+  align (boids) {
     //{!1} This is an arbitrary value and could
     // vary from boid to boid.
-    float neighbordist = 50;
-    PVector sum = new PVector(0,0);
-    int count = 0;
-    for (Boid other : boids) {
-      float d = PVector.dist(position,other.position);
+    const neighbordist = 50;
+    const sum = createVector(0,0);
+    let count = 0;
+    for (let other of boids) {
+      const d = p5.Vector.dist(this.position,other.position);
       if ((d > 0) && (d < neighbordist)) {
         sum.add(other.velocity);
         //{!1} For an average, we need to keep track of
@@ -3346,14 +3346,14 @@ void applyBehaviors(ArrayList&lt;Vehicle&gt; vehicles) {
       }
     }
     if (count > 0) {
-      sum.setMag(maxspeed);
-      PVector steer = PVector.sub(sum,velocity);
-      steer.limit(maxforce);
+      sum.setMag(this.maxspeed);
+      const steer = p5.Vector.sub(sum, this.velocity);
+      steer.limit(this.maxforce);
       return steer;
     //{!3} If we don’t find any close boids,
     // the steering force is zero.
     } else {
-      return new PVector(0,0);
+      return createVector(0,0);
     }
   }</pre
     >
@@ -3391,12 +3391,12 @@ void applyBehaviors(ArrayList&lt;Vehicle&gt; vehicles) {
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-  PVector cohesion (ArrayList&lt;Boid&gt; boids) {
-    float neighbordist = 50;
-    PVector sum = new PVector(0, 0);
-    int count = 0;
-    for (Boid other : boids) {
-      float d = PVector.dist(position, other.position);
+  cohesion (boids) {
+    const neighbordist = 50;
+    const sum = createVector(0, 0);
+    let count = 0;
+    for (let other of boids) {
+      const d = p5.Vector.dist(this.position, other.position);
       if ((d > 0) && (d < neighbordist)) {
         //{!2} Adding up all the others’ positions
         sum.add(other.position);
@@ -3409,9 +3409,9 @@ void applyBehaviors(ArrayList&lt;Vehicle&gt; vehicles) {
       // wrote in Example 6.8.  The target
       // we seek is the average position of
       // our neighbors.
-      return seek(sum);
+      return this.seek(sum);
     } else {
-      return new PVector(0, 0);
+      return createVector(0, 0);
     }
   }</pre
     >
@@ -3422,27 +3422,26 @@ void applyBehaviors(ArrayList&lt;Vehicle&gt; vehicles) {
       <code>ParticleSystem</code> class we wrote in Chapter 4 with only one tiny
       change: When we call <code>run()</code> on each <code>Boid</code> object
       (as we did to each <code>Particle</code> object), we’ll pass in a
-      reference to the entire <code>ArrayList</code> of boids.
+      reference to the entire <code>Array</code> of boids.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-class Flock {
-  ArrayList&lt;Boid&gt; boids;
-
-  Flock() {
-    boids = new ArrayList&lt;Boid&gt;();
+Flock {
+  
+  constructor() {
+    this.boids = [];
   }
 
-  void run() {
-    for (Boid b : boids) {
+  run() {
+    for (let b of this.boids) {
       //{!1 .bold} Each Boid object must know about
       // all the other Boids.
-      b.run(boids);
+      b.run(this.boids);
     }
   }
 
-  void addBoid(Boid b) {
-    boids.add(b);
+  addBoid(b) {
+    this.boids.push(b);
   }
 }</pre
     >
@@ -3462,13 +3461,13 @@ class Flock {
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 //{!1} A Flock object manages the
 // entire group.
-Flock flock;
+let flock;
 
 function setup() {
-  size(300, 200);
+  createCanvas(300, 200);
   flock = new Flock();
-  for (int i = 0; i < 100; i++) {
-    Boid b = new Boid(width/2,height/2);
+  for (let i = 0; i < 100; i++) {
+    const b = new Boid(width/2,height/2);
     //{!1} The Flock starts out with 100 Boids.
     flock.addBoid(b);
   }
@@ -3690,24 +3689,24 @@ function draw() {
       <a href="http://www.red3d.com/cwr/papers/2000/pip.pdf"
         >“Interaction with Groups of Autonomous Characters”</a
       >. How do we implement such an algorithm in p5? One way is to keep
-      multiple <code>ArrayList</code><code>s</code>. One
-      <code>ArrayList</code> would keep track of all the boids, just like in our
+      multiple <code>Array</code><code>s</code>. One
+      <code>Array</code> would keep track of all the boids, just like in our
       flocking example.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-ArrayList&lt;Boid&gt; boids;</pre
+let boids;</pre
     >
 
     <p>
-      In addition to that <code>ArrayList</code>, we store an additional
+      In addition to that <code>Array</code>, we store an additional
       reference to each <code>Boid</code> object in a two-dimensional
-      <code>ArrayList</code>. For each cell in the grid, there is an
-      <code>ArrayList</code> that tracks the objects in that cell.
+      <code>Array</code>. For each cell in the grid, there is an
+      <code>Array</code> that tracks the objects in that cell.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-ArrayList&lt;Boid&gt;[][] grid;</pre
+let grid;</pre
     >
 
     <p>
@@ -3716,9 +3715,9 @@ ArrayList&lt;Boid&gt;[][] grid;</pre
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-int column = int(boid.x) / resolution;
-int row    = int(boid.y) / resolution;
-grid[column][row].add(boid);</pre
+const column = int(boid.x) / this.resolution;
+const row    = int(boid.y) / this.resolution;
+grid[column][row] = boid;</pre
     >
 
     <p>
@@ -3732,8 +3731,8 @@ grid[column][row].add(boid);</pre
     </div>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-int column = int(boid.x) / resolution;
-int row    = int(boid.y) / resolution;
+const column = int(boid.x) / this.resolution;
+const row    = int(boid.y) / this.resolution;
 boid.flock(boids);
 // Instead of looking at all
 // the boids, just this cell
@@ -3802,7 +3801,7 @@ boid.flock(grid[column][row]);</pre
         data-type="programlisting"
         class="codesplit"
       >
-float mag() {
+function mag() {
   return sqrt(x*x + y*y);
 }</pre
       >
@@ -3846,7 +3845,7 @@ if (v.magSq() > 100) {
         data-type="programlisting"
         class="codesplit"
       >
-float magSq() {
+function magSq() {
   return x*x + y*y;
 }</pre
       >
@@ -3878,12 +3877,11 @@ float magSq() {
 
       <p>
         Same as magnitude, but without the square root. In the case of a single
-        <code>PVector</code> object, this will never make a significant
+        <code>p5.Vector</code> object, this will never make a significant
         difference on a p5 sketch. However, if you are computing the
-        magnitude of thousands of <code>PVector</code> objects each time through
+        magnitude of thousands of <code>p5.Vector</code> objects each time through
         <code>draw()</code>, using <code>magSq()</code> instead of
-        <code>mag()</code> could help your code run a wee bit faster. (Note:
-        <code>magSq()</code> is only available in p5 2.0a1 or later.)
+        <code>mag()</code> could help your code run a wee bit faster.
       </p>
     </section>
 
@@ -3921,7 +3919,7 @@ float magSq() {
         class="codesplit"
       >
 function draw() {
-  for (int i = 0; i < 10000; i++) {
+  for (let i = 0; i < 10000; i++) {
     print(sin(PI));
   }
 }</pre
@@ -3945,9 +3943,9 @@ function draw() {
         data-type="programlisting"
         class="codesplit"
       >
-float sinvalues[] = new float[360];
-float cosvalues[] = new float[360];
-for (int i = 0; i < 360; i++) {
+let sinvalues = [];
+let cosvalues = [];
+for (let i = 0; i < 360; i++) {
   sinvalues[i] = sin(radians(i));
   cosvalues[i] = cos(radians(i));
 }</pre
@@ -3960,8 +3958,8 @@ for (int i = 0; i < 360; i++) {
         data-type="programlisting"
         class="codesplit"
       >
-int angle = int(degrees(PI));
-float answer = sinvalues[angle];</pre
+const angle = int(degrees(PI));
+const answer = sinvalues[angle];</pre
       >
 
       <p>
@@ -3976,7 +3974,7 @@ float answer = sinvalues[angle];</pre
       data-type="sect2"
       id="_3_making_gajillions_of_unnecessary_pvector_objects"
     >
-      <h3>3) Making gajillions of unnecessary PVector objects</h3>
+      <h3>3) Making gajillions of unnecessary p5.Vector objects</h3>
 
       <a
         data-primary="efficiency"
@@ -3997,7 +3995,7 @@ float answer = sinvalues[angle];</pre
       <p>
         I have to admit, I am perhaps the biggest culprit of this last note. In
         fact, in the interest of writing clear and understandable examples, I
-        often choose to make extra <code>PVector</code> objects when I
+        often choose to make extra <code>p5.Vector</code> objects when I
         absolutely do not need to. For the most part, this is not a problem at
         all. But sometimes, it can be. Let’s take a look at an example.
       </p>
@@ -4008,29 +4006,28 @@ float answer = sinvalues[angle];</pre
         class="codesplit"
       >
 function draw() {
-  for (Vehicle v : vehicles) {
-   PVector mouse = new PVector(mouseX, mouseY);
+  for (let v of vehicles) {
+   const mouse = createVector(mouseX, mouseY);
    v.seek(mouse);
   }
 }</pre
       >
 
       <p>
-        Let’s say our <code>ArrayList</code> of vehicles has one thousand
+        Let’s say our <code>Array</code> of vehicles has one thousand
         vehicles in it. We just made one thousand new
-        <code>PVector</code> objects every single time through
+        <code>p5.Vector</code> objects every single time through
         <code>draw()</code>. Now, on any ol’ laptop or desktop computer you’ve
         purchased in recent times, your sketch will likely not register a
         complaint, run slowly, or have any problems. After all, you’ve got tons
-        of RAM, and Java will be able to handle making a thousand or so
+        of RAM, and JavaScript will be able to handle making a thousand or so
         temporary objects and dispose of them without much of a problem.
       </p>
 
       <p>
-        If your numbers grow larger (and they easily could) or perhaps more
-        likely, if you are working with p5 on Android, you will almost
+        If your numbers grow larger (and they easily could) you will almost
         certainly run into a problem. In cases like this you want to look for
-        ways to reduce the number of <code>PVector</code> objects you make. An
+        ways to reduce the number of <code>p5.Vector</code> objects you make. An
         obvious fix for the above code is:
       </p>
 
@@ -4040,16 +4037,16 @@ function draw() {
         class="codesplit"
       >
 function draw() {
-  PVector mouse = new PVector(mouseX, mouseY);
-  for (Vehicle v : vehicles) {
+  const mouse = createVector(mouseX, mouseY);
+  for (let v of vehicles) {
    v.seek(mouse);
   }
 }</pre
       >
 
       <p>
-        Now you’ve made just one <code>PVector</code> instead of one thousand.
-        Even better, you could turn the <code>PVector</code> into a global
+        Now you’ve made just one <code>p5.Vector</code> instead of one thousand.
+        Even better, you could turn the <code>p5.Vector</code> into a global
         variable and just assign the <code>x</code> and <code>y</code> value:
       </p>
 
@@ -4058,19 +4055,19 @@ function draw() {
         data-type="programlisting"
         class="codesplit"
       >
-PVector mouse = new PVector();
+const mouse = createVector();
 
 function draw() {
   mouse.x = mouseX;
   mouse.y = mouseY;
-  for (Vehicle v : vehicles) {
+  for (let v of vehicles) {
    v.seek(mouse);
   }
 }</pre
       >
 
       <p>
-        Now you never make a new <code>PVector</code>; you use just one over the
+        Now you never make a new <code>p5.Vector</code>; you use just one over the
         length of your sketch!
       </p>
 
@@ -4085,20 +4082,20 @@ function draw() {
         data-type="programlisting"
         class="codesplit"
       >
-    PVector desired = PVector.sub(target, position);
+    const desired = p5.Vector.sub(target, this.position);
     desired.normalize();
-    desired.mult(maxspeed);
+    desired.mult(this.maxspeed);
 
-    //{!1 .bold} Create a new PVector to store the steering force.
-    PVector steer = PVector.sub(desired,velocity);
-    steer.limit(maxforce);
+    //{!1 .bold} Create a new p5.Vector to store the steering force.
+    const steer = p5.Vector.sub(desired,this.velocity);
+    steer.limit(this.maxforce);
     return steer;</pre
       >
 
       <p>
-        See how we’ve made two <code>PVector</code> objects? First, we figure
+        See how we’ve made two <code>p5.Vector</code> objects? First, we figure
         out the desired vector, then we calculate the steering force. Notice how
-        we could rewrite this to create only one <code>PVector</code>.
+        we could rewrite this to create only one <code>p5.Vector</code>.
       </p>
 
       <pre
@@ -4106,20 +4103,20 @@ function draw() {
         data-type="programlisting"
         class="codesplit"
       >
-    PVector desired = PVector.sub(target, position);
+    const desired = p5.Vector.sub(target, this.position);
     desired.normalize();
-    desired.mult(maxspeed);
+    desired.mult(this.maxspeed);
 
     //{!3 .bold} Calculate the steering force in the desired PVector.
-    desired.sub(velocity);
-    desired.limit(maxforce);
+    desired.sub(this.velocity);
+    desired.limit(this.maxforce);
     return desired;</pre
       >
 
       <p>
-        We don’t actually need a second <code>PVector</code> called
+        We don’t actually need a second <code>p5.Vector</code> called
         <code>steer</code>. We could just use the desired
-        <code>PVector</code> object and turn it into the steering force by
+        <code>p5.Vector</code> object and turn it into the steering force by
         subtracting velocity. I didn’t do this in my example because it is more
         confusing to read. But in some cases, it may be greatly more efficient.
       </p>
@@ -4128,7 +4125,7 @@ function draw() {
         <h5>Exercise 6.20</h5>
 
         <p>
-          Eliminate as many temporary <code>PVector</code> objects from the
+          Eliminate as many temporary <code>p5.Vector</code> objects from the
           flocking example as possible. Also use <code>magSq()</code> where
           possible.
         </p>
