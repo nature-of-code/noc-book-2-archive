@@ -3733,7 +3733,6 @@ grid[column][row] = boid;</pre
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 const column = int(boid.x) / this.resolution;
 const row    = int(boid.y) / this.resolution;
-boid.flock(boids);
 // Instead of looking at all
 // the boids, just this cell
 boid.flock(grid[column][row]);</pre
