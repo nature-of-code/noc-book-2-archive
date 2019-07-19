@@ -23,11 +23,7 @@
   <section data-type="sect1" id="chapter02_section1">
     <h2>2.1 Forces and Newton’s Laws of Motion</h2>
 
-    <a
-      data-primary="forces"
-      data-secondary="Newton's laws of motion"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="forces" data-secondary="Newton's laws of motion" data-type="indexterm"></a>
     <a data-primary="Newton" data-secondary="Isaac" data-type="indexterm"></a>
 
     <p>
@@ -43,17 +39,16 @@
     <a data-primary="forces" data-secondary="defined" data-type="indexterm"></a>
 
     <p>
-      <span class="highlight"
-        >A force is a vector that causes an object with mass to
-        accelerate.</span
-      >
+      <span class="highlight">A force is a vector that causes an object with
+        mass to
+        accelerate.</span>
     </p>
 
     <p>
       The good news here is that we recognize the first part of the definition:
       <em>a force is a vector</em>. Thank goodness we just spent a whole chapter
-      learning what a vector is and how to program with <code>p5.Vector</code
-      ><code>s</code>!
+      learning what a vector is and how to program with
+      <code>p5.Vector</code><code>s</code>!
     </p>
 
     <p>
@@ -69,10 +64,9 @@
       <p>Newton’s first law is commonly stated as:</p>
 
       <p>
-        <span class="highlight"
-          >An object at rest stays at rest and an object in motion stays in
-          motion.</span
-        >
+        <span class="highlight">An object at rest stays at rest and an object in
+          motion stays in
+          motion.</span>
       </p>
 
       <p>
@@ -81,11 +75,10 @@
       </p>
 
       <p>
-        <span class="highlight"
-          >An object at rest stays at rest and an object in motion stays in
+        <span class="highlight">An object at rest stays at rest and an object in
+          motion stays in
           motion at a constant speed and direction unless acted upon by an
-          unbalanced force.</span
-        >
+          unbalanced force.</span>
       </p>
 
       <a data-primary="Aristotle" data-type="indexterm"></a>
@@ -99,16 +92,8 @@
       </p>
 
       <a data-primary="equilibrium" data-type="indexterm"></a>
-      <a
-        data-primary="forces"
-        data-secondary="equilibrium"
-        data-type="indexterm"
-      ></a>
-      <a
-        data-primary="forces"
-        data-secondary="terminal velocity"
-        data-type="indexterm"
-      ></a>
+      <a data-primary="forces" data-secondary="equilibrium" data-type="indexterm"></a>
+      <a data-primary="forces" data-secondary="terminal velocity" data-type="indexterm"></a>
       <a data-primary="terminal velocity" data-type="indexterm"></a>
 
       <p>
@@ -118,16 +103,15 @@
         An object’s velocity will only remain constant in the absence of any
         forces or if the forces that act on it cancel each other out, i.e. the
         net force adds up to zero. This is often referred to as
-        <strong><em>equilibrium</em></strong
-        >. The falling ball will reach a terminal velocity (that stays constant)
+        <strong><em>equilibrium</em></strong>. The falling ball will reach a
+        terminal velocity (that stays constant)
         once the force of air resistance equals the force of gravity.
       </p>
 
       <figure id="chapter02_figure1">
         <img
           alt="Figure 2.1: The pendulum doesn't move because all the forces cancel each other out (add up to a net force of zero)."
-          src="chapter02/ch02_01.png"
-        />
+          src="chapter02/ch02_01.png" />
         <figcaption>
           Figure 2.1: The pendulum doesn't move because all the forces cancel
           each other out (add up to a net force of zero).&nbsp;
@@ -138,22 +122,15 @@
         In our p5 world, we could restate Newton’s first law as follows:
       </p>
 
-      <a
-        data-primary="Newton's first law"
-        data-secondary="PVector class and"
-        data-type="indexterm"
-      ></a>
-      <a
-        data-primary="PVector class (Processing)"
-        data-secondary="Newton's first law and"
-        data-type="indexterm"
-      ></a>
+      <a data-primary="Newton's first law" data-secondary="PVector class and"
+        data-type="indexterm"></a>
+      <a data-primary="PVector class (Processing)" data-secondary="Newton's first law and"
+        data-type="indexterm"></a>
 
       <p>
-        <span class="highlight"
-          >An object’s p5.Vector velocity will remain constant if it is in a state
-          of equilibrium.</span
-        >
+        <span class="highlight">An object’s p5.Vector velocity will remain
+          constant if it is in a state
+          of equilibrium.</span>
       </p>
 
       <p>
@@ -170,9 +147,8 @@
       <p>This law is often stated as:</p>
 
       <p>
-        <span class="highlight"
-          >For every action there is an equal and opposite reaction.</span
-        >
+        <span class="highlight">For every action there is an equal and opposite
+          reaction.</span>
       </p>
 
       <p>
@@ -192,10 +168,9 @@
       <p>A better way of stating the law might be:</p>
 
       <p>
-        <span class="highlight"
-          >Forces always occur in pairs. The two forces are of equal strength,
-          but in opposite directions.</span
-        >
+        <span class="highlight">Forces always occur in pairs. The two forces are
+          of equal strength,
+          but in opposite directions.</span>
       </p>
 
       <p>
@@ -233,36 +208,27 @@
       </p>
     </section>
 
-    <section
-      data-type="sect2"
-      id="_newton_s_third_law_as_seen_through_the_eyes_of_processing"
-    >
+    <section data-type="sect2" id="_newton_s_third_law_as_seen_through_the_eyes_of_processing">
       <h3>Newton’s Third Law (as seen through the eyes of p5)</h3>
 
-      <a
-        data-primary="Newton's third law"
-        data-secondary="PVector class and"
-        data-type="indexterm"
-      ></a>
-      <a
-        data-primary="PVector class (Processing)"
-        data-secondary="Newton's third law and"
-        data-type="indexterm"
-      ></a>
+      <a data-primary="Newton's third law" data-secondary="PVector class and"
+        data-type="indexterm"></a>
+      <a data-primary="PVector class (Processing)" data-secondary="Newton's third law and"
+        data-type="indexterm"></a>
 
       <p>
-        <span class="highlight"
-          >If we calculate a p5.Vector f that is a force of object A on object B,
+        <span class="highlight">If we calculate a p5.Vector f that is a force of
+          object A on object B,
           we must also apply the force—p5.Vector.mult(f,-1);—that B exerts on
-          object A.</span
-        >
+          object A.</span>
       </p>
 
       <p>
         We’ll see that in the world of p5 programming, we don’t always
         have to stay true to the above. Sometimes, such as in the case of
-        <a href="#chapter02_example6">gravitational attraction between bodies</a
-        >, we’ll want to model equal and opposite forces. Other times, such as
+        <a href="#chapter02_example6">gravitational attraction between
+          bodies</a>, we’ll want to model equal and
+        opposite forces. Other times, such as
         when we’re simply saying, “Hey, there’s some wind in the environment,”
         we’re not going to bother to model the force that a body exerts back on
         the air. In fact, we’re not modeling the air at all! Remember, we are
@@ -275,17 +241,9 @@
   <section data-type="sect1" id="chapter02_section2">
     <h2>2.2 Forces and p5—Newton’s Second Law as a Function</h2>
 
-    <a
-      data-primary="acceleration"
-      data-secondary="Newton's second law"
-      data-type="indexterm"
-    ></a>
-    <a
-      data-primary="natural phenomena"
-      data-secondary="Newton's second law"
-      data-tertiary="modeling"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="acceleration" data-secondary="Newton's second law" data-type="indexterm"></a>
+    <a data-primary="natural phenomena" data-secondary="Newton's second law"
+      data-tertiary="modeling" data-type="indexterm"></a>
     <a data-primary="Newton's second law" data-type="indexterm"></a>
 
     <p>
@@ -320,16 +278,8 @@
       </p>
 
       <a data-primary="density" data-type="indexterm"></a>
-      <a
-        data-primary="mass"
-        data-secondary="weight vs."
-        data-type="indexterm"
-      ></a>
-      <a
-        data-primary="weight"
-        data-secondary="mass vs."
-        data-type="indexterm"
-      ></a>
+      <a data-primary="mass" data-secondary="weight vs." data-type="indexterm"></a>
+      <a data-primary="weight" data-secondary="mass vs." data-type="indexterm"></a>
 
       <div data-type="note">
         <h2>Weight vs. Mass</h2>
@@ -343,8 +293,8 @@
           </li>
           <li>
             <p>
-              <strong><em>Weight</em></strong
-              >, though often mistaken for mass, is technically the force of
+              <strong><em>Weight</em></strong>, though often mistaken for mass,
+              is technically the force of
               gravity on an object. From Newton’s second law, we can calculate
               it as mass times the acceleration of gravity (<code>w</code> =
               <code>m</code> * <code>g</code>). Weight is measured in newtons.
@@ -387,68 +337,44 @@
         acceleration.
       </p>
 
-      <pre
-        data-code-language="javascript"
-        data-type="programlisting"
-        class="codesplit"
-      >
+      <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Mover {
   constructor(){
     this.position = createVector();
     this.velocity = createVector();
     this.acceleration = createVector();
   }
-}</pre
-      >
+}</pre>
 
       <p>
         Now our goal is to be able to add forces to this object, perhaps saying:
       </p>
 
-      <pre
-        data-code-language="javascript"
-        data-type="programlisting"
-        class="codesplit"
-      >
-mover.applyForce(wind);</pre
-      >
+      <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+mover.applyForce(wind);</pre>
 
       <p>or:</p>
 
-      <pre
-        data-code-language="javascript"
-        data-type="programlisting"
-        class="codesplit"
-      >
-mover.applyForce(gravity);</pre
-      >
+      <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+mover.applyForce(gravity);</pre>
 
       <p>
         where wind and gravity are <code>p5.Vector</code> objects. According to
         Newton’s second law, we could implement this function as follows.
       </p>
 
-      <pre
-        data-code-language="javascript"
-        data-type="programlisting"
-        class="codesplit"
-      >
+      <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 applyForce(force) {
   //{!1} Newton's second law at its simplest.
   this.acceleration = force;
-}</pre
-      >
+}</pre>
     </section>
   </section>
 
   <section data-type="sect1" id="chapter02_section3">
     <h2>2.3 Force Accumulation</h2>
 
-    <a
-      data-primary="forces"
-      data-secondary="accumulation of"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="forces" data-secondary="accumulation of" data-type="indexterm"></a>
 
     <p>
       This looks pretty good. After all, <em>acceleration = force</em> is a
@@ -462,8 +388,7 @@ applyForce(force) {
 mover.applyForce(wind);
 mover.applyForce(gravity);
 mover.update();
-mover.display();</pre
-    >
+mover.display();</pre>
 
     <p>
       OK, let’s <em>be</em> the computer for a moment. First, we call
@@ -477,8 +402,7 @@ mover.display();</pre
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-this.velocity.add(this.acceleration);</pre
-    >
+this.velocity.add(this.acceleration);</pre>
 
     <p>
       We’re not going to see any error in p5, but zoinks! We’ve got a
@@ -504,8 +428,9 @@ this.velocity.add(this.acceleration);</pre
       mass. This makes perfect sense. After all, as we saw in Newton’s first
       law, if all the forces add up to zero, an object experiences an
       equilibrium state (i.e. no acceleration). Our implementation of this is
-      through a process known as <strong><em>force accumulation</em></strong
-      >. It’s actually very simple; all we need to do is add all of the forces
+      through a process known as <strong><em>force accumulation</em></strong>.
+      It’s actually very simple; all we need to
+      do is add all of the forces
       together. At any given moment, there might be 1, 2, 6, 12, or 303 forces.
       As long as our object knows how to accumulate them, it doesn’t matter how
       many forces act on it.
@@ -515,8 +440,7 @@ this.velocity.add(this.acceleration);</pre
 applyForce(force) {
   //{!1} Newton's second law, but with force accumulation. We now add each force to acceleration, one at a time.
   this.acceleration.add(force);
-}</pre
-    >
+}</pre>
 
     <p>
       Now, we’re not finished just yet. Force accumulation has one more piece.
@@ -532,14 +456,10 @@ applyForce(force) {
 if (mousePressed) {
   const wind = createVector(0.5, 0);
   mover.applyForce(wind);
-}</pre
-    >
+}</pre>
 
-    <a
-      data-primary="acceleration"
-      data-secondary="force accumulation and"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="acceleration" data-secondary="force accumulation and"
+      data-type="indexterm"></a>
 
     <p>
       When the user releases the mouse, the wind will stop, and according to
@@ -564,8 +484,7 @@ update() {
   this.velocity.add(this.acceleration);
   this.position.add(this.velocity);
   this.acceleration.mult(0);
-}</pre
-    >
+}</pre>
 
     <div data-type="exercise" id="chapter02_exercise1">
       <h5>Exercise 2.1</h5>
@@ -582,12 +501,8 @@ update() {
     <h2>2.4 Dealing with Mass</h2>
 
     <a data-primary="mass" data-secondary="modeling" data-type="indexterm"></a>
-    <a
-      data-primary="natural phenomena"
-      data-secondary="mass"
-      data-tertiary="modeling"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="natural phenomena" data-secondary="mass" data-tertiary="modeling"
+      data-type="indexterm"></a>
 
     <p>
       OK. We’ve got one tiny little addition to make before we are done with
@@ -610,15 +525,10 @@ class Mover {
     //{!1} Adding mass as a float
     this.mass = ????;
   }
-}</pre
-    >
+}</pre>
 
-    <a
-      data-primary="mass"
-      data-secondary="units of measurement"
-      data-tertiary="defining"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="mass" data-secondary="units of measurement" data-tertiary="defining"
+      data-type="indexterm"></a>
 
     <div data-type="note">
       <h2>Units of Measurement</h2>
@@ -659,14 +569,9 @@ constructor() {
   this.velocity = createVector(0, 0);
   this.acceleration = createVector(0, 0);
   this.mass = 10.0;
-}</pre
-    >
+}</pre>
 
-    <a
-      data-primary="forces"
-      data-secondary="applying to objects"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="forces" data-secondary="applying to objects" data-type="indexterm"></a>
 
     <p>
       This isn’t so great since things only become interesting once we have
@@ -679,8 +584,7 @@ applyForce(force) {
   //{!2} Newton's second law (with force accumulation and mass)
   force.div(mass);
   this.acceleration.add(force);
-}</pre
-    >
+}</pre>
 
     <p>
       Yet again, even though our code looks quite reasonable, we have a fairly
@@ -695,8 +599,7 @@ Mover m2 = new Mover();
 PVector wind = new PVector(1,0);
 
 m1.applyForce(wind);
-m2.applyForce(wind);</pre
-    >
+m2.applyForce(wind);</pre>
 
     <p>
       Again, let’s <em>be</em> the computer. Object <code>m1</code> receives the
@@ -704,16 +607,13 @@ m2.applyForce(wind);</pre
     </p>
 
     <p>
-      <span class="formula">m1 equals wind force: &nbsp;&nbsp;&nbsp; (1,0)</span
-      ><br />
+      <span class="formula">m1 equals wind force: &nbsp;&nbsp;&nbsp;
+        (1,0)</span><br />
       <span class="formula">Divided by mass of 10: &nbsp;&nbsp; (0.1,0)</span>
     </p>
 
-    <a
-      data-primary="object-oriented programming"
-      data-secondary="references to vs. copies of objects"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="object-oriented programming"
+      data-secondary="references to vs. copies of objects" data-type="indexterm"></a>
 
     <p>
       OK. Moving on to object <code>m2</code>. It also receives the wind
@@ -740,8 +640,7 @@ applyForce(force) {
   const f = force.copy();
   f.div(this.mass);
   this.acceleration.add(f);
-}</pre
-    >
+}</pre>
 
     <p>
       There’s another way we could write the above function, using the static
@@ -757,27 +656,18 @@ applyForce(force) {
         <code>div()</code> instead of <code>copy()</code>.
       </p>
 
-      <pre
-        data-code-language="java"
-        data-type="programlisting"
-        class="codesplit"
-      >
+      <pre data-code-language="java" data-type="programlisting" class="codesplit">
 applyForce(force) {
   const f = _______.___(_____,____);
   this.acceleration.add(f);
-}</pre
-      >
+}</pre>
     </div>
   </section>
 
   <section data-type="sect1" id="chapter02_section5">
     <h2>2.5 Creating Forces</h2>
 
-    <a
-      data-primary="forces"
-      data-secondary="creating"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="forces" data-secondary="creating" data-type="indexterm"></a>
 
     <p>
       Let’s take a moment to remind ourselves where we are. We know what a force
@@ -792,12 +682,8 @@ applyForce(force) {
       p5 world.
     </p>
 
-    <a
-      data-primary="natural phenomena"
-      data-secondary="forces"
-      data-tertiary="modeling"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="natural phenomena" data-secondary="forces" data-tertiary="modeling"
+      data-type="indexterm"></a>
 
     <ol>
       <li>
@@ -826,8 +712,7 @@ applyForce(force) {
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 const wind = createVector(0.01,0);
-m.applyForce(wind);</pre
-    >
+m.applyForce(wind);</pre>
 
     <p>
       The result isn’t terribly interesting, but it is a good place to start. We
@@ -837,10 +722,7 @@ m.applyForce(wind);</pre
       down), we might write the following:
     </p>
 
-    <figure
-      class="screenshot"
-      data-p5-sketch="https://editor.p5js.org/embed/B13QnJZul"
-    >
+    <figure class="screenshot" data-p5-sketch="https://editor.p5js.org/embed/B13QnJZul">
       <img alt="ch02 ex01" src="chapter02/ch02_ex01.png" />
       <figcaption>&nbsp;</figcaption>
     </figure>
@@ -853,8 +735,7 @@ m.applyForce(wind);</pre
 const wind = createVector(0.01, 0);
 const gravity = createVector(0, 0.1);
 m.applyForce(wind);
-m.applyForce(gravity);</pre
-    >
+m.applyForce(gravity);</pre>
 
     <p>
       Now we have two forces, pointing in different directions with different
@@ -931,8 +812,7 @@ class Mover {
       this.position.y = height;
     }
   }
-}</pre
-    >
+}</pre>
 
     <p>
       Now that our class is set, we can choose to create, say, one hundred
@@ -940,8 +820,7 @@ class Mover {
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-const movers = [];</pre
-    >
+const movers = [];</pre>
 
     <p>
       And then we can initialize all of those <code>Mover</code> objects in
@@ -953,8 +832,7 @@ function setup() {
   for (let i = 0; i < movers.length; i++) {
     movers[i] = new Mover();
   }
-}</pre
-    >
+}</pre>
 
     <p>
       But now we have a small issue. If we refer back to the
@@ -968,15 +846,10 @@ function setup() {
     this.position = createVector(30, 30);
     this.velocity = createVector(0, 0);
     this.acceleration = createVector(0, 0);
-  }</pre
-    >
+  }</pre>
 
-    <a
-      data-primary="constructor"
-      data-secondary="arguments"
-      data-tertiary="adding to"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="constructor" data-secondary="arguments" data-tertiary="adding to"
+      data-type="indexterm"></a>
 
     <p>
       …we discover that every <code>Mover</code> object is made exactly the same
@@ -992,8 +865,7 @@ function setup() {
     this.position = createVector(x, y);
     this.velocity = createVector(0, 0);
     this.acceleration = createVector(0, 0);
-  }</pre
-    >
+  }</pre>
 
     <p>
       Notice how the mass and position are no longer set to hardcoded numbers,
@@ -1007,8 +879,7 @@ function setup() {
 // A big Mover on the left side of the window
 const m1 = new Mover(10, 0, height/2);
 // A small Mover on the right side of the window
-const m1 = new Mover(0.1, width, height/2);</pre
-    >
+const m1 = new Mover(0.1, width, height/2);</pre>
 
     <p>
       With an array, however, we want to initialize all of the objects with a
@@ -1021,8 +892,7 @@ function setup() {
     // Initializing many Mover objects, all with random mass (and all starting at 0,0)
     movers[i] = new Mover(random(0.1, 5), i * 20, 0);
   }
-}</pre
-    >
+}</pre>
 
     <p>
       For each mover created, the mass is set to a random value between 0.1 and
@@ -1037,10 +907,7 @@ function setup() {
       forces in the environment, and enjoy the show.
     </p>
 
-    <figure
-      class="screenshot"
-      data-p5-sketch="https://editor.p5js.org/embed/SJC2hk-dl"
-    >
+    <figure class="screenshot" data-p5-sketch="https://editor.p5js.org/embed/SJC2hk-dl">
       <img alt="ch02 ex02" src="chapter02/ch02_ex02.png" />
       <figcaption>&nbsp;</figcaption>
     </figure>
@@ -1065,8 +932,7 @@ function draw() {
     movers[i].display();
     movers[i].checkEdges();
   }
-}</pre
-    >
+}</pre>
 
     <p>
       Note how in the above image, the smaller circles reach the right of the
@@ -1090,18 +956,10 @@ function draw() {
   <section data-type="sect1" id="chapter02_section6">
     <h2>2.6 Gravity on Earth and Modeling a Force</h2>
 
-    <a
-      data-primary="forces"
-      data-secondary="gravity"
-      data-tertiary="modeling"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="forces" data-secondary="gravity" data-tertiary="modeling"
+      data-type="indexterm"></a>
     <a data-primary="Galileo" data-type="indexterm"></a>
-    <a
-      data-primary="natural phenomena"
-      data-secondary="gravity"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="natural phenomena" data-secondary="gravity" data-type="indexterm"></a>
 
     <p>
       You may have noticed something woefully inaccurate about this last
@@ -1120,10 +978,7 @@ function draw() {
       made-up gravity force by mass.
     </p>
 
-    <figure
-      class="screenshot"
-      data-p5-sketch="https://editor.p5js.org/embed/HyQea1W_l"
-    >
+    <figure class="screenshot" data-p5-sketch="https://editor.p5js.org/embed/HyQea1W_l">
       <img alt="ch02 ex03" src="chapter02/ch02_ex03.png" />
       <figcaption>&nbsp;</figcaption>
     </figure>
@@ -1145,8 +1000,7 @@ for (let i = 0; i < movers.length; i++) {
     movers[i].update();
     movers[i].display();
     movers[i].checkEdges();
-  }</pre
-    >
+  }</pre>
 
     <p>
       While the objects now fall at the same rate, because the strength of the
@@ -1162,23 +1016,11 @@ for (let i = 0; i < movers.length; i++) {
       “But how does it really all work?”
     </p>
 
-    <a
-      data-primary="forces"
-      data-secondary="models of"
-      data-tertiary="building"
-      data-type="indexterm"
-    ></a>
-    <a
-      data-primary="natural phenomena"
-      data-secondary="physics (real world)"
-      data-tertiary="modeling"
-      data-type="indexterm"
-    ></a>
-    <a
-      data-primary="physics"
-      data-secondary="modeling"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="forces" data-secondary="models of" data-tertiary="building"
+      data-type="indexterm"></a>
+    <a data-primary="natural phenomena" data-secondary="physics (real world)"
+      data-tertiary="modeling" data-type="indexterm"></a>
+    <a data-primary="physics" data-secondary="modeling" data-type="indexterm"></a>
 
     <p>
       Open up any high school physics textbook and you will find some diagrams
@@ -1209,8 +1051,9 @@ for (let i = 0; i < movers.length; i++) {
       <li>
         <p>
           Translating that formula into p5 code that calculates a
-          <code>p5.Vector</code> to be sent through our <code>Mover</code
-          ><code>'s</code> <code>applyForce()</code> function
+          <code>p5.Vector</code> to be sent through our
+          <code>Mover</code><code>'s</code> <code>applyForce()</code>
+          function
         </p>
       </li>
     </ul>
@@ -1222,11 +1065,7 @@ for (let i = 0; i < movers.length; i++) {
       p5.
     </p>
 
-    <a
-      data-primary="formulae"
-      data-secondary="evaluating in code"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="formulae" data-secondary="evaluating in code" data-type="indexterm"></a>
 
     <div data-type="note">
       <h2>Dealing with formulae</h2>
@@ -1249,11 +1088,7 @@ for (let i = 0; i < movers.length; i++) {
         </div>
       </div>
 
-      <a
-        data-primary="friction"
-        data-secondary="formula for"
-        data-type="indexterm"
-      ></a>
+      <a data-primary="friction" data-secondary="formula for" data-type="indexterm"></a>
 
       <p>
         What we’re seeing here is that formulas like to use a lot of symbols
@@ -1272,11 +1107,8 @@ for (let i = 0; i < movers.length; i++) {
       <ul>
         <li>
           <p>
-            <strong
-              ><em
-                >Evaluate the right side, assign to the left side.</em
-              ></strong
-            >
+            <strong><em>Evaluate the right side, assign to the left
+                side.</em></strong>
             This is just like in code! What we’re doing here is evaluating the
             right side of the equation and assigning it to the left. In the case
             above, we want to calculate the force of friction—the left side
@@ -1298,18 +1130,14 @@ for (let i = 0; i < movers.length; i++) {
         </li>
         <li>
           <p>
-            <strong
-              ><em
-                >When symbols are placed next to each other, we mean for them to
-                be multiplied.</em
-              ></strong
-            >
+            <strong><em>When symbols are placed next to each other, we mean for
+                them to
+                be multiplied.</em></strong>
             The formula above actually has four elements: -1, <em>&mu;</em>,
             <em>N</em>, and <span data-type="equation">\hat{v}</span> . We want
             to multiply them together and read the formula as:
-            <span data-type="equation"
-              >\vec{friction} = -1 * \mu * N * \hat{\nu}</span
-            >
+            <span data-type="equation">\vec{friction} = -1 * \mu * N *
+              \hat{\nu}</span>
           </p>
         </li>
       </ul>
@@ -1319,30 +1147,19 @@ for (let i = 0; i < movers.length; i++) {
   <section data-type="sect1" id="chapter02_section7">
     <h2>2.7 Friction</h2>
 
-    <a
-      data-primary="forces"
-      data-secondary="friction"
-      data-tertiary="modeling"
-      data-type="indexterm"
-    ></a>
-    <a
-      data-primary="friction"
-      data-secondary="modeling with formulae"
-      data-type="indexterm"
-    ></a>
-    <a
-      data-primary="natural phenomena"
-      data-secondary="friction"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="forces" data-secondary="friction" data-tertiary="modeling"
+      data-type="indexterm"></a>
+    <a data-primary="friction" data-secondary="modeling with formulae" data-type="indexterm"></a>
+    <a data-primary="natural phenomena" data-secondary="friction" data-type="indexterm"></a>
 
     <p>Let’s begin with friction and follow our steps.</p>
 
     <a data-primary="dissipative force" data-type="indexterm"></a>
 
     <p>
-      Friction is a <strong><em>dissipative force</em></strong
-      >. A dissipative force is one in which the total energy of a system
+      Friction is a <strong><em>dissipative force</em></strong>. A dissipative
+      force is one in which the total energy of
+      a system
       decreases when an object is in motion. Let’s say you are driving a car.
       When you press your foot down on the brake pedal, the car’s brakes use
       friction to slow down the motion of the tires. Kinetic energy (motion) is
@@ -1360,11 +1177,8 @@ for (let i = 0; i < movers.length; i++) {
       <figcaption>Figure 2.3</figcaption>
     </figure>
 
-    <a
-      data-primary="friction"
-      data-secondary="determining direction/magnitude of"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="friction" data-secondary="determining direction/magnitude of"
+      data-type="indexterm"></a>
 
     <p>
       It’s now up to us to separate this formula into two components that
@@ -1382,8 +1196,7 @@ const friction = this.velocity.copy();
 friction.normalize();
 // Let’s figure out the direction of the friction force
 // (a unit vector in the opposite direction of velocity).
-friction.mult(-1);</pre
-    >
+friction.mult(-1);</pre>
 
     <p>
       Notice two additional steps here. First, it’s important to make a copy of
@@ -1396,28 +1209,17 @@ friction.mult(-1);</pre
 
     <a data-primary="mu (μ)" data-type="indexterm"></a>
     <a data-primary="coefficient of friction" data-type="indexterm"></a>
-    <a
-      data-primary="coefficient of friction"
-      data-secondary="mu (μ)"
-      data-type="indexterm"
-    ></a>
-    <a
-      data-primary="friction"
-      data-secondary="mu (μ)"
-      data-type="indexterm"
-    ></a>
-    <a
-      data-primary="friction"
-      data-secondary="coefficient of friction"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="coefficient of friction" data-secondary="mu (μ)" data-type="indexterm"></a>
+    <a data-primary="friction" data-secondary="mu (μ)" data-type="indexterm"></a>
+    <a data-primary="friction" data-secondary="coefficient of friction" data-type="indexterm"></a>
 
     <p>
       According to the formula, the magnitude is <code>&mu;</code> *
       <code>N</code>. <code>&mu;</code>, the Greek letter
       <em>mu</em> (pronounced “mew”), is used here to describe the
-      <strong><em>coefficient of friction</em></strong
-      >. The coefficient of friction establishes the strength of a friction
+      <strong><em>coefficient of friction</em></strong>. The coefficient of
+      friction establishes the strength of a
+      friction
       force for a particular surface. The higher it is, the stronger the
       friction; the lower, the weaker. A block of ice, for example, will have a
       much lower coefficient of friction than, say, sandpaper. Since we’re in a
@@ -1426,20 +1228,15 @@ friction.mult(-1);</pre
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-const c = 0.01;</pre
-    >
+const c = 0.01;</pre>
 
-    <a
-      data-primary="friction"
-      data-secondary="normal force"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="friction" data-secondary="normal force" data-type="indexterm"></a>
     <a data-primary="normal force" data-type="indexterm"></a>
 
     <p>
       Now for the second part: <code>N</code>. <code>N</code> refers to the
-      <strong><em>normal force</em></strong
-      >, the force perpendicular to the object’s motion along a surface. Think
+      <strong><em>normal force</em></strong>, the force perpendicular to the
+      object’s motion along a surface. Think
       of a vehicle driving along a road. The vehicle pushes down against the
       road with gravity, and Newton’s third law tells us that the road in turn
       pushes back against the vehicle. That’s the normal force. The greater the
@@ -1463,8 +1260,7 @@ const c = 0.01;</pre
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-const normal = 1;</pre
-    >
+const normal = 1;</pre>
 
     <p>
       Now that we have both the magnitude and direction for friction, we can put
@@ -1482,26 +1278,19 @@ friction.mult(-1);
 friction.normalize();
 
 // Take the unit vector and multiply it by magnitude and we have our force vector!
-friction.mult(frictionMag);</pre
-    >
+friction.mult(frictionMag);</pre>
 
     <p>
       …and add it to our “forces” example, where many objects experience wind,
       gravity, and now friction:
     </p>
 
-    <figure
-      class="two-col"
-      data-p5-sketch="https://editor.p5js.org/embed/SkUTq1MPQ"
-    >
+    <figure class="two-col" data-p5-sketch="https://editor.p5js.org/embed/SkUTq1MPQ">
       <img alt="No friction" src="chapter02/ch02_ex04a.png" />
       <figcaption>No friction&nbsp;</figcaption>
     </figure>
 
-    <figure
-      class="two-col"
-      data-p5-sketch="https://editor.p5js.org/embed/B1isyebug"
-    >
+    <figure class="two-col" data-p5-sketch="https://editor.p5js.org/embed/B1isyebug">
       <img alt="With friction" src="chapter02/ch02_ex04b.png" />
       <figcaption>With friction&nbsp;</figcaption>
     </figure>
@@ -1534,8 +1323,7 @@ function draw() {
     movers[i].display();
     movers[i].checkEdges();
   }
-}</pre
-    >
+}</pre>
 
     <p>
       Running this example, you’ll notice that the circles don’t even make it to
@@ -1567,22 +1355,10 @@ function draw() {
     </figure>
 
     <a data-primary="drag force" data-type="indexterm"></a>
-    <a
-      data-primary="fluid resistance"
-      data-secondary="modeling"
-      data-type="indexterm"
-    ></a>
-    <a
-      data-primary="forces"
-      data-secondary="fluid resistance"
-      data-type="indexterm"
-    ></a>
-    <a
-      data-primary="natural phenomena"
-      data-secondary="fluid resistance"
-      data-tertiary="modeling"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="fluid resistance" data-secondary="modeling" data-type="indexterm"></a>
+    <a data-primary="forces" data-secondary="fluid resistance" data-type="indexterm"></a>
+    <a data-primary="natural phenomena" data-secondary="fluid resistance" data-tertiary="modeling"
+      data-type="indexterm"></a>
     <a data-primary="viscous force" data-type="indexterm"></a>
 
     <p>
@@ -1622,11 +1398,7 @@ function draw() {
     </ul>
 
     <a data-primary="rho (ρ)" data-type="indexterm"></a>
-    <a
-      data-primary="friction"
-      data-secondary="rho (ρ)"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="friction" data-secondary="rho (ρ)" data-type="indexterm"></a>
 
     <ul>
       <li>
@@ -1680,10 +1452,7 @@ function draw() {
     </p>
 
     <figure id="chapter02_figure5">
-      <img
-        alt="Figure 2.5: Our simplified drag force formula"
-        src="chapter02/ch02_05.png"
-      />
+      <img alt="Figure 2.5: Our simplified drag force formula" src="chapter02/ch02_05.png" />
       <figcaption>
         Figure 2.5: Our simplified drag force formula&nbsp;
       </figcaption>
@@ -1701,14 +1470,9 @@ const drag = this.velocity.copy();
 drag.mult(-1);
 drag.normalize();
 // Magnitude and direction together!
-drag.mult(dragMagnitude);</pre
-    >
+drag.mult(dragMagnitude);</pre>
 
-    <a
-      data-primary="friction"
-      data-secondary="applying to an object"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="friction" data-secondary="applying to an object" data-type="indexterm"></a>
 
     <p>
       Let’s implement this force in our <code>Mover</code> class example with
@@ -1741,8 +1505,7 @@ class Liquid {
     rect(this.x, this.y, this.w, this.h);
   }
 
-}</pre
-    >
+}</pre>
 
     <p>
       The main program will now include a <code>Liquid</code> object reference
@@ -1755,8 +1518,7 @@ let liquid;
 function setup() {
   //{!1} Initialize a Liquid object.  Note the coefficient is low (0.1), otherwise the object would come to a halt fairly quickly (which may someday be the effect you want).
   liquid = new Liquid(0, height/2, width, height/2, 0.1);
-}</pre
-    >
+}</pre>
 
     <p>
       Now comes an interesting question: how do we get the
@@ -1777,8 +1539,7 @@ function setup() {
 // If a Mover is inside a Liquid, apply the drag force.
 if (liquid.contains(movers[i])) {
   liquid[i].drag(movers[i]);
-}</pre
-    >
+}</pre>
 
     <p>
       The above code tells us that we need to add two functions to the
@@ -1796,17 +1557,14 @@ contains(m) {
   const pos = m.position;
   //{.offset-top} This Boolean expression determines if the PVector position is inside the rectangle defined by the Liquid class.
   return pos.x > x && pos.x < x + w && pos.y > y && pos.y < y + h;
-}</pre
-    >
+}</pre>
 
     <p>
       The <code>drag()</code> function is a bit more complicated; however, we’ve
       written the code for it already. This is simply an implementation of our
       formula. The drag force is equal to
-      <em
-        >the coefficient of drag multiplied by the speed of the
-        <code>Mover</code> squared in the opposite direction of velocity!</em
-      >
+      <em>the coefficient of drag multiplied by the speed of the
+        <code>Mover</code> squared in the opposite direction of velocity!</em>
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
@@ -1820,18 +1578,14 @@ contains(m) {
   drag.setMag(dragMagnitude);
   //{!1} Apply the force.
   m.applyForce(drag);
-}</pre
-    >
+}</pre>
 
     <p>
       And with these two functions added to the <code>Liquid</code> class, we’re
       ready to put it all together in the main tab:
     </p>
 
-    <figure
-      class="screenshot"
-      data-p5-sketch="https://editor.p5js.org/embed/H1DmxeW_g"
-    >
+    <figure class="screenshot" data-p5-sketch="https://editor.p5js.org/embed/H1DmxeW_g">
       <img alt="ch02 ex05" src="chapter02/ch02_ex05.png" />
       <figcaption>&nbsp;</figcaption>
     </figure>
@@ -1872,8 +1626,7 @@ function draw() {
     movers[i].display();
     movers[i].checkEdges();
   }
-}</pre
-    >
+}</pre>
 
     <p>
       Running the example, you should notice that we are simulating balls
@@ -1893,8 +1646,9 @@ function draw() {
 
       <p>
         Take a look at our formula for drag again:
-        <strong><em>drag force = coefficient * speed * speed</em></strong
-        >. The faster an object moves, the greater the drag force against it. In
+        <strong><em>drag force = coefficient * speed * speed</em></strong>. The
+        faster an object moves, the greater the
+        drag force against it. In
         fact, an object not moving in water experiences no drag at all. Expand
         the example to drop the balls from different heights. How does this
         affect the drag as they hit the water?
@@ -1926,16 +1680,8 @@ function draw() {
   <section data-type="sect1" id="chapter02_section9">
     <h2>2.9 Gravitational Attraction</h2>
 
-    <a
-      data-primary="gravity"
-      data-secondary="modeling"
-      data-type="indexterm"
-    ></a>
-    <a
-      data-primary="natural phenomena"
-      data-secondary="gravity"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="gravity" data-secondary="modeling" data-type="indexterm"></a>
+    <a data-primary="natural phenomena" data-secondary="gravity" data-type="indexterm"></a>
 
     <figure class="half-width-right" id="chapter02_figure6">
       <img alt="Figure 2.6" src="chapter02/ch02_06.png" />
@@ -1956,20 +1702,11 @@ function draw() {
 
     <p>Let’s examine this formula a bit more closely.</p>
 
-    <a
-      data-primary="forces"
-      data-secondary="universal gravitational constant"
-      data-type="indexterm"
-    ></a>
-    <a
-      data-primary="gravity"
-      data-secondary="universal gravitational constant"
-      data-type="indexterm"
-    ></a>
-    <a
-      data-primary="universal gravitational constant"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="forces" data-secondary="universal gravitational constant"
+      data-type="indexterm"></a>
+    <a data-primary="gravity" data-secondary="universal gravitational constant"
+      data-type="indexterm"></a>
+    <a data-primary="universal gravitational constant" data-type="indexterm"></a>
 
     <ul>
       <li>
@@ -1994,9 +1731,9 @@ function draw() {
         <p>
           <code>m<sub>1</sub></code> and <code>m<sub>2</sub></code> are the
           masses of objects 1 and 2. As we saw with Newton’s second law (<span
-            data-type="equation"
-            >\vec{F} = M \times \vec{A}</span
-          >), mass is also something we could choose to ignore. After all,
+            data-type="equation">\vec{F} = M \times
+            \vec{A}</span>), mass is also something we could choose to ignore.
+          After all,
           shapes drawn on the screen don’t actually have a physical mass.
           However, if we keep these values, we can create more interesting
           simulations in which “bigger” objects exert a stronger gravitational
@@ -2016,9 +1753,9 @@ function draw() {
           <span data-type="equation">r^2</span> refers to the distance between
           the two objects squared. Let’s take a moment to think about this a bit
           more. With everything on the top of the formula—<code>G</code>,
-          <code>m<sub>1</sub></code
-          >, <code>m<sub>2</sub></code
-          >—the bigger its value, the stronger the force. Big mass, big force.
+          <code>m<sub>1</sub></code>, <code>m<sub>2</sub></code>—the bigger its
+          value, the stronger the force. Big mass,
+          big force.
           Big <code>G</code>, big force. Now, when we divide by something, we
           have the opposite. The strength of the force is inversely proportional
           to the distance squared. The <em>farther away</em> an object is, the
@@ -2036,16 +1773,8 @@ function draw() {
 
     <p>We have two objects, and:</p>
 
-    <a
-      data-primary="gravity"
-      data-secondary="implementing model of"
-      data-type="indexterm"
-    ></a>
-    <a
-      data-primary="natural phenomena"
-      data-secondary="gravity"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="gravity" data-secondary="implementing model of" data-type="indexterm"></a>
+    <a data-primary="natural phenomena" data-secondary="gravity" data-type="indexterm"></a>
 
     <ol>
       <li>
@@ -2093,8 +1822,7 @@ function draw() {
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-const dir = p5.Vector.sub(mouse, position);</pre
-    >
+const dir = p5.Vector.sub(mouse, position);</pre>
 
     <p>
       In our case, the direction of the attraction force that object 1 exerts on
@@ -2103,8 +1831,7 @@ const dir = p5.Vector.sub(mouse, position);</pre
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 const dir = p5.Vector.sub(position1, position2);
-dir.normalize();</pre
-    >
+dir.normalize();</pre>
 
     <p>
       Don’t forget that since we want a unit vector, a vector that tells us
@@ -2119,8 +1846,7 @@ dir.normalize();</pre
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 float m = (G * mass1 * mass2) / (distance * distance);
-dir.mult(m);</pre
-    >
+dir.mult(m);</pre>
 
     <figure class="half-width-right" id="chapter02_figure8">
       <img alt="Figure 2.8" src="chapter02/ch02_08.png" />
@@ -2152,13 +1878,14 @@ const m = (G * mass1 * mass2) / (distance * distance);
 
 //{!1} Normalize and scale the force vector to the appropriate magnitude.
 force.normalize();
-force.mult(m);</pre
-    >
+force.mult(m);</pre>
 
     <p>
-      Note that I also renamed the <code>p5.Vector</code> “dir” as “force.” After
+      Note that I also renamed the <code>p5.Vector</code> “dir” as “force.”
+      After
       all, when we’re finished with the calculations, the
-      <code>p5.Vector</code> we started with ends up being the actual force vector
+      <code>p5.Vector</code> we started with ends up being the actual force
+      vector
       we wanted all along.
     </p>
 
@@ -2214,8 +1941,7 @@ class Attractor {
     fill(175,200);
     ellipse(this.position.x, this.position.y, this.mass * 2, this.mass * 2);
   }
-}</pre
-    >
+}</pre>
 
     <p>
       And in our main program, we can add an instance of the
@@ -2241,14 +1967,9 @@ function draw() {
 
   m.update();
   m.display();
-}</pre
-    >
+}</pre>
 
-    <a
-      data-primary="object"
-      data-secondary="interaction between"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="object" data-secondary="interaction between" data-type="indexterm"></a>
 
     <p>
       This is a good structure: a main program with a <code>Mover</code> and an
@@ -2297,8 +2018,7 @@ function draw() {
             <pre>
 const f = a.attract(m);
 m.applyForce(f);
-</pre
-            >
+</pre>
           </td>
         </tr>
       </tbody>
@@ -2325,16 +2045,14 @@ m.applyForce(f);
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 // Made-up force
 const f = createVector(0.1, 0);
-m.applyForce(f);</pre
-    >
+m.applyForce(f);</pre>
 
     <p>We now have:</p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 //{!1 .bold} Attraction force between two objects
 const f = a.attract(m);
-m.applyForce(f);</pre
-    >
+m.applyForce(f);</pre>
 
     <p>And so our <code>draw()</code> function can now be written as:</p>
 
@@ -2350,8 +2068,7 @@ function draw() {
 
   a.display();
   m.display();
-}</pre
-    >
+}</pre>
 
     <p>
       We’re almost there. Since we decided to put the
@@ -2364,8 +2081,7 @@ function draw() {
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 attract(m) {
 
-}</pre
-    >
+}</pre>
 
     <p>
       And what goes inside that function? All of that nice math we worked out
@@ -2384,14 +2100,9 @@ attract(m) {
 
   //{!1} Return the force so that it can be applied!
   return force;
-}</pre
-    >
+}</pre>
 
-    <a
-      data-primary="gravity"
-      data-secondary="placing limits on model of"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="gravity" data-secondary="placing limits on model of" data-type="indexterm"></a>
 
     <p>
       And we’re done. Sort of. Almost. There’s one small kink we need to work
@@ -2413,8 +2124,7 @@ attract(m) {
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-  distance = constrain(distance,5,25);</pre
-    >
+  distance = constrain(distance,5,25);</pre>
 
     <p>
       For the same reason that we need to constrain the minimum distance, it’s
@@ -2438,10 +2148,7 @@ attract(m) {
       move the <code>Attractor</code> object with the mouse.)
     </p>
 
-    <figure
-      class="screenshot"
-      data-p5-sketch="https://editor.p5js.org/embed/HyWqel-de"
-    >
+    <figure class="screenshot" data-p5-sketch="https://editor.p5js.org/embed/HyWqel-de">
       <img alt="ch02 ex06" src="chapter02/ch02_ex06.png" />
       <figcaption>&nbsp;</figcaption>
     </figure>
@@ -2497,18 +2204,14 @@ class Attractor {
     fill(175,200);
     ellipse(this.position.x, this.position.y, this.mass * 2, this.mass * 2);
   }
-}</pre
-    >
+}</pre>
 
     <p>
       And we could, of course, expand this example using an array to include
       many <code>Mover</code> objects, just as we did with friction and drag:
     </p>
 
-    <figure
-      class="screenshot"
-      data-p5-sketch="https://editor.p5js.org/embed/rJ9l-x-Ox"
-    >
+    <figure class="screenshot" data-p5-sketch="https://editor.p5js.org/embed/rJ9l-x-Ox">
       <img alt="ch02 ex07" src="chapter02/ch02_ex07.png" />
       <figcaption>&nbsp;</figcaption>
     </figure>
@@ -2546,8 +2249,7 @@ function draw() {
     movers[i].display();
   }
 
-}</pre
-    >
+}</pre>
 
     <div data-type="exercise" id="chapter02_exercise8">
       <h5>Exercise 2.8</h5>
@@ -2558,9 +2260,9 @@ function draw() {
         an example that has systems of both movers and attractors. What if you
         make the attractors invisible? Can you create a pattern/design from the
         trails of objects moving around attractors? See the
-        <a href="http://processing.org/exhibition/works/metropop/"
-          >Metropop Denim project by Clayton Cubitt and Tom Carden</a
-        >
+        <a href="http://processing.org/exhibition/works/metropop/">Metropop
+          Denim project by Clayton Cubitt and Tom
+          Carden</a>
         for an example.
       </p>
     </div>
@@ -2585,9 +2287,10 @@ function draw() {
     <h2>2.10 Everything Attracts (or Repels) Everything</h2>
 
     <p>
-      Hopefully, you found it helpful that we started with a simple scenario—<em
-        >one object attracts another object</em
-      ><code>—</code>and moved on to <em>one object attracts many objects</em>.
+      Hopefully, you found it helpful that we started with a simple
+      scenario—<em>one object attracts another
+        object</em><code>—</code>and moved on to <em>one object attracts many
+        objects</em>.
       However, it’s likely that you are going to find yourself in a slightly
       more complex situation: <em>many objects attract each other</em>. In other
       words, every object in a given system attracts every other object in that
@@ -2615,8 +2318,7 @@ function draw() {
     movers[i].update();
     movers[i].display();
   }
-}</pre
-    >
+}</pre>
 
     <p>
       The <code>draw()</code> function is where we need to work some magic.
@@ -2637,8 +2339,7 @@ function draw() {
     }
     movers[i].update();
     movers[i].display();
-  }</pre
-    >
+  }</pre>
 
     <p>
       In the previous example, we had an <code>Attractor</code> object with a
@@ -2665,8 +2366,7 @@ class Mover {
     force.mult(strength);
     return force;
   }
-}</pre
-    >
+}</pre>
 
     <p>
       Of course, there’s one small problem. When we are looking at every mover
@@ -2678,10 +2378,7 @@ class Mover {
       applying the force when i equals j.
     </p>
 
-    <figure
-      class="screenshot"
-      data-p5-sketch="https://editor.p5js.org/embed/SkYSWlb_x"
-    >
+    <figure class="screenshot" data-p5-sketch="https://editor.p5js.org/embed/SkYSWlb_x">
       <img alt="ch02 ex08" src="chapter02/ch02_ex08.png" />
       <figcaption>&nbsp;</figcaption>
     </figure>
@@ -2714,8 +2411,7 @@ function draw() {
     movers[i].update();
     movers[i].display();
   }
-}</pre
-    >
+}</pre>
 
     <div data-type="exercise" id="chapter02_exercise10">
       <h5>Exercise 2.10</h5>
