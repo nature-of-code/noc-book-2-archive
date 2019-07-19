@@ -12,15 +12,8 @@
 
   <a data-primary="Lucasfilm Ltd." data-type="indexterm"></a>
   <a data-primary="particle systems" data-type="indexterm"></a>
-  <a
-    data-primary="Reeves"
-    data-secondary="William T."
-    data-type="indexterm"
-  ></a>
-  <a
-    data-primary="Star Trek II: The Wrath of Khan (1982)"
-    data-type="indexterm"
-  ></a>
+  <a data-primary="Reeves" data-secondary="William T." data-type="indexterm"></a>
+  <a data-primary="Star Trek II: The Wrath of Khan (1982)" data-type="indexterm"></a>
 
   <p>
     In 1982, William T. Reeves, a researcher at Lucasfilm Ltd., was working on
@@ -28,10 +21,9 @@
     revolves around the Genesis Device, a torpedo that when shot at a barren,
     lifeless planet has the ability to reorganize matter and create a habitable
     world for colonization. During the sequence, a wall of fire ripples over the
-    planet while it is being “terraformed.” The term
-    <strong><em>particle system</em></strong
-    >, an incredibly common and useful technique in computer graphics, was
-    coined in the creation of this particular effect.
+    planet while it is being “terraformed.” The term <strong><em>particle system</em></strong>, an
+    incredibly common and useful technique in computer graphics, was coined in the creation of this
+    particular effect.
   </p>
 
   <blockquote>
@@ -41,8 +33,7 @@
     from the system.”
     <span class="attribution">
       —William Reeves, "Particle Systems—A Technique for Modeling a Class of
-      Fuzzy Objects," ACM Transactions on Graphics 2:2 (April 1983), 92.</span
-    >
+      Fuzzy Objects," ACM Transactions on Graphics 2:2 (April 1983), 92.</span>
   </blockquote>
 
   <p>
@@ -67,11 +58,7 @@
   <section data-type="sect1" id="chapter04_section1">
     <h2>4.1 Why We Need Particle Systems</h2>
 
-    <a
-      data-primary="particle systems"
-      data-secondary="purpose of"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="particle systems" data-secondary="purpose of" data-type="indexterm"></a>
 
     <p>
       We’ve defined a particle system to be a collection of independent objects,
@@ -103,11 +90,7 @@
       looks like the following:
     </p>
 
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 // Ah, isn’t this main program so simple and lovely?
 let ps;
 
@@ -119,8 +102,7 @@ function setup() {
 function draw() {
   background(255);
   ps.run();
-}</pre
-    >
+}</pre>
 
     <p>
       No single particle is ever referenced in the above code, yet the result
@@ -131,16 +113,10 @@ function draw() {
     </p>
 
     <a data-primary="inheritance" data-type="indexterm"></a>
-    <a
-      data-primary="object-oriented programming"
-      data-secondary="inheritance"
-      data-type="indexterm"
-    ></a>
-    <a
-      data-primary="object-oriented programming"
-      data-secondary="polymorphism"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="object-oriented programming" data-secondary="inheritance"
+      data-type="indexterm"></a>
+    <a data-primary="object-oriented programming" data-secondary="polymorphism"
+      data-type="indexterm"></a>
     <a data-primary="polymorphism" data-type="indexterm"></a>
 
     <p>
@@ -173,11 +149,7 @@ function draw() {
   <section data-type="sect1" id="chapter04_section2">
     <h2>4.2 A Single Particle</h2>
 
-    <a
-      data-primary="particle systems"
-      data-secondary="particles in"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="particle systems" data-secondary="particles in" data-type="indexterm"></a>
     <a data-primary="particles" data-type="indexterm"></a>
 
     <p>
@@ -191,11 +163,7 @@ function draw() {
       <code>update()</code> its position.
     </p>
 
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Particle {
   //{!3} A “Particle” object is just another name for our “Mover.” It has position, velocity, and acceleration.
   Particle(l) {
@@ -214,8 +182,7 @@ class Particle {
     fill(175);
     ellipse(this.position.x, this.position.y, 8, 8);
   }
-}</pre
-    >
+}</pre>
 
     <p>
       This is about as simple as a particle can get. From here, we could take
@@ -224,31 +191,19 @@ class Particle {
       (we’ll do precisely this in a future example). We could add variables to
       describe color and shape, or reference a <code>p5.Image</code> to draw the
       particle. For now, however, let’s focus on adding just one additional
-      detail: <strong><em>lifespan</em></strong
-      >.
+      detail: <strong><em>lifespan</em></strong>.
     </p>
 
     <a data-primary="emitter" data-type="indexterm"></a>
-    <a
-      data-primary="particle systems"
-      data-secondary="emitter"
-      data-type="indexterm"
-    ></a>
-    <a
-      data-primary="particle systems"
-      data-secondary="lifespan of particles"
-      data-type="indexterm"
-    ></a>
-    <a
-      data-primary="particles"
-      data-secondary="lifespan of"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="particle systems" data-secondary="emitter" data-type="indexterm"></a>
+    <a data-primary="particle systems" data-secondary="lifespan of particles"
+      data-type="indexterm"></a>
+    <a data-primary="particles" data-secondary="lifespan of" data-type="indexterm"></a>
 
     <p>
       Typical particle systems involve something called an
-      <strong><em>emitter</em></strong
-      >. The emitter is the source of the particles and controls the initial
+      <strong><em>emitter</em></strong>. The emitter is the source of the particles and controls the
+      initial
       settings for the particles, position, velocity, etc. An emitter might emit
       a single burst of particles, or a continuous stream of particles, or both.
       The point is that for a typical implementation such as this, a particle is
@@ -265,11 +220,7 @@ class Particle {
       we expand the <code>Particle</code> class as follows:
     </p>
 
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Particle {
 
   constructor(l) {
@@ -293,8 +244,7 @@ class Particle {
     fill(175, this.lifespan);
     ellipse(this.position.x, this.position.y, 8, 8);
   }
-}</pre
-    >
+}</pre>
 
     <p>
       The reason we chose to start the lifespan at 255 and count down to 0 is
@@ -303,18 +253,10 @@ class Particle {
       is “dead” it will also have faded away onscreen.
     </p>
 
-    <a
-      data-primary="particle systems"
-      data-secondary="dead particles"
-      data-tertiary="checking for"
-      data-type="indexterm"
-    ></a>
-    <a
-      data-primary="particles"
-      data-secondary="death"
-      data-tertiary="checking for"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="particle systems" data-secondary="dead particles" data-tertiary="checking for"
+      data-type="indexterm"></a>
+    <a data-primary="particles" data-secondary="death" data-tertiary="checking for"
+      data-type="indexterm"></a>
 
     <p>
       With the addition of the <code>lifespan</code> variable, we’ll also need
@@ -327,11 +269,7 @@ class Particle {
       <code>return true</code>, if not we <code>return false</code>.
     </p>
 
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   isDead() {
     //{!4} Is the particle still alive?
     if (this.lifespan < 0.0) {
@@ -339,14 +277,9 @@ class Particle {
     } else {
       return false;
     }
-  }</pre
-    >
+  }</pre>
 
-    <a
-      data-primary="particles"
-      data-secondary="testing"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="particles" data-secondary="testing" data-type="indexterm"></a>
 
     <p>
       Before we get to the next step of making many particles, it’s worth taking
@@ -358,21 +291,16 @@ class Particle {
       initial velocity as well as a downward acceleration (to simulate gravity).
     </p>
 
-    <figure
-      class="screenshot"
-      data-p5-sketch="https://editor.p5js.org/embed/B1GoIg-ug"
-    >
+    <figure class="screenshot" data-p5-sketch="https://editor.p5js.org/embed/B1GoIg-ug">
       <img alt="ch04 ex01" src="chapter04/ch04_ex01.png" />
       <figcaption>&nbsp;</figcaption>
     </figure>
 
-    <div data-type="example"><h5>Example 4.1: A single particle</h5></div>
+    <div data-type="example">
+      <h5>Example 4.1: A single particle</h5>
+    </div>
 
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 let p;
 
 function setup() {
@@ -390,7 +318,7 @@ function draw() {
 }
 
 class Particle {
-  
+
   constructor(l) {
     //{!2 .offset-top} For demonstration purposes we assign the Particle a random velocity and constant acceleration.
     this.acceleration = createVector(0, 0.05);
@@ -425,8 +353,7 @@ class Particle {
       return false;
     }
   }
-}</pre
-    >
+}</pre>
 
     <div data-type="exercise" id="chapter04_exercise1">
       <h5>Exercise 4.1</h5>
@@ -459,12 +386,8 @@ class Particle {
     <a data-primary="ArrayList class (Java)" data-type="indexterm"></a>
     <a data-primary="contract() function (p5)" data-type="indexterm"></a>
     <a data-primary="expand() function (p5)" data-type="indexterm"></a>
-    <a
-      data-primary="particle systems"
-      data-secondary="ArrayList"
-      data-tertiary="using"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="particle systems" data-secondary="ArrayList" data-tertiary="using"
+      data-type="indexterm"></a>
     <a data-primary="splice() function (p5)" data-type="indexterm"></a>
     <a data-primary="subset() function (p5)" data-type="indexterm"></a>
 
@@ -478,16 +401,12 @@ class Particle {
       plain javascript approach and use the methods directly available in the
       javascipt class <code>Array</code>.
       <a
-        href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array"
-        >JavaScript Array Documentation</a
-      >.
+        href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">JavaScript
+        Array
+        Documentation</a>.
     </p>
 
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 const total = 10;
 // we use let because later we will reassign the value of the particles array
 let particles = [];
@@ -504,20 +423,11 @@ function draw() {
     const p = parray[i];
     p.run();
   }
-}</pre
-    >
+}</pre>
 
-    <a
-      data-primary="ArrayList class (Java)"
-      data-secondary="generics"
-      data-tertiary="using"
-      data-type="indexterm"
-    ></a>
-    <a
-      data-primary="for loops"
-      data-secondary="ArrayList objects and"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="ArrayList class (Java)" data-secondary="generics" data-tertiary="using"
+      data-type="indexterm"></a>
+    <a data-primary="for loops" data-secondary="ArrayList objects and" data-type="indexterm"></a>
 
     <p>
       This last <code>for</code> loop looks pretty similar to our code that
@@ -528,25 +438,16 @@ function draw() {
       is a bit more concise. The "for of" loop works with arrays like this:
     </p>
 
-    <a
-      data-primary="for of loops"
-      data-secondary="enhanced"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="for of loops" data-secondary="enhanced" data-type="indexterm"></a>
 
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 let particles = [];
 
 for(let p of particles){
   p.run();
 }
 
-</pre
-    >
+</pre>
 
     <p>
       Let’s translate that. Say “for each” instead of “for” and say “in” instead
@@ -560,16 +461,11 @@ for(let p of particles){
       necessary, but I just have to type that again.
     </p>
 
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 // This for of loop also works for regular arrays!
 for (let p of particles) {
   p.run();
-}</pre
-    >
+}</pre>
 
     <p>
       Simple, elegant, concise, lovely. Take a moment. Breathe. I have some bad
@@ -578,11 +474,8 @@ for (let p of particles) {
       using that loop impossible. Let’s continue.
     </p>
 
-    <a
-      data-primary="ArrayList class (Java)"
-      data-secondary="resizability of"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="ArrayList class (Java)" data-secondary="resizability of"
+      data-type="indexterm"></a>
 
     <p>
       The code we’ve written above doesn’t take advantage of the
@@ -594,16 +487,12 @@ for (let p of particles) {
       <code>Particle</code> class code here, as it doesn’t need to change.
     </p>
 
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 let particles = [];
 
 function setup() {
   createCanvas(640, 360);
-  
+
 }
 
 function draw() {
@@ -615,8 +504,7 @@ function draw() {
     const p = particles[i];
     p.run();
   }
-}</pre
-    >
+}</pre>
 
     <p>
       Run the above code for a few minutes and you’ll start to see the frame
@@ -626,10 +514,7 @@ function draw() {
       any.
     </p>
 
-    <a
-      data-primary="remove() function (ArrayList class)"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="remove() function (ArrayList class)" data-type="indexterm"></a>
 
     <p>
       Fortunately, we can remove particles from our array using the index
@@ -643,23 +528,18 @@ function draw() {
       <code>isDead()</code> function returns false.
     </p>
 
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   for (let i = 0; i < particles.length; i++) {
     const p = particles[i];
     p.run();
   }
-  
+
   // Filter removes any elements of the array that do not pass the test
   // I am also using ES6 arrow snytax
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions
   // https://www.youtube.com/watch?v=mrYMzpbFz18
   particles = particles.filter(particle => !particle.isDead());
-  </pre
-    >
+  </pre>
 
     <p>
       Although the above code will run just fine (and the program will never
@@ -669,23 +549,15 @@ function draw() {
       code.
     </p>
 
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   for (let i = 0; i < particles.length; i++) {
     const p = particles[i];
     p.run();
     //{!1 .offset-top} Adding a new Particle to the list while iterating?
     particles.push(new Particle(createVector(width/2, 50)));
-  }</pre
-    >
+  }</pre>
 
-    <a
-      data-primary="size() function (ArrayList class)"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="size() function (ArrayList class)" data-type="indexterm"></a>
 
     <p>
       This is a somewhat extreme example (with flawed logic), but it proves the
@@ -696,11 +568,8 @@ function draw() {
       <code>Array</code>.
     </p>
 
-    <a
-      data-primary="iterating"
-      data-secondary="removing elements in for loops"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="iterating" data-secondary="removing elements in for loops"
+      data-type="indexterm"></a>
 
     <p>
       While removing elements from the <code>ArrayList</code> during a loop
@@ -724,21 +593,11 @@ function draw() {
     </p>
 
     <p>
-      <span class="formula"
-        >when i = 0 &rarr; Check particle A &rarr; Do not delete</span
-      ><br />
-      <span class="formula"
-        >when i = 1 &rarr; Check particle B &rarr; Do not delete</span
-      ><br />
-      <span class="formula"
-        >when i = 2 &rarr; Check particle C &rarr; Delete!</span
-      ><br />
-      <span class="formula2"
-        >Slide particles D and E back from slots 3 and 4 to 2 and 3</span
-      ><br />
-      <span class="formula"
-        >when i = 3 &rarr; Check particle E &rarr; Do not delete</span
-      >
+      <span class="formula">when i = 0 &rarr; Check particle A &rarr; Do not delete</span><br />
+      <span class="formula">when i = 1 &rarr; Check particle B &rarr; Do not delete</span><br />
+      <span class="formula">when i = 2 &rarr; Check particle C &rarr; Delete!</span><br />
+      <span class="formula2">Slide particles D and E back from slots 3 and 4 to 2 and 3</span><br />
+      <span class="formula">when i = 3 &rarr; Check particle E &rarr; Do not delete</span>
     </p>
 
     <p>
@@ -757,11 +616,7 @@ function draw() {
       skip an element by accident. Here’s how the code would look:
     </p>
 
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   //{!1 .bold} Looping through the list backwards
   for (let i = particles.length-1; i >= 0; i--) {
     const p = particles[i];
@@ -769,13 +624,9 @@ function draw() {
   }
 
   particles = particles.filter(particle => !particle.isDead());
-  </pre
-    >
+  </pre>
 
-    <figure
-      class="screenshot"
-      data-p5-sketch="https://editor.p5js.org/embed/B1tgPxW_e"
-    >
+    <figure class="screenshot" data-p5-sketch="https://editor.p5js.org/embed/B1tgPxW_e">
       <img alt="ch04 ex02" src="chapter04/ch04_ex02.png" />
       <figcaption>&nbsp;</figcaption>
     </figure>
@@ -784,11 +635,7 @@ function draw() {
       <h5>Example 4.2: Array of particles</h5>
     </div>
 
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 let particles = [];
 
 function setup() {
@@ -807,25 +654,16 @@ function draw() {
   }
 
   particles = particles.filter(particle => !particle.isDead());
-}</pre
-    >
+}</pre>
   </section>
 
   <section data-type="sect1" id="chapter04_section4">
     <h2>4.4 The Particle System Class</h2>
 
-    <a
-      data-primary="object-oriented programming"
-      data-secondary="classes of user-defined objects"
-      data-tertiary="creating"
-      data-type="indexterm"
-    ></a>
-    <a
-      data-primary="particle systems"
-      data-secondary="class for"
-      data-tertiary="creating"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="object-oriented programming" data-secondary="classes of user-defined objects"
+      data-tertiary="creating" data-type="indexterm"></a>
+    <a data-primary="particle systems" data-secondary="class for" data-tertiary="creating"
+      data-type="indexterm"></a>
 
     <p>
       OK. Now we’ve done two things. We’ve written a class to describe an
@@ -848,11 +686,7 @@ function draw() {
       our main javascript file to look like this:
     </p>
 
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 //{!1} Just one wee ParticleSystem!
 let ps;
 
@@ -864,8 +698,7 @@ function setup() {
 function draw() {
   background(255);
   ps.run();
-}</pre
-    >
+}</pre>
 
     <p>
       Let’s take the code from Example 4.2 and review a bit of object-oriented
@@ -900,7 +733,7 @@ function draw() {
     p.run();
   }
 
-  particles = particles.filter(particle => !particle.isDead());  
+  particles = particles.filter(particle => !particle.isDead());
 </b>
 }
 </pre>
@@ -923,7 +756,7 @@ class ParticleSystem {
       p.run();
     }
 
-    this.particles = this.particles.filter(particle => !particle.isDead());  
+    this.particles = this.particles.filter(particle => !particle.isDead());
   </b>
   }
 }
@@ -933,11 +766,8 @@ class ParticleSystem {
       </tbody>
     </table>
 
-    <a
-      data-primary="particle systems"
-      data-secondary="origin point (of particles)"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="particle systems" data-secondary="origin point (of particles)"
+      data-type="indexterm"></a>
 
     <p>
       We could also add some new features to the particle system itself. For
@@ -952,11 +782,7 @@ class ParticleSystem {
       <h5>Example 4.3: Simple Single Particle System</h5>
     </div>
 
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class ParticleSystem {
 
   ParticleSystem(position) {
@@ -968,8 +794,7 @@ class ParticleSystem {
   addParticle() {
     //{!1 .bold}  The origin is passed to each Particle when it is added.
     this.particles.add(new Particle(this.origin));
-  }</pre
-    >
+  }</pre>
 
     <div data-type="exercise" id="chapter04_exercise3">
       <h5>Exercise 4.3</h5>
@@ -996,12 +821,8 @@ class ParticleSystem {
   <section data-type="sect1" id="chapter04_section5">
     <h2>4.5 A System of Systems</h2>
 
-    <a
-      data-primary="particle systems"
-      data-secondary="multiple systems"
-      data-tertiary="organizing"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="particle systems" data-secondary="multiple systems" data-tertiary="organizing"
+      data-type="indexterm"></a>
 
     <p>
       Let’s review for a moment where we are. We know how to talk about an
@@ -1028,10 +849,7 @@ class ParticleSystem {
 
     <p>You start with a blank screen.</p>
 
-    <figure
-      class="screenshot"
-      data-p5-sketch="https://editor.p5js.org/embed/BJYldlbOg"
-    >
+    <figure class="screenshot" data-p5-sketch="https://editor.p5js.org/embed/BJYldlbOg">
       <img alt="ch04 ex04a" src="chapter04/ch04_ex04a.png" />
       <figcaption>&nbsp;</figcaption>
     </figure>
@@ -1041,10 +859,7 @@ class ParticleSystem {
       position.
     </p>
 
-    <figure
-      class="screenshot"
-      data-p5-sketch="https://editor.p5js.org/embed/S1mDs_7PQ"
-    >
+    <figure class="screenshot" data-p5-sketch="https://editor.p5js.org/embed/S1mDs_7PQ">
       <img alt="ch04 ex04b" src="chapter04/ch04_ex04b.png" />
       <figcaption>&nbsp;</figcaption>
     </figure>
@@ -1054,10 +869,7 @@ class ParticleSystem {
       mouse’s position.
     </p>
 
-    <figure
-      class="screenshot"
-      data-p5-sketch="https://editor.p5js.org/embed/HJXzkYQP7"
-    >
+    <figure class="screenshot" data-p5-sketch="https://editor.p5js.org/embed/HJXzkYQP7">
       <img alt="ch04 ex04c" src="chapter04/ch04_ex04c.png" />
       <figcaption>&nbsp;</figcaption>
     </figure>
@@ -1068,11 +880,7 @@ class ParticleSystem {
       <code>ps</code>.
     </p>
 
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 let ps;
 
 function setup() {
@@ -1084,8 +892,7 @@ function draw() {
   background(255);
   ps.run();
   ps.addParticle();
-}</pre
-    >
+}</pre>
 
     <p>
       For this new example, what we want to do instead is create an
@@ -1094,35 +901,27 @@ function draw() {
       <code>Array</code> is empty.
     </p>
 
-    <div data-type="example"><h5>Example 4.4: System of systems</h5></div>
+    <div data-type="example">
+      <h5>Example 4.4: System of systems</h5>
+    </div>
 
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 //{!1} This time, the type of thing we are putting in the ArrayList is a ParticleSystem itself!
 let systems = [];
 
 function setup() {
   createCanvas(600, 200);
-}</pre
-    >
+}</pre>
 
     <p>
       Whenever the mouse is pressed, a new <code>ParticleSystem</code> object is
       created and placed into the <code>Array</code>.
     </p>
 
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 function mousePressed() {
   systems.push(new ParticleSystem(createVector(mouseX, mouseY)));
-}</pre
-    >
+}</pre>
 
     <p>
       And in <code>draw()</code>, instead of referencing a single
@@ -1130,11 +929,7 @@ function mousePressed() {
       the <code>Array</code> and call <code>run()</code> on each of them.
     </p>
 
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 function draw() {
   background(255);
   //{!4} Since we aren’t deleting elements, we can use the for of loop!
@@ -1142,8 +937,7 @@ function draw() {
     ps.run();
     ps.addParticle();
   }
-}</pre
-    >
+}</pre>
 
     <div data-type="exercise" id="chapter04_exercise5">
       <h5>Exercise 4.5</h5>
@@ -1171,21 +965,12 @@ function draw() {
   <section data-type="sect1" id="chapter04_section6">
     <h2>4.6 Inheritance and Polymorphism: An Introduction</h2>
 
-    <a
-      data-primary="&lt;em&gt;Learning p5&lt;/em&gt; (Shiffman)"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="&lt;em&gt;Learning p5&lt;/em&gt; (Shiffman)" data-type="indexterm"></a>
     <a data-primary="inheritance" data-type="indexterm"></a>
-    <a
-      data-primary="object-oriented programming"
-      data-secondary="inheritance"
-      data-type="indexterm"
-    ></a>
-    <a
-      data-primary="object-oriented programming"
-      data-secondary="polymorphism"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="object-oriented programming" data-secondary="inheritance"
+      data-type="indexterm"></a>
+    <a data-primary="object-oriented programming" data-secondary="polymorphism"
+      data-type="indexterm"></a>
     <a data-primary="polymorphism" data-type="indexterm"></a>
 
     <p>
@@ -1229,11 +1014,7 @@ function draw() {
       might consider doing the following:
     </p>
 
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class HappyConfetti {
 
 }
@@ -1244,8 +1025,7 @@ class FunConfetti {
 
 class WackyConfetti {
 
-}</pre
-    >
+}</pre>
 
     <p>
       This is a nice solution: we have three different classes to describe the
@@ -1257,15 +1037,11 @@ class WackyConfetti {
       <a href="#intro_section2">Introduction</a>.
     </p>
 
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class ParticleSystem {
   constructor(num) {
     this.particles = [];
-    
+
     for (let i = 0; i < num; i++) {
       const r = random(1);
       //{!7} Randomly picking a "kind" of particle
@@ -1277,8 +1053,7 @@ class ParticleSystem {
         this.particles.add(new WackyConfetti());
       }
     }
-  }</pre
-    >
+  }</pre>
 
     <p>
       OK, we now need to pause for a moment. We’ve done nothing wrong. All we
@@ -1288,23 +1063,19 @@ class ParticleSystem {
     </p>
 
     <p>
-      <span class="highlight"
-        >Problem #1: Aren’t we going to be copying/pasting a lot of code between
-        the different “confetti” classes?</span
-      >
+      <span class="highlight">Problem #1: Aren’t we going to be copying/pasting a lot of code
+        between
+        the different “confetti” classes?</span>
     </p>
 
-    <a
-      data-primary="code duplication"
-      data-secondary="inheritance and"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="code duplication" data-secondary="inheritance and" data-type="indexterm"></a>
 
     <p>
       Yes. Even though our kinds of particles are different enough to merit our
       breaking them out into separate classes, there is still a ton of code that
-      they will likely share. They’ll all have <code>p5.Vector</code
-      ><code>s</code> to keep track of position, velocity, and acceleration; an
+      they will likely share. They’ll all have <code>p5.Vector</code><code>s</code> to keep track of
+      position, velocity,
+      and acceleration; an
       <code>update()</code> function that implements our motion algorithm; etc.
     </p>
 
@@ -1331,13 +1102,9 @@ class ParticleSystem {
       <code>sleep()</code>, and <code>bark()</code> functions.
     </p>
 
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Dog {
-  
+
   constructor() {
     // Dogs and cats have the same variables (age) and functions (eat, sleep).
     this.age = 0;
@@ -1355,18 +1122,13 @@ class Dog {
   bark() {
     print("WOOF");
   }
-}</pre
-    >
+}</pre>
 
     <p>Now, let’s move on to cats.</p>
 
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Cat {
-  
+
   constructor() {
     this.age = 0;
   }
@@ -1382,8 +1144,7 @@ class Cat {
   meow() {
     print("MEOW!");
   }
-}</pre
-    >
+}</pre>
 
     <p>
       As we rewrite the same code for fish, horses, koalas, and lemurs, this
@@ -1407,27 +1168,20 @@ class Cat {
       </li>
     </ul>
 
-    <a
-      data-primary="inheritance"
-      data-secondary="subclass"
-      data-type="indexterm"
-    ></a>
-    <a
-      data-primary="inheritance"
-      data-secondary="superclasses"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="inheritance" data-secondary="subclass" data-type="indexterm"></a>
+    <a data-primary="inheritance" data-secondary="superclasses" data-type="indexterm"></a>
     <a data-primary="subclass" data-type="indexterm"></a>
     <a data-primary="superclasses" data-type="indexterm"></a>
 
     <p>
       Inheritance makes this all possible. With inheritance, classes can inherit
       properties (variables) and functionality (methods) from other classes. A
-      <code>Dog</code> class is a child (<strong><em>subclass</em></strong
-      >) of an <code>Animal</code> class. Children will automatically inherit
-      all variables and functions from the parent (<strong
-        ><em>superclass</em></strong
-      >), but can also include functions and variables not found in the parent.
+      <code>Dog</code> class is a child (<strong><em>subclass</em></strong>) of an
+      <code>Animal</code> class. Children
+      will automatically inherit
+      all variables and functions from the parent (<strong><em>superclass</em></strong>), but can
+      also include functions
+      and variables not found in the parent.
       Like a phylogenetic "tree of life," inheritance follows a tree structure.
       Dogs inherit from mammals, which inherit from animals, etc.
     </p>
@@ -1437,28 +1191,16 @@ class Cat {
       <figcaption>Figure 4.2</figcaption>
     </figure>
 
-    <a
-      data-primary="inheritance"
-      data-secondary="syntax for"
-      data-type="indexterm"
-    ></a>
-    <a
-      data-primary="p5"
-      data-secondary="class inheritance"
-      data-tertiary="syntax for"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="inheritance" data-secondary="syntax for" data-type="indexterm"></a>
+    <a data-primary="p5" data-secondary="class inheritance" data-tertiary="syntax for"
+      data-type="indexterm"></a>
 
     <p>Here is how the syntax works with inheritance.</p>
 
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 // The Animal class is the parent (or super) class.
 class Animal {
-  
+
   constructor() {
     //{!1} Dog and Cat inherit the variable age.
     this.age = 0;
@@ -1493,22 +1235,13 @@ class Cat extends Animal {
   meow() {
     print("MEOW!");
   }
-}</pre
-    >
+}</pre>
 
     <p>This brings up two new terms:</p>
 
     <a data-primary="extends keyword (p5)" data-type="indexterm"></a>
-    <a
-      data-primary="inheritance"
-      data-secondary="extends keyword (p5)"
-      data-type="indexterm"
-    ></a>
-    <a
-      data-primary="inheritance"
-      data-secondary="super() function (p5)"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="inheritance" data-secondary="extends keyword (p5)" data-type="indexterm"></a>
+    <a data-primary="inheritance" data-secondary="super() function (p5)" data-type="indexterm"></a>
     <a data-primary="super() function(p5)" data-type="indexterm"></a>
 
     <ul>
@@ -1542,13 +1275,9 @@ class Cat extends Animal {
       this:
     </p>
 
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Dog extends Animal {
-  
+
   constructor() {
     super();
     //{!1} A child class can introduce new variables not included in the parent.
@@ -1558,19 +1287,12 @@ class Dog extends Animal {
   bark() {
     print("WOOF!");
   }
-}</pre
-    >
+}</pre>
 
-    <a
-      data-primary="inheritance"
-      data-secondary="overriding superclass functions"
-      data-type="indexterm"
-    ></a>
-    <a
-      data-primary="superclasses"
-      data-secondary="overriding functions from"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="inheritance" data-secondary="overriding superclass functions"
+      data-type="indexterm"></a>
+    <a data-primary="superclasses" data-secondary="overriding functions from"
+      data-type="indexterm"></a>
 
     <p>
       Note how the parent constructor is called via <code>super()</code>, which
@@ -1580,11 +1302,7 @@ class Dog extends Animal {
       can be <em>overridden</em> by rewriting the function inside the subclass.
     </p>
 
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Dog extends Animal {
 
   constructor() {
@@ -1601,24 +1319,14 @@ class Dog extends Animal {
   bark() {
     print("WOOF!");
   }
-}</pre
-    >
+}</pre>
 
-    <a
-      data-primary="inheritance"
-      data-secondary="adding functionality to superclass objects"
-      data-type="indexterm"
-    ></a>
-    <a
-      data-primary="subclass"
-      data-secondary="adding functionality to superclass objects"
-      data-type="indexterm"
-    ></a>
-    <a
-      data-primary="superclasses"
-      data-secondary="adding functionality within subclasses"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="inheritance" data-secondary="adding functionality to superclass objects"
+      data-type="indexterm"></a>
+    <a data-primary="subclass" data-secondary="adding functionality to superclass objects"
+      data-type="indexterm"></a>
+    <a data-primary="superclasses" data-secondary="adding functionality within subclasses"
+      data-type="indexterm"></a>
 
     <p>
       But what if a dog eats the same way as a generic animal, just with some
@@ -1626,11 +1334,7 @@ class Dog extends Animal {
       and incorporate custom code.
     </p>
 
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Dog extends Animal {
 
    constructor() {
@@ -1648,18 +1352,13 @@ class Dog extends Animal {
    bark() {
     print("WOOF!");
   }
-}</pre
-    >
+}</pre>
   </section>
 
   <section data-type="sect1" id="chapter04_section8">
     <h2>4.8 Particles with Inheritance</h2>
 
-    <a
-      data-primary="inheritance"
-      data-secondary="implementing"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="inheritance" data-secondary="implementing" data-type="indexterm"></a>
 
     <p>
       Now that we’ve had an introduction to the theory of inheritance and its
@@ -1672,11 +1371,7 @@ class Dog extends Animal {
       simplified from <a href="#chapter04_example1">Example 4.1</a>:
     </p>
 
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Particle {
 
   Particle(l) {
@@ -1699,8 +1394,7 @@ class Particle {
     fill(0);
     ellipse(this.position.x, this.position.y, 8, 8);
   }
-}</pre
-    >
+}</pre>
 
     <p>
       Next, we create a subclass from <code>Particle</code> (let’s call it
@@ -1710,11 +1404,7 @@ class Particle {
       calling <code>super()</code>.
     </p>
 
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Confetti extends Particle {
 
   // We could add variables for only Confetti here.
@@ -1733,8 +1423,7 @@ class Confetti extends Particle {
     stroke(0);
     rect(this.position.x, this.position.y, 8, 8);
   }
-}</pre
-    >
+}</pre>
 
     <p>
       Let’s make this a bit more sophisticated. Let’s say we want to have the
@@ -1754,13 +1443,8 @@ class Confetti extends Particle {
       <a href="#intro_section6">Introduction</a>!
     </p>
 
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
-const angle = map(this.position.x,0,width,0,TWO_PI);</pre
-    >
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+const angle = map(this.position.x,0,width,0,TWO_PI);</pre>
 
     <p>
       And just to give it a bit more spin, we can actually map the angle’s range
@@ -1768,11 +1452,7 @@ const angle = map(this.position.x,0,width,0,TWO_PI);</pre
       <code>display()</code> function.
     </p>
 
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   display() {
     const theta = map(this.position.x, 0, width, 0, TWO_PI*2);
 
@@ -1785,8 +1465,7 @@ const angle = map(this.position.x,0,width,0,TWO_PI);</pre
     rotate(theta);
     rect(0, 0, 8, 8);
     pop();
-  }</pre
-    >
+  }</pre>
 
     <div data-type="exercise" id="chapter04_exercise7">
       <h5>Exercise 4.7</h5>
@@ -1799,7 +1478,7 @@ const angle = map(this.position.x,0,width,0,TWO_PI);</pre
 
     <p>
       Now that we have a <code>Confetti</code> subclass that extends our base
-      <code>Particle</code> class, we can add these subclasses to our 
+      <code>Particle</code> class, we can add these subclasses to our
       <code>ParticleSystem</code> class. We'll see how this works in the next section.
     </p>
   </section>
@@ -1807,10 +1486,7 @@ const angle = map(this.position.x,0,width,0,TWO_PI);</pre
   <section data-type="sect1" id="chapter04_section10">
     <h2>4.10 Particle Systems with Inheritance</h2>
 
-    <figure
-      class="screenshot"
-      data-p5-sketch="https://editor.p5js.org/embed/rkJJFxbOe"
-    >
+    <figure class="screenshot" data-p5-sketch="https://editor.p5js.org/embed/rkJJFxbOe">
       <img alt="ch04 ex05" src="chapter04/ch04_ex05.png" />
       <figcaption>&nbsp;</figcaption>
     </figure>
@@ -1819,13 +1495,9 @@ const angle = map(this.position.x,0,width,0,TWO_PI);</pre
       <h5>Example 4.5: Particle system inheritance</h5>
     </div>
 
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class ParticleSystem {
-  
+
   constructor(position) {
     this.origin = this.position.copy();
     //{!1 .bold} One list, for anything that is a Particle or extends Particle
@@ -1850,8 +1522,7 @@ class ParticleSystem {
 
     this.particles = this.particles.filter(particle => !particle.isDead());
   }
-}</pre
-    >
+}</pre>
 
     <div data-type="exercise" id="chapter04_exercise8">
       <h5>Exercise 4.8</h5>
@@ -1867,16 +1538,8 @@ class ParticleSystem {
   <section data-type="sect1" id="chapter04_section11">
     <h2>4.11 Particle Systems with Forces</h2>
 
-    <a
-      data-primary="forces"
-      data-secondary="particle systems with"
-      data-type="indexterm"
-    ></a>
-    <a
-      data-primary="particle systems"
-      data-secondary="forces and"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="forces" data-secondary="particle systems with" data-type="indexterm"></a>
+    <a data-primary="particle systems" data-secondary="forces and" data-type="indexterm"></a>
 
     <p>
       So far in this chapter, we’ve been focusing on structuring our code in an
@@ -1886,11 +1549,7 @@ class ParticleSystem {
       examine the constructor of our simple <code>Particle</code> class.
     </p>
 
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   constructor(l) {
     //{!1 .bold} We’re setting acceleration to a constant value!
     this.acceleration = createVector(0,0.05);
@@ -1898,16 +1557,11 @@ class ParticleSystem {
     this.velocity = createVector(random(-1, 1), random(-2, 0));
     this.position = l.copy();
     this.lifespan = 255.0;
-  }</pre
-    >
+  }</pre>
 
     <p>And now let’s look at the <code>update()</code> function.</p>
 
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   update() {
     this.velocity.add(this.acceleration);
     this.position.add(this.velocity);
@@ -1915,8 +1569,7 @@ class ParticleSystem {
     [inline]// Where is the line of code to clear acceleration?
 
     this.lifespan -= 2.0;
-  }</pre
-    >
+  }</pre>
 
     <p>
       Our <code>Particle</code> class is structured to have a constant
@@ -1932,46 +1585,32 @@ class ParticleSystem {
       divide it by mass.)
     </p>
 
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   applyForce(force) {
     const f = force.copy();
     f.div(this.mass);
     this.acceleration.add(f);
-  }</pre
-    >
+  }</pre>
 
     <p>
       Once we have this, we can add in one more line of code to clear the
       acceleration at the end of <code>update()</code>.
     </p>
 
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
  update() {
    this.velocity.add(this.acceleration);
    this.position.add(this.velocity);
    //{!1} There it is!
    this.acceleration.mult(0);
    this.lifespan -= 2.0;
-  }</pre
-    >
+  }</pre>
 
     <p>And our <code>Particle</code> class is complete!</p>
 
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Particle {
-  
+
   constructor(l) {
     //{!1} We now start with acceleration of 0.
     this.acceleration = createVector(0, 0);
@@ -2017,8 +1656,7 @@ class Particle {
       return false;
     }
   }
-}</pre
-    >
+}</pre>
 
     <p>
       Now that the <code>Particle</code> class is completed, we have a very
@@ -2037,30 +1675,20 @@ class Particle {
       now: a force pointing down, like gravity.
     </p>
 
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
-const gravity = createVector(0,0.1);</pre
-    >
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+const gravity = createVector(0,0.1);</pre>
 
     <p>
       We said it should always be applied, i.e. in <code>draw()</code>, so let’s
       take a look at our <code>draw()</code> function as it stands.
     </p>
 
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 function draw() {
   background(100);
   ps.addParticle();
   ps.run();
-}</pre
-    >
+}</pre>
 
     <p>
       Well, it seems that we have a small problem. <code>applyForce()</code> is
@@ -2075,11 +1703,7 @@ function draw() {
       force to all the individual particles:
     </p>
 
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 function draw() {
   background(100);
 
@@ -2088,14 +1712,10 @@ function draw() {
   ps.applyForce(gravity);
   ps.addParticle();
   ps.run();
-}</pre
-    >
+}</pre>
 
-    <a
-      data-primary="object-oriented programming"
-      data-secondary="maintaining encapsulation"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="object-oriented programming" data-secondary="maintaining encapsulation"
+      data-type="indexterm"></a>
 
     <p>
       Of course, if we call a new function on the
@@ -2107,17 +1727,12 @@ function draw() {
 
     <p>Now in code:</p>
 
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   applyForce(f) {
     for (let p of this.particles) {
       p.applyForce(f);
     }
-  }</pre
-    >
+  }</pre>
 
     <p>
       It almost seems silly to write this function. What we’re saying is “apply
@@ -2135,10 +1750,7 @@ function draw() {
       since nothing has changed):
     </p>
 
-    <figure
-      class="screenshot"
-      data-p5-sketch="https://editor.p5js.org/embed/rkrHFebul"
-    >
+    <figure class="screenshot" data-p5-sketch="https://editor.p5js.org/embed/rkrHFebul">
       <img alt="ch04 ex06" src="chapter04/ch04_ex06.png" />
       <figcaption>&nbsp;</figcaption>
     </figure>
@@ -2147,11 +1759,7 @@ function draw() {
       <h5>Example 4.6: Particle system with forces</h5>
     </div>
 
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 let ps;
 
 function setup() {
@@ -2172,7 +1780,7 @@ function draw() {
 
 
 class ParticleSystem {
-  
+
   constructor(position) {
     this.origin = this.position.copy();
     this.particles = [];
@@ -2198,28 +1806,18 @@ class ParticleSystem {
 
     this.particles = this.particles.filter(particle => !particle.isDead());
   }
-}</pre
-    >
+}</pre>
   </section>
 
   <section data-type="sect1" id="chapter04_section12">
     <h2>4.12 Particle Systems with Repellers</h2>
 
-    <a
-      data-primary="forces"
-      data-secondary="applying to single objects in a system"
-      data-type="indexterm"
-    ></a>
-    <a
-      data-primary="particle systems"
-      data-secondary="applying force to single particles in"
-      data-type="indexterm"
-    ></a>
-    <a
-      data-primary="particles"
-      data-secondary="applying force to single particles in"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="forces" data-secondary="applying to single objects in a system"
+      data-type="indexterm"></a>
+    <a data-primary="particle systems" data-secondary="applying force to single particles in"
+      data-type="indexterm"></a>
+    <a data-primary="particles" data-secondary="applying force to single particles in"
+      data-type="indexterm"></a>
 
     <p>
       What if we wanted to take this example one step further and add a
@@ -2232,20 +1830,15 @@ class ParticleSystem {
     </p>
 
     <figure class="two-col-borderless" id="chapter04_figure3">
-      <img
-        alt="Figure 4.3: Gravity force—vectors are all identical"
-        src="chapter04/ch04_03.png"
-      />
+      <img alt="Figure 4.3: Gravity force—vectors are all identical" src="chapter04/ch04_03.png" />
       <figcaption>
         Figure 4.3: Gravity force—vectors are all identical&nbsp;
       </figcaption>
     </figure>
 
     <figure class="two-col-borderless" id="chapter04_figure4">
-      <img
-        alt="Figure 4.4: Attractor force—vectors are all different"
-        src="chapter04/ch04_04.png"
-      />
+      <img alt="Figure 4.4: Attractor force—vectors are all different"
+        src="chapter04/ch04_04.png" />
       <figcaption>
         Figure 4.4: Attractor force—vectors are all different&nbsp;
       </figcaption>
@@ -2272,11 +1865,7 @@ class ParticleSystem {
       </li>
     </ol>
 
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 let ps;
 //{!1 .bold} New thing: we declare a Repeller object.
 let repeller;
@@ -2301,21 +1890,16 @@ function draw() {
   ps.run();
   //{!1 .bold} New thing: we display the Repeller object.
   repeller.display();
-}</pre
-    >
+}</pre>
 
     <p>
       Making a <code>Repeller</code> object is quite easy; it’s a duplicate of
       the <code>Attractor</code> class from Chapter 2, Example 2.6 .
     </p>
 
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Repeller {
-  
+
   constructor(x, y)  {
     //{!1 .bold} A Repeller doesn’t move, so you just need position.
     this.position = createVector(x, y);
@@ -2327,8 +1911,7 @@ class Repeller {
     fill(255);
     ellipse(this.position.x, this.position.y, this.r*2, this.r*2);
   }
-}</pre
-    >
+}</pre>
 
     <p>
       The more difficult question is, how do we write the
@@ -2354,8 +1937,7 @@ applyForce(f) {
     p.applyForce(f);
   }
 }
-</pre
-            >
+</pre>
           </td>
           <td>
             <pre>
@@ -2365,8 +1947,7 @@ applyRepeller(r) {
     p.applyForce(force);
   }
 }
-</pre
-            >
+</pre>
           </td>
         </tr>
       </tbody>
@@ -2383,11 +1964,7 @@ applyRepeller(r) {
       <code>Attractor</code> class.
     </p>
 
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   // All the same steps we had to calculate an attractive force, only pointing in the opposite direction.
   repel(p) {
     // 1) Get force direction.
@@ -2401,8 +1978,7 @@ applyRepeller(r) {
     // 4) Make a vector out of direction and magnitude.
     dir.mult(force);
     return dir;
-  }</pre
-    >
+  }</pre>
 
     <p>
       Notice how throughout this entire process of adding a repeller to the
@@ -2418,10 +1994,7 @@ applyRepeller(r) {
       <code>Particle</code> class, which hasn’t changed.
     </p>
 
-    <figure
-      class="screenshot"
-      data-p5-sketch="https://editor.p5js.org/embed/rkVTFxZ_e"
-    >
+    <figure class="screenshot" data-p5-sketch="https://editor.p5js.org/embed/rkVTFxZ_e">
       <img alt="ch04 ex07" src="chapter04/ch04_ex07.png" />
       <figcaption>&nbsp;</figcaption>
     </figure>
@@ -2430,11 +2003,7 @@ applyRepeller(r) {
       <h5>Example 4.7: ParticleSystem with repeller</h5>
     </div>
 
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 // One ParticleSystem
 let ps;
 //{!1} One repeller
@@ -2461,7 +2030,7 @@ function draw() {
 
 //{!1} The ParticleSystem manages all the Particles.
 class ParticleSystem {
-  
+
   constructor(position) {
     this.origin = this.position.copy();
     this.particles = [];
@@ -2521,8 +2090,7 @@ class Repeller {
     dir.mult(force);
     return dir;
   }
-}</pre
-    >
+}</pre>
 
     <div data-type="exercise" id="chapter04_exercise9">
       <h5>Exercise 4.9</h5>
@@ -2547,11 +2115,8 @@ class Repeller {
     <h2>4.13 Image Textures and Additive Blending</h2>
 
     <a data-primary="image textures" data-type="indexterm"></a>
-    <a
-      data-primary="p5"
-      data-secondary="incorporating images into projects"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="p5" data-secondary="incorporating images into projects"
+      data-type="indexterm"></a>
 
     <p>
       Even though this book is really about behaviors and algorithms rather than
@@ -2567,22 +2132,13 @@ class Repeller {
       two images:
     </p>
 
-    <figure
-      class="two-col-borderless"
-      data-p5-sketch="https://editor.p5js.org/embed/SyHBRKmD7"
-    >
+    <figure class="two-col-borderless" data-p5-sketch="https://editor.p5js.org/embed/SyHBRKmD7">
       <img alt="White circles" src="chapter04/ch04_ex08b.png" />
       <figcaption>White circles&nbsp;</figcaption>
     </figure>
 
-    <figure
-      class="two-col-borderless"
-      data-p5-sketch="https://editor.p5js.org/embed/Bkp87YXPX"
-    >
-      <img
-        alt="Fuzzy images with transparency"
-        src="chapter04/ch04_ex08a.png"
-      />
+    <figure class="two-col-borderless" data-p5-sketch="https://editor.p5js.org/embed/Bkp87YXPX">
+      <img alt="Fuzzy images with transparency" src="chapter04/ch04_ex08a.png" />
       <figcaption>Fuzzy images with transparency&nbsp;</figcaption>
     </figure>
 
@@ -2597,11 +2153,7 @@ class Repeller {
       <figcaption>Figure 4.5</figcaption>
     </figure>
 
-    <a
-      data-primary="image textures"
-      data-secondary="PNG format and"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="image textures" data-secondary="PNG format and" data-type="indexterm"></a>
     <a data-primary="PNG graphic file format" data-type="indexterm"></a>
 
     <p>
@@ -2614,17 +2166,9 @@ class Repeller {
       just a few lines of code.
     </p>
 
-    <a
-      data-primary="image textures"
-      data-secondary="PImage objects (p5)"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="image textures" data-secondary="PImage objects (p5)" data-type="indexterm"></a>
     <a data-primary="PImage objects (p5)" data-type="indexterm"></a>
-    <a
-      data-primary="p5"
-      data-secondary="PImage objects"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="p5" data-secondary="PImage objects" data-type="indexterm"></a>
 
     <p>First, we’ll need to declare a <code>p5.Image</code> object.</p>
 
@@ -2632,57 +2176,34 @@ class Repeller {
       <h5>Example 4.8: Image texture particle system</h5>
     </div>
 
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
-let img;</pre
-    >
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+let img;</pre>
 
     <p>Load the image in <code>setup()</code>.</p>
 
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 function setup() {
   //{!1} Loading the PNG
   img = loadImage("texture.png");
-}</pre
-    >
+}</pre>
 
     <p>
       And when it comes time to draw the particle, we’ll use the image reference
       instead of drawing an ellipse or rectangle.
     </p>
 
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   årender() {
     imageMode(CENTER);
     //{!1} Note how tint() is the image equivalent of shape’s fill().
     tint(255, this.lifespan);
     image(img, this.position.x, this.position.y);
-  }</pre
-    >
+  }</pre>
 
-    <a
-      data-primary="natural phenomena"
-      data-secondary="smoke"
-      data-tertiary="modeling with particle systems"
-      data-type="indexterm"
-    ></a>
-    <a
-      data-primary="particle systems"
-      data-secondary="smoke"
-      data-tertiary="modeling"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="natural phenomena" data-secondary="smoke"
+      data-tertiary="modeling with particle systems" data-type="indexterm"></a>
+    <a data-primary="particle systems" data-secondary="smoke" data-tertiary="modeling"
+      data-type="indexterm"></a>
 
     <p>
       Incidentally, this smoke example is a nice excuse to revisit the Gaussian
@@ -2699,26 +2220,17 @@ function setup() {
       initial velocities as follows:
     </p>
 
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
     const vx = randomGaussian() * 0.3;
     const vy = randomGaussian() * 0.3 - 1.0;
-    const vel = createVector(vx, vy);</pre
-    >
+    const vel = createVector(vx, vy);</pre>
 
     <p>
       Finally, in this example, a wind force is applied to the smoke mapped from
       the mouse’s horizontal position.
     </p>
 
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 function draw() {
   background(0);
 
@@ -2731,8 +2243,7 @@ function draw() {
   for (let i = 0; i < 2; i++) {
     ps.addParticle();
   }
-}</pre
-    >
+}</pre>
 
     <div data-type="exercise" id="chapter04_exercise11">
       <h5>Exercise 4.11</h5>
@@ -2755,11 +2266,7 @@ function draw() {
     </div>
 
     <a data-primary="blend modes" data-type="indexterm"></a>
-    <a
-      data-primary="image textures"
-      data-secondary="blend modes"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="image textures" data-secondary="blend modes" data-type="indexterm"></a>
 
     <p>
       Finally, it’s worth noting that there are many different algorithms for
@@ -2773,11 +2280,7 @@ function draw() {
     </p>
 
     <a data-primary="additive blend mode" data-type="indexterm"></a>
-    <a
-      data-primary="blend modes"
-      data-secondary="additive"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="blend modes" data-secondary="additive" data-type="indexterm"></a>
     <a data-primary="Hodgin" data-secondary="Robert" data-type="indexterm"></a>
     <a data-primary="iTunes visualizer" data-type="indexterm"></a>
     <a data-primary="Magnetosphere" data-type="indexterm"></a>
@@ -2804,28 +2307,21 @@ function draw() {
       <figcaption>&nbsp;</figcaption>
     </figure>
 
-    <div data-type="example"><h5>Example 4.9: Additive blending</h5></div>
+    <div data-type="example">
+      <h5>Example 4.9: Additive blending</h5>
+    </div>
 
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 function setup() {
   createCanvas(640, 360);
-}</pre
-    >
+}</pre>
 
     <p>
       Then, before you go to draw anything, you set the blend mode using
       <code>blendMode()</code>:
     </p>
 
-    <pre
-      data-code-language="javascript"
-      data-type="programlisting"
-      class="codesplit"
-    >
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 function draw() {
   //{!1} Additive blending
   blendMode(ADD);
@@ -2837,8 +2333,7 @@ function draw() {
 
   // All your other particle stuff would go here.
 
-}</pre
-    >
+}</pre>
 
     <div data-type="exercise" id="chapter04_exercise13">
       <h5>Exercise 4.13</h5>
@@ -2849,11 +2344,7 @@ function draw() {
       </p>
     </div>
 
-    <a
-      data-primary="blend modes"
-      data-secondary="list of"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="blend modes" data-secondary="list of" data-type="indexterm"></a>
 
     <div data-type="exercise" id="chapter04_exercise14">
       <h5>Exercise 4.14</h5>

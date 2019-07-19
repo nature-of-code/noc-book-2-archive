@@ -1,0 +1,7 @@
+{
+  "[html]": {
+    "editor.defaultFormatter": "vscode.html-language-features"
+  },
+  "files.trimTrailingWhitespace": true,
+  "html.format.wrapLineLength": 100
+}

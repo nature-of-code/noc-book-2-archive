@@ -14,8 +14,8 @@
     environment. We could move straight from here into topics such as particle
     systems, steering forces, group behaviors, etc. If we did that, however,
     we’d skip an important area of mathematics that we’re going to need:
-    <strong><em>trigonometry</em></strong
-    >, or the mathematics of triangles, specifically right triangles.
+    <strong><em>trigonometry</em></strong>, or the mathematics of triangles, specifically right
+    triangles.
   </p>
 
   <p>
@@ -46,19 +46,16 @@
       <code>rotate()</code> function to rotate and spin objects.
     </p>
 
-    <a
-      data-primary="angles"
-      data-secondary="measuring in degrees"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="angles" data-secondary="measuring in degrees" data-type="indexterm"></a>
     <a data-primary="degrees" data-type="indexterm"></a>
 
     <p>
       The first order of business is to cover
-      <strong><em>radians</em></strong> and <strong><em>degrees</em></strong
-      >. You’re probably familiar with the concept of an angle in
-      <strong><em>degrees</em></strong
-      >. A full rotation goes from 0 to 360 degrees. 90 degrees (a right angle)
+      <strong><em>radians</em></strong> and <strong><em>degrees</em></strong>. You’re probably
+      familiar with the concept
+      of an angle in
+      <strong><em>degrees</em></strong>. A full rotation goes from 0 to 360 degrees. 90 degrees (a
+      right angle)
       is 1/4th of 360, shown below as two perpendicular lines.
     </p>
 
@@ -77,23 +74,15 @@
       <figcaption>Figure 3.2</figcaption>
     </figure>
 
-    <a
-      data-primary="angles"
-      data-secondary="measuring in radians"
-      data-type="indexterm"
-    ></a>
-    <a
-      data-primary="Processing"
-      data-secondary="angles"
-      data-tertiary="measuring in"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="angles" data-secondary="measuring in radians" data-type="indexterm"></a>
+    <a data-primary="Processing" data-secondary="angles" data-tertiary="measuring in"
+      data-type="indexterm"></a>
     <a data-primary="radians" data-type="indexterm"></a>
 
     <p>
       p5, however, requires angles to be specified in
-      <strong><em>radians</em></strong
-      >. A radian is a unit of measurement for angles defined by the ratio of
+      <strong><em>radians</em></strong>. A radian is a unit of measurement for angles defined by the
+      ratio of
       the length of the arc of a circle to the radius of that circle. One radian
       is the angle at which that ratio equals one (see Figure 3.3). 180 degrees
       = PI radians, 360 degrees = 2*PI radians, 90 degrees = PI/2 radians, etc.
@@ -104,27 +93,15 @@
       <figcaption>Figure 3.3</figcaption>
     </figure>
 
-    <a
-      data-primary="degrees"
-      data-secondary="radians"
-      data-tertiary="converting to"
-      data-type="indexterm"
-    ></a>
-    <a
-      data-primary="radians"
-      data-secondary="converting from degrees"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="degrees" data-secondary="radians" data-tertiary="converting to"
+      data-type="indexterm"></a>
+    <a data-primary="radians" data-secondary="converting from degrees" data-type="indexterm"></a>
 
     <p>The formula to convert from degrees to radians is:</p>
 
     <p>radians = 2 * PI * (degrees / 360)</p>
 
-    <a
-      data-primary="Processing"
-      data-secondary="radians() function"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="Processing" data-secondary="radians() function" data-type="indexterm"></a>
     <a data-primary="radians() function (Processing)" data-type="indexterm"></a>
 
     <p>
@@ -138,22 +115,15 @@
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 float angle = radians(60);
-rotate(angle);</pre
-    >
+rotate(angle);</pre>
 
-    <a
-      data-primary="Processing"
-      data-secondary="rotation tutorial"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="Processing" data-secondary="rotation tutorial" data-type="indexterm"></a>
 
     <!-- TODO: add a new reference to 2D transforms in p5 -->
     <p>
       If you are not familiar with how rotation is implemented in p5, I
       would suggest this tutorial:
-      <a href="http://www.processing.org/learning/transform2d/"
-        >p5 — Transform 2D</a
-      >.
+      <a href="http://www.processing.org/learning/transform2d/">p5 — Transform 2D</a>.
     </p>
 
     <a data-primary="pi (π)" data-type="indexterm"></a>
@@ -179,10 +149,7 @@ rotate(angle);</pre
         <code>translate()</code> and <code>rotate()</code>.
       </p>
 
-      <figure
-        class="screenshot"
-        data-p5-sketch="https://editor.p5js.org/embed/rk65mQXwX"
-      >
+      <figure class="screenshot" data-p5-sketch="https://editor.p5js.org/embed/rk65mQXwX">
         <img alt="ch03 exc01" src="chapter03/ch03_exc01.png" />
         <figcaption>&nbsp;</figcaption>
       </figure>
@@ -192,19 +159,11 @@ rotate(angle);</pre
   <section data-type="sect1" id="chapter03_section2">
     <h2>3.2 Angular Motion</h2>
 
-    <a
-      data-primary="acceleration"
-      data-secondary="rotation"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="acceleration" data-secondary="rotation" data-type="indexterm"></a>
     <a data-primary="angles" data-secondary="motion" data-type="indexterm"></a>
     <a data-primary="motion" data-secondary="angular" data-type="indexterm"></a>
     <a data-primary="rotation" data-type="indexterm"></a>
-    <a
-      data-primary="shapes"
-      data-secondary="rotating"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="shapes" data-secondary="rotating" data-type="indexterm"></a>
 
     <p>Remember all this stuff?</p>
 
@@ -219,9 +178,7 @@ rotate(angle);</pre
     </p>
 
     <p>
-      <span class="formula"
-        >angular velocity = angular velocity + angular acceleration</span
-      ><br />
+      <span class="formula">angular velocity = angular velocity + angular acceleration</span><br />
       <span class="formula">angle = angle + angular velocity</span>
     </p>
 
@@ -240,17 +197,13 @@ translate(width/2, height/2);
 rotate(angle);
 line(-50, 0, 50, 0);
 ellipse(50, 0, 8, 8);
-ellipse(-50, 0, 8, 8);</pre
-    >
+ellipse(-50, 0, 8, 8);</pre>
 
     <p>
       Adding in our principles of motion brings us to the following example.
     </p>
 
-    <figure
-      class="screenshot"
-      data-p5-sketch="https://editor.p5js.org/embed/SJSSzlWOg"
-    >
+    <figure class="screenshot" data-p5-sketch="https://editor.p5js.org/embed/SJSSzlWOg">
       <img alt="ch03 ex01" src="chapter03/ch03_ex01.png" />
       <figcaption>&nbsp;</figcaption>
     </figure>
@@ -287,8 +240,7 @@ function draw() {
   aVelocity += aAcceleration;
   //{!1} Angular equivalent of position.add(velocity);
   angle += aVelocity;
-}</pre
-    >
+}</pre>
 
     <p>
       The baton starts onscreen with no rotation and then spins faster and
@@ -313,10 +265,9 @@ class Mover {
     this.angle = 0;
     this.aVelocity = 0;
     this.aAcceleration = 0;
-  }  
+  }
 
-}</pre
-    >
+}</pre>
 
     <p>
       And then in <code>update()</code>, we update both position and angle
@@ -334,8 +285,7 @@ update() {
   this.angle += this.aVelocity;
 
   this.acceleration.mult(0);
-}</pre
-    >
+}</pre>
 
     <p>
       Of course, for any of this to matter, we also would need to rotate the
@@ -356,20 +306,18 @@ display() {
   rotate(this.angle);
   rect(0, 0, this.mass * 16, this.mass * 16);
   pop();
-}</pre
-    >
+}</pre>
 
     <p>
       Now, if we were to actually go ahead and run the above code, we wouldn’t
-      see anything new. This is because the angular acceleration (<code
-        >this.aAcceleration = 0;</code
-      >) is initialized to zero. For the object to rotate, we need to give it an
+      see anything new. This is because the angular acceleration
+      (<code>this.aAcceleration = 0;</code>) is initialized
+      to zero. For the object to rotate, we need to give it an
       acceleration! Certainly, we could hard-code in a different number.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-this.aAcceleration = 0.01;</pre
-    >
+this.aAcceleration = 0.01;</pre>
 
     <p>
       However, we can produce a more interesting result by dynamically assigning
@@ -377,9 +325,9 @@ this.aAcceleration = 0.01;</pre
       could head far down this road, trying to model the physics of angular
       acceleration using the concepts of
       <a href="http://en.wikipedia.org/wiki/Torque">torque</a> and
-      <a href="http://en.wikipedia.org/wiki/Moment_of_inertia"
-        >moment of inertia</a
-      >. Nevertheless, this level of simulation is beyond the scope of this
+      <a href="http://en.wikipedia.org/wiki/Moment_of_inertia">moment of inertia</a>. Nevertheless,
+      this level of
+      simulation is beyond the scope of this
       book. (We will see more about modeling angular acceleration with a
       pendulum later in this chapter, as well as look at how Box2D realistically
       models rotational motion in Chapter 5.)
@@ -392,8 +340,7 @@ this.aAcceleration = 0.01;</pre
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-    this.aAcceleration = this.acceleration.x;</pre
-    >
+    this.aAcceleration = this.acceleration.x;</pre>
 
     <p>
       Yes, this is completely arbitrary. But it does do something. If the object
@@ -408,10 +355,7 @@ this.aAcceleration = 0.01;</pre
       with these tweaks added.
     </p>
 
-    <figure
-      class="screenshot"
-      data-p5-sketch="https://editor.p5js.org/embed/r1W0zgWOg"
-    >
+    <figure class="screenshot" data-p5-sketch="https://editor.p5js.org/embed/r1W0zgWOg">
       <img alt="ch03 ex02" src="chapter03/ch03_ex02.png" />
       <figcaption>&nbsp;</figcaption>
     </figure>
@@ -434,8 +378,7 @@ this.aAcceleration = 0.01;</pre
     this.angle += this.aVelocity;
 
     this.acceleration.mult(0);
-  }</pre
-    >
+  }</pre>
 
     <div data-type="exercise" id="chapter03_exercise2">
       <h5>Exercise 3.2</h5>
@@ -458,11 +401,8 @@ this.aAcceleration = 0.01;</pre
 
     <a data-primary="&lt;em&gt;sohcahtoa&lt;/em&gt;" data-type="indexterm"></a>
     <a data-primary="trigonometry" data-type="indexterm"></a>
-    <a
-      data-primary="trigonometry"
-      data-secondary="&lt;em&gt;sohcahtoa&lt;/em&gt;"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="trigonometry" data-secondary="&lt;em&gt;sohcahtoa&lt;/em&gt;"
+      data-type="indexterm"></a>
 
     <p>
       I think it may be time. We’ve looked at angles, we’ve spun an object. It’s
@@ -483,20 +423,17 @@ this.aAcceleration = 0.01;</pre
     <ul>
       <li>
         <p>
-          <strong><em>soh</em></strong
-          >: sine = opposite / hypotenuse
+          <strong><em>soh</em></strong>: sine = opposite / hypotenuse
         </p>
       </li>
       <li>
         <p>
-          <strong><em>cah</em></strong
-          >: cosine = adjacent / hypotenuse
+          <strong><em>cah</em></strong>: cosine = adjacent / hypotenuse
         </p>
       </li>
       <li>
         <p>
-          <strong><em>toa</em></strong
-          >: tangent = opposite / adjacent
+          <strong><em>toa</em></strong>: tangent = opposite / adjacent
         </p>
       </li>
     </ul>
@@ -512,11 +449,7 @@ this.aAcceleration = 0.01;</pre
       it a slightly different way (Figure 3.5).
     </p>
 
-    <a
-      data-primary="vectors"
-      data-secondary="as right triangles"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="vectors" data-secondary="as right triangles" data-type="indexterm"></a>
 
     <p>
       See how we create a right triangle out of a vector? The vector arrow
@@ -536,21 +469,14 @@ this.aAcceleration = 0.01;</pre
   <section data-type="sect1" id="chapter03_section4">
     <h2>3.4 Pointing in the Direction of Movement</h2>
 
-    <a
-      data-primary="rotation"
-      data-secondary="pointing towards movement"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="rotation" data-secondary="pointing towards movement" data-type="indexterm"></a>
 
     <p>
       Let’s go all the way back to Example 1.10, which features a
       <code>Mover</code> object accelerating towards the mouse.
     </p>
 
-    <figure
-      class="screenshot"
-      data-p5-sketch="https://editor.p5js.org/embed/ryAIHLIPe"
-    >
+    <figure class="screenshot" data-p5-sketch="https://editor.p5js.org/embed/ryAIHLIPe">
       <img alt="ch01 ex10" src="chapter01/ch01_ex10.png" />
       <figcaption>&nbsp;</figcaption>
     </figure>
@@ -576,16 +502,8 @@ this.aAcceleration = 0.01;</pre
     </figure>
 
     <a data-primary="tangent" data-type="indexterm"></a>
-    <a
-      data-primary="trigonometry"
-      data-secondary="tangent"
-      data-type="indexterm"
-    ></a>
-    <a
-      data-primary="vectors"
-      data-secondary="tangent"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="trigonometry" data-secondary="tangent" data-type="indexterm"></a>
+    <a data-primary="vectors" data-secondary="tangent" data-type="indexterm"></a>
 
     <p>OK. We know that the definition of tangent is:</p>
 
@@ -599,8 +517,8 @@ this.aAcceleration = 0.01;</pre
       The problem with the above is that we know velocity, but we don’t know the
       angle. We have to solve for the angle. This is where a special function
       known as <em>inverse tangent</em> comes in, sometimes referred to as
-      <em>arctangent</em> or <em>tan<sup>-1</sup></em
-      >. (There is also an <em>inverse sine</em> and an
+      <em>arctangent</em> or <em>tan<sup>-1</sup></em>. (There is also an <em>inverse sine</em> and
+      an
       <em>inverse cosine</em>.)
     </p>
 
@@ -636,29 +554,16 @@ this.aAcceleration = 0.01;</pre
       <dt><em>then</em></dt>
       <dd>
         <p>
-          <em
-            >angle = arctangent(velocity<sub>y</sub> / velocity<sub>x</sub>)</em
-          >
+          <em>angle = arctangent(velocity<sub>y</sub> / velocity<sub>x</sub>)</em>
         </p>
       </dd>
     </dl>
 
     <a data-primary="atan() function (Processing)" data-type="indexterm"></a>
-    <a
-      data-primary="Processing"
-      data-secondary="atan() function"
-      data-type="indexterm"
-    ></a>
-    <a
-      data-primary="tangent"
-      data-secondary="atan() function (arctangent)"
-      data-type="indexterm"
-    ></a>
-    <a
-      data-primary="trigonometry"
-      data-secondary="atan() function"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="Processing" data-secondary="atan() function" data-type="indexterm"></a>
+    <a data-primary="tangent" data-secondary="atan() function (arctangent)"
+      data-type="indexterm"></a>
+    <a data-primary="trigonometry" data-secondary="atan() function" data-type="indexterm"></a>
 
     <p>
       Now that we have the formula, let’s see where it should go in our mover’s
@@ -680,8 +585,7 @@ this.aAcceleration = 0.01;</pre
     rotate(this.angle);
     rect(0, 0, 30, 10);
     pop();
-  }</pre
-    >
+  }</pre>
 
     <p>
       Now the above code is pretty darn close, and almost works. We still have a
@@ -701,27 +605,15 @@ this.aAcceleration = 0.01;</pre
     </p>
 
     <p>
-      <span class="formula"
-        >V1 &rArr; angle = atan(3/-4) = atan(-0.75) = -0.6435011 radians = -37
-        degrees</span
-      ><br />
-      <span class="formula"
-        >V2 &rArr; angle = atan(-3/4) = atan(-0.75) = -0.6435011 radians = -37
-        degrees</span
-      >
+      <span class="formula">V1 &rArr; angle = atan(3/-4) = atan(-0.75) = -0.6435011 radians = -37
+        degrees</span><br />
+      <span class="formula">V2 &rArr; angle = atan(-3/4) = atan(-0.75) = -0.6435011 radians = -37
+        degrees</span>
     </p>
 
     <a data-primary="atan2() function (Processing)" data-type="indexterm"></a>
-    <a
-      data-primary="Processing"
-      data-secondary="atan2() function"
-      data-type="indexterm"
-    ></a>
-    <a
-      data-primary="tangent"
-      data-secondary="atan2() function"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="Processing" data-secondary="atan2() function" data-type="indexterm"></a>
+    <a data-primary="tangent" data-secondary="atan2() function" data-type="indexterm"></a>
 
     <p>
       …we get the same angle for each vector. This can’t be right for both; the
@@ -733,10 +625,7 @@ this.aAcceleration = 0.01;</pre
       <code>atan2()</code> that does it for you.
     </p>
 
-    <figure
-      class="screenshot"
-      data-p5-sketch="https://editor.p5js.org/embed/BkfQ7g-_l"
-    >
+    <figure class="screenshot" data-p5-sketch="https://editor.p5js.org/embed/BkfQ7g-_l">
       <img alt="ch03 ex03" src="chapter03/ch03_ex03.png" />
       <figcaption>&nbsp;</figcaption>
     </figure>
@@ -759,28 +648,15 @@ this.aAcceleration = 0.01;</pre
     rotate(this.angle);
     rect(0, 0, 30, 10);
     pop();
-  }</pre
-    >
+  }</pre>
 
-    <a
-      data-primary="heading() function (PVector class)"
-      data-type="indexterm"
-    ></a>
-    <a
-      data-primary="motion"
-      data-secondary="heading() function (PVector class)"
-      data-type="indexterm"
-    ></a>
-    <a
-      data-primary="PVector class (Processing)"
-      data-secondary="heading() function"
-      data-type="indexterm"
-    ></a>
-    <a
-      data-primary="tangent"
-      data-secondary="heading() function (PVector class)"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="heading() function (PVector class)" data-type="indexterm"></a>
+    <a data-primary="motion" data-secondary="heading() function (PVector class)"
+      data-type="indexterm"></a>
+    <a data-primary="PVector class (Processing)" data-secondary="heading() function"
+      data-type="indexterm"></a>
+    <a data-primary="tangent" data-secondary="heading() function (PVector class)"
+      data-type="indexterm"></a>
 
     <p>
       To simplify this even further, the <code>p5.Vector</code> class itself
@@ -791,8 +667,7 @@ this.aAcceleration = 0.01;</pre
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
     // The easiest way to do this!
-    this.angle = this.velocity.heading();</pre
-    >
+    this.angle = this.velocity.heading();</pre>
 
     <div data-type="exercise" id="chapter03_exercise3">
       <h5>Exercise 3.3</h5>
@@ -811,31 +686,20 @@ this.aAcceleration = 0.01;</pre
 
     <a data-primary="Cartesian coordinates" data-type="indexterm"></a>
     <a data-primary="coordinate systems" data-type="indexterm"></a>
-    <a
-      data-primary="coordinate systems"
-      data-secondary="Cartesian"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="coordinate systems" data-secondary="Cartesian" data-type="indexterm"></a>
     <a data-primary="Descartes" data-secondary="René" data-type="indexterm"></a>
-    <a
-      data-primary="shapes"
-      data-secondary="displaying"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="shapes" data-secondary="displaying" data-type="indexterm"></a>
 
     <p>
       Any time we display a shape in p5, we have to specify a pixel
       position, a set of <code>x</code> and <code>y</code> coordinates. These
-      coordinates are known as <strong><em>Cartesian coordinates</em></strong
-      >, named for René Descartes, the French mathematician who developed the
+      coordinates are known as <strong><em>Cartesian coordinates</em></strong>, named for René
+      Descartes, the French
+      mathematician who developed the
       ideas behind Cartesian space.
     </p>
 
-    <a
-      data-primary="coordinate systems"
-      data-secondary="polar"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="coordinate systems" data-secondary="polar" data-type="indexterm"></a>
     <a data-primary="polar coordinates" data-type="indexterm"></a>
 
     <p>
@@ -850,16 +714,8 @@ this.aAcceleration = 0.01;</pre
       Polar coordinate—the magnitude (length) and direction (angle) of a vector
     </p>
 
-    <a
-      data-primary="coordinate systems"
-      data-secondary="Processing and"
-      data-type="indexterm"
-    ></a>
-    <a
-      data-primary="Processing"
-      data-secondary="coordinate systems and"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="coordinate systems" data-secondary="Processing and" data-type="indexterm"></a>
+    <a data-primary="Processing" data-secondary="coordinate systems and" data-type="indexterm"></a>
 
     <p>
       p5’s drawing functions, however, don’t understand polar
@@ -873,17 +729,12 @@ this.aAcceleration = 0.01;</pre
     </p>
 
     <a data-primary="theta (θ)" data-type="indexterm"></a>
-    <a
-      data-primary="angles"
-      data-secondary="theta (θ)"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="angles" data-secondary="theta (θ)" data-type="indexterm"></a>
 
     <figure id="chapter03_figure8">
       <img
         alt="Figure 3.8: The Greek letter θ (theta) is often used to denote an angle.  Since a polar coordinate is conventionally referred to as (r, θ), we’ll use theta as a variable name when referring to an angle."
-        src="chapter03/ch03_08.png"
-      />
+        src="chapter03/ch03_08.png" />
       <figcaption>
         Figure 3.8: The Greek letter θ (theta) is often used to denote an angle.
         Since a polar coordinate is conventionally referred to as (r, θ), we’ll
@@ -892,40 +743,22 @@ this.aAcceleration = 0.01;</pre
     </figure>
 
     <p>
-      <span class="formula"
-        >sine(theta) &nbsp;&nbsp;= y/r &nbsp;&nbsp;&rarr;&nbsp;&nbsp; y = r
-        <code>*</code> sine(theta)</span
-      ><br />
-      <span class="formula"
-        >cosine(theta) = x/r &nbsp;&nbsp;&rarr;&nbsp;&nbsp; x = r
-        <code>*</code> cosine(theta)</span
-      >
+      <span class="formula">sine(theta) &nbsp;&nbsp;= y/r &nbsp;&nbsp;&rarr;&nbsp;&nbsp; y = r
+        <code>*</code> sine(theta)</span><br />
+      <span class="formula">cosine(theta) = x/r &nbsp;&nbsp;&rarr;&nbsp;&nbsp; x = r
+        <code>*</code> cosine(theta)</span>
     </p>
 
-    <a
-      data-primary="Cartesian coordinates"
-      data-secondary="polar coordinates"
-      data-tertiary="converting from"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="Cartesian coordinates" data-secondary="polar coordinates"
+      data-tertiary="converting from" data-type="indexterm"></a>
     <a data-primary="cos() function (Processing)" data-type="indexterm"></a>
-    <a
-      data-primary="polar coordinates"
-      data-secondary="Cartesian coordinates"
-      data-tertiary="converting to"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="polar coordinates" data-secondary="Cartesian coordinates"
+      data-tertiary="converting to" data-type="indexterm"></a>
     <a data-primary="sin() function (Processing)" data-type="indexterm"></a>
-    <a
-      data-primary="trigonometry"
-      data-secondary="cos() function (Processing)"
-      data-type="indexterm"
-    ></a>
-    <a
-      data-primary="trigonometry"
-      data-secondary="sin() function (Processing)"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="trigonometry" data-secondary="cos() function (Processing)"
+      data-type="indexterm"></a>
+    <a data-primary="trigonometry" data-secondary="sin() function (Processing)"
+      data-type="indexterm"></a>
 
     <p>
       For example, if <code>r</code> is 75 and <code>theta</code> is 45 degrees
@@ -940,14 +773,10 @@ const r = 75;
 const theta = PI / 4;
 // Converting from polar (r,theta) to Cartesian (x,y)
 const x = r * cos(theta);
-const y = r * sin(theta);</pre
-    >
+const y = r * sin(theta);</pre>
 
-    <a
-      data-primary="shapes"
-      data-secondary="moving with polar coordinates"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="shapes" data-secondary="moving with polar coordinates"
+      data-type="indexterm"></a>
 
     <p>
       This type of conversion can be useful in certain applications. For
@@ -961,15 +790,14 @@ const y = r * sin(theta);</pre
       <code>theta</code>.
     </p>
 
-    <figure
-      class="screenshot"
-      data-p5-sketch="https://editor.p5js.org/embed/S1UL7gZue"
-    >
+    <figure class="screenshot" data-p5-sketch="https://editor.p5js.org/embed/S1UL7gZue">
       <img alt="ch03 ex04" src="chapter03/ch03_ex04.png" />
       <figcaption>&nbsp;</figcaption>
     </figure>
 
-    <div data-type="example"><h5>Example 3.4: Polar to Cartesian</h5></div>
+    <div data-type="example">
+      <h5>Example 3.4: Polar to Cartesian</h5>
+    </div>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 const r = 75;
@@ -991,8 +819,7 @@ function draw() {
   ellipse(x + width/2, y + height/2, 16, 16);
 
   theta += 0.01;
-}</pre
-    >
+}</pre>
 
     <div data-type="exercise" id="chapter03_exercise4">
       <h5>Exercise 3.4</h5>
@@ -1021,10 +848,7 @@ function draw() {
         the spaceship is pointing.
       </p>
 
-      <figure
-        class="screenshot"
-        data-p5-sketch="https://editor.p5js.org/embed/rJ1eCXXw7"
-      >
+      <figure class="screenshot" data-p5-sketch="https://editor.p5js.org/embed/rJ1eCXXw7">
         <img alt="ch03 exc05" src="chapter03/ch03_exc05.png" />
         <figcaption>&nbsp;</figcaption>
       </figure>
@@ -1058,17 +882,14 @@ function draw() {
     <p>
       You’ll notice that the output of the sine function is a smooth curve
       alternating between &minus;1 and 1. This type of a behavior is known as
-      <strong><em>oscillation</em></strong
-      >, a periodic movement between two points. Plucking a guitar string,
+      <strong><em>oscillation</em></strong>, a periodic movement between two points. Plucking a
+      guitar string,
       swinging a pendulum, bouncing on a pogo stick—these are all examples of
       oscillating motion.
     </p>
 
-    <a
-      data-primary="oscillation"
-      data-secondary="simulating with sine curves"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="oscillation" data-secondary="simulating with sine curves"
+      data-type="indexterm"></a>
 
     <p>
       And so we happily discover that we can simulate oscillation in a
@@ -1082,19 +903,12 @@ function draw() {
       from the left side to the right side of a p5 window.
     </p>
 
-    <figure
-      class="screenshot"
-      data-p5-sketch="https://editor.p5js.org/embed/BJTYQlWOe"
-    >
+    <figure class="screenshot" data-p5-sketch="https://editor.p5js.org/embed/BJTYQlWOe">
       <img alt="ch03 ex05" src="chapter03/ch03_ex05.png" />
       <figcaption>&nbsp;</figcaption>
     </figure>
 
-    <a
-      data-primary="oscillation"
-      data-secondary="simple harmonic motion"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="oscillation" data-secondary="simple harmonic motion" data-type="indexterm"></a>
     <a data-primary="simple harmonic motion" data-type="indexterm"></a>
 
     <p>
@@ -1112,29 +926,21 @@ function draw() {
     </p>
 
     <a data-primary="amplitude" data-type="indexterm"></a>
-    <a
-      data-primary="oscillation"
-      data-secondary="amplitude"
-      data-type="indexterm"
-    ></a>
-    <a
-      data-primary="oscillation"
-      data-secondary="period"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="oscillation" data-secondary="amplitude" data-type="indexterm"></a>
+    <a data-primary="oscillation" data-secondary="period" data-type="indexterm"></a>
     <a data-primary="period" data-type="indexterm"></a>
 
     <ul>
       <li>
         <p>
-          <strong><em>Amplitude</em></strong
-          >: The distance from the center of motion to either extreme
+          <strong><em>Amplitude</em></strong>: The distance from the center of motion to either
+          extreme
         </p>
       </li>
       <li>
         <p>
-          <strong><em>Period</em></strong
-          >: The amount of time it takes for one complete cycle of motion
+          <strong><em>Period</em></strong>: The amount of time it takes for one complete cycle of
+          motion
         </p>
       </li>
     </ul>
@@ -1155,21 +961,12 @@ function draw() {
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 // Our amplitude is measured in pixels.
-const amplitude = 100;</pre
-    >
+const amplitude = 100;</pre>
 
     <a data-primary="millis() function (Processing)" data-type="indexterm"></a>
-    <a
-      data-primary="Processing"
-      data-secondary="measuring time in"
-      data-type="indexterm"
-    ></a>
-    <a
-      data-primary="time"
-      data-secondary="millis() function"
-      data-tertiary="measuring with"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="Processing" data-secondary="measuring time in" data-type="indexterm"></a>
+    <a data-primary="time" data-secondary="millis() function" data-tertiary="measuring with"
+      data-type="indexterm"></a>
     <a data-primary="period" data-type="indexterm"></a>
 
     <p>
@@ -1185,8 +982,7 @@ const amplitude = 100;</pre
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 // Period is measured in frames (the unit of time for animation).
-const period = 120;</pre
-    >
+const period = 120;</pre>
 
     <p>
       Once we have the amplitude and period, it’s time to write a formula to
@@ -1195,14 +991,10 @@ const period = 120;</pre
     </p>
 
     <pre data-code-language="java" data-type="programlisting" class="codesplit">
-const x = amplitude * sin(TWO_PI * frameCount / period);</pre
-    >
+const x = amplitude * sin(TWO_PI * frameCount / period);</pre>
 
-    <a
-      data-primary="map() function (Processing)"
-      data-secondary="oscillation and"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="map() function (Processing)" data-secondary="oscillation and"
+      data-type="indexterm"></a>
 
     <p>
       Let’s dissect the formula a bit more and try to understand each component.
@@ -1307,7 +1099,9 @@ const x = amplitude * sin(TWO_PI * frameCount / period);</pre
       period of 120 frames.
     </p>
 
-    <div data-type="example"><h5>Example 3.5: Simple Harmonic Motion</h5></div>
+    <div data-type="example">
+      <h5>Example 3.5: Simple Harmonic Motion</h5>
+    </div>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 function setup() {
@@ -1326,19 +1120,15 @@ function draw() {
   translate(width/2, height/2);
   line(0, 0, x, 0);
   ellipse(x, 0, 20, 20);
-}</pre
-    >
+}</pre>
 
     <a data-primary="frequency (of oscillations)" data-type="indexterm"></a>
-    <a
-      data-primary="oscillation"
-      data-secondary="frequency of"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="oscillation" data-secondary="frequency of" data-type="indexterm"></a>
 
     <p>
-      It’s also worth mentioning the term <strong><em>frequency</em></strong
-      >: the number of cycles per time unit. Frequency is equal to 1 divided by
+      It’s also worth mentioning the term <strong><em>frequency</em></strong>: the number of cycles
+      per time unit.
+      Frequency is equal to 1 divided by
       <code>period</code>. If the period is 120 frames, then only 1/120th of a
       cycle is completed in one frame, and so frequency = 1/120. In the above
       example, we simply chose to define the rate of oscillation in terms of
@@ -1362,16 +1152,8 @@ function draw() {
   <section data-type="sect1" id="chapter03_section7">
     <h2>3.7 Oscillation with Angular Velocity</h2>
 
-    <a
-      data-primary="angular velocity"
-      data-secondary="oscillation with"
-      data-type="indexterm"
-    ></a>
-    <a
-      data-primary="oscillation"
-      data-secondary="angular velocity and"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="angular velocity" data-secondary="oscillation with" data-type="indexterm"></a>
+    <a data-primary="oscillation" data-secondary="angular velocity and" data-type="indexterm"></a>
 
     <p>
       An understanding of the concepts of oscillation, amplitude, and
@@ -1382,14 +1164,12 @@ function draw() {
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-const x = amplitude * sin(TWO_PI * frameCount / period);</pre
-    >
+const x = amplitude * sin(TWO_PI * frameCount / period);</pre>
 
     <p>And let’s rewrite it a slightly different way:</p>
 
     <pre data-code-language="java" data-type="programlisting" class="codesplit">
-const x = amplitude * sin ( some value that increments slowly );</pre
-    >
+const x = amplitude * sin ( some value that increments slowly );</pre>
 
     <p>
       If we care about precisely defining the period of oscillation in terms of
@@ -1401,15 +1181,13 @@ const x = amplitude * sin ( some value that increments slowly );</pre
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 let angle = 0;
-const aVelocity = 0.05;</pre
-    >
+const aVelocity = 0.05;</pre>
 
     <p>in <code>draw()</code>, we can simply say:</p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 angle += aVelocity;
-const x = amplitude * sin(angle);</pre
-    >
+const x = amplitude * sin(angle);</pre>
 
     <p><code>angle</code> is our “some value that increments slowly.”</p>
 
@@ -1439,8 +1217,7 @@ function draw() {
   translate(width/2, height/2);
   line(0, 0, x, 0);
   ellipse(x, 0, 20, 20);
-}</pre
-    >
+}</pre>
 
     <p>
       Just because we’re not referencing it directly doesn’t mean that we’ve
@@ -1452,11 +1229,7 @@ function draw() {
 
     <p><span class="formula">period = TWO_PI / angular velocity</span></p>
 
-    <a
-      data-primary="oscillation"
-      data-secondary="on two axes"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="oscillation" data-secondary="on two axes" data-type="indexterm"></a>
 
     <p>
       Let’s expand this example a bit more and create an
@@ -1466,15 +1239,14 @@ function draw() {
       axis). Another perfect opportunity for <code>p5.Vector</code>!
     </p>
 
-    <figure
-      class="screenshot"
-      data-p5-sketch="https://editor.p5js.org/embed/rJkWNeWOx"
-    >
+    <figure class="screenshot" data-p5-sketch="https://editor.p5js.org/embed/rJkWNeWOx">
       <img alt="ch03 ex07" src="chapter03/ch03_ex07.png" />
       <figcaption>&nbsp;</figcaption>
     </figure>
 
-    <div data-type="example"><h5>Example 3.7: Oscillator objects</h5></div>
+    <div data-type="example">
+      <h5>Example 3.7: Oscillator objects</h5>
+    </div>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Oscillator  {
@@ -1506,8 +1278,7 @@ class Oscillator  {
     ellipse(x, y, 16, 16);
     pop();
   }
-}</pre
-    >
+}</pre>
 
     <div data-type="exercise" id="chapter03_exercise7">
       <h5>Exercise 3.7</h5>
@@ -1533,11 +1304,7 @@ class Oscillator  {
   <section data-type="sect1" id="chapter03_section8">
     <h2>3.8 Waves</h2>
 
-    <a
-      data-primary="oscillation"
-      data-secondary="waves"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="oscillation" data-secondary="waves" data-type="indexterm"></a>
     <a data-primary="waves" data-type="indexterm"></a>
 
     <p>
@@ -1550,10 +1317,7 @@ class Oscillator  {
       these oscillating circles next to each other.
     </p>
 
-    <figure
-      class="screenshot"
-      data-p5-sketch="https://editor.p5js.org/embed/Byt94lW_x"
-    >
+    <figure class="screenshot" data-p5-sketch="https://editor.p5js.org/embed/Byt94lW_x">
       <img alt="ch03 ex09" src="chapter03/ch03_ex09.png" />
       <figcaption>&nbsp;</figcaption>
     </figure>
@@ -1563,17 +1327,10 @@ class Oscillator  {
       a creature, as well as to simulate a soft surface (such as water).
     </p>
 
-    <a
-      data-primary="period"
-      data-secondary="defined in pixels rather than frames"
-      data-type="indexterm"
-    ></a>
-    <a
-      data-primary="waves"
-      data-secondary="angular velocity"
-      data-tertiary="defining with"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="period" data-secondary="defined in pixels rather than frames"
+      data-type="indexterm"></a>
+    <a data-primary="waves" data-secondary="angular velocity" data-tertiary="defining with"
+      data-type="indexterm"></a>
 
     <p>
       Here, we’re going to encounter the same questions of amplitude (height of
@@ -1592,8 +1349,7 @@ class Oscillator  {
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 let angle = 0;
 const angleVel = 0.2;
-const amplitude = 100;</pre
-    >
+const amplitude = 100;</pre>
 
     <p>
       Then we’re going to loop through all of the <code>x</code> values where we
@@ -1623,33 +1379,23 @@ const amplitude = 100;</pre
     ellipse(x, y + height/2, 48, 48);
     // 3) Increment the angle according to angular velocity.
     angle += angleVel;
-  }</pre
-    >
+  }</pre>
 
     <p>
       Let’s look at the results with different values for <code>angleVel</code>:
     </p>
 
-    <figure
-      class="three-col"
-      data-p5-sketch="https://editor.p5js.org/embed/B1JE_HQDX"
-    >
+    <figure class="three-col" data-p5-sketch="https://editor.p5js.org/embed/B1JE_HQDX">
       <img alt="angleVel = 0.05" src="chapter03/ch03_ex09a.png" />
       <figcaption>angleVel = 0.05&nbsp;</figcaption>
     </figure>
 
-    <figure
-      class="three-col"
-      data-p5-sketch="https://editor.p5js.org/embed/HkfDFLQDX"
-    >
+    <figure class="three-col" data-p5-sketch="https://editor.p5js.org/embed/HkfDFLQDX">
       <img alt="angleVel = 0.2" src="chapter03/ch03_ex09b.png" />
       <figcaption>angleVel = 0.2&nbsp;</figcaption>
     </figure>
 
-    <figure
-      class="three-col"
-      data-p5-sketch="https://editor.p5js.org/embed/SkOFK8QDX"
-    >
+    <figure class="three-col" data-p5-sketch="https://editor.p5js.org/embed/SkOFK8QDX">
       <img alt="angleVel = 0.4" src="chapter03/ch03_ex09c.png" />
       <figcaption>angleVel = 0.4&nbsp;</figcaption>
     </figure>
@@ -1664,10 +1410,7 @@ const amplitude = 100;</pre
       points with a line.
     </p>
 
-    <figure
-      class="screenshot"
-      data-p5-sketch="https://editor.p5js.org/embed/SJjQNeZOl"
-    >
+    <figure class="screenshot" data-p5-sketch="https://editor.p5js.org/embed/SJjQNeZOl">
       <img alt="ch03 ex08" src="chapter03/ch03_ex08.png" />
       <figcaption>&nbsp;</figcaption>
     </figure>
@@ -1700,14 +1443,9 @@ function setup(){
     angle += angleVel;
   }
   endShape();
-}</pre
-    >
+}</pre>
 
-    <a
-      data-primary="oscillation"
-      data-secondary="varying"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="oscillation" data-secondary="varying" data-type="indexterm"></a>
     <a data-primary="waves" data-secondary="varying" data-type="indexterm"></a>
 
     <p>
@@ -1727,15 +1465,14 @@ function setup(){
       <code>startAngle</code>) increments with its own angular velocity.
     </p>
 
-    <figure
-      class="screenshot"
-      data-p5-sketch="https://editor.p5js.org/embed/Byt94lW_x"
-    >
+    <figure class="screenshot" data-p5-sketch="https://editor.p5js.org/embed/Byt94lW_x">
       <img alt="ch03 ex09" src="chapter03/ch03_ex09.png" />
       <figcaption>&nbsp;</figcaption>
     </figure>
 
-    <div data-type="example"><h5>Example 3.9: The Wave</h5></div>
+    <div data-type="example">
+      <h5>Example 3.9: The Wave</h5>
+    </div>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 let startAngle = 0;
@@ -1759,8 +1496,7 @@ function draw() {
     ellipse(x,y,48,48);
     angle += angleVel;
   }
-}</pre
-    >
+}</pre>
 
     <div data-type="exercise" id="chapter03_exercise9">
       <h5>Exercise 3.9</h5>
@@ -1806,27 +1542,11 @@ function draw() {
   <section data-type="sect1" id="chapter03_section9">
     <h2>3.9 Trigonometry and Forces: The Pendulum</h2>
 
-    <a
-      data-primary="forces"
-      data-secondary="trigonometry and"
-      data-type="indexterm"
-    ></a>
-    <a
-      data-primary="natural phenomena"
-      data-secondary="pivots"
-      data-tertiary="modeling"
-      data-type="indexterm"
-    ></a>
-    <a
-      data-primary="pivots"
-      data-secondary="modeling"
-      data-type="indexterm"
-    ></a>
-    <a
-      data-primary="trigonometry"
-      data-secondary="forces and"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="forces" data-secondary="trigonometry and" data-type="indexterm"></a>
+    <a data-primary="natural phenomena" data-secondary="pivots" data-tertiary="modeling"
+      data-type="indexterm"></a>
+    <a data-primary="pivots" data-secondary="modeling" data-type="indexterm"></a>
+    <a data-primary="trigonometry" data-secondary="forces and" data-type="indexterm"></a>
 
     <p>
       Do you miss Newton’s laws of motion? I know I sure do. Well, lucky for
@@ -1852,12 +1572,8 @@ function draw() {
       scenario, a pendulum in a 2D space—a p5 window (see Figure 3.10).
     </p>
 
-    <a
-      data-primary="acceleration"
-      data-secondary="angular"
-      data-tertiary="determining"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="acceleration" data-secondary="angular" data-tertiary="determining"
+      data-type="indexterm"></a>
     <a data-primary="angular acceleration" data-type="indexterm"></a>
 
     <p>
@@ -1887,20 +1603,18 @@ function draw() {
       <figcaption>Figure 3.12</figcaption>
     </figure>
 
-    <a
-      data-primary="gravity"
-      data-secondary="modeling with trigonometry"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="gravity" data-secondary="modeling with trigonometry" data-type="indexterm"></a>
 
     <p>
-      We can see that the force of the pendulum (<code>F<sub>p</sub></code
-      >) should point perpendicular to the arm of the pendulum in the direction
+      We can see that the force of the pendulum (<code>F<sub>p</sub></code>) should point
+      perpendicular to the arm of
+      the pendulum in the direction
       that the pendulum is swinging. After all, if there were no arm, the bob
       would just fall straight down. It’s the tension force of the arm that
       keeps the bob accelerating towards the pendulum’s rest state. Since the
-      force of gravity (<code>F<sub>g</sub></code
-      >) points downward, by making a right triangle out of these two vectors,
+      force of gravity (<code>F<sub>g</sub></code>) points downward, by making a right triangle out
+      of these two
+      vectors,
       we’ve accomplished something quite magnificent. We’ve made the force of
       gravity the hypotenuse of a right triangle and separated the vector into
       two components, one of which represents the force of the pendulum. Since
@@ -1914,9 +1628,7 @@ function draw() {
     <p>Therefore:</p>
 
     <p>
-      <span class="formula"
-        >F<sub>p</sub> = F<sub>g</sub> <code>*</code> sine(&theta;)</span
-      >
+      <span class="formula">F<sub>p</sub> = F<sub>g</sub> <code>*</code> sine(&theta;)</span>
     </p>
 
     <p>
@@ -1927,9 +1639,7 @@ function draw() {
     </p>
 
     <p>
-      <span class="formula"
-        >angular velocity = angular velocity + angular acceleration</span
-      ><br />
+      <span class="formula">angular velocity = angular velocity + angular acceleration</span><br />
       <span class="formula">angle = angle + angular velocity</span>
     </p>
 
@@ -1941,22 +1651,14 @@ function draw() {
     </p>
 
     <p>
-      <span class="formula"
-        >pendulum angular acceleration = acceleration due to gravity
-        <code>*</code> sine (&theta;)</span
-      >
+      <span class="formula">pendulum angular acceleration = acceleration due to gravity
+        <code>*</code> sine (&theta;)</span>
     </p>
 
-    <a
-      data-primary="gravity"
-      data-secondary="modeling reality vs. arbitrary values"
-      data-type="indexterm"
-    ></a>
-    <a
-      data-primary="natural phenomena"
-      data-secondary="modeling reality vs. arbitrary values"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="gravity" data-secondary="modeling reality vs. arbitrary values"
+      data-type="indexterm"></a>
+    <a data-primary="natural phenomena" data-secondary="modeling reality vs. arbitrary values"
+      data-type="indexterm"></a>
 
     <p>
       This is a good time to remind ourselves that we’re p5 programmers
@@ -1968,9 +1670,7 @@ function draw() {
     </p>
 
     <p>
-      <span class="formula"
-        >angular acceleration = gravity <code>*</code> sine(&theta;)</span
-      >
+      <span class="formula">angular acceleration = gravity <code>*</code> sine(&theta;)</span>
     </p>
 
     <p>
@@ -2023,8 +1723,7 @@ class Pendulum  {
     this.aVelocity = ????;
     // Angular acceleration
     this.aAcceleration = ????;
-  } </pre
-    >
+  } </pre>
 
     <p>
       We’ll also need to write a function <code>update()</code> to update the
@@ -2041,8 +1740,7 @@ class Pendulum  {
     this.aVelocity += this.aAcceleration;
     //{!1} Increment angle.
     this.angle += this.aVelocity;
-  }</pre
-    >
+  }</pre>
 
     <figure class="half-width-right" id="chapter03_figure13">
       <img alt="Figure 3.13" src="chapter03/ch03_13.png" />
@@ -2064,8 +1762,7 @@ class Pendulum  {
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 this.origin = createVector(100,10);
-this.r = 125;</pre
-    >
+this.r = 125;</pre>
 
     <p>
       We’ve got the current angle stored in our variable <code>angle</code>. So
@@ -2076,8 +1773,7 @@ this.r = 125;</pre
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-const position = createVector(r * sin(this.angle), r* cos(this.angle));</pre
-    >
+const position = createVector(r * sin(this.angle), r* cos(this.angle));</pre>
 
     <p>
       Note, however that <code>sin(angle)</code> is used for the x-value and
@@ -2093,8 +1789,7 @@ const position = createVector(r * sin(this.angle), r* cos(this.angle));</pre
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-this.position.add(this.origin);</pre
-    >
+this.position.add(this.origin);</pre>
 
     <p>
       And all that remains is the little matter of drawing a line and ellipse
@@ -2105,8 +1800,7 @@ this.position.add(this.origin);</pre
 stroke(0);
 fill(175);
 line(this.origin.x, this.origin.y, this.position.x, this.position.y);
-ellipse(this.position.x, this.position.y, 16, 16);</pre
-    >
+ellipse(this.position.x, this.position.y, 16, 16);</pre>
 
     <p>
       Before we put everything together, there’s one last little detail I
@@ -2125,27 +1819,17 @@ ellipse(this.position.x, this.position.y, 16, 16);</pre
       the longer the arm, the slower the acceleration. To simulate a pendulum
       more accurately, we divide by that length, in this case <code>r</code>.
       For a more involved explanation, visit
-      <a href="http://calculuslab.deltacollege.edu/ODE/7-A-2/7-A-2-h.html"
-        >The Simple Pendulum website</a
-      >.
+      <a href="http://calculuslab.deltacollege.edu/ODE/7-A-2/7-A-2-h.html">The Simple Pendulum
+        website</a>.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-this.aAcceleration = (-1 * G * sin(this.angle)) / r;</pre
-    >
+this.aAcceleration = (-1 * G * sin(this.angle)) / r;</pre>
 
-    <a
-      data-primary="acceleration"
-      data-secondary="damping"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="acceleration" data-secondary="damping" data-type="indexterm"></a>
     <a data-primary="damping" data-type="indexterm"></a>
     <a data-primary="forces" data-secondary="damping" data-type="indexterm"></a>
-    <a
-      data-primary="friction"
-      data-secondary="damping"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="friction" data-secondary="damping" data-type="indexterm"></a>
 
     <p>
       Finally, a real-world pendulum is going to experience some amount of
@@ -2159,23 +1843,21 @@ this.aAcceleration = (-1 * G * sin(this.angle)) / r;</pre
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-this.aVelocity *= 0.99;</pre
-    >
+this.aVelocity *= 0.99;</pre>
 
     <p>
       Putting everything together, we have the following example (with the
       pendulum beginning at a 45-degree angle).
     </p>
 
-    <figure
-      class="screenshot"
-      data-p5-sketch="https://editor.p5js.org/embed/ByF7Hx-Ol"
-    >
+    <figure class="screenshot" data-p5-sketch="https://editor.p5js.org/embed/ByF7Hx-Ol">
       <img alt="ch03 ex10" src="chapter03/ch03_ex10.png" />
       <figcaption>&nbsp;</figcaption>
     </figure>
 
-    <div data-type="example"><h5>Example 3.10: Swinging pendulum</h5></div>
+    <div data-type="example">
+      <h5>Example 3.10: Swinging pendulum</h5>
+    </div>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 let p;
@@ -2189,11 +1871,10 @@ function setup() {
 function draw() {
   background(255);
   p.go();
-}</pre
-    >
+}</pre>
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Pendulum  {
-     
+
   constructor( origin_, r_) {
     //{!7} Many, many variables to keep track of the Pendulum’s various properties
     this.origin = origin_.copy(); // position of arm origin
@@ -2235,15 +1916,12 @@ class Pendulum  {
     //{!1 .code-wide} The bob
     ellipse(this.position.x, this.position.y, 16, 16);
   }
-}</pre
-    >
+}</pre>
 
     <p>
-      <em
-        >(Note that the version of the example posted on the website has
+      <em>(Note that the version of the example posted on the website has
         additional code to allow the user to grab the pendulum and swing it with
-        the mouse.)</em
-      >
+        the mouse.)</em>
     </p>
 
     <div data-type="exercise" id="chapter03_exercise12">
@@ -2255,11 +1933,8 @@ class Pendulum  {
         results but will be wildly inaccurate physically. Simulating an actual
         double pendulum involves sophisticated equations, which you can read
         about here:
-        <a href="http://scienceworld.wolfram.com/physics/DoublePendulum.html"
-          ><em class="hyperlink"
-            >http://scienceworld.wolfram.com/physics/DoublePendulum.html</em
-          ></a
-        >.
+        <a href="http://scienceworld.wolfram.com/physics/DoublePendulum.html"><em
+            class="hyperlink">http://scienceworld.wolfram.com/physics/DoublePendulum.html</em></a>.
       </p>
     </div>
 
@@ -2321,18 +1996,10 @@ class Pendulum  {
       <figcaption>Figure 3.14</figcaption>
     </figure>
 
-    <a
-      data-primary="forces"
-      data-secondary="Hooke's law"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="forces" data-secondary="Hooke's law" data-type="indexterm"></a>
     <a data-primary="Hooke's law" data-type="indexterm"></a>
     <a data-primary="Hooke" data-secondary="Robert" data-type="indexterm"></a>
-    <a
-      data-primary="springs"
-      data-secondary="Hooke's law"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="springs" data-secondary="Hooke's law" data-type="indexterm"></a>
 
     <p>
       The force of a spring is calculated according to Hooke’s law, named for
@@ -2342,17 +2009,12 @@ class Pendulum  {
     </p>
 
     <p>
-      <span class="highlight"
-        >The force of the spring is directly proportional to the extension of
-        the spring.</span
-      >
+      <span class="highlight">The force of the spring is directly proportional to the extension of
+        the spring.</span>
     </p>
 
     <figure class="half-width-right" id="chapter03_figure15">
-      <img
-        alt="Figure 3.15: x = current length - rest length"
-        src="chapter03/ch03_15.png"
-      />
+      <img alt="Figure 3.15: x = current length - rest length" src="chapter03/ch03_15.png" />
       <figcaption>
         Figure 3.15: x = current length - rest length&nbsp;
       </figcaption>
@@ -2364,11 +2026,7 @@ class Pendulum  {
       law is stated as follows:
     </p>
 
-    <a
-      data-primary="Hooke's law"
-      data-secondary="formula for expressing"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="Hooke's law" data-secondary="formula for expressing" data-type="indexterm"></a>
 
     <p>
       <span class="formula">F<sub>spring</sub> = - k <code>*</code> x</span>
@@ -2409,15 +2067,10 @@ class Pendulum  {
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 const anchor = createVector();
 const position = createVector();
-const restLength = ????;</pre
-    >
+const restLength = ????;</pre>
 
-    <a
-      data-primary="springs"
-      data-secondary="magnitude of force"
-      data-tertiary="determining"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="springs" data-secondary="magnitude of force" data-tertiary="determining"
+      data-type="indexterm"></a>
 
     <p>
       First, let’s use Hooke’s law to calculate the magnitude of the force. We
@@ -2426,14 +2079,9 @@ const restLength = ????;</pre
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-const k = 0.1;</pre
-    >
+const k = 0.1;</pre>
 
-    <a
-      data-primary="springs"
-      data-secondary="rest length"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="springs" data-secondary="rest length" data-type="indexterm"></a>
 
     <p>
       <code>x</code> is perhaps a bit more difficult. We need to know the
@@ -2450,15 +2098,10 @@ const k = 0.1;</pre
 //{!1} A vector pointing from anchor to bob gives us the current length of the spring.
 const dir = p5.Vector.sub(bob, anchor);
 const currentLength = dir.mag();
-const x = currentLength - restLength;</pre
-    >
+const x = currentLength - restLength;</pre>
 
-    <a
-      data-primary="springs"
-      data-secondary="direction of force"
-      data-tertiary="determining"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="springs" data-secondary="direction of force" data-tertiary="determining"
+      data-type="indexterm"></a>
 
     <p>
       Now that we’ve sorted out the elements necessary for the magnitude of the
@@ -2496,15 +2139,10 @@ const x = currentLength - restLength;
 force.normalize();
 
 // Putting it together: direction and magnitude!
-force.mult(-1 * k * x);</pre
-    >
+force.mult(-1 * k * x);</pre>
 
-    <a
-      data-primary="object-oriented programming"
-      data-secondary="structures"
-      data-tertiary="choosing between"
-      data-type="indexterm"
-    ></a>
+    <a data-primary="object-oriented programming" data-secondary="structures"
+      data-tertiary="choosing between" data-type="indexterm"></a>
 
     <p>
       Now that we have the algorithm worked out for computing the spring force
@@ -2540,8 +2178,7 @@ function draw()  {
   //{!2} Our standard update() and display() functions
   bob.update();
   bob.display();
-}</pre
-    >
+}</pre>
 
     <figure id="chapter03_figure18">
       <img alt="Figure 3.18" src="chapter03/ch03_18.png" />
@@ -2560,7 +2197,7 @@ function draw()  {
 
     <p>This allows us to write a lovely main program as follows:</p>
 
-    <pre data-code-language="javascript data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript data-type=" programlisting" class="codesplit">
 let bob;
 //{!1 .bold} Adding a Spring object
 let spring;
@@ -2580,8 +2217,7 @@ function draw()  {
   bob.update();
   bob.display();
   spring.display();
-}</pre
-    >
+}</pre>
 
     <p>
       You may notice here that this is quite similar to what we did in
@@ -2591,21 +2227,18 @@ function draw()  {
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   const force = attractor.attract(mover);
-  mover.applyForce(force);</pre
-    >
+  mover.applyForce(force);</pre>
 
     <p>The analogous situation here with a spring would be:</p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   const force = spring.connect(bob);
-  bob.applyForce(force);</pre
-    >
+  bob.applyForce(force);</pre>
 
     <p>Nevertheless, in this example all we said was:</p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-  spring.connect(bob);</pre
-    >
+  spring.connect(bob);</pre>
 
     <p>
       What gives? Why don’t we need to call <code>applyForce()</code> on the
@@ -2623,8 +2256,7 @@ function draw()  {
 
     //{!1} The function connect() takes care of calling applyForce() and therefore doesn’t have to return a vector to the calling area.
     b.applyForce(force);
-  }</pre
-    >
+  }</pre>
 
     <p>
       Why do it one way with the <code>Attractor</code> class and another way
@@ -2640,15 +2272,14 @@ function draw()  {
       <code>Spring</code> class.
     </p>
 
-    <figure
-      class="screenshot"
-      data-p5-sketch="https://editor.p5js.org/embed/HkzFHeZdg"
-    >
+    <figure class="screenshot" data-p5-sketch="https://editor.p5js.org/embed/HkzFHeZdg">
       <img alt="ch03 ex11" src="chapter03/ch03_ex11.png" />
       <figcaption>&nbsp;</figcaption>
     </figure>
 
-    <div data-type="example"><h5>Example 3.11: A Spring connection</h5></div>
+    <div data-type="example">
+      <h5>Example 3.11: A Spring connection</h5>
+    </div>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Spring {
@@ -2691,8 +2322,7 @@ class Spring {
     stroke(255);
     line(b.position.x,b.position.y,this.anchor.x,this.anchor.y);
   }
-}</pre
-    >
+}</pre>
 
     <p>
       The full code for this example is included on the book website, and the
@@ -2711,11 +2341,7 @@ class Spring {
         function and see if you can fill in the blanks.
       </p>
 
-      <pre
-        data-code-language="javascript"
-        data-type="programlisting"
-        class="codesplit"
-      >
+      <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 constrainLength(b, minlen, maxlen) {
   //{!1} Vector pointing from Bob to Anchor
   const dir = p5.Vector.sub(______,______);
@@ -2736,8 +2362,7 @@ constrainLength(b, minlen, maxlen) {
     b.position = p5.Vector.add(______,______);
     b.velocity.mult(0);
   }
-}</pre
-      >
+}</pre>
     </div>
 
     <div data-type="exercise" id="chapter03_exercise16">
