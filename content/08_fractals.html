@@ -544,7 +544,7 @@ void cantor(float x, float y, float len) {
 
     <p>The Koch curve is a series of connected lines, and so we will think of each segment as a
       “KochLine.” Each <code>KochLine</code> object has a start point (“a”) and an end point (“b”).
-      These points are <code>PVector</code> objects, and the line is drawn with p5.js’s
+      These points are <code>p5.Vector</code> objects, and the line is drawn with p5.js’s
       <code>line()</code> function.</p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
@@ -662,7 +662,7 @@ void generate() {
       <code>KochLine</code> objects. Of course, the above omits the real “work” here, which is
       figuring out those rules. How do we break one line segment into four as described by the
       rules? While this can be accomplished with some simple arithmetic and trigonometry, since our
-      <code>KochLine</code> object uses <code>PVector</code>, this is a nice opportunity for us to
+      <code>KochLine</code> object uses <code>p5.Vector</code>, this is a nice opportunity for us to
       practice our vector math. Let’s establish how many points we need to compute for each
       <code>KochLine</code> object.</p>
 
@@ -706,7 +706,7 @@ void generate() {
 }</pre>
 
     <p>Now we just need to write five new functions in the <code>KochLine</code> class, each one
-      returning a <code>PVector</code> according to <a href="#chapter08_figure16">Figure 8.16</a>
+      returning a <code>p5.Vector</code> according to <a href="#chapter08_figure16">Figure 8.16</a>
       above. Let’s knock off <code>kochA()</code> and <code>kochE()</code> first, which are simply
       the start and end points of the original line.</p>
 
@@ -725,7 +725,7 @@ void generate() {
 </pre>
 
     <p>Now let’s move on to points B and D. B is one-third of the way along the line segment and D
-      is two-thirds. Here we can make a <code>PVector</code> that points from start to end and
+      is two-thirds. Here we can make a <code>p5.Vector</code> that points from start to end and
       shrink it to one-third the length for B and two-thirds the length for D to find these points.
     </p>
 
@@ -756,8 +756,8 @@ void generate() {
 
     <p>The last point, C, is the most difficult one to find. However, if you recall that the angles
       of an equilateral triangle are all sixty degrees, this makes it a little bit easier. If we
-      know how to find point B with a <code>PVector</code> one-third the length of the line, what if
-      we were to rotate that same <code>PVector</code> sixty degrees and move along that vector from
+      know how to find point B with a <code>p5.Vector</code> one-third the length of the line, what if
+      we were to rotate that same <code>p5.Vector</code> sixty degrees and move along that vector from
       point B? We’d be at point C!</p>
 
     <figure id="chapter08_figure18"><img alt="Figure 8.18" src="chapter08/ch08_18.png" />
