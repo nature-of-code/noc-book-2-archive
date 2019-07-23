@@ -891,8 +891,8 @@ function setup() {
       <em>rotate</em> in the fractal’s rules. Each new branch must rotate relative to the previous
       branch, which is rotated relative to all its previous branches. Luckily for us, p5.js has
       a mechanism to keep track of rotations for us—the <strong><em>transformation
-          matrix</em></strong>. If you aren’t familiar with the functions <code>pushMatrix()</code>
-      and <code>popMatrix()</code>, I suggest you read the online p5.js tutorial <a
+          matrix</em></strong>. If you aren’t familiar with the functions <code>push()</code>
+      and <code>pop()</code>, I suggest you read the online p5.js tutorial <a
         href="http://processing.org/learning/transform2d/">2D Transformations</a>, which will cover
       the concepts you’ll need for this particular example.</p>
 
@@ -931,8 +931,8 @@ rotate(PI / 6);
 line(0, 0, 0, -100);</pre>
 
     <p>Now that we have a branch going to the right, we need one going to the left. We can use
-      <code>pushMatrix()</code> to save the transformation state before we rotate, letting us call
-      <code>popMatrix()</code> to restore that state and draw the branch to the left. Let’s look at
+      <code>push()</code> to save the transformation state before we rotate, letting us call
+      <code>pop()</code> to restore that state and draw the branch to the left. Let’s look at
       all the code together.</p>
 
     <figure class="two-col" id="chapter08_figure22"><img alt="Figure 8.22"
@@ -952,10 +952,10 @@ line(0, 0, 0, -100);
 translate(0, -100);
 
 // Branch to the right
-pushMatrix();
+push();
 rotate(PI / 6);
 line(0, 0, 0, -100);
-popMatrix();
+pop();
 
 // Branch to the left
 rotate(-PI / 6);
@@ -980,26 +980,26 @@ void branch() {
   // Translate to the end.
   translate(0, -100);
 
-  pushMatrix();
+  push();
   //{!2} Rotate to the right and branch again.
   rotate(PI / 6);
   branch();
-  popMatrix();
+  pop();
 
-  pushMatrix();
+  push();
   //{!2} Rotate to the left and branch again.
   rotate(-PI/6);
   branch();
-  popMatrix();
+  pop();
 }</pre>
 
-    <p>Notice how in the above code we use <code>pushMatrix()</code> and <code>popMatrix()</code>
+    <p>Notice how in the above code we use <code>push()</code> and <code>pop()</code>
       around each subsequent call to <code>branch()</code>. This is one of those elegant code
       solutions that feels almost like magic. Each call to <code>branch()</code> takes a moment to
       remember the position of that particular branch. If you turn yourself into p5.js for a
       moment and try to follow the recursive function with pencil and paper, you’ll notice that it
       draws all of the branches to the right first. When it gets to the end,
-      <code>popMatrix()</code> will pop us back along all of the branches we’ve drawn and start
+      <code>pop()</code> will pop us back along all of the branches we’ve drawn and start
       sending branches out to the left.</p>
 
     <div data-type="exercise">
@@ -1032,17 +1032,17 @@ void branch(float len) {
   len *= 0.66;
 
   if (len > 2) {
-    pushMatrix();
+    push();
     rotate(theta);
     //{!1} Subsequent calls to branch()
     // include the length argument.
     branch(len);
-    popMatrix();
+    pop();
 
-    pushMatrix();
+    push();
     rotate(-theta);
     branch(len);
-    popMatrix();
+    pop();
   }
 }</pre>
 
@@ -1136,14 +1136,14 @@ void branch(float len) {
   translate(0, -len);
   len *= 0.66;
   if (len > 2) {
-    pushMatrix();
+    push();
     rotate(theta);
     branch(len);
-    popMatrix();
-    pushMatrix();
+    pop();
+    push();
     rotate(-theta);
     branch(len);
-    popMatrix();
+    pop();
   }
 }</pre>
 
@@ -1174,10 +1174,10 @@ void branch(float len) {
 
       //{!1} Each branch gets its own random angle.
       float theta = random(-PI/2, PI/2);
-      pushMatrix();
+      push();
       rotate(theta);
       branch(h);
-      popMatrix();
+      pop();
     }
   }</pre>
 
@@ -1440,8 +1440,8 @@ s += "add some more stuff";</pre>
       <span class="formula">G: translate(0,len);</span><br />
       <span class="formula">+: rotate(angle);</span><br />
       <span class="formula">-: rotate(-angle);</span><br />
-      <span class="formula">[: pushMatrix();</span><br />
-      <span class="formula">]: popMatrix();</span></p>
+      <span class="formula">[: push();</span><br />
+      <span class="formula">]: pop();</span></p>
 
     <p>Assuming we have a sentence generated from the L-system, we can walk through the sentence
       character by character and call the appropriate function as outlined above.</p>
@@ -1466,9 +1466,9 @@ for (int i = 0; i &lt; sentence.length(); i++) {
   } else if (c == '-') {
     rotate(-theta);
   } else if (c == '[') {
-    pushMatrix();
+    push();
   } else if (c == ']') {
-    popMatrix();
+    pop();
   }
 }</pre>
 
