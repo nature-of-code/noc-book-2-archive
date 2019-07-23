@@ -12,11 +12,11 @@
   <p>In this chapter, we’re going to take a break from talking about vectors and motion. In fact,
     the rest of the book will mostly focus on systems and algorithms (albeit ones that we can,
     should, and will apply to moving bodies). In the previous chapter, we encountered our first
-    Processing example of a complex system: flocking. We briefly stated the core principles behind
+    p5.js example of a complex system: flocking. We briefly stated the core principles behind
     complex systems: more than the sum of its parts, a complex system is a system of elements,
     operating in parallel, with short-range relationships that as a whole exhibit emergent behavior.
     This entire chapter is going to be dedicated to building another complex system simulation in
-    Processing. Oddly, we are going to take some steps backward and simplify the elements of our
+    p5.js. Oddly, we are going to take some steps backward and simplify the elements of our
     system. No longer are the individual elements going to be members of a physics world; instead we
     will build a system out of the simplest digital element possible, a single bit. This bit is
     going to be called a cell and its value (0 or 1) will be called its state. Working with such
@@ -297,7 +297,7 @@
       generation.</p>
 
     <p>Before we go too far down the road of how Wolfram classifies the results of varying rulesets,
-      let’s look at how we actually build a Processing sketch that generates the Wolfram CA and
+      let’s look at how we actually build a p5.js sketch that generates the Wolfram CA and
       visualizes it onscreen.</p>
   </section>
 
@@ -471,7 +471,7 @@ for (int i = 1; i < cells.length-1; i++) {
 
     <p>Notice how we need the value of cell #5 at generation 0 in order to calculate cell #6’s new
       state at generation 1? A cell’s new state is a function of the previous neighbor states. Do we
-      know cell #5’s value at generation 0? Remember, Processing just executes this line of code for
+      know cell #5’s value at generation 0? Remember, p5.js just executes this line of code for
       <em>i = 5</em>.</p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
@@ -529,7 +529,7 @@ cells = newcells;</pre>
       <figcaption>Figure 7.14 (repeated)&nbsp;</figcaption>
     </figure>
 
-    <p>We can store this ruleset in Processing as an array.</p>
+    <p>We can store this ruleset in p5.js as an array.</p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 int[] ruleset = {0,1,0,1,1,0,1,0};</pre>
@@ -555,7 +555,7 @@ if (a == 1 && b == 1 && c == 1) return ruleset[0];</pre>
     else if (a == 0 &amp;&amp; b == 0 &amp;&amp; c == 0) return ruleset[7];
     //{!1} For this function to be valid, we have to make sure something is returned
     // in cases where the states do not match one of the eight possibilities.
-    // We know this is impossible given the rest of our code, but Processing (Java) does not.
+    // We know this is impossible given the rest of our code, but p5.js (javascript) does not.
     return 0;
   }</pre>
 
@@ -680,7 +680,7 @@ class CA {
       how we might choose to display such a system.</p>
 
     <p>The good news is that drawing the CA is not particularly difficult. Let’s begin by looking at
-      how we would render a single generation. Assume we have a Processing window 600 pixels wide
+      how we would render a single generation. Assume we have a canvas 600 pixels wide
       and we want each cell to be a 10x10 square. We therefore have a CA with 60 cells. Of course,
       we can calculate this value dynamically.</p>
 
@@ -707,7 +707,7 @@ for (int i = 0; i < cells.length; i++) {
       there is a black cell (saving us the work of drawing many white squares), but in most cases
       this solution is good enough (and necessary for other more sophisticated designs with varying
       colors, etc.) Also, if we wanted each cell to be represented as a single pixel, we would not
-      want to use Processing’s <code>rect()</code> function, but rather access the pixel array
+      want to use p5.js’s <code>rect()</code> function, but rather access the pixel array
       directly.</p>
 
     <p>In the above code, you’ll notice the y-position for each rectangle is 0. If we want the
@@ -774,7 +774,7 @@ class CA {
       <h5>Exercise 7.1</h5>
 
       <p>Expand Example 7.1 to have the following feature: when the CA reaches the bottom of the
-        Processing window, the CA starts over with a new, random ruleset.</p>
+        canvas, the CA starts over with a new, random ruleset.</p>
     </div>
 
 
@@ -879,7 +879,7 @@ class CA {
     <div data-type="exercise" id="chapter07_exercise5">
       <h5>Exercise 7.5</h5>
 
-      <p>Create a Processing sketch that saves an image for every possible ruleset. Can you classify
+      <p>Create a p5.js sketch that saves an image for every possible ruleset. Can you classify
         them?</p>
     </div>
   </section>
@@ -895,7 +895,7 @@ class CA {
       one. This will introduce some additional complexity; each cell will have a bigger
       neighborhood, but that will open up the door to a range of possible applications. After all,
       most of what we do in computer graphics lives in two dimensions, and this chapter will
-      demonstrate how to apply CA thinking to what we draw in our Processing sketches.</p>
+      demonstrate how to apply CA thinking to what we draw in our p5.js sketches.</p>
 
     <a data-primary="complex systems" data-secondary="Game of Life as" data-type="indexterm"></a> <a
       data-primary="Conway" data-secondary="John" data-type="indexterm"></a> <a
@@ -1248,7 +1248,7 @@ for ( int i = 0; i < columns; i++) {
 
       <p>While the above solution (Example 7.2) is convenient, it is not particularly
         memory-efficient. It creates a new 2D array for every frame of animation! This matters very
-        little for a Processing desktop application, but if you were implementing the Game of Life
+        little for a p5.js application, but if you were implementing the Game of Life
         on a microcontroller or mobile device, you’d want to be more careful. One solution is to
         have only two arrays and constantly swap them, writing the next set of states into whichever
         one isn’t the current array. Implement this particular solution.</p>
