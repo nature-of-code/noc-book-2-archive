@@ -307,11 +307,11 @@ void drawCircle(int x, int y, float radius) {
     </div>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-void setup() {
+function setup() {
   size(640, 360);
 }
 
-void draw() {
+function draw() {
   background(255);
   drawCircle(width/2, height/2, 200);
 }
@@ -578,7 +578,7 @@ ArrayList&lt;KochLine&gt; lines;</pre>
       line segment to it, a line that stretches from 0 to the width of the sketch.</p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-void setup() {
+function setup() {
   size(600, 300);
   //{!1} Create the ArrayList.
   lines = new ArrayList<KochLine>();
@@ -596,7 +596,7 @@ void setup() {
       displayed in a loop.</p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-void draw() {
+function draw() {
   background(255);
   for (KochLine l : lines) {
     l.display();
@@ -797,7 +797,7 @@ void generate() {
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 ArrayList&lt;KochLine&gt; lines;
 
-void setup() {
+function setup() {
   size(600, 300);
   background(255);
   lines = new ArrayList<KochLine>();
@@ -1069,11 +1069,11 @@ void branch(float len) {
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 float theta;
 
-void setup() {
+function setup() {
   size(300, 200);
 }
 
-void draw() {
+function draw() {
   background(255);
   //{!1} Pick an angle according to
   // the mouse position.
@@ -1323,11 +1323,11 @@ String current = "A";
 //{!1} Let’s keep track of how many generations.
 int count = 0;
 
-void setup() {
+function setup() {
   println("Generation " + count + ": " + current);
 }
 
-void draw() {
+function draw() {
 }
 
 void mousePressed() {
@@ -1512,7 +1512,7 @@ for (int i = 0; i &lt; sentence.length(); i++) {
 LSystem lsys;
 Turtle turtle;
 
-void setup() {
+function setup() {
   size(600,600);
 
   //{.code-wide} A ruleset is an array of Rule objects.
@@ -1527,7 +1527,7 @@ void setup() {
   turtle = new Turtle(lsys.getSentence(), width/4, radians(25));
 }
 
-void draw() {
+function draw() {
   background(255);
   //{!2} Start at the bottom of the window and draw.
   translate(width/2, height);
