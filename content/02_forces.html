@@ -654,16 +654,16 @@ applyForce(force) {
     <a data-primary="forces" data-secondary="creating" data-type="indexterm"></a>
 
     <p>
-      Let’s take a moment to remind ourselves where we are. We know what a force
-      is (a vector), and we know how to apply a force to an object (divide it by
-      mass and add it to the object’s acceleration vector). What are we missing?
-      Well, we have yet to figure out how we get a force in the first place.
+      Let’s take a moment to recap what I‘ve covered so far. I've defined what a force
+      is (a vector), and how to apply a force to an object (divide it by
+      mass and add it to the object’s acceleration vector). What is missing?
+      Well, I have yet to figure out how to calculate a force in the first place.
       Where do forces come from?
     </p>
 
     <p>
-      In this chapter, we’ll look at two methods for creating forces in our
-      p5 world.
+      In this chapter, I’ll look at two methods for creating forces in a
+      p5.js world.
     </p>
 
     <a data-primary="natural phenomena" data-secondary="forces" data-tertiary="modeling"
@@ -680,30 +680,30 @@ applyForce(force) {
       <li>
         <p>
           <strong>Model a force!</strong> Yes, forces exist in the real world.
-          And physics textbooks often contain formulas for these forces. We can
+          And physics textbooks often contain formulas for these forces. You can
           take these formulas, translate them into source code, and model
-          real-world forces in p5.
+          real-world forces in JavaScript.
         </p>
       </li>
     </ol>
 
     <p>
-      The easiest way to make up a force is to just pick a number. Let’s start
-      with the idea of simulating wind. How about a wind force that points to
-      the right and is fairly weak? Assuming a <code>Mover</code> object m, our
+      The easiest way to make up a force is to just pick a number (or two numbers really). Let’s
+      start with the idea of simulating wind. How about a wind force that points to
+      the right and is fairly weak? Assuming a <code>Mover</code> object <code>mover</code>, the
       code would look like:
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-const wind = createVector(0.01,0);
-m.applyForce(wind);</pre>
+let wind = createVector(0.01, 0);
+mover.applyForce(wind);</pre>
 
     <p>
-      The result isn’t terribly interesting, but it is a good place to start. We
+      The result isn’t terribly interesting, but it is a good place to start. I
       create a <code>p5.Vector</code> object, initialize it, and pass it into an
-      object (which in turn will apply it to its own acceleration). If we wanted
-      to have two forces, perhaps wind and gravity (a bit stronger, pointing
-      down), we might write the following:
+      object (which in turn will apply it to its own acceleration). To finish off this example, I‘ll
+      add one more force–gravity (pointing down)–and only engage the wind force when the mouse is
+      pressed.
     </p>
 
     <figure class="screenshot" data-p5-sketch="https://editor.p5js.org/embed/B13QnJZul">
@@ -716,31 +716,33 @@ m.applyForce(wind);</pre>
     </div>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-const wind = createVector(0.01, 0);
-const gravity = createVector(0, 0.1);
-m.applyForce(wind);
-m.applyForce(gravity);</pre>
+let gravity = createVector(0, 0.1);
+mover.applyForce(gravity);
+
+if (mouseIsPressed) {
+  let wind = createVector(0.1, 0);
+  mover.applyForce(wind);
+}</pre>
 
     <p>
-      Now we have two forces, pointing in different directions with different
-      magnitudes, both applied to object <code>m</code>. We’re beginning to get
-      somewhere. We’ve now built a world for our objects in p5, an
-      environment to which they can actually respond.
+      Now I have two forces, pointing in different directions with different
+      magnitudes, both applied to object <code>mover</code>. I’m beginning to get
+      somewhere. I’ve built a world, an environment with forces that act on objects.
     </p>
 
     <p>
-      Let’s look at how we could make this example a bit more exciting with many
-      objects of varying mass. To do this, we’ll need a quick review of
-      object-oriented programming. Again, we’re not covering all the basics of
-      programming here (for that you can check out any of the intro p5
-      books listed in the introduction). However, since the idea of creating a
+      Let’s look at what happens now when I add a second object with a variable mass. To do this,
+      we’ll need a quick review of
+      object-oriented programming. Again, I’m not covering all the basics of
+      programming here (for that you can check out any of the intro p5.js
+      books or video tutorials listed in the introduction). However, since the idea of creating a
       world filled with objects is pretty fundamental to all the examples in
       this book, it’s worth taking a moment to walk through the steps of going
       from one object to many.
     </p>
 
     <p>
-      This is where we are with the <code>Mover</code> class as a whole. Notice
+      This is where I left the <code>Mover</code> class. Notice
       how it is identical to the <code>Mover</code> class created in Chapter 1,
       with two additions—<code>mass</code> and a new
       <code>applyForce()</code> function.
@@ -752,7 +754,7 @@ class Mover {
   constructor() {
     //{!1} And for now, we'll just set the mass equal to 1 for simplicity.
     this.mass = 1;
-    this.position = createVector(30, 30);
+    this.position = createVector(width / 2, 30);
     this.velocity = createVector(0, 0);
     this.acceleration = createVector(0, 0);
   }
@@ -760,7 +762,7 @@ class Mover {
   // Newton's second law.
   applyForce(force) {
     //{!2} Receive a force, divide by mass, and add to acceleration.
-    const f = PVector.div(force,this.mass);
+    let f = p5.Vector.div(force, this.mass);
     this.acceleration.add(f);
   }
 
@@ -777,10 +779,10 @@ class Mover {
     stroke(0);
     fill(175);
     //{!1} Scaling the size according to mass.
-    ellipse(this.position.x, this.position.y, this.mass*16, this.mass*16);
+    ellipse(this.position.x, this.position.y, this.mass * 16, this.mass * 16);
   }
 
-  // Somewhat arbitrarily, we are deciding that an object bounces when it hits the edges of a window.
+  // Somewhat arbitrarily, I have decided that an object bounces when it hits the edges of a window.
   checkEdges() {
     if (this.position.x > width) {
       this.position.x = width;
@@ -791,7 +793,7 @@ class Mover {
     }
 
     if (this.position.y > height) {
-      //{!2} Even though we said we shouldn't touch position and velocity directly, there are some exceptions. Here we are doing so as a quick and easy way to reverse the direction of our object when it reaches the edge.
+      //{!2} Even though I said not to touch position and velocity directly, there are some exceptions. Here I are doing so as a quick and easy way to reverse the direction of the object when it reaches the edge.
       this.velocity.y *= -1;
       this.position.y = height;
     }
@@ -799,35 +801,23 @@ class Mover {
 }</pre>
 
     <p>
-      Now that our class is set, we can choose to create, say, one hundred
-      <code>Mover</code> objects with an array.
+      Now that the class is set, we can choose to create more than one <code>Mover</code> objects.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-const movers = [];</pre>
+let moverA = new Mover();
+let moverB = new Mover();</pre>
 
     <p>
-      And then we can initialize all of those <code>Mover</code> objects in
-      <code>setup()</code> with a loop.
-    </p>
-
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-function setup() {
-  for (let i = 0; i < movers.length; i++) {
-    movers[i] = new Mover();
-  }
-}</pre>
-
-    <p>
-      But now we have a small issue. If we refer back to the
+      But there is an issue. Referring back to the
       <code>Mover</code> object’s constructor…
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   constructor() {
-    //{!2} Every object has a mass of 1 and a position of (30, 30).
+    //{!2} Every object has a mass of 1 and a position of (width / 2, 30).
     this.mass = 1;
-    this.position = createVector(30, 30);
+    this.position = createVector(width / 2, 30);
     this.velocity = createVector(0, 0);
     this.acceleration = createVector(0, 0);
   }</pre>
@@ -836,14 +826,13 @@ function setup() {
       data-type="indexterm"></a>
 
     <p>
-      …we discover that every <code>Mover</code> object is made exactly the same
-      way. What we want are <code>Mover</code> objects of varying mass that
-      start at varying positions. Here is where we need to increase the
-      sophistication of our constructor by adding arguments.
+      …you will notice that every <code>Mover</code> object is made exactly the same
+      way. What I want are <code>Mover</code> objects of variable mass that
+      start at variable positions. A nice way to accomplish this is to add constructor arguments.
     </p>
 
     <pre data-code-language="java" data-type="programlisting" class="codesplit">
-  Mover(m, x, y) {
+  Mover(x, y, m) {
     //{!2} Now setting these variables with arguments
     this.mass = m;
     this.position = createVector(x, y);
@@ -854,40 +843,27 @@ function setup() {
     <p>
       Notice how the mass and position are no longer set to hardcoded numbers,
       but rather initialized via arguments passed through the constructor. This
-      means we can create a variety of <code>Mover</code> objects: big ones,
+      means I can create a variety of <code>Mover</code> objects: big ones,
       small ones, ones that start on the left side of the screen, ones that
       start on the right, etc.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-// A big Mover on the left side of the window
-const m1 = new Mover(10, 0, height/2);
-// A small Mover on the right side of the window
-const m1 = new Mover(0.1, width, height/2);</pre>
+// A large Mover on the left side of the window
+let moverA = new Mover(100, 30, 10);
+// A smaller Mover on the right side of the window
+let moverB = new Mover(400, 30, 2);</pre>
 
     <p>
-      With an array, however, we want to initialize all of the objects with a
-      loop.
-    </p>
-
-    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-function setup() {
-  for (let i = 0; i < 10; i++) {
-    // Initializing many Mover objects, all with random mass (and all starting at 0,0)
-    movers[i] = new Mover(random(0.1, 5), i * 20, 0);
-  }
-}</pre>
-
-    <p>
-      For each mover created, the mass is set to a random value between 0.1 and
-      5, the starting x-position is set to 0, and the starting y-position is set
-      to 0. Certainly, there are all sorts of ways we might choose to initialize
-      the objects; this is just a demonstration of one possibility.
+      There are all sorts of ways I could choose to initialize the values (random, perlin noise, in
+      a grid, etc.) and, of course, an array most likely makes more sense to manage large numbers of
+      Mover objects. This is just a demonstration of the basic idea to get started and I‘ll
+      introduce other techniques throughout this chapter.
     </p>
 
     <p>
-      Once the array of objects is declared, created, and initialized, the rest
-      of the code is simple. We run through every object, hand them each the
+      Once the objects are declared and initialized, the rest
+      of the code follows as before. For each object, hand them the
       forces in the environment, and enjoy the show.
     </p>
 
@@ -897,7 +873,7 @@ function setup() {
     </figure>
 
     <div data-type="example">
-      <h5>Example 2.2: Forces acting on many objects</h5>
+      <h5>Example 2.2: Forces acting on two objects</h5>
     </div>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
