@@ -308,7 +308,7 @@ void drawCircle(int x, int y, float radius) {
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 function setup() {
-  size(640, 360);
+  createCanvas(640, 360);
 }
 
 function draw() {
@@ -579,7 +579,7 @@ ArrayList&lt;KochLine&gt; lines;</pre>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 function setup() {
-  size(600, 300);
+  createCanvas(600, 300);
   //{!1} Create the ArrayList.
   lines = new ArrayList<KochLine>();
 
@@ -798,7 +798,7 @@ void generate() {
 ArrayList&lt;KochLine&gt; lines;
 
 function setup() {
-  size(600, 300);
+  createCanvas(600, 300);
   background(255);
   lines = new ArrayList<KochLine>();
   PVector start = new PVector(0, 200);
@@ -1070,7 +1070,7 @@ void branch(float len) {
 float theta;
 
 function setup() {
-  size(300, 200);
+  createCanvas(300, 200);
 }
 
 function draw() {
@@ -1513,7 +1513,7 @@ LSystem lsys;
 Turtle turtle;
 
 function setup() {
-  size(600,600);
+  createCanvas(600,600);
 
   //{.code-wide} A ruleset is an array of Rule objects.
   Rule[] ruleset = new Rule[1];
