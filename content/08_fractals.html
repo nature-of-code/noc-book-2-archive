@@ -136,7 +136,7 @@
 
     <p>Another fundamental component of fractal geometry is recursion. Fractals all have a recursive
       definition. We’ll start with recursion before developing techniques and code examples for
-      building fractal patterns in Processing.</p>
+      building fractal patterns in p5.js.</p>
   </section>
 
   <section data-type="sect1" id="chapter08_section2">
@@ -198,7 +198,7 @@ void someFunction() {
     <p><span class="formula">n! = n × (n - 1) × … × 3 × 2 × 1</span><br />
       <span class="formula">0! = 1</span></p>
 
-    <p>Here we’ll write a function in Processing that uses a <code>for</code> loop to calculate
+    <p>Here we’ll write a function in p5.js that uses a <code>for</code> loop to calculate
       factorial:</p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
@@ -359,7 +359,7 @@ void drawCircle(float x, float y, float radius) {
 
     <a data-primary="Cantor set" data-secondary="recursion and" data-type="indexterm"></a>
 
-    <p>Now we’re ready to visualize the Cantor set in Processing using a recursive function. Where
+    <p>Now we’re ready to visualize the Cantor set in p5.js using a recursive function. Where
       do we begin? Well, we know that the Cantor set begins with a line. So let’s start there and
       write a function that draws a line.</p>
 
@@ -525,7 +525,7 @@ void cantor(float x, float y, float len) {
         towards infinity, the length of the Koch curve approaches infinity. Yet it fits in the tiny
         finite space provided right here on this paper (or screen)!</p>
 
-      <p>Since we are working in the Processing land of finite pixels, this theoretical paradox
+      <p>Since we are working in the p5.js land of finite pixels, this theoretical paradox
         won’t be a factor for us. We’ll have to limit the number of times we recursively apply the
         Koch rules so that our program won’t run out of memory or crash.</p>
     </div>
@@ -544,7 +544,7 @@ void cantor(float x, float y, float len) {
 
     <p>The Koch curve is a series of connected lines, and so we will think of each segment as a
       “KochLine.” Each <code>KochLine</code> object has a start point (“a”) and an end point (“b”).
-      These points are <code>PVector</code> objects, and the line is drawn with Processing’s
+      These points are <code>PVector</code> objects, and the line is drawn with p5.js’s
       <code>line()</code> function.</p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
@@ -889,10 +889,10 @@ function setup() {
 
     <p>The part that is a bit more difficult than our previous fractals lies in the use of the word
       <em>rotate</em> in the fractal’s rules. Each new branch must rotate relative to the previous
-      branch, which is rotated relative to all its previous branches. Luckily for us, Processing has
+      branch, which is rotated relative to all its previous branches. Luckily for us, p5.js has
       a mechanism to keep track of rotations for us—the <strong><em>transformation
           matrix</em></strong>. If you aren’t familiar with the functions <code>pushMatrix()</code>
-      and <code>popMatrix()</code>, I suggest you read the online Processing tutorial <a
+      and <code>popMatrix()</code>, I suggest you read the online p5.js tutorial <a
         href="http://processing.org/learning/transform2d/">2D Transformations</a>, which will cover
       the concepts you’ll need for this particular example.</p>
 
@@ -922,7 +922,7 @@ line(0, 0, 0, -100);</pre>
       <figcaption>Figure 8.21</figcaption>
     </figure>
 
-    <p>Remember, when we rotate in Processing, we are always rotating around the point of origin, so
+    <p>Remember, when we rotate in p5.js, we are always rotating around the point of origin, so
       here the point of origin must always be translated to the end of our current branch.</p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
@@ -996,7 +996,7 @@ void branch() {
     <p>Notice how in the above code we use <code>pushMatrix()</code> and <code>popMatrix()</code>
       around each subsequent call to <code>branch()</code>. This is one of those elegant code
       solutions that feels almost like magic. Each call to <code>branch()</code> takes a moment to
-      remember the position of that particular branch. If you turn yourself into Processing for a
+      remember the position of that particular branch. If you turn yourself into p5.js for a
       moment and try to follow the recursive function with pencil and paper, you’ll notice that it
       draws all of the branches to the right first. When it gets to the end,
       <code>popMatrix()</code> will pop us back along all of the branches we’ve drawn and start
@@ -1009,8 +1009,8 @@ void branch() {
         <figcaption>&nbsp;</figcaption>
       </figure>
 
-      <p>Emulate the Processing code in <a href="#chapter08_example6">Example 8.6</a> and number the
-        branches in the above diagram in the order that Processing would actually draw each one.</p>
+      <p>Emulate the p5.js code in <a href="#chapter08_example6">Example 8.6</a> and number the
+        branches in the above diagram in the order that p5.js would actually draw each one.</p>
     </div>
 
     <p>You may have noticed that the recursive function we just wrote would not actually draw the
@@ -1103,7 +1103,7 @@ function draw() {
       <p>The tree structure can also be generated using the <code>ArrayList</code> technique
         demonstrated with the Koch curve. Recreate the tree using a <code>Branch</code> object and
         an <code>ArrayList</code> to keep track of the branches. Hint: you’ll want to keep track of
-        the branch directions and lengths using vector math instead of Processing transformations.
+        the branch directions and lengths using vector math instead of p5.js transformations.
       </p>
     </div>
 
@@ -1119,7 +1119,7 @@ function draw() {
       branch lengths and angles vary from branch to branch, not to mention the fact that branches
       don’t all have exactly the same number of smaller branches. First, let’s see what happens when
       we simply vary the angle and length. This is a pretty easy one, given that we can just ask
-      Processing for a random number each time we draw the tree.</p>
+      p5.js for a random number each time we draw the tree.</p>
 
     <figure class="screenshot" data-p5-sketch="https://editor.p5js.org/embed/SygtpTUPX"><img
         alt="ch08 ex07a" src="chapter08/ch08_ex07a.png" />
@@ -1213,11 +1213,11 @@ void branch(float len) {
       they provide a mechanism for keeping track of fractal structures that require complex and
       multi-faceted production rules.</p>
 
-    <p>In order to create an example that implements L-systems in Processing, we are going to have
+    <p>In order to create an example that implements L-systems in p5.js, we are going to have
       to be comfortable with working with (a) recursion, (b) transformation matrices, and (c)
       strings. So far we’ve worked with recursion and transformations, but strings are new here. We
       will assume the basics, but if that is not comfortable for you, I would suggest taking a look
-      at the Processing tutorial <a href="http://www.processing.org/learning/text/">Strings and
+      at the p5.js tutorial <a href="http://www.processing.org/learning/text/">Strings and
         Drawing Text</a>.</p>
 
     <p>An L-system involves three main components:</p>
@@ -1427,14 +1427,14 @@ s += "add some more stuff";</pre>
 
     <p>This type of drawing framework is often referred to as “Turtle graphics” (from the old days
       of LOGO programming). Imagine a turtle sitting on your computer screen to which you could
-      issue a small set of commands: turn left, turn right, draw a line, etc. Processing isn’t set
+      issue a small set of commands: turn left, turn right, draw a line, etc. p5.js isn’t set
       up to operate this way by default, but by using <code>translate()</code>,
       <code>rotate()</code>, and <code>line()</code>, we can emulate a Turtle graphics engine fairly
       easily.</p>
 
     <a data-primary="L-systems" data-secondary="translating into code" data-type="indexterm"></a>
 
-    <p>Here’s how we would translate the above L-system alphabet into Processing code.</p>
+    <p>Here’s how we would translate the above L-system alphabet into p5.js code.</p>
 
     <p><span class="formula">F: line(0,0,0,len); translate(0,len);</span><br />
       <span class="formula">G: translate(0,len);</span><br />
