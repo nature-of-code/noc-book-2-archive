@@ -12,11 +12,11 @@
   <p>In this chapter, we’re going to take a break from talking about vectors and motion. In fact,
     the rest of the book will mostly focus on systems and algorithms (albeit ones that we can,
     should, and will apply to moving bodies). In the previous chapter, we encountered our first
-    Processing example of a complex system: flocking. We briefly stated the core principles behind
+    p5.js example of a complex system: flocking. We briefly stated the core principles behind
     complex systems: more than the sum of its parts, a complex system is a system of elements,
     operating in parallel, with short-range relationships that as a whole exhibit emergent behavior.
     This entire chapter is going to be dedicated to building another complex system simulation in
-    Processing. Oddly, we are going to take some steps backward and simplify the elements of our
+    p5.js. Oddly, we are going to take some steps backward and simplify the elements of our
     system. No longer are the individual elements going to be members of a physics world; instead we
     will build a system out of the simplest digital element possible, a single bit. This bit is
     going to be called a cell and its value (0 or 1) will be called its state. Working with such
@@ -297,7 +297,7 @@
       generation.</p>
 
     <p>Before we go too far down the road of how Wolfram classifies the results of varying rulesets,
-      let’s look at how we actually build a Processing sketch that generates the Wolfram CA and
+      let’s look at how we actually build a p5.js sketch that generates the Wolfram CA and
       visualizes it onscreen.</p>
   </section>
 
@@ -315,7 +315,7 @@
       etc.” This line of thinking is an excellent one and would likely lead you to write some code
       like this:</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Cell {
 
 }</pre>
@@ -330,15 +330,15 @@ class Cell {
       <figcaption>Figure 7.17</figcaption>
     </figure>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-int[] cells = {1,0,1,0,0,0,0,1,0,1,1,1,0,0,0,1,1,1,0,0};</pre>
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+let cells = [1,0,1,0,0,0,0,1,0,1,1,1,0,0,0,1,1,1,0,0];</pre>
 
     <p>To draw that array, we simply check if we’ve got a 0 or a 1 and create a fill accordingly.
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 //{!1} Loop through every cell.
-for (int i = 0; i < cells.length; i++) {
+for (let i = 0; i < cells.length; i++) {
 	//{!5} Create a fill based on its state (0 or 1).
   if (cells[i] == 0) {
 		fill(255);
@@ -371,20 +371,20 @@ for (int i = 0; i < cells.length; i++) {
 
     <p>This may lead you to write some code like this:</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 // For every cell in the array...
-for (int i = 0; i < cells.length; i++) {
+for (let i = 0; i < cells.length; i++) {
 
   //{!3} ...take a look at the neighborhood.
-  int left   = cell[i-1];
-  int middle = cell[i];
-  int right  = cell[i+1];
+  let left   = cells[i-1];
+  let middle = cells[i];
+  let right  = cells[i+1];
 
   //{!1} Look up the new value according to the rules.
-  int newstate = rules(left,middle,right);
+  let newstate = rules(left,middle,right);
 
   //{!1} Set the cell’s state to the new value.
-  cell[i] = newstate;
+  cells[i] = newstate;
 }</pre>
 
     <p>We’re fairly close to getting this right, but we’ve made one minor blunder and one major
@@ -439,14 +439,14 @@ for (int i = 0; i < cells.length; i++) {
       skip the edge cases, leaving their values constant. This can be accomplished by starting the
       loop one cell later and ending one cell earlier:</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 //{.bold} A loop that ignores the first and last cell
-for (int i = 1; i < cells.length-1; i++) {
-  int left   = cell[i-1];
-  int middle = cell[i];
-  int right  = cell[i+1];
-  int newstate = rules(left, middle, right);
-  cell[i] = newstate;
+for (let i = 1; i < cells.length-1; i++) {
+  let left   = cells[i-1];
+  let middle = cells[i];
+  let right  = cells[i+1];
+  let newstate = rules(left, middle, right);
+  cells[i] = newstate;
 }</pre>
 
     <a data-primary="elementary cellular automata" data-secondary="generations"
@@ -457,8 +457,8 @@ for (int i = 1; i < cells.length-1; i++) {
       absolutely fundamental to the techniques behind programming CA simulations. It all lies in
       this line of code:</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-  cell[i] = newstate;</pre>
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+  cells[i] = newstate;</pre>
 
     <p>This seems like a perfectly innocent line. After all, we’ve computed the new state value and
       we’re simply giving the cell its new state. But in the next iteration, you’ll discover a
@@ -471,11 +471,11 @@ for (int i = 1; i < cells.length-1; i++) {
 
     <p>Notice how we need the value of cell #5 at generation 0 in order to calculate cell #6’s new
       state at generation 1? A cell’s new state is a function of the previous neighbor states. Do we
-      know cell #5’s value at generation 0? Remember, Processing just executes this line of code for
+      know cell #5’s value at generation 0? Remember, p5.js just executes this line of code for
       <em>i = 5</em>.</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-  cell[i] = newstate;</pre>
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+  cells[i] = newstate;</pre>
 
     <p>Once this happens, we no longer have access to cell #5’s state at generation 0, and cell
       index 5 is storing the value for generation 1. We cannot overwrite the values in the array
@@ -483,17 +483,17 @@ for (int i = 1; i < cells.length-1; i++) {
       solution to this problem is to have two arrays, one to store the current generation states and
       one for the next generation states.</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 //{!1 .bold} Another array to store the states
 // for the next generation.
-int[] newcells = new int[cells.length];
+let newcells = [];
 
-for (int i = 1; i < cells.length-1; i++) {
+for (let i = 1; i < cells.length-1; i++) {
   //{!3} Look at the states from the current array.
-  int left   = cell[i-1];
-  int middle = cell[i];
-  int right  = cell[i+1];
-  int newstate = rules(left, middle, right);
+  const left   = cells[i-1];
+  const middle = cells[i];
+  const right  = cells[i+1];
+  const newstate = rules(left, middle, right);
   //{!1 .bold} Saving the new state in the new array
   newcells[i] = newstate;
 }</pre>
@@ -501,7 +501,7 @@ for (int i = 1; i < cells.length-1; i++) {
     <p>Once the entire array of values is processed, we can then discard the old array and set it
       equal to the new array of states.</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 //{.bold} The new generation becomes the current generation.
 cells = newcells;</pre>
 
@@ -510,9 +510,9 @@ cells = newcells;</pre>
       (left, middle, and right cells). We know that function needs to return an integer (0 or 1) as
       well as receive three arguments (for the three neighbors).</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   //{!1} Function receives 3 ints and returns 1.
-  int rules (int a, int b, int c) {</pre>
+  function rules (a, b, c) {</pre>
 
     <p>Now, there are many ways we could write this function, but I’d like to start with a
       long-winded one that will hopefully provide a clear illustration of what we are doing.</p>
@@ -529,33 +529,33 @@ cells = newcells;</pre>
       <figcaption>Figure 7.14 (repeated)&nbsp;</figcaption>
     </figure>
 
-    <p>We can store this ruleset in Processing as an array.</p>
+    <p>We can store this ruleset in p5.js as an array.</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-int[] ruleset = {0,1,0,1,1,0,1,0};</pre>
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+let ruleset = [0,1,0,1,1,0,1,0];</pre>
 
     <p>And then say:</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 if (a == 1 && b == 1 && c == 1) return ruleset[0];</pre>
 
     <p>If left, middle, and right all have the state 1, then that matches the configuration 111 and
       the new state should be equal to the first value in the ruleset array. We can now duplicate
       this strategy for all eight possibilities.</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-  int rules (int a, int b, int c) {
-    if      (a == 1 &amp;&amp; b == 1 &amp;&amp; c == 1) return ruleset[0];
-    else if (a == 1 &amp;&amp; b == 1 &amp;&amp; c == 0) return ruleset[1];
-    else if (a == 1 &amp;&amp; b == 0 &amp;&amp; c == 1) return ruleset[2];
-    else if (a == 1 &amp;&amp; b == 0 &amp;&amp; c == 0) return ruleset[3];
-    else if (a == 0 &amp;&amp; b == 1 &amp;&amp; c == 1) return ruleset[4];
-    else if (a == 0 &amp;&amp; b == 1 &amp;&amp; c == 0) return ruleset[5];
-    else if (a == 0 &amp;&amp; b == 0 &amp;&amp; c == 1) return ruleset[6];
-    else if (a == 0 &amp;&amp; b == 0 &amp;&amp; c == 0) return ruleset[7];
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+  function rules (a, b, c) {
+    if      (a === 1 && b === 1 && c === 1) return ruleset[0];
+    else if (a === 1 && b === 1 && c === 0) return ruleset[1];
+    else if (a === 1 && b === 0 && c === 1) return ruleset[2];
+    else if (a === 1 && b === 0 && c === 0) return ruleset[3];
+    else if (a === 0 && b === 1 && c === 1) return ruleset[4];
+    else if (a === 0 && b === 1 && c === 0) return ruleset[5];
+    else if (a === 0 && b === 0 && c === 1) return ruleset[6];
+    else if (a === 0 && b === 0 && c === 0) return ruleset[7];
     //{!1} For this function to be valid, we have to make sure something is returned
     // in cases where the states do not match one of the eight possibilities.
-    // We know this is impossible given the rest of our code, but Processing (Java) does not.
+    // We know this is impossible given the rest of our code, but p5.js (javascript) does not.
     return 0;
   }</pre>
 
@@ -569,14 +569,14 @@ if (a == 1 && b == 1 && c == 1) return ruleset[0];</pre>
       neighborhood configuration (a 3-bit number) into a regular integer and use that value as the
       index into the ruleset array. This can be done in Java like so.</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-  int rules (int a, int b, int c) {
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+  function rules (a, b, c) {
     // A quick way to join three bits into a String
-    String s = "" + a + b + c;
+    let s = "" + a + b + c;
 
     // The second argument ‘2’ indicates that we intend to
     // parse a binary number (base 2).
-    int index = Integer.parseInt(s,2);
+    let index = parseInt(s,2);
 
     return ruleset[index];
   }</pre>
@@ -584,65 +584,63 @@ if (a == 1 && b == 1 && c == 1) return ruleset[0];</pre>
     <p>There’s one tiny problem with this solution, however. Let’s say we are implementing rule 222:
     </p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 // Rule 222
-int[] ruleset = {1,1,0,1,1,1,1,0};</pre>
+let ruleset = [1,1,0,1,1,1,1,0];</pre>
 
     <p>And we have the neighborhood “111”. The resulting state is equal to ruleset index 0, as we
       see in the first way we wrote the function.</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-    if (a == 1 &amp;&amp; b == 1 &amp;&amp; c == 1) return ruleset[0];</pre>
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    if (a === 1 && b === 1 && c === 1) return ruleset[0];</pre>
 
     <p>If we convert “111” to a decimal number, we get 7. But we don’t want ruleset[7]; we want
       ruleset[0]. For this to work, we need to write the ruleset with the bits in reverse order,
       i.e.</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 //{!1} Rule 222 in “reverse” order
-int[] ruleset = {0,1,1,1,1,0,1,1};</pre>
+let ruleset = [0,1,1,1,1,0,1,1];</pre>
 
     <p>So far in this section, we’ve written everything we need to compute the generations for a
       Wolfram elementary CA. Let’s take a moment to organize the above code into a class, which will
       ultimately help in the design of our overall sketch.</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class CA {
-  //{!2} We need an array for the cells and
-  // one for the rules.
-  int[] cells;
-  int[] ruleset;
+  constructor(){
+    //{!2} We need an array for the cells and
+    // one for the rules.
 
-  CA() {
-    cells = new int[width];
+    this.cells = [];
     //{!1} Arbitrarily starting with rule 90
-    ruleset = {0,1,0,1,1,0,1,0};
+    this.ruleset = [0,1,0,1,1,0,1,0];
 
-    for (int i = 0; i < cells.length; i++) {
-      cells[i] = 0;
+    for (let i = 0; i < width; i++) {
+      this.cells[i] = 0;
     }
     //{!1} All cells start with state 0, except the center
     // cell has state 1.
-    cells[cells.length/2] = 1;
+    this.cells[this.cells.length/2] = 1;
   }
 
-  void generate() {
+  generate() {
     //{!7} Compute the next generation.
-    int[] nextgen = new int[cells.length];
-    for (int i = 1; i < cells.length-1; i++) {
-      int left   = cells[i-1];
-      int me     = cells[i];
-      int right  = cells[i+1];
-      nextgen[i] = rules(left, me, right);
+    let nextgen = [];
+    for (let i = 1; i < this.cells.length-1; i++) {
+      let left   = this.cells[i-1];
+      let me     = this.cells[i];
+      let right  = this.cells[i+1];
+      this.nextgen[i] = this.rules(left, me, right);
     }
-    cells = nextgen;
+    this.cells = this.nextgen;
   }
 
   //{!4} Look up a new state from the ruleset.
-  int rules (int a, int b, int c) {
-    String s = "" + a + b + c;
-    int index = Integer.parseInt(s,2);
-    return ruleset[index];
+  rules (a, b, c) {
+    let s = "" + a + b + c;
+    let index = parseInt(s,2);
+    return this.ruleset[index];
   }
 }</pre>
   </section>
@@ -680,34 +678,34 @@ class CA {
       how we might choose to display such a system.</p>
 
     <p>The good news is that drawing the CA is not particularly difficult. Let’s begin by looking at
-      how we would render a single generation. Assume we have a Processing window 600 pixels wide
+      how we would render a single generation. Assume we have a canvas 600 pixels wide
       and we want each cell to be a 10x10 square. We therefore have a CA with 60 cells. Of course,
       we can calculate this value dynamically.</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-int w = 10;
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+let w = 10;
 //{!1} How many cells fit across given a certain width
-int[] cells = new int[width/w];</pre>
+let cells = [];</pre>
 
     <p>Assuming we’ve gone through the process of generating the cell states (which we did in the
       previous section), we can now loop through the entire array of cells, drawing a black cell
       when the state is 1 and a white one when the state is 0.</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-for (int i = 0; i < cells.length; i++) {
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+for (let i = 0; i < width/w; i++) {
   //{!2} Black or white fill?
   if (cells[i] == 1) fill(0);
   else               fill(255);
   //{!1} Notice how the x-position is the cell index times the cell width.
   // In the above scenario, this would give us cells located at x equals 0, 10, 20, 30, all the way up to 600.
-  rect(i*w, 0, w, w);
+  rect(i*this.w, 0, this.w, this.w);
 }</pre>
 
     <p>In truth, we could optimize the above by having a white background and only drawing when
       there is a black cell (saving us the work of drawing many white squares), but in most cases
       this solution is good enough (and necessary for other more sophisticated designs with varying
       colors, etc.) Also, if we wanted each cell to be represented as a single pixel, we would not
-      want to use Processing’s <code>rect()</code> function, but rather access the pixel array
+      want to use p5.js’s <code>rect()</code> function, but rather access the pixel array
       directly.</p>
 
     <p>In the above code, you’ll notice the y-position for each rectangle is 0. If we want the
@@ -726,46 +724,70 @@ for (int i = 0; i < cells.length; i++) {
       <h5>Example 7.1: Wolfram elementary cellular automata</h5>
     </div>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class CA {
-  int[] cells;
-  int[] ruleset;
-  int w = 10;
-  //{!1} The CA should keep track of how
-  // many generations.
-  int generation = 0;
-  CA() {
-    cells = new int[width/w];
-    ruleset = {0,1,0,1,1,0,1,0};
-    cells[cells.length/2] = 1;
+  constructor() {
+
+    this.w = 10;
+    // An array of 0s and 1s
+    this.cells = new Array(width/this.w);
+    for (var i = 0; i < this.cells.length; i++) {
+      this.cells[i] = 0;
+    }
+    // We arbitrarily start with just the middle cell having a state of "1"
+    this.cells[this.cells.length/2] = 1;
+    //{!1} The CA should keep track of how
+    // many generations.
+    this.generation = 0;
+
+    // An array to store the ruleset, for example {0,1,1,0,1,1,0,1}
+    this.ruleset = [0, 1, 0, 1, 1, 0, 1, 0];
   }
 
   //{!1} Function to compute the next generation
-  void generate() {
-    int[] nextgen = new int[cells.length];
-    for (int i = 1; i < cells.length-1; i++) {
-      int left   = cells[i-1];
-      int me     = cells[i];
-      int right  = cells[i+1];
-      nextgen[i] = rules(left, me, right);
+  generate() {
+    // First we create an empty array filled with 0s for the new values
+    let nextgen = [];
+    for (let i = 0; i < this.cells.length; i++) {
+      nextgen[i] = 0;
     }
-    cells = nextgen;
-    //{!1} Increment the generation counter.
-    generation++;
+    // For every spot, determine new state by examing current state, and neighbor states
+    // Ignore edges that only have one neighor
+    for (let i = 1; i < this.cells.length-1; i++) {
+      let left   = this.cells[i-1];   // Left neighbor state
+      let me     = this.cells[i];     // Current state
+      let right  = this.cells[i+1];   // Right neighbor state
+      nextgen[i] = this.rules(left, me, right); // Compute next generation state based on ruleset
+    }
+    // The current generation is the new generation
+    this.cells = nextgen;
+    this.generation++;
   }
 
-  int rules(int a, int b, int c) {
-    String s = "" + a + b + c;
-    int index = Integer.parseInt(s,2);
-    return ruleset[index];
+  rules(a, b, c) {
+    // option 1: more concise
+    // let s = "" + a + b + c;
+    // let index = parseInt(s,2);
+    // return this.ruleset[index];
+
+    // option 2: Could be improved and made more concise, but here we can explicitly see what is going on for each case
+    if (a == 1 && b == 1 && c == 1) return this.ruleset[0];
+  	if (a == 1 && b == 1 && c === 0) return this.ruleset[1];
+  	if (a == 1 && b === 0 && c == 1) return this.ruleset[2];
+  	if (a == 1 && b === 0 && c === 0) return this.ruleset[3];
+  	if (a === 0 && b == 1 && c == 1) return this.ruleset[4];
+  	if (a === 0 && b == 1 && c === 0) return this.ruleset[5];
+  	if (a === 0 && b === 0 && c == 1) return this.ruleset[6];
+  	if (a === 0 && b === 0 && c === 0) return this.ruleset[7];
+    return 0;
   }
 
-  void display() {
-    for (int i = 0; i < cells.length; i++) {
-      if (cells[i] == 1) fill(0);
+  display() {
+    for (let i = 0; i < this.cells.length; i++) {
+      if (this.cells[i] == 1) fill(0);
       else               fill(255);
       //{!1} Set the y-position according to the generation.
-      rect(i*w, generation*w, w, w);
+      rect(i*this.w, this.generation*this.w, this.w, this.w);
     }
   }
 }</pre>
@@ -774,7 +796,7 @@ class CA {
       <h5>Exercise 7.1</h5>
 
       <p>Expand Example 7.1 to have the following feature: when the CA reaches the bottom of the
-        Processing window, the CA starts over with a new, random ruleset.</p>
+        canvas, the CA starts over with a new, random ruleset.</p>
     </div>
 
 
@@ -879,7 +901,7 @@ class CA {
     <div data-type="exercise" id="chapter07_exercise5">
       <h5>Exercise 7.5</h5>
 
-      <p>Create a Processing sketch that saves an image for every possible ruleset. Can you classify
+      <p>Create a p5.js sketch that saves an image for every possible ruleset. Can you classify
         them?</p>
     </div>
   </section>
@@ -895,7 +917,7 @@ class CA {
       one. This will introduce some additional complexity; each cell will have a bigger
       neighborhood, but that will open up the door to a range of possible applications. After all,
       most of what we do in computer graphics lives in two dimensions, and this chapter will
-      demonstrate how to apply CA thinking to what we draw in our Processing sketches.</p>
+      demonstrate how to apply CA thinking to what we draw in our p5.js sketches.</p>
 
     <a data-primary="complex systems" data-secondary="Game of Life as" data-type="indexterm"></a> <a
       data-primary="Conway" data-secondary="John" data-type="indexterm"></a> <a
@@ -1068,27 +1090,30 @@ class CA {
       one-dimensional array to store the list of cell states before, and for the Game of Life, we
       can use a <a href="http://www.processing.org/learning/2darray/">two-dimensional array</a>.</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-int[][] board = new int[columns][rows];</pre>
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+let w = 8;
+let columns = width/w;
+let rows = height/w;
+let board = [];</pre>
 
     <p>We’ll begin by initializing each cell of the board with a random state: 0 or 1.</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-for (int x = 0; x < columns; x++) {
-  for (int y = 0; y < rows; y++) {
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+for (let x = 0; x < columns; x++) {
+  for (let y = 0; y < rows; y++) {
     //{!1} Initialize each cell with a 0 or 1.
-    current[x][y] = int(random(2));
+    board[x][y] = int(random(2));
   }
 }</pre>
 
     <p>And to compute the next generation, just as before, we need a fresh 2D array to write to as
       we analyze each cell’s neighborhood and calculate a new state.</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-int[][] next = new int[columns][rows];
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+let next = [];
 
-for (int x = 0; x &lt; columns; x++) {
-  for (int y = 0; y &lt; rows; y++) {
+for (let x = 0; x < columns; x++) {
+  for (let y = 0; y < rows; y++) {
 
     //{!1} We need a new state for each cell.
     next[x][y] = _______________?;
@@ -1112,8 +1137,8 @@ for (int x = 0; x &lt; columns; x++) {
       create a neighbor counter variable and increment it each time we find a neighbor with a state
       of 1, we’ll have the total of live neighbors.</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-int neighbors = 0;
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+let neighbors = 0;
 
 // Top row of neighbors
 if (board[x-1][y-1] == 1) neighbors++;
@@ -1138,9 +1163,9 @@ if (board[x+1][y+1] == 1) neighbors++;</pre>
       all the neighbors’ states will yield the total number of live cells. Since the neighbors are
       arranged in a mini 3x3 grid, we can add them all up with another loop.</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-for (int i = -1; i &lt;= 1; i++) {
-  for (int j = -1; j &lt;= 1; j++) {
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+for (let i = -1; i <= 1; i++) {
+  for (let j = -1; j <= 1; j++) {
     //{!1} Add up all the neighbors’ states.
     neighbors += board[x+i][y+j];
   }
@@ -1151,7 +1176,7 @@ for (int i = -1; i &lt;= 1; i++) {
       both <code>i</code> and <code>j</code> equal 0, but another option would be to just subtract
       the cell state once we’ve finished the loop.</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 // Whoops! Subtract the cell’s state,
 // which we don’t want in the total.
 neighbors -= board[x][y];</pre>
@@ -1159,15 +1184,15 @@ neighbors -= board[x][y];</pre>
     <p>Finally, once we know the total number of live neighbors, we can decide what the cell’s new
       state should be according to the rules: birth, death, or stasis.</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 // {.code-wide} If it is alive and has less than 2 live neighbors, it dies from loneliness.
-if        ((board[x][y] == 1) &amp;&amp; (neighbors < 2)) {
+if        ((board[x][y] == 1) && (neighbors < 2)) {
   next[x][y] = 0;
 // {.code-wide} If it is alive and has more than 3 live neighbors, it dies from overpopulation.
-} else if ((board[x][y] == 1) &amp;&amp; (neighbors >  3)) {
+} else if ((board[x][y] == 1) && (neighbors >  3)) {
   next[x][y] = 0;
 // {.code-wide} If it is dead and has exactly 3 live neighbors, it is born!
-} else if ((board[x][y] == 0) &amp;&amp; (neighbors == 3)) {
+} else if ((board[x][y] == 0) &&& (neighbors == 3)) {
   next[x][y] = 1;
 // {.code-wide} In all other cases, its state remains the same.
 } else {
@@ -1176,18 +1201,18 @@ if        ((board[x][y] == 1) &amp;&amp; (neighbors < 2)) {
 
     <p>Putting this all together, we have:</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 // The next board
-int[][] next = new int[columns][rows];
+let next = [];
 
 //{!2} Looping but skipping the edge cells
-for (int x = 1; x &lt; columns-1; x++) {
-  for (int y = 1; y &lt; rows-1; y++) {
+for (let x = 1; x < columns-1; x++) {
+  for (let y = 1; y < rows-1; y++) {
     // Add up all the neighbor states to
     // calculate the number of live neighbors.
     int neighbors = 0;
-    for (int i = -1; i &lt;= 1; i++) {
-      for (int j = -1; j &lt;= 1; j++) {
+    for (let i = -1; i <= 1; i++) {
+      for (let j = -1; j <= 1; j++) {
         neighbors += board[x+i][y+j];
       }
     }
@@ -1195,9 +1220,9 @@ for (int x = 1; x &lt; columns-1; x++) {
     neighbors -= board[x][y];
 
     //{!4} The rules of life!
-    if      ((board[x][y] == 1) &amp;&amp; (neighbors <  2)) next[x][y] = 0;
-    else if ((board[x][y] == 1) &amp;&amp; (neighbors >  3)) next[x][y] = 0;
-    else if ((board[x][y] == 0) &amp;&amp; (neighbors == 3)) next[x][y] = 1;
+    if      ((board[x][y] == 1) && (neighbors <  2)) next[x][y] = 0;
+    else if ((board[x][y] == 1) && (neighbors >  3)) next[x][y] = 0;
+    else if ((board[x][y] == 0) && (neighbors == 3)) next[x][y] = 1;
     else next[x][y] = board[x][y];
   }
 }
@@ -1217,9 +1242,9 @@ board = next;</pre>
       <h5>Example 7.2: Game of Life</h5>
     </div>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-for ( int i = 0; i < columns; i++) {
-  for ( int j = 0; j < rows; j++) {
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+for ( let i = 0; i < columns; i++) {
+  for ( let j = 0; j < rows; j++) {
     // Black when state = 1
     if ((board[i][j] == 1)) fill(0);
     //{!1} White when state = 0
@@ -1248,7 +1273,7 @@ for ( int i = 0; i < columns; i++) {
 
       <p>While the above solution (Example 7.2) is convenient, it is not particularly
         memory-efficient. It creates a new 2D array for every frame of animation! This matters very
-        little for a Processing desktop application, but if you were implementing the Game of Life
+        little for a p5.js application, but if you were implementing the Game of Life
         on a microcontroller or mobile device, you’d want to be more careful. One solution is to
         have only two arrays and constantly swap them, writing the next set of states into whichever
         one isn’t the current array. Implement this particular solution.</p>
@@ -1277,36 +1302,40 @@ for ( int i = 0; i < columns; i++) {
       cell as an object with multiple properties, rather than as a single 0 or 1. To show this,
       let’s just recreate the Game of Life simulation. Only instead of:</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-  int[][] board;</pre>
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+  let board;</pre>
 
     <p>Let’s have:</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-  Cell[][] board;</pre>
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+  let board;</pre>
 
     <p>where <code>Cell</code> is a class we will write. What are the properties of a
       <code>Cell</code> object? In our Game of Life example, each cell has a position and size, as
       well as a state.</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Cell {
+  constructor(x, y, w){
+    // position and size
+    this.x = x;
+    this.y = y;
+    this.w = w;
 
-  // position and size
-  float x, y;
-  float w;
+    // What is the cell’s state?
+    this.state = ????;
 
-  // What is the cell’s state?
-  int state;</pre>
+  }
+  </pre>
 
     <p>In the non-OOP version, we used a separate 2D array to keep track of the states for the
       current and next generation. By making a cell an object, however, each cell could keep track
       of both states. In this case, we’ll think of the cell as remembering its previous state (for
       when new states need to be computed).</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   // What was its previous state?
-  int previous;</pre>
+  this.previous = this.state;</pre>
 
     <p>This allows us to visualize more information about what the state is doing. For example, we
       could choose to color a cell differently if its state has changed. For example:</p>
@@ -1320,40 +1349,40 @@ class Cell {
       <h5>Example 7.3: Game of Life OOP</h5>
     </div>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-void display() {
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+display() {
   //{!1} If the cell is born, color it blue!
-  if (previous == 0 &amp;&amp; state == 1) fill(0, 0, 255);
-  else if (state == 1) fill(0);
+  if (previous == 0 && this.state == 1) fill(0, 0, 255);
+  else if (this.state == 1) fill(0);
 
   //{!1} If the cell dies, color it red!
-  else if (previous == 1 &amp;&amp; state == 0) fill(255, 0, 0);
+  else if (this.previous == 1 && this.state == 0) fill(255, 0, 0);
   else fill(255);
 
-  rect(x, y, w, w);
+  rect(this.x, this.y, this.w, this.w);
 }</pre>
 
     <p>Not much else about the code (at least for our purposes here) has to change. The neighbors
       can still be counted the same way; the difference is that we now need to refer to the object’s
       state variables as we loop through the 2D array.</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
-for (int x = 1; x &lt; columns-1; x++) {
-  for (int y = 1; y &lt; rows-1; y++) {
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+for (let this.x = 1; x < this.columns-1; x++) {
+  for (let this.y = 1; y < this.rows-1; y++) {
 
-    int neighbors = 0;
-    for (int i = -1; i &lt;= 1; i++) {
-      for (int j = -1; j &lt;= 1; j++) {
+    let neighbors = 0;
+    for (let i = -1; i <= 1; i++) {
+      for (let j = -1; j <= 1; j++) {
         //{!1 .bold} Use the previous state when tracking neighbors.
-        neighbors += board[x+i][y+j].previous;
+        neighbors += this.board[this.x+i][this.y+j].previous;
       }
     }
-    neighbors -= board[x][y].previous;
+    neighbors -= this.board[x][y].previous;
 
     //{!3} We are calling a function newState() to assign a new state to each cell.
-    if      ((board[x][y].state == 1) &amp;&amp; (neighbors <  2)) board[x][y].newState(0);
-    else if ((board[x][y].state == 1) &amp;&amp; (neighbors >  3)) board[x][y].newState(0);
-    else if ((board[x][y].state == 0) &amp;&amp; (neighbors == 3)) board[x][y].newState(1);
+    if      ((this.board[x][y].state == 1) && (neighbors <  2)) this.board[x][y].newState(0);
+    else if ((this.board[x][y].state == 1) && (neighbors >  3)) this.board[x][y].newState(0);
+    else if ((this.board[x][y].state == 0) && (neighbors == 3)) this.board[x][y].newState(1);
     // else do nothing!
   }
 }</pre>
