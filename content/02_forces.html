@@ -1346,24 +1346,31 @@ function draw() {
 }</pre>
 
     <p>
-      Running this example, you’ll notice that the circles don’t even make it to
-      the right side of the window. Since friction continuously pushes against
-      the object in the opposite direction of its movement, the object
-      continuously slows down. This can be a useful technique or a problem
-      depending on the goals of your visualization.
+      Running this example, you’ll notice that the circle eventually comes to rest. You can make
+      this happen more or less quickly by varying the coefficient of friction as well as the
+      percentage speed loss in the <code>bounceEdges()</code> function.
     </p>
 
     <div data-type="exercise" id="chapter02_exercise4">
-      <h5>Exercise 2.4</h5>
+      <h5>Exercise 2.x</h5>
 
       <p>
-        Create pockets of friction in a p5 sketch so that objects only
-        experience friction when crossing over those pockets. What if you vary
-        the strength (friction coefficient) of each area? What if you make some
-        pockets feature the opposite of friction—i.e., when you enter a given
-        pocket you actually speed up instead of slowing down?
+        Add a second object to example 2.x. How do you handle having two objects of different
+        masses? What if each object has its own coefficient of friction relative to the bottom
+        surface? Does it make sense to encapsulate the friction force calculation into a Mover
+        method? Try an array of mover objects.
       </p>
     </div>
+
+    <div data-type="exercise" id="chapter02_exercise4">
+      <h5>Exercise 2.x</h5>
+
+      <p>
+        Instead of wind, can you add functionality to this example that allows you to toss the
+        circle with mouse interaction?
+      </p>
+    </div>
+
   </section>
 
   <section data-type="sect1" id="chapter02_section8">
@@ -1386,32 +1393,31 @@ function draw() {
       force has many different names, all really meaning the same thing:
       <em>viscous force</em>, <em>drag force</em>, <em>fluid resistance</em>.
       While the result is ultimately the same as our previous friction examples
-      (the object slows down), the way in which we calculate a drag force will
-      be slightly different. Let’s look at the formula:
+      (the object slows down), the calculation of a drag force is
+      slightly different. Let’s look at the formula:
     </p>
 
     <div data-type="equation">F_d = - \frac{1}{2}\rho\nu^2 A C_d\hat{\nu}</div>
 
     <p>
       Now let’s break this down and see what we really need for an effective
-      simulation in p5, making ourselves a much simpler formula in the
-      process.
+      simulation in p5, making a simpler formula in the process.
     </p>
 
     <ul>
       <li>
         <p>
           <span data-type="equation">F_d</span> refers to <em>drag force</em>,
-          the vector we ultimately want to compute and pass into our
-          <code>applyForce()</code> function.
+          the vector you ultimately want to compute and pass into the
+          <code>applyForce()</code> method.
         </p>
       </li>
       <li>
         <p>
-          - 1/2 is a constant: -0.5. This is fairly irrelevant in terms of our
-          p5 world, as we will be making up values for other constants
+          - 1/2 is a constant: -0.5. This is irrelevant in terms of a
+          p5.js world, as I will be making up values for other constants
           anyway. However, the fact that it is negative is important, as it
-          tells us that the force is in the opposite direction of velocity (just
+          indicates that the force points in the opposite direction of velocity (just
           as with friction).
         </p>
       </li>
@@ -1424,15 +1430,15 @@ function draw() {
       <li>
         <p>
           <span data-type="equation">\rho</span> is the Greek letter
-          <em>rho</em>, and refers to the density of the liquid, something we
-          don’t need to worry about. We can simplify the problem and consider
+          <em>rho</em>, and refers to the density of the liquid, something you
+          don’t need to worry about at the moment. For my example I will consider
           this to have a constant value of 1.
         </p>
       </li>
       <li>
         <p>
           <span data-type="equation">v</span> refers to the speed of the object
-          moving. OK, we’ve got this one! The object’s speed is the magnitude of
+          moving. OK, you’ve got this one! The object’s speed is the magnitude of
           the velocity vector: <code>velocity.mag()</code>. And
           <span data-type="equation">v^2</span> just means
           <span data-type="equation">v</span> squared or
@@ -1442,18 +1448,16 @@ function draw() {
       <li>
         <p>
           <span data-type="equation">A</span> refers to the frontal area of the
-          object that is pushing through the liquid (or gas). An aerodynamic
-          Lamborghini, for example, will experience less air resistance than a
-          boxy Volvo. Nevertheless, for a basic simulation, we can consider our
-          object to be spherical and ignore this element.
+          object that is pushing through the liquid (or gas). An aerodynamic Lamborghini, for
+          example, will experience less air resistance than a boxy Volvo. Nevertheless, for a basic
+          simulation, I will consider the object to be spherical and ignore this element.
         </p>
       </li>
       <li>
         <p>
           <span data-type="equation">C_d</span> is the coefficient of drag,
-          exactly the same as the coefficient of friction (μ). This is a
-          constant we’ll determine based on whether we want the drag force to be
-          strong or weak.
+          exactly the same as the coefficient of friction (μ). This
+          constant will determine the relative strength of the drag force.
         </p>
       </li>
       <li>
@@ -1467,26 +1471,26 @@ function draw() {
     </ul>
 
     <p>
-      Now that we’ve analyzed each of these components and determined what we
-      need for a simple simulation, we can reduce our formula to:
+      Now that I’ve analyzed each of these components and determined what is
+      needed for a simple simulation, I can reduce the formula to:
     </p>
 
     <figure id="chapter02_figure5">
-      <img alt="Figure 2.5: Our simplified drag force formula" src="chapter02/ch02_05.png" />
+      <img alt="Figure 2.5: My simplified drag force formula" src="chapter02/ch02_05.png" />
       <figcaption>
-        Figure 2.5: Our simplified drag force formula&nbsp;
+        Figure 2.5: My simplified drag force formula&nbsp;
       </figcaption>
     </figure>
 
     <p>or:</p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-const c = 0.1;
-const speed = this.velocity.mag();
-//{!1} Part 1 of our formula (magnitude): Cd * v2
-const dragMagnitude = c * speed * speed;
-const drag = this.velocity.copy();
-//{!1} Part 2 of our formula (direction): -1 * velocity
+let c = 0.1;
+let speed = this.velocity.mag();
+//{!1} Part 1 of the formula (magnitude): Cd * v2
+let dragMagnitude = c * speed * speed;
+let drag = this.velocity.copy();
+//{!1} Part 2 of the formula (direction): -1 * velocity
 drag.mult(-1);
 drag.normalize();
 // Magnitude and direction together!
@@ -1495,31 +1499,30 @@ drag.mult(dragMagnitude);</pre>
     <a data-primary="friction" data-secondary="applying to an object" data-type="indexterm"></a>
 
     <p>
-      Let’s implement this force in our <code>Mover</code> class example with
-      one addition. When we wrote our friction example, the force of friction
-      was always present. Whenever an object was moving, friction would slow it
-      down. Here, let’s introduce an element to the environment—a “liquid” that
-      the <code>Mover</code> objects pass through. The
-      <code>Liquid</code> object will be a rectangle and will know about its
+      Let’s implement this force in the <code>Mover</code> example with an added feature. For the
+      friction example, I enabled the force whenever the object was in contact
+      with the bottom edge of the canvas. Whenever the object was in contact, friction would slow it
+      down. Here, I will introduce an element to the environment—a “liquid” that
+      the mover passes through. The
+      <code>Liquid</code> object will be drawn as a rectangle with
       position, width, height, and “coefficient of drag”—i.e., is it easy for
       objects to move through it (like air) or difficult (like molasses)? In
-      addition, it should include a function to draw itself on the screen (and
-      two more functions, which we’ll see in a moment).
+      addition, it will a <code>display()</code> method and more.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Liquid {
 
-  constructor(x_, y_, w_, h_, c_) {
-    this.x = x_;
-    this.y = y_;
-    this.w = w_;
-    this.h = h_;
+  constructor(x, y, w, h, c) {
+    this.x = x;
+    this.y = y;
+    this.w = w;
+    this.h = h;
     //{!1} The liquid object includes a variable defining its coefficient of drag.
-    this.c = c_;
+    this.c = c;
   }
 
-  void display() {
+  display() {
     noStroke();
     fill(175);
     rect(this.x, this.y, this.w, this.h);
@@ -1528,8 +1531,8 @@ class Liquid {
 }</pre>
 
     <p>
-      The main program will now include a <code>Liquid</code> object reference
-      as well as a line of code that initializes that object.
+      The sketch also includes a variable <code>liquid</code> that is initialized in
+      <code>setup()</code>.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
@@ -1541,9 +1544,9 @@ function setup() {
 }</pre>
 
     <p>
-      Now comes an interesting question: how do we get the
-      <code>Mover</code> object to talk to the <code>Liquid</code> object? In
-      other words, we want to execute the following:
+      Now comes an interesting question: how does the
+      <code>Mover</code> object talk to the <code>Liquid</code> object? In
+      other words, I want to implement the following:
     </p>
 
     <p>
@@ -1551,58 +1554,59 @@ function setup() {
     </p>
 
     <p>
-      …or in object-oriented speak (assuming we are looping through an array of
-      <code>Mover</code> objects with index i):
+      …or in object-oriented speak:
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 // If a Mover is inside a Liquid, apply the drag force.
-if (liquid.contains(movers[i])) {
-  liquid[i].drag(movers[i]);
+if (liquid.contains(mover) {
+  liquid.drag(mover);
 }</pre>
 
     <p>
-      The above code tells us that we need to add two functions to the
-      <code>Liquid</code> class: (1) a function that determines if a
-      <code>Mover</code> object is inside the <code>Liquid</code> object, and
-      (2) a function that computes and applies a drag force on the
-      <code>Mover</code> object.
+      The above code serves as instructions for what I need to add to the <code>Liquid</code> class:
+      (1) a function that determines if a
+      <code>Mover</code> object is inside the <code>Liquid</code> object‘s area, and
+      (2) a function that computes and applies a drag force on that mover.
     </p>
 
-    The first is easy; we can simply use a Boolean expression to determine if
+    The first is easy; I can use a Boolean expression to determine if
     the position vector rests inside the rectangle defined by the liquid.
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-contains(m) {
-  const pos = m.position;
-  //{.offset-top} This Boolean expression determines if the PVector position is inside the rectangle defined by the Liquid class.
-  return pos.x > x && pos.x < x + w && pos.y > y && pos.y < y + h;
+contains(mover) {
+  // Store position in a separate variable to make the code more readable
+  let pos = mover.position;
+  //{.offset-top} This Boolean expression determines if the position vector is contained within the rectangle defined by the Liquid class.
+  return (pos.x > this.x && pos.x < this.x + this.w && pos.y > this.y && pos.y < this.y + this.h);
 }</pre>
 
     <p>
-      The <code>drag()</code> function is a bit more complicated; however, we’ve
-      written the code for it already. This is simply an implementation of our
-      formula. The drag force is equal to
+      The <code>drag()</code> function requires a bit more complexity; however, I’ve
+      written the code for it already. This is an implementation of the drag
+      formula! The drag force is equal to
       <em>the coefficient of drag multiplied by the speed of the
-        <code>Mover</code> squared in the opposite direction of velocity!</em>
+        mover squared in the opposite direction of velocity</em>.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
- drag(m) {
-  const speed = m.velocity.mag();
+ drag(mover) {
+  let speed = mover.velocity.mag();
   // The force's magnitude: Cd * v~2~
-  const dragMagnitude = c * speed * speed;
+  let dragMagnitude = this.c * speed * speed;
   // The force's direction: -1 * velocity
-  const drag = m.velocity.copy();
+  let drag = mover.velocity.copy();
   // Finalize the force: magnitude and direction together.
   drag.setMag(dragMagnitude);
   //{!1} Apply the force.
-  m.applyForce(drag);
+  mover.applyForce(drag);
 }</pre>
 
     <p>
-      And with these two functions added to the <code>Liquid</code> class, we’re
-      ready to put it all together in the main tab:
+      And with these two functions added to the <code>Liquid</code> class, I’m
+      ready to put it all together! In the following example, I‘ll expand the code to use an array
+      (with mover objects spaced out evenly) to demonstrate how the drag force behaves with objects
+      of variable mass.
     </p>
 
     <figure class="screenshot" data-p5-sketch="https://editor.p5js.org/embed/H1DmxeW_g">
@@ -1621,8 +1625,12 @@ let liquid;
 
 function setup() {
   createCanvas(360, 640);
+  // Initializee an array of Mover objects
   for (let i = 0; i < 10; i++) {
-    movers[i] = new Mover(random(0.1, 5), i * 20, 0);
+    // Random mass
+    let mass = random(0.1, 5);
+    // x value is spaced out evenly according to i
+    movers[i] = new Mover(i * 20, 0, mass);
   }
   liquid = new Liquid(0, height/2, width, height/2, 0.1);
 }
@@ -1637,9 +1645,9 @@ function draw() {
       liquid.drag(movers[i]);
     }
 
-		//{!2} Note that we are scaling gravity according to mass.
-    const m = 0.1 * movers[i].mass;
-    PVector gravity = new PVector(0, m);
+		//{!2} Note that gravity is scaled according to mass.
+    let m = 0.1 * movers[i].mass;
+    let gravity = createVector(0, m);
     movers[i].applyForce(gravity);
 
     movers[i].update();
