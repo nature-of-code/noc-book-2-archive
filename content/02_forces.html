@@ -856,15 +856,15 @@ let moverB = new Mover(400, 30, 2);</pre>
 
     <p>
       There are all sorts of ways I could choose to initialize the values (random, perlin noise, in
-      a grid, etc.) and, of course, an array most likely makes more sense to manage large numbers of
+      a grid, etc.) and an array most likely makes more sense to manage large numbers of
       Mover objects. This is just a demonstration of the basic idea to get started and I‘ll
       introduce other techniques throughout this chapter.
     </p>
 
     <p>
       Once the objects are declared and initialized, the rest
-      of the code follows as before. For each object, hand them the
-      forces in the environment, and enjoy the show.
+      of the code follows as before. For each object, pass the
+      forces in the environment to <code>applyForce</code>, and enjoy the show.
     </p>
 
     <figure class="screenshot" data-p5-sketch="https://editor.p5js.org/embed/SJC2hk-dl">
@@ -878,27 +878,37 @@ let moverB = new Mover(400, 30, 2);</pre>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 function draw() {
-  background(255);
+  background(51);
 
-  const wind = createVector(0.01,0);
-  //{!1} Make up two forces.
-  const gravity = createVector(0,0.1);
+  //{!3} Make up a gravity force and apply it.
+  let gravity = createVector(0, 0.1);
+  moverA.applyForce(gravity);
+  moverB.applyForce(gravity);
 
-  //{!3} Loop through all objects and apply both forces to each object.
-  for (let i = 0; i < movers.length; i++) {
-    movers[i].applyForce(wind);
-    movers[i].applyForce(gravity);
-    movers[i].update();
-    movers[i].display();
-    movers[i].checkEdges();
+  //{!3} Make up a wind force and apply when mouse is pressed.
+  if (mouseIsPressed) {
+    let wind = createVector(0.1, 0);
+    moverA.applyForce(wind);
+    moverB.applyForce(wind);
   }
-}</pre>
+
+  moverA.update();
+  moverA.display();
+  moverA.checkEdges();
+
+  moverB.update();
+  moverB.display();
+  moverB.checkEdges();
+}
+</pre>
 
     <p>
-      Note how in the above image, the smaller circles reach the right of the
-      window faster than the larger ones. This is because of our formula:
+      Note how in the above image, the small circle reaches the bottom of the
+      window faster than the larger one. This is because of our formula:
       <em>acceleration = force divided by mass</em>. The larger the mass, the
-      smaller the acceleration.
+      smaller the acceleration. While such a difference makes sense for the wind force
+      this is not physically accurate for a simulation of the earth‘s gravitational pull! I‘ll
+      get into why and how to correct this in the next section.
     </p>
 
     <div data-type="exercise" id="chapter02_exercise3">
@@ -911,6 +921,27 @@ function draw() {
         from an edge—i.e., the closer it is, the stronger the force?
       </p>
     </div>
+
+    <h5>Exercise 2.x</h5>
+    <p>
+      Create many objects with array.
+    </p>
+
+    <h5>Exercise 2.x</h5>
+    <p>
+      Fix the bouncing off the sides of the canvas so that the circle changes direction when it‘s
+      edge hits the side, rather than its center.
+    </p>
+
+    <h5>Exercise 2.x</h5>
+    <p>
+      Create a wind force that is variable. Can you make it interactive, for example, think of a fan
+      located where the mouse is and pointed towards the circles?
+    </p>
+
+    </div>
+
+
   </section>
 
   <section data-type="sect1" id="chapter02_section6">
@@ -922,19 +953,19 @@ function draw() {
     <a data-primary="natural phenomena" data-secondary="gravity" data-type="indexterm"></a>
 
     <p>
-      You may have noticed something woefully inaccurate about this last
-      example. The smaller the circle, the faster it falls. There is a logic to
-      this; after all, we just stated (according to Newton’s second law) that
+      I left the last section with a reference to the inaccuract of this example 2.3. The smaller
+      the circle, the faster it falls. There is a logic to
+      this; after all, according to Newton’s second law
       the smaller the mass, the higher the acceleration. But this is not what
       happens in the real world. If you were to climb to the top of the Leaning
       Tower of Pisa and drop two balls of different masses, which one will hit
       the ground first? According to legend, Galileo performed this exact test
       in 1589, discovering that they fell with the same acceleration, hitting
-      the ground at the same time. Why is this? As we will see later in this
-      chapter, the force of gravity is calculated relative to an object’s mass.
+      the ground at the same time. Why is this? I‘ll dive even deeper into this shortly, but the
+      quick answer is that the force of gravity is calculated relative to an object’s mass.
       The bigger the object, the stronger the force. So if the force is scaled
       according to mass, it is canceled out when acceleration is divided by
-      mass. We can implement this in our sketch rather easily by multiplying our
+      mass. A quick fix is to implement this in the sketch by multiplying the
       made-up gravity force by mass.
     </p>
 
@@ -948,28 +979,27 @@ function draw() {
     </div>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-for (let i = 0; i < movers.length; i++) {
+// Made-up gravity force
+let gravity = createVector(0, 0.1);
 
-    const wind = createVector(0.001,0);
-    const m = movers[i].mass;
-    //{!1} Scaling gravity by mass to be more accurate
-    const gravity = createVector(0, 0.1*m);
-    movers[i].applyForce(wind);
-    movers[i].applyForce(gravity);
+// Scaled by mover A's mass
+let gravityA = p5.Vector.mult(gravity, moverA.mass);
+moverA.applyForce(gravityA);
 
-    movers[i].update();
-    movers[i].display();
-    movers[i].checkEdges();
-  }</pre>
+// Scaled by mover B's mass
+let gravityB = p5.Vector.mult(gravity, moverB.mass);
+moverB.applyForce(gravityB);
+</pre>
 
     <p>
       While the objects now fall at the same rate, because the strength of the
-      wind force is independent of mass, the smaller objects still accelerate to
-      the right more quickly.
+      wind force is independent of mass, when the mouse is pressed the smaller circle still
+      accelerates to the right more quickly. ()‘ve also included a solultion to exercise 2.x in this
+      example with the addition of a <code>radius</code> variable in the <code>Mover</code> class.)
     </p>
 
     <p>
-      Making up forces will actually get us quite far. The world of p5
+      Making up forces will actually get you quite far. The world of p5.js
       is an orchestra of pixels and you are its conductor. So whatever you deem
       appropriate to be a force, well by golly, that’s the force it should be.
       Nevertheless, there may come a time where you find yourself wondering:
@@ -985,10 +1015,10 @@ for (let i = 0; i < movers.length; i++) {
     <p>
       Open up any high school physics textbook and you will find some diagrams
       and formulas describing many different forces—gravity, electromagnetism,
-      friction, tension, elasticity, and more. In this chapter we’re going to
-      look at two forces—friction and gravity. The point we’re making here is
+      friction, tension, elasticity, and more. In this chapter I’m going to
+      look at two forces—friction and gravity. The point I’d like to make here is
       not that friction and gravity are fundamental forces that you always need
-      to have in your p5 sketches. Rather, we want to evaluate these two
+      to have in your simulations. Rather, I want to demonstrate these two
       forces as case studies for the following process:
     </p>
 
@@ -1001,44 +1031,43 @@ for (let i = 0; i < movers.length; i++) {
 
         <ul>
           <li>
-            <p>How do we compute the force’s direction?</p>
+            <p>How do you compute the force’s direction?</p>
           </li>
           <li>
-            <p>How do we compute the force’s magnitude?</p>
+            <p>How do you compute the force’s magnitude?</p>
           </li>
         </ul>
       </li>
       <li>
         <p>
-          Translating that formula into p5 code that calculates a
-          <code>p5.Vector</code> to be sent through our
+          Translating that formula into p5.js code that calculates a
+          vector to be sent through the
           <code>Mover</code><code>'s</code> <code>applyForce()</code>
-          function
+          function.
         </p>
       </li>
     </ul>
 
     <p>
-      If we can follow the above steps with two forces, then hopefully if you
-      ever find yourself Googling “atomic nuclei weak nuclear force” at 3 a.m.,
-      you will have the skills to take what you find and adapt it for
-      p5.
+      If you can follow the above steps with two example forces I‘ll provide here, then hopefully
+      when you find yourself Googling “atomic nuclei weak nuclear force” at 3 a.m.,
+      you will have the skills to take what you find and adapt it for p5.js.
     </p>
 
     <a data-primary="formulae" data-secondary="evaluating in code" data-type="indexterm"></a>
 
     <div data-type="note">
-      <h2>Dealing with formulae</h2>
+      <h2>Dealing with formulas</h2>
 
       <p>
-        OK, in a moment we’re going to write out the formula for friction. This
-        isn’t the first time we’ve seen a formula in this book; we just finished
-        up our discussion of Newton’s second law,
+        OK, in a moment I’m going to write out the formula for friction. This
+        won’t be the first time you’ve seen a formula in this book; I just finished
+        up the discussion of Newton’s second law,
         <span data-type="equation">\vec{F} = M \times \vec{A}</span> (or force =
-        mass * acceleration). We didn’t spend a lot of time worrying about this
+        mass * acceleration). You hopefully didn’t spend a lot of time worrying about this
         formula because it’s a nice and simple one. Nevertheless, it’s a scary
         world out there. Just take a look at the equation for a “normal”
-        distribution, which we covered (without looking at the formula) in the
+        distribution, which I covered (without looking at the formula) in the
         <a href="#intro_section4">Introduction</a>.
       </p>
 
@@ -1051,8 +1080,8 @@ for (let i = 0; i < movers.length; i++) {
       <a data-primary="friction" data-secondary="formula for" data-type="indexterm"></a>
 
       <p>
-        What we’re seeing here is that formulas like to use a lot of symbols
-        (quite often letters from the Greek alphabet). Let’s take a look at the
+        Formulas are regularly written with many symbols
+        (often with letters from the Greek alphabet). Here‘s the
         formula for friction.
       </p>
 
@@ -1061,27 +1090,25 @@ for (let i = 0; i < movers.length; i++) {
       <p>
         If it’s been a while since you’ve looked at a formula from a math or
         physics textbook, there are three key points that are important to cover
-        before we move on.
+        before I move on.
       </p>
 
       <ul>
         <li>
           <p>
-            <strong><em>Evaluate the right side, assign to the left
-                side.</em></strong>
-            This is just like in code! What we’re doing here is evaluating the
-            right side of the equation and assigning it to the left. In the case
-            above, we want to calculate the force of friction—the left side
-            tells us what we want to calculate and the right side tells us how
+            <strong><em>Evaluate the right side, assign to the left side.</em></strong>
+            This is just like in code! In the case
+            above, I want to calculate the force of friction—the left side
+            represents what I want to calculate and the right side elaborates on how
             to do it.
           </p>
         </li>
         <li>
           <p>
-            <strong><em>Are we talking about a vector or a scalar?</em></strong>
-            It’s important for us to realize that in some cases, we’ll be
-            looking at a vector; in others, a scalar. For example, in this case
-            the force of friction is a vector. We can see that by the arrow
+            <strong><em>Am I talking about a vector or a scalar?</em></strong>
+            It’s important to realize that in some cases, you’ll be
+            calculating a vector; in others, a scalar. For example, in this case
+            the force of friction is a vector. That is indicated by the arrow
             above the word “friction.” It has a magnitude and direction. The
             right side of the equation also has a vector, as indicated by the
             symbol {unitv}, which in this case stands for the velocity unit
@@ -1090,14 +1117,12 @@ for (let i = 0; i < movers.length; i++) {
         </li>
         <li>
           <p>
-            <strong><em>When symbols are placed next to each other, we mean for
-                them to
-                be multiplied.</em></strong>
-            The formula above actually has four elements: -1, <em>&mu;</em>,
-            <em>N</em>, and <span data-type="equation">\hat{v}</span> . We want
-            to multiply them together and read the formula as:
-            <span data-type="equation">\vec{friction} = -1 * \mu * N *
-              \hat{\nu}</span>
+            <strong><em>When symbols are placed next to each other, this typically means multiply
+                them.</em></strong>
+            The formula above has four elements: -1, <em>&mu;</em>,
+            <em>N</em>, and <span data-type="equation">\hat{v}</span> . They should be
+            multiplied together, reading the formula as:
+            <span data-type="equation">\vec{friction} = -1 * \mu * N * \hat{\nu}</span>
           </p>
         </li>
       </ul>
@@ -1112,14 +1137,13 @@ for (let i = 0; i < movers.length; i++) {
     <a data-primary="friction" data-secondary="modeling with formulae" data-type="indexterm"></a>
     <a data-primary="natural phenomena" data-secondary="friction" data-type="indexterm"></a>
 
-    <p>Let’s begin with friction and follow our steps.</p>
+    <p>Let’s begin with friction and follow the above steps.</p>
 
     <a data-primary="dissipative force" data-type="indexterm"></a>
 
     <p>
       Friction is a <strong><em>dissipative force</em></strong>. A dissipative
-      force is one in which the total energy of
-      a system
+      force is one in which the total energy of a system
       decreases when an object is in motion. Let’s say you are driving a car.
       When you press your foot down on the brake pedal, the car’s brakes use
       friction to slow down the motion of the tires. Kinetic energy (motion) is
@@ -1127,7 +1151,7 @@ for (let i = 0; i < movers.length; i++) {
       contact, they experience friction. A complete model of friction would
       include separate cases for static friction (a body at rest against a
       surface) and kinetic friction (a body in motion against a surface), but
-      for our purposes, we are only going to look at the kinetic case.
+      for simplification here, I am only going to look at the kinetic case.
     </p>
 
     <p>Here’s the formula for friction:</p>
@@ -1141,18 +1165,18 @@ for (let i = 0; i < movers.length; i++) {
       data-type="indexterm"></a>
 
     <p>
-      It’s now up to us to separate this formula into two components that
-      determine the direction of friction as well as the magnitude. Based on the
-      diagram above, we can see that
+      It’s now time to separate this formula into two components that
+      determine the direction of friction as well as the magnitude. The
+      diagram above indicates that
       <em>friction points in the opposite direction of velocity.</em> In fact,
       that’s the part of the formula that says -1 *
       <span data-type="equation">\hat{v}</span>, or -1 times the velocity unit
-      vector. In p5, this would mean taking the velocity vector,
+      vector. In p5.js, this would mean taking the velocity vector,
       normalizing it, and multiplying by -1.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-const friction = this.velocity.copy();
+let friction = this.velocity.copy();
 friction.normalize();
 // Let’s figure out the direction of the friction force
 // (a unit vector in the opposite direction of velocity).
@@ -1160,11 +1184,10 @@ friction.mult(-1);</pre>
 
     <p>
       Notice two additional steps here. First, it’s important to make a copy of
-      the velocity vector, as we don’t want to reverse the object’s direction by
-      accident. Second, we normalize the vector. This is because the magnitude
-      of friction is not associated with how fast it is moving, and we want to
-      start with a friction vector of magnitude 1 so that it can easily be
-      scaled.
+      the velocity vector, as I don’t want to reverse the object’s direction by
+      accident. Second, the vector is normalized. This is because the magnitude
+      of friction is not associated with the speed of the object, and I want to
+      start with a vector of length 1 so that it can easily be scaled.
     </p>
 
     <a data-primary="mu (μ)" data-type="indexterm"></a>
@@ -1178,17 +1201,16 @@ friction.mult(-1);</pre>
       <code>N</code>. <code>&mu;</code>, the Greek letter
       <em>mu</em> (pronounced “mew”), is used here to describe the
       <strong><em>coefficient of friction</em></strong>. The coefficient of
-      friction establishes the strength of a
-      friction
+      friction establishes the strength of a friction
       force for a particular surface. The higher it is, the stronger the
       friction; the lower, the weaker. A block of ice, for example, will have a
-      much lower coefficient of friction than, say, sandpaper. Since we’re in a
-      pretend p5 world, we can arbitrarily set the coefficient based on
-      how much friction we want to simulate.
+      much lower coefficient of friction than, say, sandpaper. Since this is a
+      pretend p5.js world, I can arbitrarily set the coefficient based on
+      how much friction I want to simulate.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-const c = 0.01;</pre>
+let c = 0.01;</pre>
 
     <a data-primary="friction" data-secondary="normal force" data-type="indexterm"></a>
     <a data-primary="normal force" data-type="indexterm"></a>
@@ -1200,59 +1222,94 @@ const c = 0.01;</pre>
       of a vehicle driving along a road. The vehicle pushes down against the
       road with gravity, and Newton’s third law tells us that the road in turn
       pushes back against the vehicle. That’s the normal force. The greater the
-      gravitational force, the greater the normal force. As we’ll see in the
+      gravitational force, the greater the normal force. As you’ll see in the
       next section, gravity is associated with mass, and so a lightweight sports
       car would experience less friction than a massive tractor trailer truck.
       With the diagram above, however, where the object is moving along a
       surface at an angle, computing the magnitude and direction of the normal
       force is a bit more complicated because it doesn’t point in the opposite
-      direction of gravity. We’ll need to know something about angles and
+      direction of gravity. You’d need to know something about angles and
       trigonometry.
     </p>
 
     <p>
-      All of these specifics are important; however, in p5, a “good
-      enough” simulation can be achieved without them. We can, for example, make
+      All of these specifics are important; however, a “good
+      enough” simulation can be achieved without them. I can, for example, make
       friction work with the assumption that the normal force will always have a
-      magnitude of 1. When we get into trigonometry in the next chapter, we’ll
-      remember to return to this question and make our friction example a bit
+      magnitude of 1. When I get into trigonometry in the next chapter, you could
+      return to this question and make the friction example
       more sophisticated. Therefore:
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-const normal = 1;</pre>
+let normal = 1;</pre>
 
     <p>
-      Now that we have both the magnitude and direction for friction, we can put
-      it all together…
+      Now that I have the magnitude and direction for friction, I can put
+      it all together in code.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-const c = 0.01;
-const normal = 1;
-//{!1} Let's figure out the magnitude of friction (really just an arbitrary constant).
-const frictionMag = c * normal;
+let c = 0.1;
+let normal = 1;
+//{!1} Calculate the magnitude of friction (really just an arbitrary constant).
+let frictionMag = c * normal;
 
-const friction = this.velocity.copy();
+let friction = mover.velocity.copy();
 friction.mult(-1);
 friction.normalize();
 
-// Take the unit vector and multiply it by magnitude and we have our force vector!
-friction.mult(frictionMag);</pre>
+// Take the unit vector and multiply it by magnitude and this is the force vector!
+friction.mult(frictionMag);
+</pre>
 
     <p>
-      …and add it to our “forces” example, where many objects experience wind,
-      gravity, and now friction:
+      The above code calculates a friction force, but doesn‘t answer the question of <em>when</em>
+      to apply it? There is no answer to this question, of course, given this is all a made-up world
+      visualized in a two dimensional p5.js canvas. I‘ll make the aribitrary, but logical, decision
+      to apply
+      friction when the circle comes into contact with the bottom of the canvas by adding a function
+      to the <code>Mover</code> class called <code>contactEdge()</code>
     </p>
 
-    <figure class="two-col" data-p5-sketch="https://editor.p5js.org/embed/SkUTq1MPQ">
-      <img alt="No friction" src="chapter02/ch02_ex04a.png" />
-      <figcaption>No friction&nbsp;</figcaption>
-    </figure>
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+contactEdge() {
+  // The mover is touching the edge when it's within one pixel
+  return (this.position.y > height - this.radius - 1);
+}</pre>
 
-    <figure class="two-col" data-p5-sketch="https://editor.p5js.org/embed/B1isyebug">
-      <img alt="With friction" src="chapter02/ch02_ex04b.png" />
-      <figcaption>With friction&nbsp;</figcaption>
+    <p>
+      This is a good time for me to also mention that the actual bouncing off the edge here
+      simulates an “idealized elsatic collision”, meaning no kinetic energy is lost when the circle
+      and the edge collide. This is rarely true in the real world, pick up a tennis ball and drop it
+      against any surface and the height at which it bounces will slowly lower until it rests
+      against the ground. There are many factors at play here (including air resistence which I will
+      cover in the next section), but a quick way to simulate an inelastic collision is by reducing
+      the magnitude of velocity by a percentage with each bounce.
+    </p>
+
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+bounceEdges() {
+  // A new variable to simulate an inelastic collision
+  // 10% of the velocity's x or y component is lost
+  let bounce = -0.9;
+
+  if (this.position.y > height - this.radius) {
+    this.position.y = height - this.radius;
+    this.velocity.y *= bounce;
+  }
+}</pre>
+
+    Finally, I can add all these pieces to the “forces” example, and simulate the object
+    experiencing three forces: wind
+    (when mouse is
+    clicked), gravity (always), and now friction (when in contact with the bottom of the canvas):
+    </p>
+
+    <figure data-p5-sketch="https://editor.p5js.org/embed/B1isyebug">
+      <img alt="The circle eventually rolls to a stop with friction."
+        src="chapter02/ch02_ex04b.png" />
+      <figcaption>The circle eventually rolls to a stop with friction.</figcaption>
     </figure>
 
     <div data-type="example">
@@ -1261,28 +1318,31 @@ friction.mult(frictionMag);</pre>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 function draw() {
-  background(255);
+  background(51);
 
-  const wind = createVector(0.001, 0);
-  //{!1} We could scale by mass to be more accurate.
-  const gravity = createVector(0, 0.1);
+  let gravity = createVector(0, 1);
+  //{!1} I should scale by mass to be more accurate, but this example only has one circle
+  mover.applyForce(gravity);
 
-  for (let i = 0; i < movers.length; i++) {
-		//{!5 .bold}
-		const c = 0.01;
-    const friction = movers[i].velocity.copy();
-    friction.mult(-1);
-    friction.normalize();
-    friction.mult(c);
-    //{!1 .bold} Apply the friction force vector to the object.
-    movers[i].applyForce(friction);
-    movers[i].applyForce(wind);
-    movers[i].applyForce(gravity);
-
-    movers[i].update();
-    movers[i].display();
-    movers[i].checkEdges();
+  if (mouseIsPressed) {
+    let wind = createVector(0.5, 0);
+    mover.applyForce(wind);
   }
+
+  if (mover.contactEdge()) {
+		//{!5 .bold}
+    let c = 0.1;
+    let friction = mover.velocity.copy();
+    friction.mult(-1);
+    friction.setMag(c);
+
+    //{!1 .bold} Apply the friction force vector to the object.
+    mover.applyForce(friction);
+  }
+
+  mover.update();
+  mover.display();
+  mover.checkEdges();
 }</pre>
 
     <p>
