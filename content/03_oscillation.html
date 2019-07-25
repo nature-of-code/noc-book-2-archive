@@ -420,7 +420,7 @@ this.aAcceleration = 0.01;</pre>
       data-type="indexterm"></a>
 
     <p>
-      I think it may be time. We’ve looked at angles, we’ve spun an object. It’s
+      I think it may be time. I’ve discussed angles, I’ve spun a baton. It’s
       time for: <em>sohcahtoa</em>. Yes, <em>sohcahtoa</em>. This seemingly
       nonsensical word is actually the foundation for a lot of computer graphics
       work. A basic understanding of trigonometry is essential if you want to
@@ -467,16 +467,16 @@ this.aAcceleration = 0.01;</pre>
     <a data-primary="vectors" data-secondary="as right triangles" data-type="indexterm"></a>
 
     <p>
-      See how we create a right triangle out of a vector? The vector arrow
+      See how a right triangle is created from a vector? The vector arrow
       itself is the hypotenuse and the components of the vector (<code>x</code>
       and <code>y</code>) are the sides of the triangle. The angle is an
       additional means for specifying the vector’s direction (or “heading”).
     </p>
 
     <p>
-      Because the trigonometric functions allow us to establish a relationship
+      Because the trigonometric functions establish a relationship
       between the components of a vector and its direction + magnitude, they
-      will prove very useful throughout this book. We’ll begin by looking at an
+      will prove very useful throughout this book. I’ll begin by looking at an
       example that requires the tangent function.
     </p>
   </section>
@@ -497,18 +497,17 @@ this.aAcceleration = 0.01;</pre>
     </figure>
 
     <p>
-      You might notice that almost all of the shapes we’ve been drawing so far
+      You might notice that almost all of the shapes I’ve been drawing so far
       are circles. This is convenient for a number of reasons, one of which is
-      that we don’t have to consider the question of rotation. Rotate a circle
+      that I don’t have to consider the question of rotation. Rotate a circle
       and, well, it looks exactly the same. However, there comes a time in all
       motion programmers’ lives when they want to draw something on the screen
       that points in the direction of movement. Perhaps you are drawing an ant,
-      or a car, or a spaceship. And when we say "point in the direction of
-      movement," what we are really saying is “rotate according to the velocity
+      or a car, or a spaceship. And when I say “point in the direction of
+      movement,” what I am really saying is “rotate according to the velocity
       vector.” Velocity is a vector, with an <code>x</code> and a
-      <code>y</code> component, but to rotate in p5 we need an angle, in
-      radians. Let’s draw our trigonometry diagram one more time, with an
-      object’s velocity vector (Figure 3.6).
+      <code>y</code> component, but to rotate in p5.js you need an angles. Let’s draw the
+      trigonometry diagram once more, this time with an object’s velocity vector (Figure 3.6).
     </p>
 
     <figure class="half-width-right" id="chapter03_figure6">
@@ -520,7 +519,7 @@ this.aAcceleration = 0.01;</pre>
     <a data-primary="trigonometry" data-secondary="tangent" data-type="indexterm"></a>
     <a data-primary="vectors" data-secondary="tangent" data-type="indexterm"></a>
 
-    <p>OK. We know that the definition of tangent is:</p>
+    <p>OK. I‘ve stayed the definition of tangent is:</p>
 
     <div class="equation-w-frac-big">
       <div data-type="equation">
@@ -529,12 +528,11 @@ this.aAcceleration = 0.01;</pre>
     </div>
 
     <p>
-      The problem with the above is that we know velocity, but we don’t know the
-      angle. We have to solve for the angle. This is where a special function
-      known as <em>inverse tangent</em> comes in, sometimes referred to as
+      The problem with the above is that while velocity is known, the angle of direction is not. I
+      have to solve for that angle. This is where a special function
+      known as <em>inverse tangent</em> comes in, also known to as
       <em>arctangent</em> or <em>tan<sup>-1</sup></em>. (There is also an <em>inverse sine</em> and
-      an
-      <em>inverse cosine</em>.)
+      an <em>inverse cosine</em>.)
     </p>
 
     <p>
@@ -555,8 +553,7 @@ this.aAcceleration = 0.01;</pre>
     </dl>
 
     <p>
-      See how that is the inverse? The above now allows us to solve for the
-      angle:
+      See how that is the inverse? The above now allows me to solve for the angle:
     </p>
 
     <dl>
@@ -581,15 +578,15 @@ this.aAcceleration = 0.01;</pre>
     <a data-primary="trigonometry" data-secondary="atan() function" data-type="indexterm"></a>
 
     <p>
-      Now that we have the formula, let’s see where it should go in our mover’s
-      <code>display()</code> function. Notice that in p5, the function
+      Now that I have the formula, let’s see where it should go in the mover’s
+      <code>display()</code> function. Notice that in p5.js, the function
       for arctangent is called <code>atan()</code>.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   display() {
     //{!1} Solve for angle by using atan().
-    this.angle = atan(this.velocity.y / this.velocity.x);
+    let angle = atan(this.velocity.y / this.velocity.x);
 
     stroke(0);
     fill(175);
@@ -597,14 +594,14 @@ this.aAcceleration = 0.01;</pre>
     rectMode(CENTER);
     translate(this.position.x, this.position.y);
     //{!1} Rotate according to that angle.
-    rotate(this.angle);
+    rotate(angle);
     rect(0, 0, 30, 10);
     pop();
   }</pre>
 
     <p>
-      Now the above code is pretty darn close, and almost works. We still have a
-      big problem, though. Let’s consider the two velocity vectors depicted
+      Now the above code is pretty darn close, and almost works. There is a
+      big problem, though. Consider the two velocity vectors depicted
       below.
     </p>
 
@@ -615,7 +612,7 @@ this.aAcceleration = 0.01;</pre>
 
     <p>
       Though superficially similar, the two vectors point in quite different
-      directions—opposite directions, in fact! However, if we were to apply our
+      directions—opposite directions, in fact! However, if I were to apply the
       formula to solve for the angle to each vector…
     </p>
 
@@ -631,11 +628,11 @@ this.aAcceleration = 0.01;</pre>
     <a data-primary="tangent" data-secondary="atan2() function" data-type="indexterm"></a>
 
     <p>
-      …we get the same angle for each vector. This can’t be right for both; the
+      …I get the same angle for each vector. This can’t be right for both; the
       vectors point in opposite directions! The thing is, this is a pretty
-      common problem in computer graphics. Rather than simply using
+      common problem in computer graphics. Rather than using
       <code>atan()</code> along with a bunch of conditional statements to
-      account for positive/negative scenarios, p5 (along with pretty
+      account for positive/negative scenarios, p5.js (along with pretty
       much all programming environments) has a nice function called
       <code>atan2()</code> that does it for you.
     </p>
@@ -652,7 +649,7 @@ this.aAcceleration = 0.01;</pre>
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   display() {
     //{!1} Using atan2() to account for all possible directions
-    this.angle = atan2(this.velocity.y, this.velocity.x);
+    let angle = atan2(this.velocity.y, this.velocity.x);
 
     stroke(0);
     fill(175);
@@ -660,7 +657,7 @@ this.aAcceleration = 0.01;</pre>
     rectMode(CENTER);
     translate(this.position.x, this.position.y);
     //{!1} Rotate according to that angle.
-    rotate(this.angle);
+    rotate(angle);
     rect(0, 0, 30, 10);
     pop();
   }</pre>
@@ -677,12 +674,12 @@ this.aAcceleration = 0.01;</pre>
       To simplify this even further, the <code>p5.Vector</code> class itself
       provides a function called <code>heading()</code>, which takes care of
       calling <code>atan2()</code> for you so you can get the 2D direction
-      angle, in radians, for any p5 <code>p5.Vector</code>.
+      angle, in radians, for any <code>p5.Vector</code>.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
     // The easiest way to do this!
-    this.angle = this.velocity.heading();</pre>
+    let angle = this.velocity.heading();</pre>
 
     <div data-type="exercise" id="chapter03_exercise3">
       <h5>Exercise 3.3</h5>
@@ -706,22 +703,19 @@ this.aAcceleration = 0.01;</pre>
     <a data-primary="shapes" data-secondary="displaying" data-type="indexterm"></a>
 
     <p>
-      Any time we display a shape in p5, we have to specify a pixel
+      Any time you display a shape in p5, you have to specify a pixel
       position, a set of <code>x</code> and <code>y</code> coordinates. These
       coordinates are known as <strong><em>Cartesian coordinates</em></strong>, named for René
-      Descartes, the French
-      mathematician who developed the
-      ideas behind Cartesian space.
+      Descartes, the French mathematician who developed the ideas behind Cartesian space.
     </p>
 
     <a data-primary="coordinate systems" data-secondary="polar" data-type="indexterm"></a>
     <a data-primary="polar coordinates" data-type="indexterm"></a>
 
     <p>
-      Another useful coordinate system known as
-      <strong><em>polar coordinates</em></strong> describes a point in space as
-      an angle of rotation around the origin and a radius from the origin.
-      Thinking about this in terms of a vector:
+      Another useful coordinate system known as <strong><em>polar coordinates</em></strong>
+      describes a point in space as an angle of rotation around the origin and a radius from the
+      origin. Thinking about this in terms of a vector:
     </p>
 
     <p>
@@ -733,13 +727,13 @@ this.aAcceleration = 0.01;</pre>
     <a data-primary="Processing" data-secondary="coordinate systems and" data-type="indexterm"></a>
 
     <p>
-      p5’s drawing functions, however, don’t understand polar
-      coordinates. Whenever we want to display something in p5, we have
+      p5.js’s drawing functions, however, don’t understand polar
+      coordinates. Whenever you want to display something, you have
       to specify positions as <em>(x,y)</em> Cartesian coordinates. However,
-      sometimes it is a great deal more convenient for us to think in polar
-      coordinates when designing. Happily for us, with trigonometry we can
-      convert back and forth between polar and Cartesian, which allows us to
-      design with whatever coordinate system we have in mind but always draw
+      sometimes it is much more convenient to think in polar
+      coordinates when designing. Happily for you, with trigonometry you can
+      convert back and forth between Polar and Cartesian, designing
+      with whatever coordinate system you have in mind but always drawing
       with Cartesian coordinates.
     </p>
 
@@ -752,7 +746,7 @@ this.aAcceleration = 0.01;</pre>
         src="chapter03/ch03_08.png" />
       <figcaption>
         Figure 3.8: The Greek letter θ (theta) is often used to denote an angle.
-        Since a polar coordinate is conventionally referred to as (r, θ), we’ll
+        Since a polar coordinate is conventionally referred to as (r, θ), I’ll
         use theta as a variable name when referring to an angle.&nbsp;
       </figcaption>
     </figure>
@@ -777,18 +771,18 @@ this.aAcceleration = 0.01;</pre>
 
     <p>
       For example, if <code>r</code> is 75 and <code>theta</code> is 45 degrees
-      (or PI/4 radians), we can calculate <code>x</code> and <code>y</code> as
-      below. The functions for sine and cosine in p5 are
+      (or PI/4 radians), <code>x</code> and <code>y</code> can be computed as
+      follow. (The functions for sine and cosine in p5.js are
       <code>sin()</code> and <code>cos()</code>, respectively. They each take
-      one argument, an angle measured in radians.
+      one argument, a number representing an angle.)
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-const r = 75;
-const theta = PI / 4;
+let r = 75;
+let theta = PI / 4;
 // Converting from polar (r,theta) to Cartesian (x,y)
-const x = r * cos(theta);
-const y = r * sin(theta);</pre>
+let x = r * cos(theta);
+let y = r * sin(theta);</pre>
 
     <a data-primary="shapes" data-secondary="moving with polar coordinates"
       data-type="indexterm"></a>
@@ -801,8 +795,7 @@ const y = r * sin(theta);</pre>
     </p>
 
     <p>
-      Here’s how it is done with global variables <code>r</code> and
-      <code>theta</code>.
+      Here’s how it is done with global variables <code>r</code> and <code>theta</code>.
     </p>
 
     <figure class="screenshot" data-p5-sketch="https://editor.p5js.org/embed/S1UL7gZue">
@@ -815,7 +808,7 @@ const y = r * sin(theta);</pre>
     </div>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-const r = 75;
+let r = 75;
 let theta = 0;
 
 function setup() {
@@ -826,8 +819,8 @@ function setup() {
 function draw() {
 
   //{!2} Polar coordinates (r,theta) are converted to Cartesian (x,y) for use in the ellipse() function.
-  const x = r * cos(theta);
-  const y = r * sin(theta);
+  let x = r * cos(theta);
+  let y = r * sin(theta);
 
   noStroke();
   fill(0);
@@ -876,17 +869,16 @@ function draw() {
     <a data-primary="oscillation" data-type="indexterm"></a>
 
     <p>
-      Are you amazed yet? We’ve seen some pretty great uses of tangent (for
+      Are you amazed yet? I’ve demonstrated some pretty great uses of tangent (for
       finding the angle of a vector) and sine and cosine (for converting from
-      polar to Cartesian coordinates). We could stop right here and be
-      satisfied. But we’re not going to. This is only the beginning. What sine
+      polar to Cartesian coordinates). I could stop right here and be
+      satisfied. But I’m not going to. This is only the beginning. What sine
       and cosine can do for you goes beyond mathematical formulas and right
       triangles.
     </p>
 
     <p>
-      Let’s take a look at a graph of the sine function, where
-      <em>y = sine(x)</em>.
+      Let’s take a look at a graph of the sine function, where <em>y = sine(x)</em>.
     </p>
 
     <figure id="chapter03_figure9">
@@ -898,8 +890,7 @@ function draw() {
       You’ll notice that the output of the sine function is a smooth curve
       alternating between &minus;1 and 1. This type of a behavior is known as
       <strong><em>oscillation</em></strong>, a periodic movement between two points. Plucking a
-      guitar string,
-      swinging a pendulum, bouncing on a pogo stick—these are all examples of
+      guitar string, swinging a pendulum, bouncing on a pogo stick—these are all examples of
       oscillating motion.
     </p>
 
@@ -907,15 +898,15 @@ function draw() {
       data-type="indexterm"></a>
 
     <p>
-      And so we happily discover that we can simulate oscillation in a
-      p5 sketch by assigning the output of the sine function to an
+      And so you will happily discover that you can simulate oscillation in a
+      p5.js sketch by assigning the output of the sine function to an
       object’s position. Note that this will follow the same methodology we
       applied to Perlin noise in the <a href="#intro_section6">Introduction</a>.
     </p>
 
     <p>
-      Let’s begin with a really basic scenario. We want a circle to oscillate
-      from the left side to the right side of a p5 window.
+      Let’s begin with a really basic scenario. I want a circle to oscillate
+      from the left side to the right side of a p5.js canvas.
     </p>
 
     <figure class="screenshot" data-p5-sketch="https://editor.p5js.org/embed/BJTYQlWOe">
@@ -927,17 +918,15 @@ function draw() {
     <a data-primary="simple harmonic motion" data-type="indexterm"></a>
 
     <p>
-      This is what is known as
-      <strong><em>simple harmonic motion</em></strong> (or, to be fancier, “the
-      periodic sinusoidal oscillation of an object”). It’s going to be a simple
-      program to write, but before we get into the code, let’s familiarize
-      ourselves with some of the terminology of oscillation (and waves).
+      This is what is known as <strong><em>simple harmonic motion</em></strong> (or, to be fancier,
+      “the periodic sinusoidal oscillation of an object”). It’s going to be a simple
+      program to write, but before I get into the code, I should familiarize
+      you with some of the terminology of oscillation (and waves).
     </p>
 
     <p>
-      Simple harmonic motion can be expressed as any position (in our case, the
-      <code>x</code> position) as a function of time, with the following two
-      elements:
+      Simple harmonic motion can be expressed as any position (in this case, the
+      <code>x</code> position) as a function of time, with the following two elements:
     </p>
 
     <a data-primary="amplitude" data-type="indexterm"></a>
@@ -961,22 +950,22 @@ function draw() {
     </ul>
 
     <p>
-      Looking at the graph of sine (Figure 3.9), we can see that the amplitude
+      The graph of sine (Figure 3.9) shows that the amplitude
       is 1 and the period is <code>TWO_PI</code>; the output of sine never rises
       above 1 or below -1; and every <code>TWO_PI</code> radians (or 360
       degrees) the wave pattern repeats.
     </p>
 
     <p>
-      Now, in the p5 world we live in, what is amplitude and what is
+      Now, in a p5.js world, what is amplitude and what is
       period? Amplitude can be measured rather easily in pixels. In the case of
-      a window 200 pixels wide, we would oscillate from the center 100 pixels to
+      a window 200 pixels wide, I might choose to oscillate from the center 100 pixels to
       the right and 100 pixels to the left. Therefore:
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-// Our amplitude is measured in pixels.
-const amplitude = 100;</pre>
+// The amplitude is measured in pixels.
+let amplitude = 100;</pre>
 
     <a data-primary="millis() function (Processing)" data-type="indexterm"></a>
     <a data-primary="Processing" data-secondary="measuring time in" data-type="indexterm"></a>
@@ -986,27 +975,27 @@ const amplitude = 100;</pre>
 
     <p>
       <em>Period</em> is the amount of time it takes for one cycle, but what is
-      time in our p5 world? I mean, certainly we could say we want the
-      circle to oscillate every three seconds. And we could track the
-      milliseconds—using <code>millis()</code> —in p5 and come up with
+      time in a p5.js sketch? I mean, certainly I could say I want the
+      circle to oscillate every three seconds. And I could track the
+      milliseconds—using <code>millis()</code> —in p5.js and come up with
       an elaborate algorithm for oscillating an object according to real-world
-      time. But for us, real-world time doesn’t really matter. The real measure
-      of time in p5 is in frames. The oscillating motion should repeat
+      time. But for what I‘m trying to accomplish here, real-world time doesn’t really matter. The
+      useful measure of time in p5.js is in frames. The oscillating motion should repeat
       every 30 frames, or 50 frames, or 1000 frames, etc.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 // Period is measured in frames (the unit of time for animation).
-const period = 120;</pre>
+let period = 120;</pre>
 
     <p>
-      Once we have the amplitude and period, it’s time to write a formula to
-      calculate x as a function of time, which we now know is the current frame
+      Once I have the amplitude and period, it’s time to write a formula to
+      calculate x as a function of time, which I‘ve established as the current frame
       count.
     </p>
 
     <pre data-code-language="java" data-type="programlisting" class="codesplit">
-const x = amplitude * sin(TWO_PI * frameCount / period);</pre>
+let x = amplitude * sin(TWO_PI * frameCount / period);</pre>
 
     <a data-primary="map() function (Processing)" data-secondary="oscillation and"
       data-type="indexterm"></a>
@@ -1014,10 +1003,10 @@ const x = amplitude * sin(TWO_PI * frameCount / period);</pre>
     <p>
       Let’s dissect the formula a bit more and try to understand each component.
       The first is probably the easiest. Whatever comes out of the sine function
-      we multiply by amplitude. We know that sine will oscillate between -1 and
-      1. If we take that value and multiply it by amplitude then we’ll get the
+      is multiplied by amplitude. The output of the sine function oscillates between -1 and
+      1. If you take that value and multiply it by amplitude then you’ll get the
       desired result: a value oscillating between -amplitude and amplitude.
-      (Note: this is also a place where we could use p5’s
+      (Note: this is also a place where we could use p5.js’s
       <code>map()</code> function to map the output of sine to a custom range.)
     </p>
 
@@ -1028,13 +1017,14 @@ const x = amplitude * sin(TWO_PI * frameCount / period);</pre>
     </p>
 
     <p>
-      What’s going on here? Let’s start with what we know. We know that sine
-      will repeat every 2*PI radians—i.e. it will start at 0 and repeat at 2*PI,
-      4*PI, 6*PI, etc. If the period is 120, then we want the oscillating motion
-      to repeat when the <code>frameCount</code> is at 120 frames, 240 frames,
-      360 frames, etc. <code>frameCount</code> is really the only variable; it
+      What’s going on here? Let’s start with what you know. I‘ve explained that sine
+      will repeat every <code>2*PI</code> radians—i.e. it will start at 0 and repeat at
+      <code>2*PI</code>,
+      <code>4*PI</code>, <code>6*PI</code>, etc. If the period is 120, then I want the oscillating
+      motion to repeat when the <code>frameCount</code> is at 120 frames, 240 frames,
+      360 frames, etc. <code>frameCount</code> is really the only value changing here; it
       starts at 0 and counts upward. Let’s take a look at what the formula
-      yields with those values.
+      yields as frameCount increases.
     </p>
 
     <table>
@@ -1101,15 +1091,15 @@ const x = amplitude * sin(TWO_PI * frameCount / period);</pre>
     </table>
 
     <p>
-      <code>frameCount</code> divided by <code>period</code> tells us how many
-      cycles we’ve completed—are we halfway through the first cycle? Have we
-      completed two cycles? By multiplying that number by <code>TWO_PI</code>,
-      we get the result we want, since <code>TWO_PI</code> is the number of
-      radians required for one sine (or cosine) to complete one cycle.
+      <code>frameCount</code> divided by <code>period</code> tells you how many
+      cycles have been completed—is the wave halfway through the first cycle? Have
+      two cycles completed? By multiplying that number by <code>TWO_PI</code>,
+      I get the desired result, since <code>TWO_PI</code> is the number of
+      radians required for sine (or cosine) to complete one full cycle.
     </p>
 
     <p>
-      Wrapping this all up, here’s the p5 example that oscillates the
+      Wrapping this all up, here’s the p5.js example that oscillates the
       <code>x</code> position of a circle with an amplitude of 100 pixels and a
       period of 120 frames.
     </p>
@@ -1126,15 +1116,15 @@ function setup() {
 function draw() {
   background(255);
 
-  const period = 120;
-  const amplitude = 100;
+  let period = 120;
+  let amplitude = 100;
   //{!1 .offset} Calculating horizontal position according to the formula for simple harmonic motion
-  const x = amplitude * sin(TWO_PI * frameCount / period);
+  let x = amplitude * sin(TWO_PI * frameCount / period);
   stroke(0);
   fill(175);
   translate(width/2, height/2);
   line(0, 0, x, 0);
-  ellipse(x, 0, 20, 20);
+  ellipse(x, 0, 20);
 }</pre>
 
     <a data-primary="frequency (of oscillations)" data-type="indexterm"></a>
@@ -1142,11 +1132,10 @@ function draw() {
 
     <p>
       It’s also worth mentioning the term <strong><em>frequency</em></strong>: the number of cycles
-      per time unit.
-      Frequency is equal to 1 divided by
+      per time unit. Frequency is equal to 1 divided by
       <code>period</code>. If the period is 120 frames, then only 1/120th of a
       cycle is completed in one frame, and so frequency = 1/120. In the above
-      example, we simply chose to define the rate of oscillation in terms of
+      example, I chose to define the rate of oscillation in terms of
       period and therefore did not need a variable for frequency.
     </p>
 
@@ -1157,7 +1146,7 @@ function draw() {
         Using the sine function, create a simulation of a weight (sometimes
         referred to as a “bob”) that hangs from a spring from the top of the
         window. Use the <code>map()</code> function to calculate the vertical
-        position of the bob. Later in this chapter, we’ll see how to recreate
+        position of the bob. Later in this chapter, I’ll demonstrate how to recreate
         this same simulation by modeling the forces of a spring according to
         Hooke’s law.
       </p>
