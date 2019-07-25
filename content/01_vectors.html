@@ -489,8 +489,8 @@ position = position + velocity;</pre>
 class Vector {
 
   constructor(x, y) {
-    this.x = x_;
-    this.y = y_;
+    this.x = x;
+    this.y = y;
   }
 
   //{!4 .bold} New! A function to add another Vector to this Vector.  Simply add the <em>x</em> components and the <em>y</em>; components together.
@@ -994,7 +994,7 @@ u.div(2);</pre>
     <a data-primary="vectors" data-secondary="magnitude" data-type="indexterm"></a>
 
     <p>
-      Multiplication and division, as I just described, chnage the length
+      Multiplication and division, as I just described, change the length
       of a vector without affecting direction. Perhaps you’re
       wondering: “OK, so how do I know what the length of a vector is? I know
       the components (<code>x</code> and <code>y</code>), but how long (in
@@ -2066,7 +2066,8 @@ let dir = p5.Vector.sub(mouse, position);</pre>
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-let anything = ?????
+// Any number!
+let anything = _________;
 dir.normalize();
 dir.mult(anything);</pre>
 
