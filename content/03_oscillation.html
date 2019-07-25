@@ -8,30 +8,30 @@
   </blockquote>
 
   <p>
-    In Chapters 1 and 2, we carefully worked out an object-oriented structure to
+    In Chapters 1 and 2, I carefully worked out an object-oriented structure to
     make something move on the screen, using the concept of a vector to
     represent position, velocity, and acceleration driven by forces in the
-    environment. We could move straight from here into topics such as particle
-    systems, steering forces, group behaviors, etc. If we did that, however,
-    we’d skip an important area of mathematics that we’re going to need:
+    environment. I could move straight from here into topics such as particle
+    systems, steering forces, group behaviors, etc. If I did that, however,
+    I’d skip an important area of mathematics that you’re going to need:
     <strong><em>trigonometry</em></strong>, or the mathematics of triangles, specifically right
     triangles.
   </p>
 
   <p>
-    Trigonometry is going to give us a lot of tools. We’ll get to think about
-    angles and angular velocity and acceleration. Trig will teach us about the
+    Trigonometry is going to give you a lot of tools. You’ll get to think about
+    angles and angular velocity and acceleration. Trig will teach you about the
     sine and cosine functions, which when used properly can yield a nice
-    ease-in, ease-out wave pattern. It’s going to allow us to calculate more
+    ease-in, ease-out wave pattern. It’s going to allow you to calculate more
     complex forces in an environment that involves angles, such as a pendulum
     swinging or a box sliding down an incline.
   </p>
 
   <p>
-    So this chapter is a bit of a mishmash. We’ll start with the basics of
-    angles in p5 and cover many trigonometric topics, tying it all into
-    forces at the end. And by taking this break now, we’ll also pave the way for
-    more advanced examples that require trig later in this book.
+    So this chapter is a bit of a mishmash. I’ll start with the basics of
+    working with angles in p5.js and cover many trigonometric topics, tying it all into
+    forces at the end. If I do it well, this will also pave the way for
+    more sophisticated examples that require trig later in this book.
   </p>
 
   <section data-type="sect1" id="chapter03_section1">
@@ -40,9 +40,9 @@
     <a data-primary="angles" data-type="indexterm"></a>
 
     <p>
-      OK. Before we can do any of this stuff, we need to make sure we understand
-      what it means to be an angle in p5. If you have experience with
-      p5, you’ve undoubtedly encountered this issue while using the
+      OK. Before you can do any of this stuff, I need to make sure you understand
+      what it means to be an angle in p5.js. If you have experience with
+      p5.js, you’ve undoubtedly encountered this issue while using the
       <code>rotate()</code> function to rotate and spin objects.
     </p>
 
@@ -50,13 +50,10 @@
     <a data-primary="degrees" data-type="indexterm"></a>
 
     <p>
-      The first order of business is to cover
-      <strong><em>radians</em></strong> and <strong><em>degrees</em></strong>. You’re probably
-      familiar with the concept
-      of an angle in
+      The first order of business is to cover <strong><em>radians</em></strong> and
+      <strong><em>degrees</em></strong>. You’re probably familiar with the concept of an angle in
       <strong><em>degrees</em></strong>. A full rotation goes from 0 to 360 degrees. 90 degrees (a
-      right angle)
-      is 1/4th of 360, shown below as two perpendicular lines.
+      right angle) is 1/4th of 360, shown below as two perpendicular lines.
     </p>
 
     <figure id="chapter03_figure1">
@@ -65,7 +62,7 @@
     </figure>
 
     <p>
-      It’s fairly intuitive for us to think of angles in terms of degrees. For
+      It’s probably more intuitive for you to think of angles in terms of degrees. For
       example, the square in Figure 3.2 is rotated 45 degrees around its center.
     </p>
 
@@ -80,10 +77,9 @@
     <a data-primary="radians" data-type="indexterm"></a>
 
     <p>
-      p5, however, requires angles to be specified in
+      By default p5.js, however, considers angles to be specified in
       <strong><em>radians</em></strong>. A radian is a unit of measurement for angles defined by the
-      ratio of
-      the length of the arc of a circle to the radius of that circle. One radian
+      ratio of the length of the arc of a circle to the radius of that circle. One radian
       is the angle at which that ratio equals one (see Figure 3.3). 180 degrees
       = PI radians, 360 degrees = 2*PI radians, 90 degrees = PI/2 radians, etc.
     </p>
@@ -105,25 +101,31 @@
     <a data-primary="radians() function (Processing)" data-type="indexterm"></a>
 
     <p>
-      Thankfully, if we prefer to think in degrees but code with radians,
-      p5 makes this easy. The <code>radians()</code> function will
-      automatically convert values from degrees to radians, and the constants
-      <code>PI</code> and <code>TWO_PI</code> provide convenient access to these
+      Thankfully, if you prefer to think of angles in degrees you can call
+      <code>angleMode(DEGREES)</code>. p5.js also includes a convenience function
+      <code>radians()</code> function to
+      automatically converts values from degrees to radians as well as the constants
+      <code>PI</code> and <code>TWO_PI</code> for access to these
       commonly used numbers (equivalent to 180 and 360 degrees, respectively).
-      The following code, for example, will rotate shapes by 60 degrees.
+      Here are two ways in p5.js to rotate a shape by 60 degrees.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-float angle = radians(60);
+let angle = 60;
+rotate(radians(angle));
+
+angleMode(DEGREES);
 rotate(angle);</pre>
 
     <a data-primary="Processing" data-secondary="rotation tutorial" data-type="indexterm"></a>
 
-    <!-- TODO: add a new reference to 2D transforms in p5 -->
     <p>
-      If you are not familiar with how rotation is implemented in p5, I
-      would suggest this tutorial:
-      <a href="http://www.processing.org/learning/transform2d/">p5 — Transform 2D</a>.
+      While the above can be useful, for the purposes of this book I‘m going to always assume
+      radians. In addition, if you are not familiar with how rotation is implemented in p5.js, I
+      would suggest <a href="http://genekogan.com/code/p5js-transformations/">this
+        transformations tutorial by Gene Kogan</a> or this <a
+        href="https://youtu.be/o9sgjuh-CBM">video series on
+        transformations in p5.js</a>.
     </p>
 
     <a data-primary="pi (π)" data-type="indexterm"></a>
@@ -173,7 +175,7 @@ rotate(angle);</pre>
     </p>
 
     <p>
-      The stuff we dedicated almost all of Chapters 1 and 2 to? Well, we can
+      The stuff we dedicated almost all of Chapters 1 and 2 to? Well, you can
       apply exactly the same logic to a rotating object.
     </p>
 
@@ -183,24 +185,25 @@ rotate(angle);</pre>
     </p>
 
     <p>
-      In fact, the above is actually simpler than what we started with because
+      In fact, the above is simpler than what I started with because
       an angle is a <em>scalar</em> quantity—a single number, not a vector!
     </p>
 
     <p>
-      Using the answer from Exercise 3.1 above, let’s say we wanted to rotate a
-      baton in p5 by some angle. We would have code like:
+      Using the answer from Exercise 3.1 above, let’s say you wanted to rotate a
+      baton in p5.js by some angle. The code might read:
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 translate(width/2, height/2);
 rotate(angle);
 line(-50, 0, 50, 0);
-ellipse(50, 0, 8, 8);
-ellipse(-50, 0, 8, 8);</pre>
+ellipse(50, 0, 8);
+ellipse(-50, 0, 8);</pre>
 
     <p>
-      Adding in our principles of motion brings us to the following example.
+      Adding in the principles of motion, I can then write the following example (the solution to
+      Exercise 3.1).
     </p>
 
     <figure class="screenshot" data-p5-sketch="https://editor.p5js.org/embed/SJSSzlWOg">
@@ -247,10 +250,21 @@ function draw() {
       faster as the angle of rotation accelerates.
     </p>
 
+
+    <div data-type="exercise" id="chapter03_exerciseX">
+      <h5>Exercise 3.x-axis</h5>
+      <p>
+        Add an interaction to the spinning baton. How can you control the acceleration with the
+        mouse? Can you introduce the idea of drag, decreasing the angular velocity over time so that
+        it will always eventually come to rest?
+      </p>
+
+    </div>
+
+
     <p>
-      This idea can be incorporated into our <code>Mover</code> object. For
-      example, we can add the variables related to angular motion to our
-      <code>Mover</code>.
+      This idea can be incorporated into the <code>Mover</code> class by adding new variables
+      related to angular motion.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
@@ -270,7 +284,7 @@ class Mover {
 }</pre>
 
     <p>
-      And then in <code>update()</code>, we update both position and angle
+      And then in <code>update()</code>, position and angle are updated
       according to the same algorithm!
     </p>
 
@@ -288,14 +302,15 @@ update() {
 }</pre>
 
     <p>
-      Of course, for any of this to matter, we also would need to rotate the
-      object when displaying it.
+      Of course, for any of this to matter, I also would need to rotate the
+      object when displaying it. (I'll add drawing a line from the center to the edge of the circle
+      so that rotation is viewabale. You could also use a shape other than a circle.)
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 display() {
   stroke(0);
-  fill(175,200);
+  fill(175, 200);
   rectMode(CENTER);
   //{!1} push() and pop() are necessary so that the rotation of this shape doesn’t affect the rest of our world.
   push();
@@ -304,38 +319,38 @@ display() {
   translate(this.position.x, this.position.y);
   //{!1} Rotate by the angle.
   rotate(this.angle);
-  rect(0, 0, this.mass * 16, this.mass * 16);
+  ellipse(0, 0, this.radius * 2);
+  line(0, 0, this.radius, 0);
   pop();
 }</pre>
 
     <p>
-      Now, if we were to actually go ahead and run the above code, we wouldn’t
+      Now, if you were to actually go ahead and run the above code, you wouldn’t
       see anything new. This is because the angular acceleration
       (<code>this.aAcceleration = 0;</code>) is initialized
-      to zero. For the object to rotate, we need to give it an
-      acceleration! Certainly, we could hard-code in a different number.
+      to zero. For the object to rotate, it needs a non-zero
+      acceleration! Certainly, one option is to hard-code a number.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 this.aAcceleration = 0.01;</pre>
 
     <p>
-      However, we can produce a more interesting result by dynamically assigning
-      an angular acceleration according to forces in the environment. Now, we
-      could head far down this road, trying to model the physics of angular
-      acceleration using the concepts of
+      However, you can produce a more interesting result by dynamically assigning
+      an angular acceleration according to forces in the environment. Now, I
+      could head far down this road and research modeling the physics of angular
+      acceleration based on the concepts of
       <a href="http://en.wikipedia.org/wiki/Torque">torque</a> and
       <a href="http://en.wikipedia.org/wiki/Moment_of_inertia">moment of inertia</a>. Nevertheless,
-      this level of
-      simulation is beyond the scope of this
-      book. (We will see more about modeling angular acceleration with a
-      pendulum later in this chapter, as well as look at how Box2D realistically
+      this level of simulation is beyond the scope of this
+      book. (I will cover more about modeling angular acceleration with a
+      pendulum later in this chapter, as well as look at how other physics libraries realistically
       models rotational motion in Chapter 5.)
     </p>
 
     <p>
-      For now, a quick and dirty solution will do. We can produce reasonable
-      results by simply calculating angular acceleration as a function of the
+      For now, a quick and dirty solution will do. I can produce reasonable
+      results by calculating angular acceleration as a function of the
       object’s acceleration vector. Here’s one such example:
     </p>
 
