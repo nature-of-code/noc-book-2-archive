@@ -44,72 +44,71 @@
   </p>
 
   <p>
-    This chapter will be dedicated to looking at implementation strategies for
-    coding a particle system. How do we organize our code? Where do we store
+    This chapter is dedicated to looking at implementation strategies for
+    coding a particle system. How do you organize your code? Where do you store
     information related to individual particles versus information related to
-    the system as a whole? The examples we’ll look at will focus on managing the
+    the system as a whole? The examples I’ll cover will focus on managing the
     data associated with a particle system. They’ll use simple shapes for the
     particles and apply only the most basic behaviors (such as gravity).
-    However, by using this framework and building in more interesting ways to
+    However, by building on this framework and adding more interesting ways to
     render the particles and compute behaviors, you can achieve a variety of
     effects.
   </p>
 
   <section data-type="sect1" id="chapter04_section1">
-    <h2>4.1 Why We Need Particle Systems</h2>
+    <h2>4.1 Why You Need Particle Systems</h2>
 
     <a data-primary="particle systems" data-secondary="purpose of" data-type="indexterm"></a>
 
     <p>
-      We’ve defined a particle system to be a collection of independent objects,
+      I’ve defined a particle system to be a collection of independent objects,
       often represented by a simple shape or dot. Why does this matter?
-      Certainly, the prospect of modeling some of the phenomena we listed
+      Certainly, the prospect of modeling some of the phenomena listed
       (explosions!) is attractive and potentially useful. But really, there’s an
-      even better reason for us to concern ourselves with particle systems. If
-      we want to get anywhere in this nature of code life, we’re going to need
-      to work with systems of <em>many</em> things. We’re going to want to look
-      at balls bouncing, birds flocking, ecosystems evolving, all sorts of
-      things in plural.
+      even better reason to explore particle systems. If
+      you want to get anywhere in this nature of code life, you’re likely to find yourself
+      developing systems of <em>many</em> things–balls bouncing, birds flocking, ecosystems
+      evolving, all sorts of things in plural.
     </p>
 
     <p>
-      Just about every chapter after this one is going to need to deal with a
-      list of objects. Yes, we’ve done this with an array in some of our first
-      vector and forces examples. But we need to go where no array has gone
+      Just about every chapter after this one is going to deal with a
+      list of objects. Yes, I’ve dipped my toe in the array waters in some of the first
+      vector and forces examples. But now it‘s time to go where no array has gone
       before.
     </p>
 
     <p>
-      First, we’re going to want to deal with flexible quantities of elements.
-      Sometimes we’ll have zero things, sometimes one thing, sometimes ten
-      things, and sometimes ten thousand things. Second, we’re going to want to
-      take a more sophisticated object-oriented approach. Instead of simply
-      writing a class to describe a single particle, we’re also going to want to
+      First, I’m going to want to deal with flexible quantities of elements.
+      Some examples will have zero things, sometimes one thing, sometimes ten
+      things, and sometimes ten thousand things. Second, I’m going to want to
+      take a more sophisticated object-oriented approach. Instead of
+      writing a class to describe a single particle, I’m also going to want to
       write a class that describes the collection of particles—the particle
-      system itself. The goal here is to be able to write a main program that
+      system itself. The goal here is to be able to write a sketch that
       looks like the following:
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 // Ah, isn’t this main program so simple and lovely?
-let ps;
+let system;
 
 function setup() {
   createCanvas(640, 360);
-  ps = new ParticleSystem();
+  system = new ParticleSystem();
 }
 
 function draw() {
   background(255);
-  ps.run();
+  system.run();
 }</pre>
 
     <p>
       No single particle is ever referenced in the above code, yet the result
       will be full of particles flying all over the screen. Getting used to
-      writing p5 sketches with multiple classes, and classes that keep lists of
-      instances of other classes, will prove very useful as we get to more
-      advanced chapters in this book.
+      writing p5.js sketches with multiple classes, and classes that keep lists of
+      instances of other classes, will prove very useful as you get to
+      later chapters in this book.
     </p>
 
     <a data-primary="inheritance" data-type="indexterm"></a>
@@ -120,19 +119,19 @@ function draw() {
     <a data-primary="polymorphism" data-type="indexterm"></a>
 
     <p>
-      Finally, working with particle systems is also a good excuse for us to
-      tackle two other advanced object-oriented programming techniques:
-      inheritance and polymorphism. With the examples we’ve seen up until now,
-      we’ve always had an array of a single type of object, like "movers" or
-      “oscillators.” With inheritance (and polymorphism), we’ll learn a
-      convenient way to store a single list that contains objects of different
+      Finally, working with particle systems is also a good excuse to
+      tackle two other object-oriented programming techniques:
+      inheritance and polymorphism. With the examples you’ve seen up until now,
+      I’ve always used an array of a single type of object, like "movers" or
+      “oscillators.” With inheritance (and polymorphism), I’ll demonstrate a
+      convenient way to store a single list containing objects of different
       types. This way, a particle system need not only be a system of a single
       type of particle.
     </p>
 
     <p>
       Though it may seem obvious to you, I’d also like to point out that these
-      are typical implementations of particle systems, and that’s where we will
+      are typical implementations of particle systems, and that’s where I will
       begin in this chapter. However, the fact that the particles in this
       chapter look or behave a certain way should not limit your imagination.
       Just because particle systems tend to look sparkly, fly forward, and fall
@@ -141,8 +140,8 @@ function draw() {
     </p>
 
     <p>
-      The focus here is really just how to keep track of a system of many
-      elements. What those elements do and how those elements look is up to you.
+      The focus here is on how to keep track of a system of many elements.
+      What those elements do and how those elements look is up to you.
     </p>
   </section>
 
@@ -153,21 +152,20 @@ function draw() {
     <a data-primary="particles" data-type="indexterm"></a>
 
     <p>
-      Before we can get rolling on the system itself, we have to write the class
-      that will describe a single particle. The good news: we’ve done this
-      already. Our <code>Mover</code> class from Chapter 2 serves as the perfect
-      template. For us, a particle is an independent body that moves about the
+      Before I can get rolling on coding the system itself, I need to write the class
+      to describe a single particle. The good news: I’ve done this
+      already! The <code>Mover</code> class from Chapter 2 serves as the perfect
+      template. A particle is an independent body that moves about the
       screen. It has <code>position</code>, <code>velocity</code>, and
       <code>acceleration</code>, a constructor to initialize those variables,
-      and functions to <code>display()</code> itself and
-      <code>update()</code> its position.
+      and functions to <code>display()</code> itself and <code>update()</code> its position.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Particle {
   //{!3} A “Particle” object is just another name for our “Mover.” It has position, velocity, and acceleration.
-  Particle(l) {
-    this.position = l.copy();
+  Particle(x, y) {
+    this.position = createVector(x, y);
     this.acceleration = createVector();
     this.velocity = createVector();
   }
@@ -180,17 +178,17 @@ class Particle {
   display() {
     stroke(0);
     fill(175);
-    ellipse(this.position.x, this.position.y, 8, 8);
+    ellipse(this.position.x, this.position.y, 8);
   }
 }</pre>
 
     <p>
-      This is about as simple as a particle can get. From here, we could take
-      our particle in several directions. We could add an
+      This is about as simple as a particle can get. From here, I could take
+      the particle in several directions. I could add the
       <code>applyForce()</code> function to affect the particle’s behavior
-      (we’ll do precisely this in a future example). We could add variables to
+      (I’ll do precisely this in a future example). I could add variables to
       describe color and shape, or reference a <code>p5.Image</code> to draw the
-      particle. For now, however, let’s focus on adding just one additional
+      particle. For now, however, I’ll focus on adding just one additional
       detail: <strong><em>lifespan</em></strong>.
     </p>
 
@@ -201,23 +199,23 @@ class Particle {
     <a data-primary="particles" data-secondary="lifespan of" data-type="indexterm"></a>
 
     <p>
-      Typical particle systems involve something called an
-      <strong><em>emitter</em></strong>. The emitter is the source of the particles and controls the
-      initial
+      Some particle systems involve something called an <strong><em>emitter</em></strong>.
+      The emitter is the source of the particles and controls the initial
       settings for the particles, position, velocity, etc. An emitter might emit
       a single burst of particles, or a continuous stream of particles, or both.
-      The point is that for a typical implementation such as this, a particle is
-      born at the emitter but does not live forever. If it were to live forever,
-      our p5 sketch would eventually grind to a halt as the number of particles
-      increases to an unwieldy number over time. As new particles are born, we
-      need old particles to die. This creates the illusion of an infinite stream
-      of particles, and the performance of our program does not suffer. There
-      are many different ways to decide when a particle dies. For example, it
-      could come into contact with another object, or it could simply leave the
-      screen. For our first <code>Particle</code> class, however, we’re simply
-      going to add a <code>lifespan</code> variable. The timer will start at 255
-      and count down to 0, when the particle will be considered “dead.” And so
-      we expand the <code>Particle</code> class as follows:
+      The new feature here is that a particle
+      born at the emitter does not live forever. If it were to live forever,
+      the p5.js sketch would eventually grind to a halt as the number of particles
+      increases to an unwieldy number over time. As new particles are born,
+      old particles need to be removed. This creates the illusion of an infinite stream
+      of particles, and the performance of the sketch does not suffer. There
+      are many different ways to decide when a particle is ready to be removed. For example, it
+      could come into contact with another object, or it could leave the
+      canvas. For this first <code>Particle</code> class, I’ll choose to add a
+      <code>lifespan</code> variable that acts like a countdown timer.
+      The timer will start at 255
+      and count down to 0, when the particle will be considered “dead.” The code for this in the
+      <code>Particle</code> class as:
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
