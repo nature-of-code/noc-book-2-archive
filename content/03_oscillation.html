@@ -1967,18 +1967,17 @@ class Pendulum  {
     <a data-primary="springs" data-type="indexterm"></a>
 
     <p>
-      In <a href="#chapter03_section6">section 3.6</a>, we looked at modeling
+      In <a href="#chapter03_section6">section 3.6</a>, I looked at modeling
       simple harmonic motion by mapping the sine wave to a pixel range.
       <a href="#chapter03_exercise6">Exercise 3.6</a> asked you to use this
       technique to create a simulation of a bob hanging from a spring. While
       using the <code>sin()</code> function is a quick-and-dirty,
-      one-line-of-code way of getting something up and running, it won’t do if
-      what we really want is to have a bob hanging from a spring in a
+      one-line-of-code way of getting such a result, it won’t do if
+      what you really want is to have a bob hanging from a spring in a
       two-dimensional space that responds to other forces in the environment
       (wind, gravity, etc.) To accomplish a simulation like this (one that is
       identical to the pendulum example, only now the arm is a springy
-      connection), we need to model the forces of a spring using
-      <code>p5.Vector</code>.
+      connection), you need to model the forces of a spring using vectors.
     </p>
 
     <figure id="chapter03_figure14">
@@ -1995,7 +1994,7 @@ class Pendulum  {
       The force of a spring is calculated according to Hooke’s law, named for
       Robert Hooke, a British physicist who developed the formula in 1660. Hooke
       originally stated the law in Latin: "<em>Ut tensio, sic vis</em>," or “As
-      the extension, so the force.” Let’s think of it this way:
+      the extension, so the force.” Think of it this way:
     </p>
 
     <p>
@@ -2040,9 +2039,9 @@ class Pendulum  {
     </ul>
 
     <p>
-      Now remember, force is a vector, so we need to calculate both magnitude
+      Now remember, force is a vector, so you need to calculate both magnitude
       and direction. Let’s look at one more diagram of the spring and label all
-      the givens we might have in a p5 sketch.
+      the givens we might have in a p5.js sketch.
     </p>
 
     <figure id="chapter03_figure16">
@@ -2051,54 +2050,53 @@ class Pendulum  {
     </figure>
 
     <p>
-      Let’s establish the following three variables as shown in Figure 3.16.
+      For the code, I‘ll start with the following three variables as shown in Figure 3.16.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-const anchor = createVector();
-const position = createVector();
-const restLength = ????;</pre>
+let anchor = createVector();
+let position = createVector();
+let restLength = ????;</pre>
 
     <a data-primary="springs" data-secondary="magnitude of force" data-tertiary="determining"
       data-type="indexterm"></a>
 
     <p>
-      First, let’s use Hooke’s law to calculate the magnitude of the force. We
-      need to know <code>k</code> and <code>x</code>. <code>k</code> is easy;
-      it’s just a constant, so let’s make something up.
+      I’ll then use Hooke’s law to calculate the magnitude of the force. I
+      need to calculate <code>k</code> and <code>x</code>. <code>k</code> is easy;
+      it’s just a constant, so I’ll make something up.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-const k = 0.1;</pre>
+let k = 0.1;</pre>
 
     <a data-primary="springs" data-secondary="rest length" data-type="indexterm"></a>
 
     <p>
-      <code>x</code> is perhaps a bit more difficult. We need to know the
+      <code>x</code> is perhaps a bit more difficult. I need to know the
       “difference between the current length and the rest length.” The rest
       length is defined as the variable <code>restLength</code>. What’s the
       current length? The distance between the anchor and the bob. And how can
-      we calculate that distance? How about the magnitude of a vector that
+      I calculate that distance? How about the magnitude of a vector that
       points from the anchor to the bob? (Note that this is exactly the same
-      process we employed when calculating distance in Example 2.9:
-      gravitational attraction.)
+      process employed when calculating distance in Example 2.9: gravitational attraction.)
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 //{!1} A vector pointing from anchor to bob gives us the current length of the spring.
-const dir = p5.Vector.sub(bob, anchor);
-const currentLength = dir.mag();
-const x = currentLength - restLength;</pre>
+let dir = p5.Vector.sub(bob, anchor);
+let currentLength = dir.mag();
+let x = currentLength - restLength;</pre>
 
     <a data-primary="springs" data-secondary="direction of force" data-tertiary="determining"
       data-type="indexterm"></a>
 
     <p>
-      Now that we’ve sorted out the elements necessary for the magnitude of the
-      force (-1 * <code>k</code> * <code>x</code>), we need to figure out the
+      Now that I’ve sorted out the elements necessary for the magnitude of the
+      force (-1 * <code>k</code> * <code>x</code>), I need to figure out the
       direction, a unit vector pointing in the direction of the force. The good
-      news is that we already have this vector. Right? Just a moment ago we
-      thought to ourselves: “How we can calculate that distance? How about the
+      news is that I already have this vector. Right? Just a moment ago I asked the question: “How
+      I can calculate that distance? How about the
       magnitude of a vector that points from the anchor to the bob?” Well, that
       is the direction of the force!
     </p>
@@ -2109,44 +2107,40 @@ const x = currentLength - restLength;</pre>
     </figure>
 
     <p>
-      In Figure 3.17, we can see that if we stretch the spring beyond its rest
+      Figure 3.17 shows that if you stretch the spring beyond its rest
       length, there should be a force pulling it back towards the anchor. And if
       it shrinks below its rest length, the force should push it away from the
       anchor. This reversal of direction is accounted for in the formula with
-      the -1. And so all we need to do is normalize the <code>p5.Vector</code> we
+      the -1. And so all I need to do is set the magnitude of the vector used
       used for the distance calculation! Let’s take a look at the code and
-      rename that <code>p5.Vector</code> variable as “force.”
+      rename that vector variable as <code>force</code>.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 //{!4} Magnitude of spring force according to Hooke’s law
-const k = 0.1;
-const force = p5.Vector.sub(bob, anchor);
-const currentLength = force.mag();
-const x = currentLength - restLength;
-
-//{!1} Direction of spring force (unit vector)
-force.normalize();
+let k = 0.1;
+let force = p5.Vector.sub(bob, anchor);
+let currentLength = force.mag();
+let x = currentLength - restLength;
 
 // Putting it together: direction and magnitude!
-force.mult(-1 * k * x);</pre>
+force.setMag(-1 * k * x);</pre>
 
     <a data-primary="object-oriented programming" data-secondary="structures"
       data-tertiary="choosing between" data-type="indexterm"></a>
 
     <p>
-      Now that we have the algorithm worked out for computing the spring force
+      Now that I have the algorithm worked out for computing the spring force
       vector, the question remains: what object-oriented programming structure
-      should we use? This, again, is one of those situations in which there is
-      no “correct” answer. There are several possibilities; which one we choose
-      depends on the program’s goals and one’s own personal coding style. Still,
-      since we’ve been working all along with a <code>Mover</code> class, let’s
-      keep going with this same framework. Let’s think of our
+      should I use? This, again, is one of those situations in which there is
+      no “correct” answer. There are several possibilities; which one I choose
+      depends on my goals and personal coding style. Since I’ve been working all along with a
+      <code>Mover</code> class, I’ll stick with this same framework. I’ll think of the
       <code>Mover</code> class as the spring’s “bob.” The bob needs
       <code>position</code>, <code>velocity</code>, and
-      <code>acceleration</code> vectors to move about the screen. Perfect—we’ve
+      <code>acceleration</code> vectors to move about the screen. Perfect—I’ve
       got that already! And perhaps the bob experiences a gravity force via the
-      <code>applyForce()</code> function. Just one more step—we need to apply
+      <code>applyForce()</code> function. Just one more step—applying
       the spring force:
     </p>
 
@@ -2158,14 +2152,14 @@ function setup() {
 }
 
 function draw()  {
-  //{!1} Our Chapter 2 “make-up-a-gravity force”
-  const gravity = createVector(0, 1);
+  //{!1} Chapter 2 “make-up-a-gravity force”
+  let gravity = createVector(0, 1);
   bob.applyForce(gravity);
-  //{!2 .bold} We need to also calculate and apply a spring force!
-  const springForce = _______________????
+  //{!2 .bold} I need to also calculate and apply a spring force!
+  let springForce = _______________????
   bob.applyForce(spring);
 
-  //{!2} Our standard update() and display() functions
+  //{!2} The standard update() and display() functions
   bob.update();
   bob.display();
 }</pre>
@@ -2185,7 +2179,7 @@ function draw()  {
       and its rest length and calculates the spring force on the bob.
     </p>
 
-    <p>This allows us to write a lovely main program as follows:</p>
+    <p>This allows me to write a lovely sketch as follows:</p>
 
     <pre data-code-language="javascript data-type=" programlisting" class="codesplit">
 let bob;
@@ -2198,7 +2192,7 @@ function setup() {
 }
 
 function draw()  {
-  const gravity = createVector(0,1);
+  let gravity = createVector(0,1);
   bob.applyForce(gravity);
 
   //{!1 .bold} This new function in the Spring class will take care of computing the force of the spring on the bob.
@@ -2210,56 +2204,55 @@ function draw()  {
 }</pre>
 
     <p>
-      You may notice here that this is quite similar to what we did in
-      <a href="#chapter02_example6">Example 2.6</a> with an attractor. There, we
-      said something like:
+      You may notice here that this is quite similar to what I did in
+      <a href="#chapter02_example6">Example 2.6</a> with an attractor. There, I
+      wrote something like:
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-  const force = attractor.attract(mover);
+  let force = attractor.attract(mover);
   mover.applyForce(force);</pre>
 
     <p>The analogous situation here with a spring would be:</p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-  const force = spring.connect(bob);
+  let force = spring.connect(bob);
   bob.applyForce(force);</pre>
 
-    <p>Nevertheless, in this example all we said was:</p>
+    <p>Nevertheless, in this example all I said was:</p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   spring.connect(bob);</pre>
 
     <p>
-      What gives? Why don’t we need to call <code>applyForce()</code> on the
-      bob? The answer is, of course, that we do need to call
+      What gives? Why don’t I need to call <code>applyForce()</code> on the
+      bob? The answer is, of course, that I do need to call
       <code>applyForce()</code> on the bob. Only instead of doing it in
-      <code>draw()</code>, we’re just demonstrating that a perfectly reasonable
+      <code>draw()</code>, I’m demonstrating that a perfectly reasonable
       (and sometimes preferable) alternative is to ask the
       <code>connect()</code> function to internally handle calling
       <code>applyForce()</code> on the bob.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-  connect(b) {
-    const force = some fancy calculations
+  connect(bob) {
+    let force = some fancy calculations
 
     //{!1} The function connect() takes care of calling applyForce() and therefore doesn’t have to return a vector to the calling area.
-    b.applyForce(force);
+    bob.applyForce(force);
   }</pre>
 
     <p>
       Why do it one way with the <code>Attractor</code> class and another way
-      with the <code>Spring</code> class? When we were first learning about
+      with the <code>Spring</code> class? When I first discussed
       forces, it was a bit clearer to show all the forces being applied in the
-      main <code>draw()</code> loop, and hopefully this helped you learn about
-      force accumulation. Now that we’re more comfortable with that, perhaps
+      <code>draw()</code> loop, and hopefully this helped you learn about
+      force accumulation. Now that you’re more comfortable with that, perhaps
       it’s simpler to embed some of the details inside the objects themselves.
     </p>
 
     <p>
-      Let’s take a look at the rest of the elements in the
-      <code>Spring</code> class.
+      Let’s take a look at the rest of the elements in the <code>Spring</code> class.
     </p>
 
     <figure class="screenshot" data-p5-sketch="https://editor.p5js.org/embed/HkzFHeZdg">
@@ -2275,48 +2268,47 @@ function draw()  {
 class Spring {
 
   //{!1} The constructor initializes the anchor point and rest length.
-  constructor( x_, y_, l_) {
-    //{!1} We need to keep track of the spring’s anchor position.
-    this.anchor = createVector(x_,y_);
+  constructor(x, y, length) {
+    //{!1} The spring’s anchor position.
+    this.anchor = createVector(x, y);
     //{!2} Rest length and spring constant variables
-    this.len = l_;
+    this.length = length;
     this.k = 0.1;
   }
 
   //{!1} Calculate spring force—our implementation of Hooke’s Law.
-  connect(b) {
+  connect(bob) {
 
     //{!1 .bold .code-wide} Get a vector pointing from anchor to Bob position.
-    const force = p5.Vector.sub(b.position, this.anchor);
+    let force = p5.Vector.sub(bob.position, this.anchor);
     //{!2 .bold} Calculate the displacement between distance and rest length.
-    const d = force.mag();
-    const stretch = d - this.len;
+    let d = force.mag();
+    let stretch = d - this.length;
 
     //{!2 .bold} Direction and magnitude together!
     force.normalize();
     force.mult(-1 * this.k * stretch);
 
     //{!1} Call applyForce() right here!
-    b.applyForce(force);
+    bob.applyForce(force);
   }
 
   //{!5} Draw the anchor.
   display() {
     fill(100);
-    rectMode(CENTER);
-    rect(this.anchor.x,this.anchor.y,10,10);
+    ellipse(this.anchor.x, this.anchor.y, 10);
   }
 
   //{!4} Draw the spring connection between Bob position and anchor.
   displayLine(b) {
     stroke(255);
-    line(b.position.x,b.position.y,this.anchor.x,this.anchor.y);
+    line(b.position.x, b.position.y, this.anchor.x, this.anchor.y);
   }
 }</pre>
 
     <p>
       The full code for this example is included on the book website, and the
-      Web version also incorporates two additional features: (1) the
+      that version also incorporates two additional features: (1) the
       <code>Bob</code> class includes functions for mouse interactivity so that
       the bob can be dragged around the window, and (2) the
       <code>Spring</code> object includes a function to constrain the
@@ -2334,22 +2326,20 @@ class Spring {
       <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 constrainLength(b, minlen, maxlen) {
   //{!1} Vector pointing from Bob to Anchor
-  const dir = p5.Vector.sub(______,______);
-  const d = dir.mag();
+  let dir = p5.Vector.sub(______,______);
+  let d = dir.mag();
 
   //{!1} Is it too short?
   if (d < minlen) {
-    dir.normalize();
-    dir.mult(________);
+    dir.setMag(________);
     //{!1} Keep position within constraint.
-    b.position = p5.Vector.add(______,______);
+    b.position = p5.Vector.add(______, ______);
     b.velocity.mult(0);
   //{!1} Is it too long?
   } else if (____________) {
-    dir.normalize();
-    dir.mult(_________);
+    dir.setMag(_________);
     //{!1} Keep position within constraint.
-    b.position = p5.Vector.add(______,______);
+    b.position = p5.Vector.add(______, ______);
     b.velocity.mult(0);
   }
 }</pre>
@@ -2359,8 +2349,8 @@ constrainLength(b, minlen, maxlen) {
       <h5>Exercise 3.16</h5>
 
       <p>
-        Create a system of multiple bobs and spring connections. How would you
-        have a bob connected to a bob with no fixed anchor?
+        Create a system of multiple bobs and spring connections. Try
+        connecting a bob to another bob with no fixed anchor?
       </p>
     </div>
 
