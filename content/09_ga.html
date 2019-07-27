@@ -13,9 +13,10 @@
 		sketches and life was free and easy. What is one of programming’s fundamental concepts that
 		you likely used in those first sketches and continue to use over and over again?
 		<em>Variables</em>. Variables allow you to save data and reuse that data while a program
-		runs. This, of course, is nothing new to us. In fact, we have moved far beyond a sketch with
+		runs. This, of course, is nothing new to you. In fact, you have moved far beyond a sketch
+		with
 		just one or two variables and on to more complex data structures—variables made from custom
-		types (objects) that include both data and functionality. We’ve made our own little worlds
+		types (objects) that include both data and functionality. You've made our own little worlds
 		of movers and particles and vehicles and cells and trees.</p>
 
 	<a data-primary="evolution" data-secondary="modeling" data-type="indexterm"></a> <a
@@ -25,15 +26,15 @@
 		initialized. Perhaps you made a whole bunch of particles with random colors and sizes or a
 		list of vehicles all starting at the same <code>x</code>,<code>y</code> position on screen.
 		But instead of acting as “intelligent designers” and assigning the properties of our objects
-		through randomness or thoughtful consideration, we can let a process found in
-		nature<code>—</code><em>evolution</em><code>—</code>decide for us.</p>
+		through randomness or thoughtful consideration, you can let a process found in
+		nature<code>—</code><em>evolution</em><code>—</code>decide for you.</p>
 
-	<p>Can we think of the variables of an object as its DNA? Can objects make other objects and
-		pass down their DNA to a new generation? Can our simulation evolve?</p>
+	<p>Can you think of the variables of an object as its DNA? Can objects make other objects and
+		pass down their DNA to a new generation? Can your simulation evolve?</p>
 
-	<p> The answer to all these questions is yes. After all, we wouldn’t be able to face ourselves
-		in the mirror as nature-of-coders without tackling a simulation of one of the most powerful
-		algorithmic processes found in nature itself. This chapter is dedicated to examining the
+	<p>The answer to all these questions is yes. After all, the book would hardly be complete
+		without tackling a simulation of one of the most powerful algorithmic processes found in
+		nature itself. This chapter is dedicated to examining the
 		principles behind biological evolution and finding ways to apply those principles in code.
 	</p>
 
@@ -45,28 +46,28 @@
 			data-primary="natural phenomena" data-secondary="genetic algorithms"
 			data-type="indexterm"></a>
 
-		<p>It’s important for us to clarify the goals of this chapter. We will not go into depth
-			about the science of genetics and evolution as it happens in the real world. We won’t be
+		<p>It’s important for me to clarify the goals of this chapter. I will not go into depth
+			about the science of genetics and evolution as it happens in the real world. I won’t be
 			making Punnett squares (sorry to disappoint) and there will be no discussion of
 			nucleotides, protein synthesis, RNA, and other topics related to the actual biological
-			processes of evolution. Instead, we are going to look at the core principles behind
+			processes of evolution. Instead, I am going to look at the core principles behind
 			Darwinian evolutionary theory and develop a set of algorithms <em>inspired</em> by these
-			principles. We don’t care so much about an accurate simulation of evolution; rather, we
+			principles. I don’t care so much about an accurate simulation of evolution; rather, I
 			care about methods for applying evolutionary strategies in software.</p>
 
 		<p>This is not to say that a project with more scientific depth wouldn’t have value, and I
 			encourage readers with a particular interest in this topic to explore possibilities for
 			expanding the examples provided with additional evolutionary features. Nevertheless, for
-			the sake of keeping things manageable, we’re going to stick to the basics, which will be
+			the sake of keeping things manageable, I'm going to stick to the basics, which will be
 			plenty complex and exciting.</p>
 
 		<a data-primary="genetic algorithms" data-secondary="defined" data-type="indexterm"></a>
 
 		<p>The term “genetic algorithm” refers to a specific algorithm implemented in a specific way
 			to solve specific sorts of problems. While the formal genetic algorithm itself will
-			serve as the foundation for the examples we create in this chapter, we needn’t worry
-			about implementing the algorithm with perfect accuracy, given that we are looking for
-			creative uses of evolutionary theories in our code. This chapter will be broken down
+			serve as the foundation for the examples we create in this chapter, I won't try to
+			implement the algorithm with perfect accuracy, given that I am looking for
+			creative uses of evolutionary theories in my code. This chapter will be broken down
 			into the following three parts (with the majority of the time spent on the first).</p>
 
 		<a data-primary="genetic algorithms" data-secondary="traditional" data-type="indexterm"></a>
@@ -74,15 +75,15 @@
 
 		<ol>
 			<li>
-				<p><strong><em>Traditional Genetic Algorithm.</em></strong> We’ll begin with the
+				<p><strong><em>Traditional Genetic Algorithm.</em></strong> I'll begin with the
 					traditional computer science genetic algorithm. This algorithm was developed to
 					solve problems in which the solution space is so vast that a “brute force”
 					algorithm would simply take too long. Here’s an example: I’m thinking of a
 					number. A number between one and one billion. How long will it take for you to
 					guess it? Solving a problem with “brute force” refers to the process of checking
 					every possible solution. Is it one? Is it two? Is it three? Is it four? And so
-					and and so forth. Though luck does play a factor here, with brute force we would
-					often find ourselves patiently waiting for years while you count to one billion.
+					and and so forth. Though luck does play a factor here, with brute force I would
+					wait patiently for years while you count to one billion.
 					However, what if I could tell you if an answer you gave was good or bad? Warm or
 					cold? Very warm? Hot? Super, super cold? If you could evaluate how “fit” a guess
 					is, you could pick other numbers closer to that guess and arrive at the answer
@@ -93,7 +94,7 @@
 					data-type="indexterm"></a> <a
 					data-primary="interactive selection genetic algorithms"
 					data-type="indexterm"></a> <strong><em>Interactive Selection.</em></strong> Once
-				we establish the traditional computer science algorithm, we’ll look at other
+				you examine the traditional computer science algorithm, you'll look at other
 				applications of genetic algorithms in the visual arts. Interactive selection refers
 				to the process of evolving something (often an computer-generated image) through
 				user interaction. Let’s say you walk into a museum gallery and see ten paintings.
@@ -104,10 +105,10 @@
 				<p><strong><em>Ecosystem Simulation.</em></strong> The traditional computer science
 					genetic algorithm and interactive selection technique are what you will likely
 					find if you search online or read a textbook about artificial intelligence. But
-					as we’ll soon see, they don’t really simulate the process of evolution as it
+					as you'll soon see, they don’t really simulate the process of evolution as it
 					happens in the real world. In this chapter, I want to also explore techniques
 					for simulating the process of evolution in an ecosystem of pseudo-living beings.
-					How can our objects that move about the screen meet each other, mate, and pass
+					How can your objects that move about the screen meet each other, mate, and pass
 					their genes on to a new generation? This would apply directly to the Ecosystem
 					Project outlined at the end of each chapter.</p>
 			</li>
@@ -128,7 +129,8 @@
 			data-secondary="John" data-type="indexterm"></a>
 
 		<p>While computer simulations of evolutionary processes date back to the 1950s, much of what
-			we think of as genetic algorithms (also known as “GAs”) today was developed by John
+			have become commonly referred to as genetic algorithms (also known as “GAs”) today was
+			developed by John
 			Holland, a professor at the University of Michigan, whose book <em>Adaptation in Natural
 				and Artificial Systems</em> pioneered GA research. Today, more genetic algorithms
 			are part of a wider field of research, often referred to as "Evolutionary Computing."
@@ -139,8 +141,8 @@
 			data-primary="probability" data-secondary="infinite monkey theorem"
 			data-type="indexterm"></a>
 
-		<p>To help illustrate the traditional genetic algorithm, we are going to start with monkeys.
-			No, not our evolutionary ancestors. We’re going to start with some fictional monkeys
+		<p>To help illustrate the traditional genetic algorithm, I am going to start with monkeys.
+			No, not our evolutionary ancestors. I'm going to start with some fictional monkeys
 			that bang away on keyboards with the goal of typing out the complete works of
 			Shakespeare.</p>
 
@@ -152,13 +154,13 @@
 			typewriter will eventually type the complete works of Shakespeare (given an infinite
 			amount of time). The problem with this theory is that the probability of said monkey
 			actually typing Shakespeare is so low that even if that monkey started at the Big Bang,
-			it’s unbelievably unlikely we’d even have <em>Hamlet</em> at this point.</p>
+			it’s unbelievably unlikely they would even have <em>Hamlet</em> at this point.</p>
 
-		<p>Let’s consider a monkey named George. George types on a reduced typewriter containing
+		<p>Consider a monkey named George. George types on a reduced typewriter containing
 			only twenty-seven characters: twenty-six letters and one space bar. So the probability
 			of George hitting any given key is one in twenty-seven.</p>
 
-		<p>Let’s consider the phrase “to be or not to be that is the question” (we’re simplifying it
+		<p>Next, consider the phrase “to be or not to be that is the question” (I'm simplifying it
 			from the original “To be, or not to be: that is the question”). The phrase is 39
 			characters long. If George starts typing, the chance he’ll get the first character right
 			is 1 in 27. Since the probability he’ll get the second character right is also 1 in 27,
@@ -183,29 +185,29 @@
 		<p>The point of all these unfathomably large numbers is not to give you a headache, but to
 			demonstrate that a brute force algorithm (typing every possible random phrase) is not a
 			reasonable strategy for arriving randomly at “to be or not to be that is the question”.
-			Enter genetic algorithms, which will show that we can still start with random phrases
+			Enter genetic algorithms, which will show that you can still start with random phrases
 			and find the solution through simulated evolution.</p>
 
 		<p>Now, it’s worth noting that this problem (<em>arrive at the phrase “to be or not to be
-				that is the question”</em>) is a ridiculous one. Since we know the answer, all we
+				that is the question”</em>) is a ridiculous one. Since you know the answer, all you
 			need to do is type it. Here’s a p5.js sketch that solves the problem.</p>
 
-		<pre data-code-language="java" data-type="programlisting" class="codesplit">
+		<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 String s = "to be or not to be that is the question";
 print(s);</pre>
 
-		<p>Nevertheless, the point here is that solving a problem with a known answer allows us to
-			easily test our code. Once we’ve successfully solved the problem, we can feel more
+		<p>Nevertheless, the point here is that solving a problem with a known answer allows you to
+			easily test your code. Once you've successfully solved the problem, you can feel more
 			confident in using genetic algorithms to do some actual useful work: solving problems
 			with unknown answers. So this first example serves no real purpose other than to
-			demonstrate how genetic algorithms work. If we test the GA results against the known
-			answer and get “to be or not to be”, then we’ve succeeded in writing our genetic
+			demonstrate how genetic algorithms work. If you test the GA results against the known
+			answer and get “to be or not to be”, then you've succeeded in writing a genetic
 			algorithm.</p>
 
 		<div data-type="exercise" id="chapter09_exercise1">
 			<h5>Exercise 9.1</h5>
 
-			<p>Create a sketch that generates random strings. We’ll need to know how to do this in
+			<p>Create a sketch that generates random strings. You'll need to know how to do this in
 				order to implement the genetic algorithm example that will shortly follow. How long
 				does it take for p5.js to randomly generate the string “cat”? How could you
 				adapt this to generate a random design using p5.js’s shape-drawing functions?
@@ -845,21 +847,21 @@ print(s);</pre>
 				genetic information for a member of the population. Let’s call it
 				<strong><em>DNA</em></strong>.</p>
 
-			<pre data-code-language="java" data-type="programlisting" class="codesplit">
+			<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class DNA {
 
 }</pre>
 
 			<p>The population will then be an array of <code>DNA</code> objects.</p>
 
-			<pre data-code-language="java" data-type="programlisting" class="codesplit">
+			<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 // A population of 100 DNA objects
 DNA[] population = new DNA[100];</pre>
 
 			<p>But what stuff goes in the <code>DNA</code> class? For a typing monkey, its DNA is
 				the random phrase it types, a string of characters.</p>
 
-			<pre data-code-language="java" data-type="programlisting" class="codesplit">
+			<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class DNA {
   String phrase;
 }</pre>
@@ -868,7 +870,7 @@ class DNA {
 				use an actual <code>String</code> object as the genetic code. Instead, we’ll use an
 				array of characters.</p>
 
-			<pre data-code-language="java" data-type="programlisting" class="codesplit">
+			<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class DNA {
   //{!1} Each "gene" is one element of the array.
   // We need 18 genes because “to be or not to be” is 18 characters long.
@@ -886,7 +888,7 @@ class DNA {
 				<em>randomly generated DNA</em>. Therefore, in the object’s constructor, we randomly
 				create each character of the array.</p>
 
-			<pre data-code-language="java" data-type="programlisting" class="codesplit">
+			<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class DNA {
   char[] genes = new char[18];
 
@@ -904,7 +906,7 @@ class DNA {
 			<p>Now that we have the constructor, we can return to <code>setup()</code> and
 				initialize each <code>DNA</code> object in the population array.</p>
 
-			<pre data-code-language="java" data-type="programlisting" class="codesplit">
+			<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 DNA[] population = new DNA[100];
 
 function setup() {
@@ -940,13 +942,13 @@ function setup() {
 				write a function inside the <code>DNA</code> class itself to score its own fitness.
 				Let’s assume we have a target phrase:</p>
 
-			<pre data-code-language="java" data-type="programlisting" class="codesplit">
+			<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 String target = "to be or not to be";</pre>
 
 			<p>We can now compare each “gene” against the corresponding character in the target
 				phrase, incrementing a counter each time we get a correct character.</p>
 
-			<pre data-code-language="java" data-type="programlisting" class="codesplit">
+			<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class DNA {
   // We are adding another variable to the
   // DNA class to track fitness.
@@ -969,7 +971,7 @@ class DNA {
 			<p>In the main tab’s <code>draw()</code>, the very first step we’ll take is to call the
 				fitness function for each member of the population.</p>
 
-			<pre data-code-language="java" data-type="programlisting" class="codesplit">
+			<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 function draw() {
 
   for (int i = 0; i < population.length; i++) {
@@ -1016,7 +1018,7 @@ function draw() {
 				parent to the <code>array</code> N number of times where N is equal to its
 				percentage score.</p>
 
-			<pre data-code-language="java" data-type="programlisting" class="codesplit">
+			<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   //{!1} Start with an empty mating pool.
   ArrayList<DNA> matingPool = new ArrayList<DNA>();
 
@@ -1082,13 +1084,13 @@ function draw() {
 			<p>First thing we need are two random indices into the mating pool—random numbers
 				between 0 and the size of the <code>array</code>.</p>
 
-			<pre data-code-language="java" data-type="programlisting" class="codesplit">
+			<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   int a = int(random(matingPool.size()));
   int b = int(random(matingPool.size()));</pre>
 
 			<p>We can use these indices to retrieve an actual DNA instance from the mating pool.</p>
 
-			<pre data-code-language="java" data-type="programlisting" class="codesplit">
+			<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   DNA parentA = matingPool.get(a);
   DNA parentB = matingPool.get(b);</pre>
 
@@ -1112,7 +1114,7 @@ function draw() {
 			<p>Once we have the two parents, we can perform <strong><em>crossover</em></strong> to
 				generate the child DNA, followed by <strong><em>mutation</em></strong>.</p>
 
-			<pre data-code-language="java" data-type="programlisting" class="codesplit">
+			<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   // A function for crossover
   DNA child = parentA.crossover(parentB);
   // A function for mutation
@@ -1123,7 +1125,7 @@ function draw() {
 				called <code>crossover()</code> above indicates that the function receives an
 				instance of DNA as an argument and returns a new instance of DNA, the child.</p>
 
-			<pre data-code-language="java" data-type="programlisting" class="codesplit">
+			<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   // The function receives one argument (DNA) and returns DNA.
   DNA crossover(DNA partner) {
 
@@ -1165,7 +1167,7 @@ function draw() {
 				to the mutation rate. With a mutation rate of 1%, for example, we would pick a new
 				character one time out of a hundred.</p>
 
-			<pre data-code-language="java" data-type="programlisting" class="codesplit">
+			<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 float mutationRate = 0.01;
 
 if (random(1) < mutationRate) {
@@ -1175,7 +1177,7 @@ if (random(1) < mutationRate) {
 
 			<p>The entire function therefore reads:</p>
 
-			<pre data-code-language="java" data-type="programlisting" class="codesplit">
+			<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   void mutate() {
     //{!1} Looking at each gene in the array
     for (int i = 0; i < genes.length; i++) {
@@ -1207,7 +1209,7 @@ if (random(1) < mutationRate) {
 			<h5>Example 9.1: Genetic algorithm: Evolving Shakespeare</h5>
 		</div>
 
-		<pre data-code-language="java" data-type="programlisting" class="codesplit">
+		<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 // Variables we need for our GA
 
 // Mutation rate
@@ -1277,7 +1279,7 @@ function draw() {
 		<p>The main tab precisely mirrors the steps of the genetic algorithm. However, most of the
 			functionality called upon is actually present in the <code>DNA</code> class itself.</p>
 
-		<pre data-code-language="java" data-type="programlisting" class="codesplit">
+		<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class DNA {
 
   char[] genes;
@@ -1371,7 +1373,7 @@ class DNA {
 				the arrays and <code>array</code><code>s</code> to store the population and
 				mating pool).</p>
 
-			<pre data-code-language="java" data-type="programlisting" class="codesplit">
+			<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 float mutationRate = 0.01;
 int totalPopulation = 150;</pre>
 
@@ -1768,7 +1770,7 @@ int totalPopulation = 150;</pre>
 				And where do you do this? All you have to edit are those few lines of code inside
 				the function that computes the fitness variable.</p>
 
-			<pre data-code-language="java" data-type="programlisting" class="codesplit">
+			<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 void fitness() {
   ????????????
   ????????????
@@ -1801,7 +1803,7 @@ void fitness() {
 				been doing this all along. Anytime you write a class in p5.js, you make a whole
 				bunch of variables.</p>
 
-			<pre data-code-language="java" data-type="programlisting" class="codesplit">
+			<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Vehicle {
   float maxspeed;
   float maxforce;
@@ -1814,7 +1816,7 @@ class Vehicle {
 				<code>mutate()</code>, etc.—found in the <code>DNA</code> class. One common solution
 				is to use an array of floating point numbers between 0 and 1.</p>
 
-			<pre data-code-language="java" data-type="programlisting" class="codesplit">
+			<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class DNA {
 
   // An array of floats
@@ -1834,7 +1836,7 @@ class DNA {
 				express that data visually—it is the phenotype. The two can be linked by creating a
 				<code>DNA</code> instance inside the <code>Vehicle</code> class itself.</p>
 
-			<pre data-code-language="java" data-type="programlisting" class="codesplit">
+			<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Vehicle {
   //{!1} A DNA object embedded into the Vehicle class
   DNA dna;
@@ -1862,7 +1864,7 @@ class Vehicle {
 				the range. For example, if you want a size variable between 10 and 72, you would
 				say:</p>
 
-			<pre data-code-language="java" data-type="programlisting" class="codesplit">
+			<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
     size = map(dna.genes[2], 0, 1, 10, 72);</pre>
 
 			<p>In other cases, you will want to design a genotype that is an array of objects.
@@ -1870,7 +1872,7 @@ class Vehicle {
 				describe each thruster with a <code>vector</code> that outlines its direction and
 				relative strength.</p>
 
-			<pre data-code-language="java" data-type="programlisting" class="codesplit">
+			<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class DNA {
 
   // The genotype is an array of PVectors.
@@ -1889,7 +1891,7 @@ class DNA {
 			<p>The phenotype would be a <code>Rocket</code> class that participates in a physics
 				system.</p>
 
-			<pre data-code-language="java" data-type="programlisting" class="codesplit">
+			<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Rocket {
   DNA dna;
   [inline]// etc.</pre>
@@ -1954,7 +1956,7 @@ class Rocket {
 		<p>Let’s start by taking our basic <code>Mover</code> class from Chapter 2 examples and
 			renaming it <code>Rocket</code>.</p>
 
-		<pre data-code-language="java" data-type="programlisting" class="codesplit">
+		<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Rocket {
 
   // A rocket has three vectors: position, velocity, acceleration.
@@ -1999,7 +2001,7 @@ class Rocket {
 
 		<p>Let’s assume we have a <code>vector</code> target.</p>
 
-		<pre data-code-language="java" data-type="programlisting" class="codesplit">
+		<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   void fitness() {
     // How close did we get?
     float d = PVector.dist(position, target);
@@ -2134,7 +2136,7 @@ class Rocket {
 		<p>There are several additional improvements we’ll want to make to the fitness function, but
 			this simple one is a good start.</p>
 
-		<pre data-code-language="java" data-type="programlisting" class="codesplit">
+		<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 void fitness() {
   float d = PVector.dist(position, target);
   //{!1} Squaring 1 divided by distance
@@ -2148,7 +2150,7 @@ void fitness() {
 			of animation. Our genotype, the data required to encode the rocket’s behavior, is
 			therefore an array of <code>vector</code><code>s</code>.</p>
 
-		<pre data-code-language="java" data-type="programlisting" class="codesplit">
+		<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class DNA {
   PVector[] genes;</pre>
 
@@ -2161,7 +2163,7 @@ class DNA {
 			<code>vector</code><code>s</code>. Now, your instinct in creating a random
 			<code>vector</code> might be as follows:</p>
 
-		<pre data-code-language="java" data-type="programlisting" class="codesplit">
+		<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 PVector v = new PVector(random(-1, 1), random(-1, 1));</pre>
 
 		<figure class="half-width-right" id="chapter09_figure12"><img alt="Figure 9.12"
@@ -2186,7 +2188,7 @@ PVector v = new PVector(random(-1, 1), random(-1, 1));</pre>
 			quicker path to the result is just to use <code>vector</code>'s
 			<code>random2D()</code>.</p>
 
-		<pre data-code-language="java" data-type="programlisting" class="codesplit">
+		<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 for (int i = 0; i < genes.length; i++) {
   //{!1} Making a PVector from a random angle
   genes[i] = PVector.random2D();
@@ -2198,7 +2200,7 @@ for (int i = 0; i < genes.length; i++) {
 			<code>DNA</code> class: a maximum force that scales all the
 			<code>vector</code><code>s</code>. This will control the thruster power.</p>
 
-		<pre data-code-language="java" data-type="programlisting" class="codesplit">
+		<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class DNA {
 
   // The genetic sequence is an array of PVectors.
@@ -2230,7 +2232,7 @@ class DNA {
 			knows how to compute its distance to the target, and therefore the fitness function will
 			live here in the phenotype as well.</p>
 
-		<pre data-code-language="java" data-type="programlisting" class="codesplit">
+		<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Rocket {
 
   // A Rocket has DNA.
@@ -2247,7 +2249,7 @@ class Rocket {
 			rocket. To do this, we’ll also have to add an integer that acts as a counter to walk
 			through the array.</p>
 
-		<pre data-code-language="java" data-type="programlisting" class="codesplit">
+		<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   int geneCounter = 0;
 
   void run() {
@@ -2271,7 +2273,7 @@ class Rocket {
 			array of child rockets is exactly the same as what we did with our population of
 			strings.</p>
 
-		<pre data-code-language="java" data-type="programlisting" class="codesplit">
+		<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Population {
 
   // Population has variables to keep
@@ -2298,7 +2300,7 @@ class Population {
 			simulation itself. This is identical to what we did in the <code>run()</code> function
 			of a particle system—update all the particle positions and draw them.</p>
 
-		<pre data-code-language="java" data-type="programlisting" class="codesplit">
+		<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   void live () {
     for (int i = 0; i < population.length; i++) {
       //{!1} The run function takes care of
@@ -2312,7 +2314,7 @@ class Population {
 			tab, our primary responsibility is to implement the steps of the genetic algorithm in
 			the appropriate order by calling the functions in the <code>Population</code> class.</p>
 
-		<pre data-code-language="java" data-type="programlisting" class="codesplit">
+		<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
     population.fitness();
     population.selection();
     population.reproduction();</pre>
@@ -2353,7 +2355,7 @@ class Population {
 			<h5>Example 9.2: Simple Smart Rockets</h5>
 		</div>
 
-		<pre data-code-language="java" data-type="programlisting" class="codesplit">
+		<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 // How many frames does a generation live for?
 int lifetime;
 
@@ -2419,7 +2421,7 @@ function draw() {
 			<h5>Example 9.3: Smart Rockets</h5>
 		</div>
 
-		<pre data-code-language="java" data-type="programlisting" class="codesplit">
+		<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Obstacle {
 
   // An obstacle is a position (top left
@@ -2430,7 +2432,7 @@ class Obstacle {
 		<p>We can also write a <code>contains()</code> function that will <code>return true</code>
 			or <code>return false</code> to determine if a rocket has hit the obstacle.</p>
 
-		<pre data-code-language="java" data-type="programlisting" class="codesplit">
+		<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   boolean contains(PVector v) {
     if (v.x > position.x && v.x < position.x + w && v.y &gt; position.y && v.y < position.y + h) {
       return true;
@@ -2443,7 +2445,7 @@ class Obstacle {
 			check to see if it has collided with an obstacle and set a <code>boolean</code> flag to
 			be true if it does, adding a function to the rocket class.</p>
 
-		<pre data-code-language="java" data-type="programlisting" class="codesplit">
+		<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   // This new function lives in the rocket
   // class and checks if a rocket has
   // hit an obstacle.
@@ -2457,7 +2459,7 @@ class Obstacle {
 
 		<p>If the rocket hits an obstacle, we choose to stop it from updating its position.</p>
 
-		<pre data-code-language="java" data-type="programlisting" class="codesplit">
+		<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   void run() {
     //{!1 .bold} Only run the rocket if it doesn’t hit an obstacle.
     if (!stopped) {
@@ -2473,7 +2475,7 @@ class Obstacle {
 			pretty terrible if the rocket hits an obstacle, and so its fitness should be greatly
 			reduced.</p>
 
-		<pre data-code-language="java" data-type="programlisting" class="codesplit">
+		<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   void fitness() {
     float d = dist(position.x, position.y, target.position.x, target.position.y);
     fitness = pow(1/d, 2);
@@ -2499,7 +2501,7 @@ class Obstacle {
 			this the rocket’s “record” distance. (All of the code snippets in this section live
 			inside the <code>Rocket</code> class.)</p>
 
-		<pre data-code-language="java" data-type="programlisting" class="codesplit">
+		<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   void checkTarget() {
     float d = dist(position.x, position.y, target.position.x, target.position.y);
     // Every frame, we check its distance and see
@@ -2513,7 +2515,7 @@ class Obstacle {
 			reaches the target. At the end of its life, the counter will equal the amount of time
 			the rocket took to reach that target.</p>
 
-		<pre data-code-language="java" data-type="programlisting" class="codesplit">
+		<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
     // If the object reaches the target,
     // set a boolean flag to true.
     if (target.contains(position)) {
@@ -2528,7 +2530,7 @@ class Obstacle {
 		<p>Fitness is also inversely proportional to <code>finishTime</code>, and so we can improve
 			our fitness function as follows:</p>
 
-		<pre data-code-language="java" data-type="programlisting" class="codesplit">
+		<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   void fitness() {
 
     // Finish time and record distance!
@@ -2645,7 +2647,7 @@ class Obstacle {
 		<p>The face’s DNA (genotype) is an array of floating point numbers between 0 and 1, with a
 			single value for each property.</p>
 
-		<pre data-code-language="java" data-type="programlisting" class="codesplit">
+		<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class DNA {
 
   float[] genes;
@@ -2663,7 +2665,7 @@ class DNA {
 		<p>The phenotype is a <code>Face</code> class that includes an instance of a
 			<code>DNA</code> object.</p>
 
-		<pre data-code-language="java" data-type="programlisting" class="codesplit">
+		<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Face {
 
   DNA dna;
@@ -2674,7 +2676,7 @@ class Face {
 			color values. (In this case, we are also using <code>colorMode()</code> to set the RGB
 			ranges between 0 and 1.)</p>
 
-		<pre data-code-language="java" data-type="programlisting" class="codesplit">
+		<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 	void display() {
 
 	  //{.offset-top} Using map() to convert the genes to a range for drawing the face.
@@ -2723,7 +2725,7 @@ class Face {
 			<h5>Example 9.4: Interactive selection</h5>
 		</div>
 
-		<pre data-code-language="java" data-type="programlisting" class="codesplit">
+		<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 Population population;
 Button button;
 
@@ -2832,7 +2834,7 @@ void mousePressed() {
 			will have a radius and a maximum speed. The bigger it is, the slower it moves; the
 			smaller, the faster.</p>
 
-		<pre data-code-language="java" data-type="programlisting" class="codesplit">
+		<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Bloop {
   // A position
   PVector position;
@@ -2871,7 +2873,7 @@ class Bloop {
 			<code>array</code> in a class called <code>World</code>, which will manage all the
 			elements of the bloops’ world.</p>
 
-		<pre data-code-language="java" data-type="programlisting" class="codesplit">
+		<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class World {
 
   //{!1} A list of bloops
@@ -2908,14 +2910,14 @@ class World {
 			One way we can build a mechanism to ensure bloop deaths in our world is by adding a
 			<code>health</code> variable to the <code>Bloop</code> class.</p>
 
-		<pre data-code-language="java" data-type="programlisting" class="codesplit">
+		<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Bloop {
   //{!1} A bloop is born with 100 health points.
   float health = 100;</pre>
 
 		<p>In each frame of animation, a bloop loses some health.</p>
 
-		<pre data-code-language="java" data-type="programlisting" class="codesplit">
+		<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   void update() {
     // All that other stuff for movement
 
@@ -2925,7 +2927,7 @@ class Bloop {
 
 		<p>If health drops below 0, the bloop dies.</p>
 
-		<pre data-code-language="java" data-type="programlisting" class="codesplit">
+		<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   // We add a function to the Bloop class
   // to test if the bloop is alive or dead.
   boolean dead() {
@@ -2956,7 +2958,7 @@ class Bloop {
 			bloop is close enough, it eats the food (which is then removed from the world) and
 			increases its health.</p>
 
-		<pre data-code-language="java" data-type="programlisting" class="codesplit">
+		<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   void eat() {
     for (int i = food.size()-1; i >= 0; i--) {
       PVector foodposition = food.get(i);
@@ -3003,7 +3005,7 @@ class Bloop {
 			<p>Since size and speed are inversely related (large bloops are slow, small bloops are
 				fast), we only need a genotype with a single number.</p>
 
-			<pre data-code-language="java" data-type="programlisting" class="codesplit">
+			<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class DNA {
 
   float[] genes;
@@ -3022,7 +3024,7 @@ class DNA {
 			<p>The phenotype then is the bloop itself, whose size and speed is assigned by adding an
 				instance of a <code>DNA</code> object to the <code>Bloop</code> class.</p>
 
-			<pre data-code-language="java" data-type="programlisting" class="codesplit">
+			<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Bloop {
   PVector position;
   float health;
@@ -3086,7 +3088,7 @@ class Bloop {
 				<code>Bloop</code> class that picks a random number every frame. If the number is
 				less than 0.01 (1%), a new bloop is born.</p>
 
-			<pre data-code-language="java" data-type="programlisting" class="codesplit">
+			<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   // This function will return a new bloop, the child.
   Bloop reproduce() {
 
@@ -3102,7 +3104,7 @@ class Bloop {
 				and making a new object from the newly made DNA. Here, since we are making a child
 				from a single parent, we’ll call a function called <code>copy()</code> instead.</p>
 
-			<pre data-code-language="java" data-type="programlisting" class="codesplit">
+			<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   Bloop reproduce() {
     if (random(1) < 0.0005) {
       //{.bold} Make a copy of the DNA.
@@ -3127,7 +3129,7 @@ class Bloop {
 				since p5.js includes a function <code>arraycopy()</code> that copies the
 				contents of one array into another.</p>
 
-			<pre data-code-language="java" data-type="programlisting" class="codesplit">
+			<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class DNA {
 
   //{!1} This copy() function replaces
@@ -3158,7 +3160,7 @@ class DNA {
 				<h5>Example 9.5: Evolution ecosystem</h5>
 			</div>
 
-			<pre data-code-language="java" data-type="programlisting" class="codesplit">
+			<pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 World world;
 
 //{!9} setup() and draw() do nothing more than create
