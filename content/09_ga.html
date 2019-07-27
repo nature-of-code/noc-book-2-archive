@@ -9,7 +9,7 @@
 		<p data-type="attribution">— Richard Dawkins</p>
 	</blockquote>
 
-	<p>Let’s take a moment to think back to a simpler time, when you wrote your first Processing
+	<p>Let’s take a moment to think back to a simpler time, when you wrote your first p5.js
 		sketches and life was free and easy. What is one of programming’s fundamental concepts that
 		you likely used in those first sketches and continue to use over and over again?
 		<em>Variables</em>. Variables allow you to save data and reuse that data while a program
@@ -188,11 +188,11 @@
 
 		<p>Now, it’s worth noting that this problem (<em>arrive at the phrase “to be or not to be
 				that is the question”</em>) is a ridiculous one. Since we know the answer, all we
-			need to do is type it. Here’s a Processing sketch that solves the problem.</p>
+			need to do is type it. Here’s a p5.js sketch that solves the problem.</p>
 
 		<pre data-code-language="java" data-type="programlisting" class="codesplit">
 String s = "to be or not to be that is the question";
-println(s);</pre>
+print(s);</pre>
 
 		<p>Nevertheless, the point here is that solving a problem with a known answer allows us to
 			easily test our code. Once we’ve successfully solved the problem, we can feel more
@@ -207,8 +207,8 @@ println(s);</pre>
 
 			<p>Create a sketch that generates random strings. We’ll need to know how to do this in
 				order to implement the genetic algorithm example that will shortly follow. How long
-				does it take for Processing to randomly generate the string “cat”? How could you
-				adapt this to generate a random design using Processing’s shape-drawing functions?
+				does it take for p5.js to randomly generate the string “cat”? How could you
+				adapt this to generate a random design using p5.js’s shape-drawing functions?
 			</p>
 		</div>
 	</section>
@@ -268,8 +268,8 @@ println(s);</pre>
 
 		<p>Next I’d like to walk through the narrative of the genetic algorithm. We’ll do this in
 			the context of the typing monkey. The algorithm itself will be divided into two parts: a
-			set of conditions for initialization (i.e. Processing’s <code>setup()</code>) and the
-			steps that are repeated over and over again (i.e. Processing’s <code>draw()</code>)
+			set of conditions for initialization (i.e. p5.js’s <code>setup()</code>) and the
+			steps that are repeated over and over again (i.e. p5.js’s <code>draw()</code>)
 			until we arrive at the correct answer.</p>
 	</section>
 
@@ -800,7 +800,7 @@ println(s);</pre>
 			reproduction again.</p>
 
 		<p>Now that we have described all the steps of the genetic algorithm in detail, it’s time to
-			translate these steps into Processing code. Because the previous description was a bit
+			translate these steps into p5.js code. Because the previous description was a bit
 			longwinded, let’s look at an overview of the algorithm first. We’ll then cover each of
 			the three steps in its own section, working out the code.</p>
 
@@ -841,7 +841,7 @@ println(s);</pre>
 				members of the population. In most cases (such as our typing-monkey example), the
 				number of elements in the population can be fixed, and so we use an array. (Later
 				we’ll see examples that involve a growing/shrinking population and we’ll use an
-				<code>ArrayList</code>.) But an array of what? We need an object that stores the
+				<code>array</code>.) But an array of what? We need an object that stores the
 				genetic information for a member of the population. Let’s call it
 				<strong><em>DNA</em></strong>.</p>
 
@@ -877,7 +877,7 @@ class DNA {
 
 			<p>By using an array, we’ll be able to extend all the code we write into other examples.
 				For example, the DNA of a creature in a physics system might be an array of
-				<code>PVector</code><code>s</code>—or for an image, an array of integers (RGB
+				<code>vector</code><code>s</code>—or for an image, an array of integers (RGB
 				colors). We can describe any set of properties in an array, and even though a string
 				is convenient for this particular sketch, an array will serve as a better foundation
 				for future evolutionary examples.</p>
@@ -907,7 +907,7 @@ class DNA {
 			<pre data-code-language="java" data-type="programlisting" class="codesplit">
 DNA[] population = new DNA[100];
 
-void setup() {
+function setup() {
   for (int i = 0; i < population.length; i++) {
     //{!1} Initializing each member of the population
     population[i] = new DNA();
@@ -970,7 +970,7 @@ class DNA {
 				fitness function for each member of the population.</p>
 
 			<pre data-code-language="java" data-type="programlisting" class="codesplit">
-void draw() {
+function draw() {
 
   for (int i = 0; i < population.length; i++) {
     population[i].fitness();
@@ -1006,14 +1006,14 @@ void draw() {
 			</figure>
 
 			<p>Instead we can pick from the five options (ABCDE) according to their probabilities by
-				filling an <code>ArrayList</code> with multiple instances of each parent. In other
+				filling an <code>array</code> with multiple instances of each parent. In other
 				words, let’s say you had a bucket of wooden letters—30 As, 40 Bs, 5 Cs, 15 Ds, and
 				10 Es.</p>
 
 			<p>If you pick a random letter out of that bucket, there’s a 30% chance you’ll get an A,
 				a 5% chance you’ll get a C, and so on. For us, that bucket is an
-				<code>ArrayList</code>, and each wooden letter is a potential parent. We add each
-				parent to the <code>ArrayList</code> N number of times where N is equal to its
+				<code>array</code>, and each wooden letter is a potential parent. We add each
+				parent to the <code>array</code> N number of times where N is equal to its
 				percentage score.</p>
 
 			<pre data-code-language="java" data-type="programlisting" class="codesplit">
@@ -1080,7 +1080,7 @@ void draw() {
 				<code>parentB</code>.</p>
 
 			<p>First thing we need are two random indices into the mating pool—random numbers
-				between 0 and the size of the <code>ArrayList</code>.</p>
+				between 0 and the size of the <code>array</code>.</p>
 
 			<pre data-code-language="java" data-type="programlisting" class="codesplit">
   int a = int(random(matingPool.size()));
@@ -1222,8 +1222,8 @@ ArrayList<DNA> matingPool;
 // Target phrase
 String target;
 
-void setup() {
-  size(640, 360);
+function setup() {
+  createCanvas(640, 360);
 
   //{!2} Initializing target phrase and mutation rate
   target = "to be or not to be";
@@ -1236,7 +1236,7 @@ void setup() {
   }
 }
 
-void draw() {
+function draw() {
 
   // <b><span style="font-size: 110%; text-decoration:underline;">Step 2: Selection</b></span>
 
@@ -1355,7 +1355,7 @@ class DNA {
 			reproduction don’t need to change. There are, however, three key components to genetic
 			algorithms that you, the developer, will have to customize for each use. This is crucial
 			to moving beyond trivial demonstrations of evolutionary simulations (as in the
-			Shakespeare example) to creative uses in projects that you make in Processing and other
+			Shakespeare example) to creative uses in projects that you make in p5.js and other
 			creative programming environments.</p>
 
 		<section data-type="sect2" id="_key_1_varying_the_variables">
@@ -1368,7 +1368,7 @@ class DNA {
 
 			<p>There aren’t a lot of variables to the genetic algorithm itself. In fact, if you look
 				at the previous example’s code, you’ll see only two global variables (not including
-				the arrays and <code>ArrayList</code><code>s</code> to store the population and
+				the arrays and <code>array</code><code>s</code> to store the population and
 				mating pool).</p>
 
 			<pre data-code-language="java" data-type="programlisting" class="codesplit">
@@ -1594,7 +1594,7 @@ int totalPopulation = 150;</pre>
 
 			<p>There are a couple of problems here. First, we are adding elements to the mating pool
 				N numbers of times, where N equals fitness multiplied by 100. Objects can only be
-				added to an <code>ArrayList</code> a whole number of times, and so A and B will both
+				added to an <code>array</code> a whole number of times, and so A and B will both
 				be added 80 times, giving them an equal probability of being selected. Even with an
 				improved solution that takes floating point probabilities into account, 80.1% is
 				only a teeny tiny bit higher than 80%. But getting 801 characters right is a whole
@@ -1721,7 +1721,7 @@ int totalPopulation = 150;</pre>
 			<p>While this rather specific discussion of exponential vs. linear fitness functions is
 				an important detail in the design of a good fitness function, I don’t want us to
 				miss the more important point here: <em>Design your own fitness function!</em> I
-				seriously doubt that any project you undertake in Processing with genetic algorithms
+				seriously doubt that any project you undertake in p5.js with genetic algorithms
 				will actually involve counting the correct number of characters in a string. In the
 				context of this book, it’s more likely you will be looking to evolve a creature that
 				is part of a physics system. Perhaps you are looking to optimize the weights of
@@ -1798,7 +1798,7 @@ void fitness() {
 				drawn in the window).</p>
 
 			<p>The good news is—and we hinted at this at the start of this chapter—you’ve really
-				been doing this all along. Anytime you write a class in Processing, you make a whole
+				been doing this all along. Anytime you write a class in p5.js, you make a whole
 				bunch of variables.</p>
 
 			<pre data-code-language="java" data-type="programlisting" class="codesplit">
@@ -1858,7 +1858,7 @@ class Vehicle {
 			<p>Of course, you most likely don’t want all your variables to have a range between 0
 				and 1. But rather than try to remember how to adjust those ranges in the
 				<code>DNA</code> class itself, it’s easier to pull the genetic information from the
-				<code>DNA</code> object and use Processing’s <code>map()</code> function to change
+				<code>DNA</code> object and use p5.js’s <code>map()</code> function to change
 				the range. For example, if you want a size variable between 10 and 72, you would
 				say:</p>
 
@@ -1867,7 +1867,7 @@ class Vehicle {
 
 			<p>In other cases, you will want to design a genotype that is an array of objects.
 				Consider the design of a rocket with a series of “thruster” engines. You could
-				describe each thruster with a <code>PVector</code> that outlines its direction and
+				describe each thruster with a <code>vector</code> that outlines its direction and
 				relative strength.</p>
 
 			<pre data-code-language="java" data-type="programlisting" class="codesplit">
@@ -1901,12 +1901,12 @@ class Rocket {
 				separate classes (<code>DNA</code> and <code>Rocket</code> for example) is that when
 				it comes time to build all of the code, you’ll notice that the <code>DNA</code>
 				class we developed earlier remains intact. The only thing that changes is the
-				array’s data type (<code>float</code>, <code>PVector</code>, etc.) and the
+				array’s data type (<code>float</code>, <code>vector</code>, etc.) and the
 				expression of that data in the phenotype class.</p>
 
 			<p>In the next section, we’ll follow this idea a bit further and walk through the
 				necessary steps for an example that involves moving bodies and an array of
-				<code>PVector</code><code>s</code> as DNA.</p>
+				<code>vector</code><code>s</code> as DNA.</p>
 		</section>
 	</section>
 
@@ -1997,7 +1997,7 @@ class Rocket {
 			distance: the smaller the distance, the greater the fitness; the greater the distance,
 			the smaller the fitness.</p>
 
-		<p>Let’s assume we have a <code>PVector</code> target.</p>
+		<p>Let’s assume we have a <code>vector</code> target.</p>
 
 		<pre data-code-language="java" data-type="programlisting" class="codesplit">
   void fitness() {
@@ -2144,9 +2144,9 @@ void fitness() {
 		<p><span class="highlight">Key #3: Genotype and Phenotype</span></p>
 
 		<p>We stated that each rocket has a thruster that fires in a variable direction with a
-			variable magnitude in each frame. And so we need a <code>PVector</code> for each frame
+			variable magnitude in each frame. And so we need a <code>vector</code> for each frame
 			of animation. Our genotype, the data required to encode the rocket’s behavior, is
-			therefore an array of <code>PVector</code><code>s</code>.</p>
+			therefore an array of <code>vector</code><code>s</code>.</p>
 
 		<pre data-code-language="java" data-type="programlisting" class="codesplit">
 class DNA {
@@ -2158,8 +2158,8 @@ class DNA {
 			we initialize the array of genes. With the typing monkey, we had an array of characters
 			and picked a random character for each element of the array. Here we’ll do exactly the
 			same thing and initialize a DNA sequence as an array of random
-			<code>PVector</code><code>s</code>. Now, your instinct in creating a random
-			<code>PVector</code> might be as follows:</p>
+			<code>vector</code><code>s</code>. Now, your instinct in creating a random
+			<code>vector</code> might be as follows:</p>
 
 		<pre data-code-language="java" data-type="programlisting" class="codesplit">
 PVector v = new PVector(random(-1, 1), random(-1, 1));</pre>
@@ -2172,7 +2172,7 @@ PVector v = new PVector(random(-1, 1), random(-1, 1));</pre>
 		<p>This is perfectly fine and will likely do the trick. However, if we were to draw every
 			single possible vector we might pick, the result would fill a square (see Figure 9.12).
 			In this case, it probably doesn’t matter, but there is a slight bias to diagonals here
-			given that a <code>PVector</code> from the center of a square to a corner is longer than
+			given that a <code>vector</code> from the center of a square to a corner is longer than
 			a purely vertical or horizontal one.</p>
 
 		<figure class="half-width-right" id="chapter09_figure13"><img alt="Figure 9.13"
@@ -2180,10 +2180,10 @@ PVector v = new PVector(random(-1, 1), random(-1, 1));</pre>
 			<figcaption>Figure 9.13</figcaption>
 		</figure>
 
-		<p>What would be better here is to pick a random angle and make a <code>PVector</code> of
+		<p>What would be better here is to pick a random angle and make a <code>vector</code> of
 			length one from that angle, giving us a circle (see Figure 9.13). This could be easily
 			done with a <a href="#chapter03_section5">quick polar to Cartesian conversion</a>, but a
-			quicker path to the result is just to use <code>PVector</code>'s
+			quicker path to the result is just to use <code>vector</code>'s
 			<code>random2D()</code>.</p>
 
 		<pre data-code-language="java" data-type="programlisting" class="codesplit">
@@ -2192,11 +2192,11 @@ for (int i = 0; i < genes.length; i++) {
   genes[i] = PVector.random2D();
 }</pre>
 
-		<p>A <code>PVector</code> of length one is actually going to be quite a large force.
+		<p>A <code>vector</code> of length one is actually going to be quite a large force.
 			Remember, forces are applied to acceleration, which accumulates into velocity thirty
 			times per second. So, for this example, we can also add one more variable to the
 			<code>DNA</code> class: a maximum force that scales all the
-			<code>PVector</code><code>s</code>. This will control the thruster power.</p>
+			<code>vector</code><code>s</code>. This will control the thruster power.</p>
 
 		<pre data-code-language="java" data-type="programlisting" class="codesplit">
 class DNA {
@@ -2218,13 +2218,13 @@ class DNA {
     }
   }</pre>
 
-		<p>Notice also that we created an array of <code>PVector</code><code>s</code> with length
-			lifetime. We need a <code>PVector</code> for each frame of the rocket’s life, and the
+		<p>Notice also that we created an array of <code>vector</code><code>s</code> with length
+			lifetime. We need a <code>vector</code> for each frame of the rocket’s life, and the
 			above assumes the existence of a global variable lifetime that stores the total number
 			of frames in each generation’s life cycle.</p>
 
-		<p>The expression of this array of <code>PVector</code><code>s</code>, the phenotype, is a
-			<code>Rocket</code> class modeled on our basic <code>PVector</code> and forces examples
+		<p>The expression of this array of <code>vector</code><code>s</code>, the phenotype, is a
+			<code>Rocket</code> class modeled on our basic <code>vector</code> and forces examples
 			from Chapter 2. All we need to do is add an instance of a <code>DNA</code> object to the
 			class. The fitness variable will also live here. Only the <code>Rocket</code> object
 			knows how to compute its distance to the target, and therefore the fitness function will
@@ -2243,7 +2243,7 @@ class Rocket {
   PVector acceleration;</pre>
 
 		<p>What are we using the DNA for? We are marching through the array of
-			<code>PVector</code><code>s</code> and applying them one at a time as a force to the
+			<code>vector</code><code>s</code> and applying them one at a time as a force to the
 			rocket. To do this, we’ll also have to add an integer that acts as a counter to walk
 			through the array.</p>
 
@@ -2363,8 +2363,8 @@ int lifeCounter;
 // The population
 Population population;
 
-void setup() {
-  size(640, 480);
+function setup() {
+  createCanvas(640, 480);
   lifetime = 500;
   lifeCounter = 0;
 
@@ -2375,7 +2375,7 @@ void setup() {
   population = new Population(mutationRate, 50);
 }
 
-void draw() {
+function draw() {
   background(255);
   // The revised genetic algorithm
   if (lifeCounter < lifetime) {
@@ -2439,7 +2439,7 @@ class Obstacle {
     }
   }</pre>
 
-		<p>Assuming we make an <code>ArrayList</code> of obstacles, we can then have each rocket
+		<p>Assuming we make an <code>array</code> of obstacles, we can then have each rocket
 			check to see if it has collided with an obstacle and set a <code>boolean</code> flag to
 			be true if it does, adding a function to the rocket class.</p>
 
@@ -2574,7 +2574,7 @@ class Obstacle {
 			<h5>Exercise 9.11</h5>
 
 			<p>Another way to achieve a similar result is to evolve a flow field. Can you make the
-				genotype of a rocket a flow field of <code>PVector</code><code>s</code>?</p>
+				genotype of a rocket a flow field of <code>vector</code><code>s</code>?</p>
 		</div>
 
 		<a data-primary="Evolved Virtual Creatures (Sims)" data-type="indexterm"></a> <a
@@ -2587,7 +2587,7 @@ class Obstacle {
 		</p>
 
 		<p>One of the innovations in Sims’s work is a node-based genotype. In other words, the
-			creature’s DNA is not a linear list of <code>PVector</code><code>s</code> or numbers,
+			creature’s DNA is not a linear list of <code>vector</code><code>s</code> or numbers,
 			but a map of nodes. (For an example of this, take a look at <a
 				href="#chapter05_exercise15">Exercise 5.15</a>, toxiclibs' Force Directed Graph.)
 			The phenotype is the creature’s design itself, a network of limbs connected with
@@ -2669,7 +2669,7 @@ class Face {
   DNA dna;
   float fitness;</pre>
 
-		<p>When it comes time to draw the face on screen, we can use Processing’s <code>map()</code>
+		<p>When it comes time to draw the face on screen, we can use p5.js’s <code>map()</code>
 			function to convert any gene value to the appropriate range for pixel dimensions or
 			color values. (In this case, we are also using <code>colorMode()</code> to set the RGB
 			ranges between 0 and 1.)</p>
@@ -2727,14 +2727,14 @@ class Face {
 Population population;
 Button button;
 
-void setup() {
-  size(780, 200);
+function setup() {
+  createCanvas(780, 200);
   float mutationRate = 0.05;
   population = new Population(mutationRate, 10);
   button = new Button(15, 150, 160, 20, "evolve new generation");
 }
 
-void draw() {
+function draw() {
 
   population.display();
   //{!1 .bold} The mouse position is passed to
@@ -2866,9 +2866,9 @@ class Bloop {
 			constructor), but you get the idea.</p>
 
 		<p>For this example, we’ll want to store the population of bloops in an
-			<code>ArrayList</code>, rather than an array, as we expect the population to grow and
+			<code>array</code>, rather than an array, as we expect the population to grow and
 			shrink according to how often bloops die or are born. We can store this
-			<code>ArrayList</code> in a class called <code>World</code>, which will manage all the
+			<code>array</code> in a class called <code>World</code>, which will manage all the
 			elements of the bloops’ world.</p>
 
 		<pre data-code-language="java" data-type="programlisting" class="codesplit">
@@ -2951,7 +2951,7 @@ class Bloop {
 			have faster and faster bloops. Another option would be to introduce food. When a bloop
 			eats food, it increases its health points, and therefore extends its life.</p>
 
-		<p>Let’s assume we have an <code>ArrayList</code> of <code>PVector</code> positions for
+		<p>Let’s assume we have an <code>array</code> of <code>vector</code> positions for
 			food, named “food.” We could test each bloop’s proximity to each food position. If the
 			bloop is close enough, it eats the food (which is then removed from the world) and
 			increases its health.</p>
@@ -3124,7 +3124,7 @@ class Bloop {
 				likely quickly die out.</p>
 
 			<p>Writing the <code>copy()</code> function into the <code>DNA</code> class is easy
-				since Processing includes a function <code>arraycopy()</code> that copies the
+				since p5.js includes a function <code>arraycopy()</code> that copies the
 				contents of one array into another.</p>
 
 			<pre data-code-language="java" data-type="programlisting" class="codesplit">
@@ -3144,7 +3144,7 @@ class DNA {
 			<p>Now that we have all the pieces in place for selection and reproduction, we can
 				finalize the <code>World</code> class that manages the list of all
 				<code>Bloop</code> objects (as well as a <code>Food</code> object, which itself is a
-				list of <code>PVector</code> positions for food).</p>
+				list of <code>vector</code> positions for food).</p>
 
 			<p>Before you run the example, take a moment to guess what size and speed of bloops the
 				system will evolve towards. We’ll discuss following the code.</p>
@@ -3163,12 +3163,12 @@ World world;
 
 //{!9} setup() and draw() do nothing more than create
 // and run a World object.
-void setup() {
-  size(600, 400);
+function setup() {
+  createCanvas(600, 400);
   world = new World(20);
 }
 
-void draw() {
+function draw() {
   background(255);
   world.run();
 }
