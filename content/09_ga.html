@@ -1586,9 +1586,11 @@ let totalPopulation = 150;</pre>
                 problem’s goals and evaluate numerically how well those goals have been achieved,
                 then you will not have successful evolution in your simulation.</p>
 
-            <p>Before I move onto other scenarios exploring other fitness functions, I want to look at
+            <p>Before I move onto other scenarios exploring other fitness functions, I want to look
+                at
                 flaws in my Shakespearean fitness function. Consider solving for a phrase that is
-                not nineteen characters long, but one thousand. Now, in the case there are two members
+                not nineteen characters long, but one thousand. Now, in the case there are two
+                members
                 of the population, one with 800 characters correct and one with 801. Here are their
                 fitness scores:</p>
 
@@ -1938,7 +1940,7 @@ class Rocket {
             data-type="indexterm"></a> <a data-primary="Thorp" data-secondary="Jer"
             data-type="indexterm"></a>
 
-        <p>We picked the rocket idea for a specific reason. In 2009, <a href="http://blprnt.com">Jer
+        <p>I picked the rocket idea for a specific reason. In 2009, <a href="http://blprnt.com">Jer
                 Thorp</a> released a genetic algorithms example on his blog entitled “Smart
             Rockets.” Jer points out that NASA uses evolutionary computing techniques to solve all
             sorts of problems, from satellite antenna design to rocket firing patterns. This
@@ -1962,72 +1964,75 @@ class Rocket {
             thrusters don’t fire all at once and continuously; rather, they fire one at a time in a
             custom sequence.</p>
 
-        <p>In this section, we’re going to evolve our own simplified Smart Rockets, inspired by Jer
-            Thorp’s. When we get to the end of the section, we’ll leave implementing some of Jer’s
+        <p>In this section, I'm going to evolve my own simplified Smart Rockets, inspired by Jer
+            Thorp’s. When I get to the end of the section, I'll leave implementing some of Jer’s
             additional advanced features as an exercise.</p>
 
-        <p>Our rockets will have only one thruster, and this thruster will be able to fire in any
+        <p>My rockets will have only one thruster, and this thruster will be able to fire in any
             direction with any strength for every frame of animation. This isn’t particularly
-            realistic, but it will make building out the framework a little easier. (We can always
+            realistic, but it will make building out the framework a little easier. (You can always
             make the rocket and its thrusters more advanced and realistic later.)</p>
 
-        <p>Let’s start by taking our basic <code>Mover</code> class from Chapter 2 examples and
+        <p>I will start by taking the basic <code>Mover</code> class from Chapter 2 examples and
             renaming it <code>Rocket</code>.</p>
 
         <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Rocket {
 
-  // A rocket has three vectors: position, velocity, acceleration.
-  PVector position;
-  PVector velocity;
-  PVector acceleration;
+
+  constructor(pos){
+    // A rocket has three vectors: position, velocity, acceleration.
+    this.position = pos.copy();
+    this.velocity = createVector();
+    this.acceleration = createVector();
+  }
 
   // Accumulating forces into acceleration (Newton’s 2nd law)
-  void applyForce(PVector f) {
-    acceleration.add(f);
+  applyForce(f) {
+    this.acceleration.add(f);
   }
 
   // Our simple physics model (Euler integration)
-  void update() {
+  update() {
     // Velocity changes according to acceleration.
-    velocity.add(acceleration);
+    this.velocity.add(this.acceleration);
     //{!2} position changes according to velocity.
-    position.add(velocity);
-    acceleration.mult(0);
+    this.position.add(this.velocity);
+    this.acceleration.mult(0);
   }
 }</pre>
 
-        <p>Using the above framework, we can implement our smart rocket by saying that for every
-            frame of animation, we call <code>applyForce()</code> with a new force. The “thruster”
+        <p>Using the above framework, I can implement our smart rocket by saying that for every
+            frame of animation, I call <code>applyForce()</code> with a new force. The “thruster”
             applies a single force to the rocket each time through <code>draw()</code>.</p>
 
-        <p>Considering this example, let’s go through the three keys to programming our own custom
+        <p>Considering this example, I will go through the three keys to programming a custom
             genetic algorithm example as outlined in the previous section.</p>
 
         <p><strong>Key #1: Population size and mutation rate</strong></p>
 
-        <p>We can actually hold off on this first key for the moment. Our strategy will be to pick
+        <p>I will actually hold off on this first key for the moment. My strategy will be to pick
             some reasonable numbers (a population of 100 rockets, mutation rate of 1%) and build out
-            the system, playing with these numbers once we have our sketch up and running.</p>
+            the system, playing with these numbers once I have my sketch up and running.</p>
 
         <p><strong>Key #2: The fitness function</strong></p>
 
-        <p>We stated the goal of a rocket reaching a target. In other words, the closer a rocket
+        <p>I stated the goal of a rocket reaching a target. In other words, the closer a rocket
             gets to the target, the higher the fitness. Fitness is inversely proportional to
             distance: the smaller the distance, the greater the fitness; the greater the distance,
             the smaller the fitness.</p>
 
-        <p>Let’s assume we have a <code>vector</code> target.</p>
+        <p>Let’s assume I have a <code>vector</code> target.</p>
 
         <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-  void fitness() {
+  calcfitness() {
     // How close did we get?
-    float d = PVector.dist(position, target);
+    let d = p5.Vector.dist(this.position, target);
     //{!1} Fitness is inversely proportional to distance.
-    fitness = 1/d;
+    this.fitness = 1/d;
   }</pre>
 
-        <p>This is perhaps the simplest fitness function we could write. By using one divided by
+        <p>This is perhaps the simplest fitness function I could write. By using one divided by
             distance, large distances become small numbers and small distances become large.</p>
 
         <table>
@@ -2081,7 +2086,7 @@ class Rocket {
             </tbody>
         </table>
 
-        <p>And if we wanted to use our exponential trick from the previous section, we could use one
+        <p>And if I wanted to use my exponential trick from the previous section, I could use one
             divided by distance squared.</p>
 
         <table>
@@ -2151,46 +2156,48 @@ class Rocket {
             </tbody>
         </table>
 
-        <p>There are several additional improvements we’ll want to make to the fitness function, but
+        <p>There are several additional improvements I'll want to make to the fitness function, but
             this simple one is a good start.</p>
 
         <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-void fitness() {
-  float d = PVector.dist(position, target);
+calcFitness() {
+  let d = p5.Vector.dist(position, target);
   //{!1} Squaring 1 divided by distance
-  fitness = pow(1/d, 2);
+  this.fitness = pow(1/d, 2);
 }</pre>
 
         <p><span class="highlight">Key #3: Genotype and Phenotype</span></p>
 
-        <p>We stated that each rocket has a thruster that fires in a variable direction with a
-            variable magnitude in each frame. And so we need a <code>vector</code> for each frame
-            of animation. Our genotype, the data required to encode the rocket’s behavior, is
+        <p>I stated that each rocket has a thruster that fires in a variable direction with a
+            variable magnitude in each frame. And so I need a <code>vector</code> for each frame
+            of animation. The genotype, the data required to encode the rocket’s behavior, is
             therefore an array of <code>vector</code><code>s</code>.</p>
 
         <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class DNA {
-  PVector[] genes;</pre>
+  constructor(num){
+      this.genes = [];
+  }</pre>
 
-        <p>The happy news here is that we don’t really have to do anything else to the
+        <p>The happy news here is that I don’t really have to do anything else to the
             <code>DNA</code> class. All of the functionality we developed for the typing monkey
-            (crossover and mutation) applies here. The one difference we do have to consider is how
-            we initialize the array of genes. With the typing monkey, we had an array of characters
-            and picked a random character for each element of the array. Here we’ll do exactly the
+            (crossover and mutation) applies here. The one difference I do have to consider is how
+            to initialize the array of genes. With the typing monkey, I had an array of characters
+            and picked a random character for each element of the array. Here I'll do exactly the
             same thing and initialize a DNA sequence as an array of random
             <code>vector</code><code>s</code>. Now, your instinct in creating a random
             <code>vector</code> might be as follows:</p>
 
         <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-PVector v = new PVector(random(-1, 1), random(-1, 1));</pre>
+let v = createVector(random(-1, 1), random(-1, 1));</pre>
 
         <figure class="half-width-right" id="chapter09_figure12"><img alt="Figure 9.12"
                 src="chapter09/ch09_12.png" />
             <figcaption>Figure 9.12</figcaption>
         </figure>
 
-        <p>This is perfectly fine and will likely do the trick. However, if we were to draw every
-            single possible vector we might pick, the result would fill a square (see Figure 9.12).
+        <p>This is perfectly fine and will likely do the trick. However, if I were to draw every
+            single possible vector I might pick, the result would fill a square (see Figure 9.12).
             In this case, it probably doesn’t matter, but there is a slight bias to diagonals here
             given that a <code>vector</code> from the center of a square to a corner is longer than
             a purely vertical or horizontal one.</p>
@@ -2207,129 +2214,145 @@ PVector v = new PVector(random(-1, 1), random(-1, 1));</pre>
             <code>random2D()</code>.</p>
 
         <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-for (int i = 0; i < genes.length; i++) {
+for (let i = 0; i < num; i++) {
   //{!1} Making a PVector from a random angle
-  genes[i] = PVector.random2D();
+  this.genes[i] = p5.Vector.random2D();
 }</pre>
 
         <p>A <code>vector</code> of length one is actually going to be quite a large force.
             Remember, forces are applied to acceleration, which accumulates into velocity thirty
-            times per second. So, for this example, we can also add one more variable to the
+            times per second. So, for this example, I will also add one more variable to the
             <code>DNA</code> class: a maximum force that scales all the
             <code>vector</code><code>s</code>. This will control the thruster power.</p>
 
         <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class DNA {
-
-  // The genetic sequence is an array of PVectors.
-  PVector[] genes;
-
-  // How strong can the thrusters be?
-  float maxforce = 0.1;
-
-  DNA() {
+  constructor() {
     // We need a PVector for every frame of the rocket’s life.
-    genes = new PVector[lifetime];
-    for (int i = 0; i < genes.length; i++) {
-      genes[i] = PVector.random2D();
-      //{!1} Scaling the PVectors randomly,
+    // The genetic sequence is an array of vectors.
+    this.genes = [];
+    // How strong can the thrusters be?
+    this.maxForce = 0.1;
+    // notice that genes are equal to a global variable called lifetime
+    for (let i = 0; i < lifetime; i++) {
+      this.genes[i] = p5.Vector.random2D();
+      //{!1} Scaling the vectors randomly,
       // but no stronger than maximum force
-      genes[i].mult(random(0, maxforce));
+      this.genes[i].mult(random(0, maxforce));
     }
   }</pre>
 
-        <p>Notice also that we created an array of <code>vector</code><code>s</code> with length
-            lifetime. We need a <code>vector</code> for each frame of the rocket’s life, and the
+        <p>Notice also that I created an array of <code>vector</code><code>s</code> with length
+            lifetime. I need a <code>vector</code> for each frame of the rocket’s life, and the
             above assumes the existence of a global variable lifetime that stores the total number
             of frames in each generation’s life cycle.</p>
 
         <p>The expression of this array of <code>vector</code><code>s</code>, the phenotype, is a
             <code>Rocket</code> class modeled on our basic <code>vector</code> and forces examples
-            from Chapter 2. All we need to do is add an instance of a <code>DNA</code> object to the
+            from Chapter 2. All I need to do is add an instance of a <code>DNA</code> object to the
             class. The fitness variable will also live here. Only the <code>Rocket</code> object
             knows how to compute its distance to the target, and therefore the fitness function will
             live here in the phenotype as well.</p>
 
         <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Rocket {
+  constructor(pos, dna){
+    // A Rocket has DNA.
+    this.dna = dna;
+    // A Rocket has fitness.
+    this.fitness = 0;
 
-  // A Rocket has DNA.
-  DNA dna;
-  // A Rocket has fitness.
-  float fitness;
+    this.position = pos.copy();
+    this.velocity = createVector();
+    this.acceleration = createVector();
+  }
+  </pre>
 
-  PVector position;
-  PVector velocity;
-  PVector acceleration;</pre>
-
-        <p>What are we using the DNA for? We are marching through the array of
+        <p>What am I using the DNA for? Here I am marching through the array of
             <code>vector</code><code>s</code> and applying them one at a time as a force to the
-            rocket. To do this, we’ll also have to add an integer that acts as a counter to walk
+            rocket. To do this, I'll also have to add an integer that acts as a counter to walk
             through the array.</p>
 
         <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-  int geneCounter = 0;
+class Rocket {
+    constructor(pos, dna){
+        // A Rocket has DNA.
+        this.dna = dna;
+        // A Rocket has fitness.
+        this.fitness = 0;
+        this.geneCounter = 0;
+        this.position = pos.copy();
+        this.velocity = createVector();
+        this.acceleration = createVector();
+    }
 
-  void run() {
+
+  run() {
     // Apply a force from the genes array.
-    applyForce(dna.genes[geneCounter]);
+    this.applyForce(this.dna.genes[this.geneCounter]);
     // Go to the next force in the genes array.
-    geneCounter++;
+    this.geneCounter++;
     //{!1} Update the Rocket’s physics.
-    update();
+    this.update();
   }</pre>
     </section>
 
     <section data-type="sect1" id="chapter09_section11">
         <h2>9.11 Smart Rockets: Putting It All Together</h2>
 
-        <p>We now have our <code>DNA</code> class (genotype) and our <code>Rocket</code> class
+        <p>Now I have a <code>DNA</code> class (genotype) and a <code>Rocket</code> class
             (phenotype). The last piece of the puzzle is a <code>Population</code> class, which
             manages an array of rockets and has the functionality for selection and reproduction.
-            Again, the happy news here is that we barely have to change anything from the
+            Again, the happy news here is that I barely have to change anything from the
             Shakespeare monkey example. The process for building a mating pool and generating a new
-            array of child rockets is exactly the same as what we did with our population of
+            array of child rockets is exactly the same as what I did with our population of
             strings.</p>
 
         <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Population {
-
-  // Population has variables to keep
-  // track of mutation rate, current
-  // population array, mating pool, and
-  // number of generations.
-  float mutationRate;
-  Rocket[] population;
-  ArrayList<Rocket> matingPool;
-  int generations;
+    // Population has variables to keep
+    // track of mutation rate, current
+    // population array, mating pool, and
+    // number of generations.
+    constructor(m, num) {
+        this.mutationRate = m; // Mutation rate
+        this.population = new Array(num); // Array to hold the current population
+        this.matingPool = []; // ArrayList which we will use for our "mating pool"
+        this.generations = 0; // Number of generations
+        //make a new set of creatures
+        for (let i = 0; i < this.population.length; i++) {
+            let position = createVector(width / 2, height + 20);
+            this.population[i] = new Rocket(position, new DNA(), this.population.length);
+        }
+    }
 
   // These functions haven’t changed, so
   // no need to go through the code again.
-  void fitness() {}
-  void selection() {}
-  void reproduction() {}</pre>
+  calcFitness() {}
+  selection() {}
+  reproduction() {}</pre>
 
         <p>There is one fairly significant change, however. With typing monkeys, a random phrase was
             evaluated as soon as it was created. The string of characters had no lifespan; it
-            existed purely for the purpose of calculating its fitness and then we moved on. The
+            existed purely for the purpose of calculating its fitness and then I moved on. The
             rockets, however, need to live for a period of time before they can be evaluated; they
-            need to be given a chance to make their attempt at reaching the target. Therefore, we
+            need to be given a chance to make their attempt at reaching the target. Therefore, I
             need to add one more function to the <code>Population</code> class that runs the physics
-            simulation itself. This is identical to what we did in the <code>run()</code> function
+            simulation itself. This is identical to what I did in the <code>run()</code> function
             of a particle system—update all the particle positions and draw them.</p>
 
         <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-  void live () {
-    for (int i = 0; i < population.length; i++) {
+  live () {
+    for (let i = 0; i < this.population.length; i++) {
       //{!1} The run function takes care of
       // the forces, updating the rocket’s
       // position, and displaying it.
-      population[i].run();
+      this.population[i].run();
     }
   }</pre>
 
-        <p>Finally, we’re ready for <code>setup()</code> and <code>draw()</code>. Here in the main
-            tab, our primary responsibility is to implement the steps of the genetic algorithm in
+        <p>Finally, I'm ready for <code>setup()</code> and <code>draw()</code>. Here in the main
+            tab, my primary responsibility is to implement the steps of the genetic algorithm in
             the appropriate order by calling the functions in the <code>Population</code> class.</p>
 
         <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
@@ -2337,8 +2360,8 @@ class Population {
     population.selection();
     population.reproduction();</pre>
 
-        <p>However, unlike the Shakespeare example, we don’t want to do this every frame. Rather,
-            our steps work as follows:</p>
+        <p>However, unlike the Shakespeare example, I don’t want to do this every frame. Rather,
+            my steps work as follows:</p>
 
         <ol>
             <li>
@@ -2375,20 +2398,20 @@ class Population {
 
         <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 // How many frames does a generation live for?
-int lifetime;
+let lifetime;
 
 // What frame are we on?
-int lifeCounter;
+let lifeCounter;
 
 // The population
-Population population;
+let population;
 
 function setup() {
   createCanvas(640, 480);
   lifetime = 500;
   lifeCounter = 0;
 
-  float mutationRate = 0.01;
+  let mutationRate = 0.01;
   //{!1} Step 1: Create the population.
   // Here is where we could play with
   // the mutation rate and population size.
@@ -2417,7 +2440,7 @@ function draw() {
 
         <p>The above example works, but it isn’t particularly interesting. After all, the rockets
             simply evolve to having DNA with a bunch of vectors that point straight upwards. In the
-            next example, we’re going to talk through two suggested improvements for the example and
+            next example, I'm going to talk through two suggested improvements for the example and
             provide code snippets that implement these improvements.</p>
 
         <figure class="screenshot" data-p5-sketch="https://editor.p5js.org/embed/H1Z_9pX_x"><img
@@ -2431,7 +2454,7 @@ function draw() {
             data-secondary="avoidance of obstacles and" data-type="indexterm"></a>
 
         <p>Adding obstacles that the rockets must avoid will make the system more complex and
-            demonstrate the power of the evolutionary algorithm more effectively. We can make
+            demonstrate the power of the evolutionary algorithm more effectively. I can make
             rectangular, stationary obstacles fairly easily by creating a class that stores a
             position and dimensions.</p>
 
@@ -2441,25 +2464,26 @@ function draw() {
 
         <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Obstacle {
+  constructor(x, y, w, h) {
+    this.position = createVector(x, y);
+    this.w = w;
+    this.h = h;
+  }</pre>
 
-  // An obstacle is a position (top left
-  // corner of rectangle) with a width and height.
-  PVector position;
-  float w, h;</pre>
-
-        <p>We can also write a <code>contains()</code> function that will <code>return true</code>
+        <p>I can also write a <code>contains()</code> function that will <code>return true</code>
             or <code>return false</code> to determine if a rocket has hit the obstacle.</p>
 
         <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-  boolean contains(PVector v) {
-    if (v.x > position.x && v.x < position.x + w && v.y &gt; position.y && v.y < position.y + h) {
-      return true;
+  contains(spot) {
+    if (spot.x > this.position.x && spot.x < this.position.x + this.w &&
+    spot.y > this.position.y && spot.y < this.position.y + this.h) {
+        return true;
     } else {
-      return false;
+        return false;
     }
   }</pre>
 
-        <p>Assuming we make an <code>array</code> of obstacles, we can then have each rocket
+        <p>Assuming I make an <code>array</code> of obstacles, I can then have each rocket
             check to see if it has collided with an obstacle and set a <code>boolean</code> flag to
             be true if it does, adding a function to the rocket class.</p>
 
@@ -2467,25 +2491,29 @@ class Obstacle {
   // This new function lives in the rocket
   // class and checks if a rocket has
   // hit an obstacle.
-  void obstacles() {
-    for (Obstacle obs : obstacles) {
-      if (obs.contains(position)) {
-        stopped = true;
+  obstacles(os) {
+    for (let i = 0; i < os.length; i++) {
+        let obs = os[i];
+        if (obs.contains(this.position)) {
+          this.hitObstacle = true;
+        }
       }
-    }
   }</pre>
 
-        <p>If the rocket hits an obstacle, we choose to stop it from updating its position.</p>
+        <p>If the rocket hits an obstacle, I choose to stop it from updating its position.</p>
 
         <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-  void run() {
-    //{!1 .bold} Only run the rocket if it doesn’t hit an obstacle.
-    if (!stopped) {
-      applyForce(dna.genes[geneCounter]);
-      geneCounter = (geneCounter + 1) % dna.genes.length;
-      update();
-			//{!1 .bold}
-      obstacles();
+  run(os) {
+    if (!this.hitObstacle && !this.hitTarget) {
+        this.applyForce(this.dna.genes[this.geneCounter]);
+        this.geneCounter = (this.geneCounter + 1) % this.dna.genes.length;
+        this.update();
+        // If I hit an edge or an obstacle
+        this.obstacles(os);
+    }
+    // Draw me!
+    if (!this.hitObstacle) {
+        this.display();
     }
   }</pre>
 
@@ -2494,8 +2522,8 @@ class Obstacle {
             reduced.</p>
 
         <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-  void fitness() {
-    float d = dist(position.x, position.y, target.position.x, target.position.y);
+  calcFitness() {
+    let d = dist(this.position.x, this.position.y, target.position.x, target.position.y);
     fitness = pow(1/d, 2);
 		//{.bold !1}
     if (stopped) fitness *= 0.1;
@@ -2506,26 +2534,29 @@ class Obstacle {
         <a data-primary="fitness functions (natural selection algorithms)"
             data-secondary="evolving for specific attributes" data-type="indexterm"></a>
 
-        <p>If you look closely at our first Smart Rockets example, you’ll notice that the rockets
+        <p>If you look closely at the first Smart Rockets example, you’ll notice that the rockets
             are not rewarded for getting to the target faster. The only variable in their fitness
             calculation is the distance to the target at the end of the generation’s life. In fact,
             in the event that the rockets get very close to the target but overshoot it and fly
             past, they may actually be penalized for getting to the target faster. Slow and steady
             wins the race in this case.</p>
 
-        <p>We could improve the algorithm to optimize for speed a number of ways. First, instead of
-            using the distance to the target at the end of the generation, we could use the distance
-            that is the closest to the target at any point during the rocket’s life. We would call
+        <p>I could improve the algorithm to optimize for speed a number of ways. First, instead of
+            using the distance to the target at the end of the generation, I could use the distance
+            that is the closest to the target at any point during the rocket’s life. I would call
             this the rocket’s “record” distance. (All of the code snippets in this section live
             inside the <code>Rocket</code> class.)</p>
 
         <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-  void checkTarget() {
-    float d = dist(position.x, position.y, target.position.x, target.position.y);
-    // Every frame, we check its distance and see
-    // if it’s closer than the “record” distance.
-    // If it is, we have a new record.
-    if (d < recordDist) recordDist = d;</pre>
+
+    checkTarget() {
+        let d = dist(this.position.x, this.position.y, target.position.x, target.position.y);
+        // Every frame, we check its distance and see
+        // if it’s closer than the “record” distance.
+        // If it is, we have a new record.
+        if (d < this.recordDist) this.recordDist = d;
+
+    </pre>
 
         <p>In addition, a rocket should be rewarded according to how quickly it reaches the target.
             The faster it reaches the target, the higher the fitness. The slower, the lower. To
@@ -2536,31 +2567,29 @@ class Obstacle {
         <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
     // If the object reaches the target,
     // set a boolean flag to true.
-    if (target.contains(position)) {
-      hitTarget = true;
-		//{!3} As long as we haven’t yet reached
-    // the target, keep incrementing the counter.
-    } else if (!hitTarget) {
-      finishTime++;
+    if (target.contains(this.position) && !this.hitTarget) {
+        this.hitTarget = true;
+    } else if (!this.hitTarget) {
+        this.finishTime++;
     }
 }</pre>
 
-        <p>Fitness is also inversely proportional to <code>finishTime</code>, and so we can improve
-            our fitness function as follows:</p>
+        <p>Fitness is also inversely proportional to <code>finishTime</code>, and so I can improve
+            the fitness function as follows:</p>
 
         <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-  void fitness() {
+    calcFitness() {
+        if (this.recordDist < 1) this.recordDist = 1;
 
-    // Finish time and record distance!
-    fitness = (1 / (finishTime * recordDist));
-    // Make it exponential.
-    fitness = pow(fitness, 2);
+        // Reward finishing faster and getting close
+        this.fitness = (1 / (this.finishTime * this.recordDist));
 
-    // Fitness goes way down if you hit an obstacle.
-    if (stopped) fitness *= 0.1;
-    //{!1} You are rewarded for reaching the target.
-    if (hitTarget) fitness *= 2;
-  }</pre>
+        // Make the function exponential
+        this.fitness = pow(this.fitness, 4);
+
+        if (this.hitObstacle) this.fitness *= 0.1; // lose 90% of fitness hitting an obstacle
+        if (this.hitTarget) this.fitness *= 2; // twice the fitness for finishing!
+    }</pre>
 
         <p>These improvements are both incorporated into the code for Example 9.3: Smart Rockets.
         </p>
