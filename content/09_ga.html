@@ -1399,8 +1399,8 @@ class DNA {
                 mating pool).</p>
 
             <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-float mutationRate = 0.01;
-int totalPopulation = 150;</pre>
+let mutationRate = 0.01;
+let totalPopulation = 150;</pre>
 
             <p>These two variables can greatly affect the behavior of the system, and it’s not such
                 a good idea to arbitrarily assign them values (though tweaking them through trial
@@ -1586,9 +1586,9 @@ int totalPopulation = 150;</pre>
                 problem’s goals and evaluate numerically how well those goals have been achieved,
                 then you will not have successful evolution in your simulation.</p>
 
-            <p>Before we think about other scenarios with other fitness functions, let’s look at
-                flaws in our Shakespearean fitness function. Consider solving for a phrase that is
-                not nineteen characters long, but one thousand. Now, let’s say there are two members
+            <p>Before I move onto other scenarios exploring other fitness functions, I want to look at
+                flaws in my Shakespearean fitness function. Consider solving for a phrase that is
+                not nineteen characters long, but one thousand. Now, in the case there are two members
                 of the population, one with 800 characters correct and one with 801. Here are their
                 fitness scores:</p>
 
@@ -1619,17 +1619,17 @@ int totalPopulation = 150;</pre>
                 </tbody>
             </table>
 
-            <p>There are a couple of problems here. First, we are adding elements to the mating pool
+            <p>There are a couple of problems here. First, I am adding elements to the mating pool
                 N numbers of times, where N equals fitness multiplied by 100. Objects can only be
                 added to an <code>array</code> a whole number of times, and so A and B will both
                 be added 80 times, giving them an equal probability of being selected. Even with an
                 improved solution that takes floating point probabilities into account, 80.1% is
                 only a teeny tiny bit higher than 80%. But getting 801 characters right is a whole
-                lot better than 800 in the evolutionary scenario. We really want to make that
-                additional character count. We want the fitness score for 801 characters to be
+                lot better than 800 in the evolutionary scenario. I really want to make that
+                additional character count. I want the fitness score for 801 characters to be
                 exponentially better than the score for 800.</p>
 
-            <p>To put it another way, let’s graph the fitness function.</p>
+            <p>To put it another way, here's a graph the fitness function.</p>
 
             <figure id="chapter09_figure8"><img alt="Figure 9.8" src="chapter09/ch09_08.png" />
                 <figcaption>Figure 9.8</figcaption>
@@ -1637,19 +1637,19 @@ int totalPopulation = 150;</pre>
 
             <p>This is a linear graph; as the number of characters goes up, so does the fitness
                 score. However, what if the fitness increased exponentially as the number of correct
-                characters increased? Our graph could then look something like:</p>
+                characters increased? My graph could then look something like:</p>
 
             <figure id="chapter09_figure9"><img alt="Figure 9.9" src="chapter09/ch09_09.png" />
                 <figcaption>Figure 9.9</figcaption>
             </figure>
 
-            <p>The more correct characters, the even greater the fitness. We can achieve this type
-                of result in a number of different ways. For example, we could say:</p>
+            <p>The more correct characters, the even greater the fitness. I can achieve this type
+                of result in a number of different ways. For example, I could say:</p>
 
             <p><span class="formula">fitness = (number of correct characters) * (number of correct
                     characters)</span></p>
 
-            <p>Let’s say we have two members of the population, one with five correct characters and
+            <p>Let’s say I have two members of the population, one with five correct characters and
                 one with six. The number 6 is a 20% increase over the number 5. Let’s look at the
                 fitness scores squared.</p>
 
@@ -1746,7 +1746,7 @@ int totalPopulation = 150;</pre>
                 data-secondary="design your own" data-type="indexterm"></a>
 
             <p>While this rather specific discussion of exponential vs. linear fitness functions is
-                an important detail in the design of a good fitness function, I don’t want us to
+                an important detail in the design of a good fitness function, I don’t want you to
                 miss the more important point here: <em>Design your own fitness function!</em> I
                 seriously doubt that any project you undertake in p5.js with genetic algorithms
                 will actually involve counting the correct number of characters in a string. In the
@@ -1796,10 +1796,10 @@ int totalPopulation = 150;</pre>
                 the function that computes the fitness variable.</p>
 
             <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-void fitness() {
+calcFitness() {
   ????????????
   ????????????
-  fitness = ??????????
+  this.fitness = ??????????
 }</pre>
         </section>
 
@@ -1815,28 +1815,31 @@ void fitness() {
                 you translate that expression into a bunch of numbers? What is the genotype and
                 phenotype?</p>
 
-            <p>When talking about the fitness function, we happily assumed we could create
+            <p>When talking about the fitness function, I happily assumed I could create
                 computer-controlled kickers that each had a “set of parameters that determine how
                 they kick a ball towards the goal.” However, what those parameters are and how you
                 choose to encode them is up to you.</p>
 
-            <p>We started with the Shakespeare example because of how easy it was to design both the
+            <p>I started with the Shakespeare example because of how easy it was to design both the
                 genotype (an array of characters) and its expression, the phenotype (the string
                 drawn in the window).</p>
 
-            <p>The good news is—and we hinted at this at the start of this chapter—you’ve really
+            <p>The good news is—and I hinted at this at the start of this chapter—you’ve really
                 been doing this all along. Anytime you write a class in p5.js, you make a whole
                 bunch of variables.</p>
 
             <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Vehicle {
-  float maxspeed;
-  float maxforce;
-  float size;
-  float separationWeight;
-  [inline]// etc.</pre>
+  constructor(){
+    this.maxspeed = ????;
+    this.maxforce = ????;
+    this.size = ????;
+    this.separationWeight = ????;
+    [inline]// etc.
+  }
+  </pre>
 
-            <p>All we need to do to evolve those parameters is to turn them into an array, so that
+            <p>All you need to do to evolve those parameters is to turn them into an array, so that
                 the array can be used with all of the functions—<code>crossover()</code>,
                 <code>mutate()</code>, etc.—found in the <code>DNA</code> class. One common solution
                 is to use an array of floating point numbers between 0 and 1.</p>
@@ -1844,18 +1847,16 @@ class Vehicle {
             <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class DNA {
 
-  // An array of floats
-  float[] genes;
-
-  DNA(int num) {
-    genes = new float[num];
-    for (int i = 0; i < genes.length; i++) {
+  constructor(num) {
+    // An array of floats
+    this.genes = [];
+    for (let i = 0; i < num; i++) {
       // Always pick a number between 0 and 1.
-      genes[i] = float(1);
+      this.genes[i] = float(1);
     }
   }</pre>
 
-            <p>Notice how we’ve now put the genetic data (genotype) and its expression (phenotype)
+            <p>Notice how I've now put the genetic data (genotype) and its expression (phenotype)
                 into two separate classes. The <code>DNA</code> class is the genotype and the
                 <code>Vehicle</code> class uses a <code>DNA</code> object to drive its behaviors and
                 express that data visually—it is the phenotype. The two can be linked by creating a
@@ -1863,22 +1864,14 @@ class DNA {
 
             <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Vehicle {
-  //{!1} A DNA object embedded into the Vehicle class
-  DNA dna;
-
-  float maxspeed;
-  float maxforce;
-  float size;
-  float separationWeight;
-  //{!1} Etc.
-
-  Vehicle() {
-    dna = new DNA(4);
+  constructor() {
+    //{!1} A DNA object embedded into the Vehicle class
+    this.dna = new DNA(4);
     //{!4} Using the genes to set variables
-    maxspeed = dna.genes[0];
-    maxforce = dna.genes[1];
-    size = dna.genes[2];
-    separationWeight = dna.genes[3];
+    this.maxspeed = dna.genes[0];
+    this.maxforce = dna.genes[1];
+    this.size = dna.genes[2];
+    this.separationWeight = dna.genes[3];
     //{!1} Etc.
   }</pre>
 
@@ -1890,7 +1883,7 @@ class Vehicle {
                 say:</p>
 
             <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-    size = map(dna.genes[2], 0, 1, 10, 72);</pre>
+    this.size = map(this.dna.genes[2], 0, 1, 10, 72);</pre>
 
             <p>In other cases, you will want to design a genotype that is an array of objects.
                 Consider the design of a rocket with a series of “thruster” engines. You could
@@ -1899,17 +1892,14 @@ class Vehicle {
 
             <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class DNA {
-
-  // The genotype is an array of PVectors.
-  PVector[] genes;
-
-  DNA(int num) {
-    genes = new PVector[num];
-    for (int i = 0; i < genes.length; i++) {
+  constructor(num) {
+    // The genotype is an array of vectors.
+    this.genes = [];
+    for (let i = 0; i < num; i++) {
       //{!1} A PVector pointing in a random direction
-      genes[i] = PVector.random2D();
+      this.genes[i] = p5.Vector.random2D();
       //{!1} And scaled randomly
-      genes[i].mult(random(10));
+      this.genes[i].mult(random(10));
     }
   }</pre>
 
@@ -1918,8 +1908,11 @@ class DNA {
 
             <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Rocket {
-  DNA dna;
-  [inline]// etc.</pre>
+  constructor(){
+    this.dna = ????;
+    [inline]// etc.
+  }
+  </pre>
 
             <a data-primary="object-oriented programming"
                 data-secondary="genotype/phenotype objects and" data-type="indexterm"></a>
@@ -1931,7 +1924,7 @@ class Rocket {
                 array’s data type (<code>float</code>, <code>vector</code>, etc.) and the
                 expression of that data in the phenotype class.</p>
 
-            <p>In the next section, we’ll follow this idea a bit further and walk through the
+            <p>In the next section, I'll follow this idea a bit further and walk through the
                 necessary steps for an example that involves moving bodies and an array of
                 <code>vector</code><code>s</code> as DNA.</p>
         </section>
