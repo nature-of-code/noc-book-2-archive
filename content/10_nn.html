@@ -667,10 +667,10 @@ train(inputs, desired) {
 class Perceptron {
   constructor(n) {
     //{!2} The Perceptron stores its weights and learning constants.
-    this.weights = new Array(n);
+    this.weights = [];
     this.c = 0.01;
     //{!3} Weights start off random.
-    for (let i = 0; i < this.weights.length; i++) {
+    for (let i = 0; i < n; i++) {
       this.weights[i] = random(-1,1);
     }
   }
@@ -710,7 +710,7 @@ class Trainer {
 
   //{!2} A "Trainer" object stores the inputs and the correct answer.
   constructor(x, y, a) {
-    this.inputs = new Array(3);
+    this.inputs = [];
     this.inputs[0] = x;
     this.inputs[1] = y;
     //{!1} Note that the Trainer has the bias input built into its array.
@@ -947,9 +947,9 @@ class Vehicle {
   seek(targets) {
 
     //{!1} Make an array of inputs for our brain.
-    let forces = new Array(targets.length];
+    let forces = [];
 
-    for (let i = 0; i < forces.length; i++) {
+    for (let i = 0; i < targets.length; i++) {
       //{!1} Fill the array with a steering force
       // for each target.
       forces[i] = this.seek(targets[i]));
@@ -1149,9 +1149,9 @@ class Vehicle {
   }
 
   steer(targets) {
-    let forces = new Array(targets.length);
+    let forces = [];
 
-    for (let i = 0; i < forces.length; i++) {
+    for (let i = 0; i < targets.length; i++) {
       forces[i] = this.seek(targets[i]);
     }
     //{!1 .bold} All the steering forces are inputs.
