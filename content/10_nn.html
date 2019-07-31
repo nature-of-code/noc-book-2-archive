@@ -441,7 +441,7 @@ class Perceptron {
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   constructor(n) {
-    this.weights = new Array(n);
+    this.weights = [];
     for (let i = 0; i < this.weights.length; i++) {
       //{!1} The weights are picked randomly to start.
       this.weights[i] = random(-1, 1);
