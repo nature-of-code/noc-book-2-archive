@@ -872,14 +872,14 @@ function draw() {
 
     <p>While classifying points according to their position above or below a line was a useful
       demonstration of the perceptron in action, it doesn’t have much practical relevance to the
-      other examples throughout this book. In this section, we’ll take the concepts of a perceptron
+      other examples throughout this book. In this section, I'll take the concepts of a perceptron
       (array of inputs, single output), apply it to steering behaviors, and demonstrate
       reinforcement learning along the way.</p>
 
-    <p>We are now going to take significant creative license with the concept of a neural network.
-      This will allow us to stick with the basics and avoid some of the highly complex algorithms
-      associated with more sophisticated neural networks. Here we’re not so concerned with following
-      rules outlined in artificial intelligence textbooks—we’re just hoping to make something
+    <p>I am now going to take significant creative license with the concept of a neural network.
+      This will allow me to stick with the basics and avoid some of the highly complex algorithms
+      associated with more sophisticated neural networks. Here I'm not so concerned with following
+      rules outlined in artificial intelligence textbooks—I'm just hoping to make something
       interesting and brain-like.</p>
 
     <p>Remember our good friend the <code>Vehicle</code> class? You know, that one for making
@@ -887,20 +887,22 @@ function draw() {
       <code>applyForce()</code> function and move around the window according to a variety of
       steering rules?</p>
 
-    <p>What if we added one more variable to our <code>Vehicle</code> class?</p>
+    <p>What if I add one more variable to the <code>Vehicle</code> class?</p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Vehicle {
+  constructor(){
+    //{!1} Giving the vehicle a brain!
+    this.brain = ????;
 
-  //{!1} Giving the vehicle a brain!
-  Perceptron brain;
+    this.position = createVector();
+    this.velocity = createVector();
+    this.acceleration = createVector();
+    [inline]//etc...
+  }
+  </pre>
 
-  PVector position;
-  PVector velocity;
-  PVector acceleration;
-  [inline]//etc...</pre>
-
-    <p>Here’s our scenario. Let’s say we have a p5.js sketch with an <code>ArrayList</code> of
+    <p>Here’s the scenario. Let’s say I have a p5.js sketch with an <code>array</code> of
       targets and a single vehicle.</p>
 
     <figure id="chapter10_figure09"><img alt="Figure 10.9" src="chapter10/ch10_09.png" />
@@ -908,65 +910,65 @@ class Vehicle {
     </figure>
 
     <p>Let’s say that the vehicle seeks all of the targets. According to the principles of Chapter
-      6, we would next write a function that calculates a steering force towards each target,
+      6, I would next write a function that calculates a steering force towards each target,
       applying each force one at a time to the object’s acceleration. Assuming the targets are an
-      <code>ArrayList</code> of <code>PVector</code> objects, it would look something like:</p>
+      <code>array</code> of <code>p5.Vector</code> objects, it would look something like:</p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-  void seek(ArrayList<PVector> targets) {
-    for (PVector target : targets) {
+  seek(targets) {
+    for (let target in targets) {
       //{!2} For every target, apply a steering force towards the target.
-      PVector force = seek(targets.get(i));
-      applyForce(force);
+      let force = this.seek(target);
+      this.applyForce(force);
     }
   }</pre>
 
-    <p>In Chapter 6, we also examined how we could create more dynamic simulations by weighting each
-      steering force according to some rule. For example, we could say that the farther you are from
+    <p>In Chapter 6, I also showed how it is possible to create more dynamic simulations by weighting each
+      steering force according to some rule. For example, you could say that the farther you are from
       a target, the stronger the force.</p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
- void seek(ArrayList<PVector> targets) {
-    for (PVector target : targets) {
-      PVector force = seek(targets.get(i));
-      float d = PVector.dist(target, position);
-      float weight = map(d, 0, width, 0, 5);
+  seek(targets) {
+    for (let target in targets) {
+      let force = this.seek(target);
+      let d = p5.Vector.dist(target, this.position);
+      let weight = map(d, 0, width, 0, 5);
       //{!1} Weighting each steering force individually
       force.mult(weight);
-      applyForce(force);
+      this.applyForce(force);
     }
   }</pre>
 
-    <p>But what if instead we could ask our brain (i.e. perceptron) to take in all the forces as an
+    <p>But what if instead I could ask the brain (i.e. perceptron) to take in all the forces as an
       input, process them according to weights of the perceptron inputs, and generate an output
-      steering force? What if we could instead say:</p>
+      steering force? What if I could instead say:</p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-  void seek(ArrayList&lt;PVector&gt; targets) {
+  seek(targets) {
 
     //{!1} Make an array of inputs for our brain.
-    PVector[] forces = new PVector[targets.size()];
+    let forces = new Array(targets.length];
 
-    for (int i = 0; i < forces.length; i++) {
+    for (let i = 0; i < forces.length; i++) {
       //{!1} Fill the array with a steering force
       // for each target.
-      forces[i] = seek(targets.get(i));
+      forces[i] = this.seek(targets[i]));
     }
 
     //{!2} Ask our brain for a result and apply that as the force!
-    PVector output = brain.process(forces);
-    applyForce(output);
+    let output = this.brain.process(forces);
+    this.applyForce(output);
   }</pre>
 
-    <p>In other words, instead of weighting and accumulating the forces inside our vehicle, we
-      simply pass an array of forces to the vehicle’s “brain” object and allow the brain to weight
-      and sum the forces for us. The output is then applied as a steering force. This opens up a
+    <p>In other words, instead of weighting and accumulating the forces inside our vehicle, I
+      instead pass an array of forces to the vehicle’s “brain” object and allow the brain to weight
+      and sum the forces for me. The output is then applied as a steering force. This opens up a
       range of possibilities. A vehicle could make decisions as to how to steer on its own, learning
       from its mistakes and responding to stimuli in its environment. Let’s see how this works.</p>
 
-    <p>We can use the line classification perceptron as a model, with one important difference—the
+    <p>I can use the line classification perceptron as a model, with one important difference—the
       inputs are not single numbers, but vectors! Let’s look at how the <code>feedforward()</code>
-      function works in our vehicle’s perceptron, alongside the one from our previous example.</p>
+      function works in the vehicle’s perceptron, alongside the one from my previous example.</p>
 
     <table class="codewide">
       <tbody>
@@ -977,12 +979,12 @@ class Vehicle {
         <tr>
           <td>
             <pre>
-PVector feedforward(PVector[] forces) {
+feedforward(forces) {
   //{!1 .bold} Sum is a PVector.
-  PVector sum = new PVector();
-  for (int i = 0; i &lt; weights.length; i++) {
+  let sum = createVector();
+  for (let i = 0; i < this.weights.length; i++) {
     //{!2 .bold} Vector addition and multiplication
-    forces[i].mult(weights[i]);
+    forces[i].mult(this.weights[i]);
     sum.add(forces[i]);
   }
   //{!1 .bold} No activation function
@@ -992,15 +994,15 @@ PVector feedforward(PVector[] forces) {
           </td>
           <td>
             <pre>
-int feedforward(float[] inputs) {
+feedforward(inputs) {
   //{!1 .bold} Sum is a float.
-  float sum = 0;
-  for (int i = 0; i &lt; weights.length; i++) {
+  let sum = 0;
+  for (let i = 0; i < this.weights.length; i++) {
     //{!1 .bold} Scalar addition and multiplication
-    sum += inputs[i]*weights[i];
+    sum += inputs[i]*this.weights[i];
   }
   //{!1 .bold} Activation function
-  return activate(sum);
+  return this.activate(sum);
 }
 </pre>
           </td>
@@ -1012,14 +1014,14 @@ int feedforward(float[] inputs) {
 
     <ol>
       <li>
-        <p><strong><em>Summing PVectors.</em></strong> Instead of a series of numbers added
-          together, each input is a <code>PVector</code> and must be multiplied by the weight and
-          added to a sum according to the mathematical <code>PVector</code> functions.</p>
+        <p><strong><em>Summing Vectors.</em></strong> Instead of a series of numbers added
+          together, each input is a <code>p5.Vector</code> and must be multiplied by the weight and
+          added to a sum according to the mathematical <code>p5.Vector</code> functions.</p>
       </li>
       <li>
-        <p><strong><em>No activation function.</em></strong> In this case, we’re taking the result
-          and applying it directly as a steering force for the vehicle, so we’re not asking for a
-          simple Boolean value that classifies it in one of two categories. Rather, we’re asking for
+        <p><strong><em>No activation function.</em></strong> In this case, I'm taking the result
+          and applying it directly as a steering force for the vehicle, so I'm not asking for a
+          simple Boolean value that classifies it in one of two categories. Rather, I'm asking for
           raw output itself, the resulting overall force.</p>
       </li>
     </ol>
@@ -1035,26 +1037,26 @@ int feedforward(float[] inputs) {
       adjust its weights in order to steer away from the predators and towards the food.</p>
 
     <p>Let’s take a simpler example, where the vehicle simply wants to stay close to the center of
-      the window. We’ll train the brain as follows:</p>
+      the window. I’ll train the brain as follows:</p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-    PVector desired = new PVector(width/2, height/2);
-    PVector error = PVector.sub(desired, position);
-    brain.train(forces, error);</pre>
+    let desired = createVector(width/2, height/2);
+    let error = p5.Vector.sub(desired, this.position);
+    this.brain.train(forces, error);</pre>
 
     <figure class="half-width-right" id="chapter10_figure10"><img alt="Figure 10.10"
         src="chapter10/ch10_10.png" />
       <figcaption>Figure 10.10</figcaption>
     </figure>
 
-    <p>Here we are passing the brain a copy of all the inputs (which it will need for error
-      correction) as well as an observation about its environment: a <code>PVector</code> that
-      points from its current position to where it desires to be. This <code>PVector</code>
-      essentially serves as the error—the longer the <code>PVector</code>, the worse the vehicle is
+    <p>Here I am passing the brain a copy of all the inputs (which it will need for error
+      correction) as well as an observation about its environment: a <code>p5.Vector</code> that
+      points from its current position to where it desires to be. This <code>p5.Vector</code>
+      essentially serves as the error—the longer the <code>p5.Vector</code>, the worse the vehicle is
       performing; the shorter, the better.</p>
 
     <p>The brain can then apply this “error” vector (which has two error values, one for
-      <code>x</code> and one for <code>y</code>) as a means for adjusting the weights, just as we
+      <code>x</code> and one for <code>y</code>) as a means for adjusting the weights, just as I
       did in the line classification example.</p>
 
     <table class="codewide">
@@ -1066,27 +1068,27 @@ int feedforward(float[] inputs) {
         <tr>
           <td>
             <pre>
-void train(PVector[] forces, PVector error) {
+train(forces, error) {
 
 
 
 
-  for (int i = 0; i < weights.length; i++) {
-    weights[i] += c*error.x * forces[i].x;
-    weights[i] += c*error.y * forces[i].y;
+  for (let i = 0; i < this.weights.length; i++) {
+    this.weights[i] += this.c*error.x * forces[i].x;
+    this.weights[i] += this.c*error.y * forces[i].y;
   }
 }
 </pre>
           </td>
           <td>
             <pre>
-void train(float[] inputs, int desired) {
+train(inputs, desired) {
 
-  int guess = feedforward(inputs);
-  float error = desired - guess;
+  let guess = this.feedforward(inputs);
+  let error = desired - guess;
 
-  for (int i = 0; i < weights.length; i++) {
-    weights[i] += c * error * inputs[i];
+  for (let i = 0; i < this.weights.length; i++) {
+    this.weights[i] += this.c * error * inputs[i];
 
   }
 }
@@ -1096,15 +1098,15 @@ void train(float[] inputs, int desired) {
       </tbody>
     </table>
 
-    <p>Because the vehicle observes its own error, there is no need to calculate one; we can simply
+    <p>Because the vehicle observes its own error, there is no need to calculate one; I can simply
       receive the error as an argument. Notice how the change in weight is processed twice, once for
       the error along the x-axis and once for the y-axis.</p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-weights[i] += c * error.x * forces[i].x;
-weights[i] += c * error.y * forces[i].y;</pre>
+this.weights[i] += this.c * error.x * forces[i].x;
+this.weights[i] += this.c * error.y * forces[i].y;</pre>
 
-    <p>We can now look at the <code>Vehicle</code> class and see how the <code>steer</code> function
+    <p>I can now look at the <code>Vehicle</code> class and see how the <code>steer</code> function
       uses a perceptron to control the overall steering force. The new content from this chapter is
       highlighted.</p>
 
@@ -1120,65 +1122,58 @@ weights[i] += c * error.y * forces[i].y;</pre>
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Vehicle {
 
-  // The Vehicle now has a brain.
-  Perceptron brain;
 
-  // Same old variables for physics
-  PVector position;
-  PVector velocity;
-  PVector acceleration;
-  float maxforce;
-  float maxspeed;
-
-  Vehicle(int n, float x, float y) {
+  constructor(n, x, y) {
+    // The Vehicle now has a brain.
 		//{.bold} The Vehicle creates a perceptron with n inputs and a learning constant.
-    brain = new Perceptron(n, 0.001);
-    acceleration = new PVector(0, 0);
-    velocity = new PVector(0, 0);
-    position = new PVector(x, y);
-    maxspeed = 4;
-    maxforce = 0.1;
+    this.brain = new Perceptron(n, 0.001);
+    // Same old variables for physics
+    this.acceleration = createVector(0, 0);
+    this.velocity = createVector(0, 0);
+    this.position = createVector(x, y);
+    this.maxspeed = 4;
+    this.maxforce = 0.1;
   }
 
   // Same old update() function
-  void update() {
-    velocity.add(acceleration);
-    velocity.limit(maxspeed);
-    position.add(velocity);
-    acceleration.mult(0);
+  update() {
+    this.velocity.add(this.acceleration);
+    this.velocity.limit(this.maxspeed);
+    this.position.add(this.velocity);
+    this.acceleration.mult(0);
   }
 
   // Same old applyForce() function
-  void applyForce(PVector force) {
-    acceleration.add(force);
+  applyForce(force) {
+    this.acceleration.add(force);
   }
 
-  void steer(ArrayList<PVector> targets) {
-    PVector[] forces = new PVector[targets.size()];
+  steer(targets) {
+    let forces = new Array(targets.length);
 
-    for (int i = 0; i < forces.length; i++) {
-      forces[i] = seek(targets.get(i));
+    for (let i = 0; i < forces.length; i++) {
+      forces[i] = this.seek(targets[i]);
     }
     //{!1 .bold} All the steering forces are inputs.
-    PVector result = brain.feedforward(forces);
+    let result = this.brain.feedforward(forces);
 
     // The result is applied.
-    applyForce(result);
+    this.applyForce(result);
 
     //{!3 .bold .code-wide} The brain is trained according to
     // the distance to the center.
-    PVector desired = new PVector(width/2, height/2);
-    PVector error = PVector.sub(desired, position);
-    brain.train(forces, error);
+    let desired = createVector(width/2, height/2);
+    let error = p5.Vector.sub(desired, this.position);
+    this.brain.train(forces, error);
   }
 
   //{!8} Same old seek() function
-  PVector seek(PVector target) {
-    PVector desired = PVector.sub(target, position);
+  seek(target) {
+    let desired = p5.Vector.sub(target, this.position);
     desired.normalize();
-    desired.mult(maxspeed);
-    PVector steer = PVector.sub(desired, velocity);
-    steer.limit(maxforce);
+    desired.mult(this.maxspeed);
+    let steer = p5.Vector.sub(desired, this.velocity);
+    steer.limit(this.maxforce);
     return steer;
   }
 }</pre>
