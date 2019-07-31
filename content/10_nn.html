@@ -1204,14 +1204,14 @@ class Vehicle {
       neural networks comes in the networking itself. Perceptrons are, sadly, incredibly limited in
       their abilities. If you read an AI textbook, it will say that a perceptron can only solve
       <strong><em>linearly separable</em></strong> problems. What’s a linearly separable problem?
-      Let’s take a look at our first example, which determined whether points were on one side of a
+      Let’s take a look at the first example, which determined whether points were on one side of a
       line or the other.</p>
 
     <figure id="chapter10_figure11"><img alt="Figure 10.11" src="chapter10/ch10_11.png" />
       <figcaption>Figure 10.11</figcaption>
     </figure>
 
-    <p>On the left of Figure 10.11, we have classic linearly separable data. Graph all of the
+    <p>On the left of Figure 10.11, is an example of classic linearly separable data. Graph all of the
       possibilities; if you can classify the data with a straight line, then it is linearly
       separable. On the right, however, is non-linearly separable data. You can’t draw a straight
       line to separate the black dots from the gray ones.</p>
@@ -1221,7 +1221,7 @@ class Vehicle {
       data-primary="XOR (exclusive or)" data-type="indexterm"></a>
 
     <p>One of the simplest examples of a non-linearly separable problem is <em>XOR</em>, or
-      “exclusive or.” We’re all familiar with <em>AND</em>. For <em>A</em> <em>AND</em> <em>B</em>
+      “exclusive or.” By now your should be familiar with <em>AND</em>. For <em>A</em> <em>AND</em> <em>B</em>
       to be true, both <em>A</em> and <em>B</em> must be true. With <em>OR</em>, either <em>A</em>
       or <em>B</em> can be true for <em>A</em> <em>OR</em> <em>B</em> to evaluate as true. These are
       both linearly separable problems. Let’s look at the solution space, a “truth table.”</p>
@@ -1258,9 +1258,9 @@ class Vehicle {
     <p>The above diagram is known as a <em>multi-layered perceptron</em>, a network of many neurons.
       Some are input neurons and receive the inputs, some are part of what’s called a “hidden” layer
       (as they are connected to neither the inputs nor the outputs of the network directly), and
-      then there are the output neurons, from which we read the results.</p>
+      then there are the output neurons, from which the results are read.</p>
 
-    <p>Training these networks is much more complicated. With the simple perceptron, we could easily
+    <p>Training these networks is much more complicated. With the simple perceptron, you could easily
       evaluate how to change the weights according to the error. But here there are so many
       different connections, each in a different layer of the network. How does one know how much
       each neuron or connection contributed to the overall error of the network?</p>
@@ -1282,13 +1282,10 @@ class Vehicle {
       in how backpropagation works, check the book website (and GitHub repository) for an example
       that solves <em>XOR</em> using a multi-layered feed forward network with backpropagation.</p>
 
-    <p>Instead, here we’ll focus on a code framework for building the visual architecture of a
-      network. We’ll make <code>Neuron</code> objects and <code>Connection</code> objects from which
-      a <code>Network</code> object can be created and animated to show the feed forward process.
-      This will closely resemble some of the force-directed graph examples we examined in Chapter 5
-      (toxiclibs).</p>
+    <p>Instead, here I'll shift the focus to using neural networks in ml5.js.</p>
   </section>
 
+  <!-- TODO: add new content with ml5 here!  -->
   <section data-type="sect1" id="chapter10_section7">
     <h2>10.7 Neural Network Diagrams</h2>
 
