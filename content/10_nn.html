@@ -817,8 +817,8 @@ float f(float x) {
   return 2*x+1;
 }
 
-void setup() {
-  size(640, 360);
+function setup() {
+  createCanvas(640, 360);
 
   ptron = new Perceptron(3);
 
@@ -834,7 +834,7 @@ void setup() {
 }
 
 
-void draw() {
+function draw() {
   background(255);
   translate(width/2, height/2);
 
@@ -1364,8 +1364,8 @@ class Network {
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 Network network;
 
-void setup() {
-  size(640, 360);
+function setup() {
+  createCanvas(640, 360);
   // Make a Network.
   network = new Network(width/2,height/2);
 
@@ -1382,7 +1382,7 @@ void setup() {
   network.addNeuron(d);
 }
 
-void draw() {
+function draw() {
   background(255);
   //{!1} Show the network.
   network.display();
@@ -1425,8 +1425,8 @@ class Connection {
       that in addition to making the neurons in <code>setup()</code>, we can also connect them.</p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-void setup() {
-  size(640, 360);
+function setup() {
+  createCanvas(640, 360);
   network = new Network(width/2,height/2);
 
   Neuron a = new Neuron(-200,0);
@@ -1542,7 +1542,7 @@ class Neuron {
       random number between 0 and 1.</p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-void setup() {
+function setup() {
   // All our old network set up code
 
   // A new function to send in an input
@@ -1747,7 +1747,7 @@ class Connection {
     </div>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-void draw() {
+function draw() {
   background(255);
   //{!1 .bold} The Network now has a new update() method that updates all of the Connection objects.
   network.update();
