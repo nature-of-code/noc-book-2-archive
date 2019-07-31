@@ -328,14 +328,14 @@
 
     <p>Let’s assume we have two arrays of numbers, the inputs and the weights. For example:</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 float[] inputs  = {12 , 4};
 float[] weights = {0.5, -1};</pre>
 
     <p>“For every input” implies a loop that multiplies each input by its corresponding weight.
       Since we need the sum, we can add up the results in that very loop.</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 // Steps 1 and 2: Add up all the weighted inputs.
 float sum = 0;
 for (int i = 0; i < inputs.length; i++) {
@@ -344,7 +344,7 @@ for (int i = 0; i < inputs.length; i++) {
 
     <p>Once we have the sum we can compute the output.</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 // Step 3: Passing the sum
 // through an activation function
 float output = activate(sum);
@@ -431,14 +431,14 @@ int activate(float sum) {
       perceptron needs to track are the input weights, and we could use an array of floats to store
       these.</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Perceptron {
   float[] weights;</pre>
 
     <p>The constructor could receive an argument indicating the number of inputs (in this case
       three: x, y, and a bias) and size the array accordingly.</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   Perceptron(int n) {
     weights = new float[n];
     for (int i = 0; i < weights.length; i++) {
@@ -452,7 +452,7 @@ class Perceptron {
       the perceptron receive its inputs as an array (which should be the same length as the array of
       weights) and return the output as an integer.</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   int feedforward(float[] inputs) {
     float sum = 0;
     for (int i = 0; i < weights.length; i++) {
@@ -471,7 +471,7 @@ class Perceptron {
       <figcaption>Figure 10.7</figcaption>
     </figure>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 // Create the Perceptron.
 Perceptron p = new Perceptron(3);
 // The input is 3 values: x,y and bias.
@@ -637,7 +637,7 @@ int result = p.feedforward(point);</pre>
     <p>Assuming the addition of a variable <code>c</code> for the learning constant, we can now
       write a training function for the perceptron following the above steps.</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 // A new variable is introduced
 // to control the learning rate.
 float c = 0.01;
@@ -662,7 +662,7 @@ void train(float[] inputs, int desired) {
 
     <p>We can now see the <code>Perceptron</code> class as a whole.</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Perceptron {
   //{!2} The Perceptron stores its weights and learning constants.
   float[] weights;
@@ -706,7 +706,7 @@ class Perceptron {
     <p>To train the perceptron, we need a set of inputs with a known answer. We could package this
       up in a class like so:</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Trainer {
 
   //{!2} A "Trainer" object stores the inputs and the correct answer.
@@ -739,7 +739,7 @@ class Trainer {
 
     <p>We can then write a Processing function with this in mind.</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 // A function to calculate y based on x along a line
 float f(float x) {
   return 2 * x + 1;
@@ -747,7 +747,7 @@ float f(float x) {
 
     <p>So, if we make up a point:</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 float x = random(width);
 float y = random(height);</pre>
 
@@ -755,7 +755,7 @@ float y = random(height);</pre>
       gives us the <code>y</code> value on the line for that <code>x</code> position. Let’s call
       that <code>yline</code>.</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 // The y position on the line
 float yline = f(x);</pre>
 
@@ -766,7 +766,7 @@ float yline = f(x);</pre>
       <figcaption>Figure 10.8</figcaption>
     </figure>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 if (y < yline) {
   //{!1} The answer is -1 if y is above the line.
   answer = -1;
@@ -776,13 +776,13 @@ if (y < yline) {
 
     <p>We can then make a <code>Trainer</code> object with the inputs and the correct answer.</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 Trainer t = new Trainer(x, y, answer);</pre>
 
     <p>Assuming we had a <code>Perceptron</code> object <code>ptron</code>, we could then train it
       by sending the inputs along with the known answer.</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 ptron.train(t.inputs, t.answer);</pre>
 
     <p>Now, it’s important to remember that this is just a demonstration. Remember our <a
@@ -805,7 +805,7 @@ ptron.train(t.inputs, t.answer);</pre>
       <h5>Example 10.1: The Perceptron</h5>
     </div>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 // The Perceptron
 Perceptron ptron;
 //{!1} 2,000 training points
@@ -892,7 +892,7 @@ void draw() {
 
     <p>What if we added one more variable to our <code>Vehicle</code> class?</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Vehicle {
 
   //{!1} Giving the vehicle a brain!
@@ -915,7 +915,7 @@ class Vehicle {
       applying each force one at a time to the object’s acceleration. Assuming the targets are an
       <code>ArrayList</code> of <code>PVector</code> objects, it would look something like:</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   void seek(ArrayList<PVector> targets) {
     for (PVector target : targets) {
       //{!2} For every target, apply a steering force towards the target.
@@ -928,7 +928,7 @@ class Vehicle {
       steering force according to some rule. For example, we could say that the farther you are from
       a target, the stronger the force.</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
  void seek(ArrayList<PVector> targets) {
     for (PVector target : targets) {
       PVector force = seek(targets.get(i));
@@ -944,7 +944,7 @@ class Vehicle {
       input, process them according to weights of the perceptron inputs, and generate an output
       steering force? What if we could instead say:</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   void seek(ArrayList&lt;PVector&gt; targets) {
 
     //{!1} Make an array of inputs for our brain.
@@ -1040,7 +1040,7 @@ int feedforward(float[] inputs) {
     <p>Let’s take a simpler example, where the vehicle simply wants to stay close to the center of
       the window. We’ll train the brain as follows:</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
     PVector desired = new PVector(width/2, height/2);
     PVector error = PVector.sub(desired, position);
     brain.train(forces, error);</pre>
@@ -1103,7 +1103,7 @@ void train(float[] inputs, int desired) {
       receive the error as an argument. Notice how the change in weight is processed twice, once for
       the error along the x-axis and once for the y-axis.</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 weights[i] += c * error.x * forces[i].x;
 weights[i] += c * error.y * forces[i].y;</pre>
 
@@ -1120,7 +1120,7 @@ weights[i] += c * error.y * forces[i].y;</pre>
       <h5>Example 10.2: Perceptron steering</h5>
     </div>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Vehicle {
 
   // The Vehicle now has a brain.
@@ -1311,7 +1311,7 @@ class Vehicle {
     <p>The primary building block for this diagram is a neuron. For the purpose of this example, the
       <code>Neuron</code> class describes an entity with an <em>(x,y)</em> position.</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 // An incredibly simple Neuron class stores and displays the position of a single neuron.
 class Neuron {
   PVector position;
@@ -1332,7 +1332,7 @@ class Neuron {
       is particle systems 101. We have a single element (a neuron) and a network (a “system” of many
       neurons).</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 //{!2} A Network is a list of neurons.
 class Network {
   ArrayList<Neuron> neurons;
@@ -1361,7 +1361,7 @@ class Network {
 
     <p>Now we can pretty easily make the diagram above.</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 Network network;
 
 void setup() {
@@ -1398,7 +1398,7 @@ void draw() {
       object to be made up of three elements, two neurons (from <code>Neuron</code> <code>a</code>
       to <code>Neuron</code> <code>b</code>) and a <code>weight</code>.</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Connection {
   //{!2} A connection is between two neurons.
   Neuron a;
@@ -1424,7 +1424,7 @@ class Connection {
       it inside the <code>Network</code> class) that connects two neurons together—the goal being
       that in addition to making the neurons in <code>setup()</code>, we can also connect them.</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 void setup() {
   size(640, 360);
   network = new Network(width/2,height/2);
@@ -1449,7 +1449,7 @@ void setup() {
     <p>The <code>Network</code> class therefore needs a new function called <code>connect()</code>,
       which makes a <code>Connection</code> object between the two specified neurons.</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   void connect(Neuron a, Neuron b) {
     //{!1} Connection has a random weight.
     Connection c = new Connection(a, b, random(1));
@@ -1467,7 +1467,7 @@ void setup() {
       want <code>a</code> to store a reference of that connection so that it can pass its output to
       <code>b</code> when the time comes.</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   void connect(Neuron a, Neuron b) {
     Connection c = new Connection(a, b, random(1));
     a.addConnection(c);
@@ -1481,7 +1481,7 @@ void setup() {
       <code>Neuron</code> class. Then we implement the <code>addConnection()</code> function that
       stores the connection in that <code>ArrayList</code>.</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Neuron {
   PVector position;
 
@@ -1510,7 +1510,7 @@ class Neuron {
       <h5>Example 10.3: Neural network diagram</h5>
     </div>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   void display() {
     stroke(0);
     strokeWeight(1);
@@ -1541,7 +1541,7 @@ class Neuron {
     <p>Our first step is to add a function to the network to receive this input, which we’ll make a
       random number between 0 and 1.</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 void setup() {
   // All our old network set up code
 
@@ -1553,7 +1553,7 @@ void setup() {
       input. In this case, we’ll do something simple and just feed a single input into the first
       neuron in the <code>ArrayList</code>, which happens to be the left-most one.</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Network {
 
   // A new function to feed an input into the neuron
@@ -1566,7 +1566,7 @@ class Network {
       <code>feedforward()</code> in the <code>Neuron</code> class that will receive the input and
       process it.</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Neuron
 
   void feedforward(float input) {
@@ -1578,7 +1578,7 @@ class Neuron
       performs is to sum up all of its inputs. So if our <code>Neuron</code> class adds a variable
       called <code>sum</code>, it can simply accumulate the inputs as they are received.</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Neuron
 	//{!1 .bold}
   int sum = 0;
@@ -1592,7 +1592,7 @@ class Neuron
       connections to the next layer in the network. Here we can create a really simple activation
       function: if the sum is greater than 1, fire!</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
  void feedforward(float input) {
     sum += input;
     // Activate the neuron and fire the outputs?
@@ -1609,7 +1609,7 @@ class Neuron
       connections and <code>feedforward()</code> the neuron’s output. For this simple example, we’ll
       just take the neuron’s <code>sum</code> variable and make it the output.</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   void fire() {
     for (Connection c : connections) {
       //{!1} The Neuron sends the sum out
@@ -1625,7 +1625,7 @@ class Neuron
       just continuing its work, it would instantly pass those inputs (multiplied by the connection’s
       weight) along to the connected neurons. We’d say something like:</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Connection {
 
   void feedforward(float val) {
@@ -1642,20 +1642,20 @@ class Connection {
       <code>Neuron</code> <code>a</code> by creating another <code>PVector</code> that will store
       the path of our traveling data.</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   PVector sender = a.position.copy();</pre>
 
     <p>Once we have a copy of that position, we can use any of the motion algorithms that we’ve
       studied throughout this book to move along this path. Here—let’s pick something very simple
       and just interpolate from <code>a</code> to <code>b</code>.</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   sender.x = lerp(sender.x, b.position.x, 0.1);
   sender.y = lerp(sender.y, b.position.y, 0.1);</pre>
 
     <p>Along with the connection’s line, we can then draw a circle at that position:</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   stroke(0);
   line(a.position.x, a.position.y, b.position.x, b.position.y);
   fill(0);
@@ -1672,14 +1672,14 @@ class Connection {
       “feedforward” signal. We can keep track of this process by employing a simple
       <code>boolean</code> to know whether the connection is sending or not. Before, we had:</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   void feedforward(float val) {
     b.feedforward(val * weight);
   }</pre>
 
     <p>Now, instead of sending the value on straight away, we’ll trigger an animation:</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Connection {
 
   boolean sending = false;
@@ -1705,7 +1705,7 @@ class Connection {
       Once it’s active, we’ll need to call another function continuously (each time through
       <code>draw()</code>), one that will update the position of the traveling data.</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
  void update() {
     if (sending) {
       //{!2} As long as we’re sending, interpolate our points.
@@ -1717,7 +1717,7 @@ class Connection {
     <p>We’re missing a key element, however. We need to check if the sender has arrived at position
       b, and if it has, feed forward that output to the next neuron.</p>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   void update() {
     if (sending) {
       sender.x = lerp(sender.x, b.position.x, 0.1);
@@ -1746,7 +1746,7 @@ class Connection {
       <h5>Example 10.4: Animating a neural network diagram</h5>
     </div>
 
-    <pre data-code-language="java" data-type="programlisting" class="codesplit">
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 void draw() {
   background(255);
   //{!1 .bold} The Network now has a new update() method that updates all of the Connection objects.
