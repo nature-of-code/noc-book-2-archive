@@ -1350,12 +1350,12 @@ class Network {
 
   //{!8} We can draw the entire network.
   void display() {
-    pushMatrix();
+    push();
     translate(position.x, position.y);
     for (Neuron n : neurons) {
       n.display();
     }
-    popMatrix();
+    pop();
   }
 }</pre>
 
