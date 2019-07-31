@@ -178,7 +178,7 @@ class Particle {
   display() {
     stroke(0);
     fill(175);
-    ellipse(this.position.x, this.position.y, 8);
+    circle(this.position.x, this.position.y, 8);
   }
 }</pre>
 
@@ -221,8 +221,8 @@ class Particle {
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Particle {
 
-  constructor(l) {
-    this.position = l.copy();
+  constructor(x, y) {
+    this.position = createVector(x, y);
     this.acceleration = createVector();
     this.velocity = createVector();
     //{!1 .bold} A new variable to keep track of how long the particle has been “alive”. We start at 255 and count down for convenience
@@ -237,18 +237,18 @@ class Particle {
   }
 
   display() {
-    //{!2 .bold}  Since our life ranges from 255 to 0 we can use it for alpha
+    //{!2 .bold}  Since the life ranges from 255 to 0 it can be used also for alpha
     stroke(0, this.lifespan);
     fill(175, this.lifespan);
-    ellipse(this.position.x, this.position.y, 8, 8);
+    circle(this.position.x, this.position.y, 8);
   }
 }</pre>
 
     <p>
-      The reason we chose to start the lifespan at 255 and count down to 0 is
-      for convenience. With those values, we can assign <code>lifespan</code> to
-      act as the alpha transparency for the ellipse as well. When the particle
-      is “dead” it will also have faded away onscreen.
+      The reason I chose to start the lifespan at 255 and count down to 0 is
+      for convenience. With those values, I can assign <code>lifespan</code> to
+      act as the alpha transparency for the circle as well. When the particle
+      is “dead” it will also have faded away.
     </p>
 
     <a data-primary="particle systems" data-secondary="dead particles" data-tertiary="checking for"
@@ -257,13 +257,13 @@ class Particle {
       data-type="indexterm"></a>
 
     <p>
-      With the addition of the <code>lifespan</code> variable, we’ll also need
+      With the addition of the <code>lifespan</code> variable, I’ll also need
       one additional function—a function that can be queried (for a true or
       false answer) as to whether the particle is alive or dead. This will come
-      in handy when we are writing the <code>ParticleSystem</code> class, whose
+      in handy when writing the <code>ParticleSystem</code> class, whose
       task will be to manage the list of particles themselves. Writing this
-      function is pretty easy; we just need to check and see if the value of
-      <code>lifespan</code> is less than 0. If it is we
+      function is pretty easy; I just need to check and see if the value of
+      <code>lifespan</code> is less than 0. If it is I
       <code>return true</code>, if not we <code>return false</code>.
     </p>
 
@@ -277,16 +277,24 @@ class Particle {
     }
   }</pre>
 
+    <p>Or more simply, I can return the result of the boolean expression itself!</p>
+
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+    isDead() {
+      //{!4} Is the particle still alive?
+      return (this.lifespan < 0.0);
+    }</pre>
+
+
     <a data-primary="particles" data-secondary="testing" data-type="indexterm"></a>
 
     <p>
-      Before we get to the next step of making many particles, it’s worth taking
-      a moment to make sure our particle works correctly and create a sketch
+      Before I get to the next step of making many particles, it’s worth taking
+      a moment to make sure the particle works correctly and create a sketch
       with one single <code>Particle</code> object. Here is the full code below,
-      with two small additions. We add a convenience function called
-      <code>run()</code> that simply calls both <code>update()</code> and
-      <code>display()</code> for us. In addition, we give the particle a random
-      initial velocity as well as a downward acceleration (to simulate gravity).
+      with one small addition–giving the particle a random
+      initial velocity as well as adding <code>applyForce()</code> (to
+      simulate gravity).
     </p>
 
     <figure class="screenshot" data-p5-sketch="https://editor.p5js.org/embed/B1GoIg-ug">
@@ -299,17 +307,24 @@ class Particle {
     </div>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-let p;
+let particle;
 
 function setup() {
   createCanvas(640, 360);
-  p = new Particle(createVector(width / 2, 10));
+  particle = new Particle(width / 2, 10);
 }
 
 function draw() {
   background(255);
-  //{!4} Operating the single Particle
-  p.run();
+  //{!2} Operating the single Particle
+  particle.update();
+  particle.display();
+
+  //{!2} Applying a gravity force
+  let gravity = createVector(0, 0.1);
+  particle.applyForce(gravity);
+
+  //{!3} Checking the particle's state
   if (p.isDead()) {
     print("Particle dead!");
   }
@@ -317,18 +332,12 @@ function draw() {
 
 class Particle {
 
-  constructor(l) {
-    //{!2 .offset-top} For demonstration purposes we assign the Particle a random velocity and constant acceleration.
-    this.acceleration = createVector(0, 0.05);
+  constructor(x,y) {
+    this.position =  createVector(x, y);
+    //{.offset-top} For demonstration purposes the Particle a random velocity.
     this.velocity = createVector(random(-1, 1), random(-2, 0));
-    this.position = l.copy();
+    this.acceleration = createVector(0, 0);
     this.lifespan = 255.0;
-  }
-
-  //{!4} Sometimes it’s convenient to have a “run” function that calls all the other functions we need.
-  run() {
-    this.update();
-    this.display();
   }
 
   update() {
@@ -340,16 +349,17 @@ class Particle {
   display() {
     stroke(0, this.lifespan);
     fill(0, this.lifespan);
-    ellipse(this.position.x, this.position.y, 8, 8);
+    circle(this.position.x, this.position.y, 8);
+  }
+
+  //{!3} Keeping the same physics model as with previous chapters
+  applyForce(force) {
+    this.acceleration.add(force);
   }
 
   //{!7} Is the Particle alive or dead?
   isDead() {
-    if (this.lifespan < 0.0) {
-      return true;
-    } else {
-      return false;
-    }
+    return (this.lifespan < 0.0);
   }
 }</pre>
 
@@ -357,8 +367,9 @@ class Particle {
       <h5>Exercise 4.1</h5>
 
       <p>
-        Rewrite the example so that the particle can respond to force vectors
-        via an <code>applyForce()</code> function.
+        Create a <code>run()</code> in the <code>Particle</code> class that handles
+        <code>update()</code>, <code>display</code>, and <code>applyForce</code>. What are the pros
+        and cons of this approach?
       </p>
     </div>
 
@@ -372,9 +383,9 @@ class Particle {
     </div>
 
     <p>
-      Now that we have a class to describe a single particle, we’re ready for
-      the next big step. How do we keep track of many particles, when we can’t
-      ensure exactly how many particles we might have at any given time?
+      Armed with a class to describe a single particle, I’m ready for
+      the next big step. How do you keep track of many particles, not knowing
+      exactly how many particles you might have at any given time?
     </p>
   </section>
 
@@ -390,36 +401,36 @@ class Particle {
     <a data-primary="subset() function (p5)" data-type="indexterm"></a>
 
     <p>
-      We will use the wonderful javascript array to hold our
+      I will use the wonderful javascript array to hold the
       <code>Particle</code> objects. Some particle systems might have a fixed
       number of particles, and arrays are magnificently efficient in those
-      instances. p5 also offers <code>append()</code>, <code>shorten()</code>,
-      <code>subset()</code>, <code>splice()</code>, and other methods for
-      resizing arrays. However, for these examples, we’re going to take a more
-      plain javascript approach and use the methods directly available in the
-      javascipt class <code>Array</code>.
+      instances. For these examples, I’m going to make heavy use of the built-in JavaScript
+      functions available in the JavaScript class <code>Array</code>. These will allow me to add and
+      remove particles and manipulate the arrays in other ways. To be more concise, I'm also going
+      to write following examples using the solution to Exercise 4.1 and assume a <code>run()</code>
+      method that
+      handles all of the particle's functionality.
       <a
         href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">JavaScript
-        Array
-        Documentation</a>.
+        Array Documentation</a>.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-const total = 10;
-// we use let because later we will reassign the value of the particles array
+let total = 10;
+// Starting with an empty array
 let particles = [];
 
 function setup() {
-  //{!3} This is what we’re used to, accessing elements on the array via an index and brackets—[].
+  //{!3} This is what you’re probably used to, accessing elements on the array via an index and brackets—[].
   for (let i = 0; i < total; i++) {
-    parray[i] = new Particle();
+    particles[i] = new Particle(width/2, height/2);
   }
 }
 
 function draw() {
-  for (let i = 0; i < parray.length; i++) {
-    const p = parray[i];
-    p.run();
+  for (let i = 0; i < particles.length; i++) {
+    let particle = particles[i];
+    particle.run();
   }
 }</pre>
 
@@ -428,11 +439,11 @@ function draw() {
     <a data-primary="for loops" data-secondary="ArrayList objects and" data-type="indexterm"></a>
 
     <p>
-      This last <code>for</code> loop looks pretty similar to our code that
-      looped through a regular array by accessing each index. We initialize a
-      variable called <code>i</code> to 0 and count up by 1, accessing each
-      element of the <code>Array</code> until we get to the end. However, this
-      is a good time to mention the "<code>for of</code> loop” javascript, which
+      This last <code>for</code> loop demonstrates how to call functions on every element of an
+      array byaccessing each index. I initialize a
+      variable <code>i</code> with value 0 and count up by 1, accessing each
+      element of the array until I reach the end. However, this
+      is a good time to mention the JavaScript "<code>for of</code> loop” javascript, which
       is a bit more concise. The "for of" loop works with arrays like this:
     </p>
 
@@ -441,18 +452,17 @@ function draw() {
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 let particles = [];
 
-for(let p of particles){
-  p.run();
+for (let particle of particles){
+  particle.run();
 }
 
 </pre>
 
     <p>
-      Let’s translate that. Say “for each” instead of “for” and say “in” instead
-      of “of”. Now you have:
+      Let’s translate that. Say “each” instead of “let” and “in” instead of “of”:
     </p>
 
-    <p>“For each Particle p in particles, run that Particle p!”</p>
+    <p>“For each particle in particles, update and display that particle!”</p>
 
     <p>
       I know. You cannot contain your excitement. I can’t. I know it’s not
@@ -460,29 +470,26 @@ for(let p of particles){
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-// This for of loop also works for regular arrays!
-for (let p of particles) {
-  p.run();
+for (let particle of particles){
+  particle.run();
 }</pre>
 
     <p>
       Simple, elegant, concise, lovely. Take a moment. Breathe. I have some bad
-      news. Yes, we love that "for of" loop and we will get to use it. But not
-      right now. Our particle system examples will require a feature that makes
-      using that loop impossible. Let’s continue.
+      news. Yes, I may love that "for of" loop and I will get to use it in examples. But not
+      just yet.
     </p>
 
     <a data-primary="ArrayList class (Java)" data-secondary="resizability of"
       data-type="indexterm"></a>
 
     <p>
-      The code we’ve written above doesn’t take advantage of the
-      <code>ArrayList</code><code>’s</code> resizability, and it uses a fixed
-      size of 10. We need to design an example that fits with our particle
-      system scenario, where we emit a continuous stream of
-      <code>Particle</code> objects, adding one new particle with each cycle
-      through <code>draw()</code>. We’ll skip rehashing the
-      <code>Particle</code> class code here, as it doesn’t need to change.
+      The code I’ve written above doesn’t take advantage of the JavaScript's ability to remove
+      elements from an array. I need to design an example that fits with the particle
+      system scenario, where a continuous stream of particles arae emitted, adding one new particle
+      with each cycle through <code>draw()</code>. I’ll skip
+      rehashing the <code>Particle</code> class code here, as it doesn’t need to change.
+      The <code>for of</code> loop still works fine.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
@@ -490,17 +497,15 @@ let particles = [];
 
 function setup() {
   createCanvas(640, 360);
-
 }
 
 function draw() {
   background(255);
   //{!1 .offset-top} A new Particle object is added to the array every cycle through draw().
-  particles.push(new Particle(createCanvas(width/2, 50)));
+  particles.push(new Particle(width/2, 50));
 
-  for (let i = 0; i < particles.length; i++) {
-    const p = particles[i];
-    p.run();
+  for (let particle of particles) {
+    particle.run();
   }
 }</pre>
 
@@ -508,73 +513,68 @@ function draw() {
       Run the above code for a few minutes and you’ll start to see the frame
       rate slow down further and further until the program grinds to a halt (my
       tests yielded horrific performance after fifteen minutes). The issue of
-      course is that we are creating more and more particles without removing
+      course is that I am adding more and more particles without removing
       any.
     </p>
 
     <a data-primary="remove() function (ArrayList class)" data-type="indexterm"></a>
 
     <p>
-      Fortunately, we can remove particles from our array using the index
-      position of the particle of interest. This is why we cannot use the new
-      enhanced <code>for of</code> loop we just learned; the enhanced loop
-      provides no means for deleting elements while iterating. Here, we can use
-      the <code>Array</code> class's <code>.filter()</code> function. The
-      <code>.filter()</code> function checks each item in the specified array
-      and removes the item(s) where the given condition is true. In this case,
-      the <code>.filter()</code> function will return the array whose particle’s
-      <code>isDead()</code> function returns false.
+      Fortunately, particles can be removed from the array with the index
+      position of the particle of interest. This is why I cannot use the
+      enhanced <code>for of</code> loop; this loop
+      provides no means for deleting elements while iterating. Instead, I can use
+      the JavaScrit array's <code>splice()</code> method. (Yes, an array in JavaScript is actually
+      an object created from the class <code>Array</code> with many methods!</code>). The
+      <code>splice()</code> method removes one or more elements from an array starting from a given
+      index.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   for (let i = 0; i < particles.length; i++) {
-    const p = particles[i];
-    p.run();
-  }
-
-  // Filter removes any elements of the array that do not pass the test
-  // I am also using ES6 arrow snytax
-  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions
-  // https://www.youtube.com/watch?v=mrYMzpbFz18
-  particles = particles.filter(particle => !particle.isDead());
-  </pre>
+    let particle = particles[i];
+    particle.run();
+    if (particle.isDead()) {
+      // Remove one particle at index i
+      particles.splice(i, 1);
+    }
+  }</pre>
 
     <p>
       Although the above code will run just fine (and the program will never
-      grind to a halt), we have opened up a medium-sized can of worms. Whenever
-      we manipulate the contents of a list while iterating through that very
-      list, we can get ourselves into trouble. Take, for example, the following
+      grind to a halt), I have opened up a medium-sized can of worms. Whenever
+      you manipulate the contents of an array while iterating through that very
+      array, you can get into trouble. Take, for example, the following
       code.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   for (let i = 0; i < particles.length; i++) {
-    const p = particles[i];
-    p.run();
+    let particle = particles[i];
+    particle.run();
     //{!1 .offset-top} Adding a new Particle to the list while iterating?
-    particles.push(new Particle(createVector(width/2, 50)));
+    particles.push(new Particle(width/2, 50));
   }</pre>
 
     <a data-primary="size() function (ArrayList class)" data-type="indexterm"></a>
 
     <p>
       This is a somewhat extreme example (with flawed logic), but it proves the
-      point. In the above case, for each particle in the list, we add a new
-      particle to the list (manipulating the <code>length</code> of the
-      <code>Array</code>). This will result in an infinite loop, as
-      <code>i</code> can never increment past the size of the
-      <code>Array</code>.
+      point. In the above case, for each particle in the array, I add a new
+      particle to that array (manipulating the <code>length</code> of the
+      array). This will result in an infinite loop, as
+      <code>i</code> can never increment past the size of the array.
     </p>
 
     <a data-primary="iterating" data-secondary="removing elements in for loops"
       data-type="indexterm"></a>
 
     <p>
-      While removing elements from the <code>ArrayList</code> during a loop
+      While removing elements from the array during a loop
       doesn’t cause the program to crash (as it does with adding), the problem
       is almost more insidious in that it leaves no evidence. To discover the
-      problem we must first establish an important fact. When an object is
-      removed from the <code>Array</code>, all elements are shifted one spot
+      problem I must first establish an important fact. When an object is
+      removed from the array with<code>splice()</code>, all elements are shifted one spot
       to the left. Note the diagram below where particle C (index 2) is removed.
       Particles A and B keep the same index, while particles D and E shift from
       3 and 4 to 2 and 3, respectively.
@@ -586,43 +586,71 @@ function draw() {
     </figure>
 
     <p>
-      Let’s pretend we are <code>i</code> looping through the
-      <code>Array</code>.
+      Let’s pretend we are <code>i</code> looping through the <code>array</code>.
     </p>
 
     <p>
       <span class="formula">when i = 0 &rarr; Check particle A &rarr; Do not delete</span><br />
       <span class="formula">when i = 1 &rarr; Check particle B &rarr; Do not delete</span><br />
       <span class="formula">when i = 2 &rarr; Check particle C &rarr; Delete!</span><br />
-      <span class="formula2">Slide particles D and E back from slots 3 and 4 to 2 and 3</span><br />
+      <span class="formula2">Slide particles D and E back from slots 3 and 4 to 2 and
+        3</span><br />
       <span class="formula">when i = 3 &rarr; Check particle E &rarr; Do not delete</span>
     </p>
 
     <p>
-      Notice the problem? We never checked particle D! When C was deleted from
-      slot #2, D moved into slot #2, but i has already moved on to slot # 3.
+      Notice the problem? Particle D was never checked! When C was deleted from
+      slot #2, D moved into slot #2, but <code>i</code> has already moved on to slot # 3.
       This is not a disaster, since particle D will get checked the next time
-      around. Still, the expectation is that we are writing code to iterate
-      through every single element of the <code>Array</code>. Skipping an
-      element is unacceptable.
+      around. Still, the expectation is that the code should iterate
+      through every single element of the array. Skipping one is unacceptable!
     </p>
 
     <p>
-      There are two solutions to this problem. The first solution is to simply
-      iterate through the <code>Array</code> backwards. If you are sliding
+      There are two solutions to this problem. The first solution is to
+      iterate through the array backwards. If you are sliding
       elements from right to left as elements are removed, it’s impossible to
       skip an element by accident. Here’s how the code would look:
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   //{!1 .bold} Looping through the list backwards
-  for (let i = particles.length-1; i >= 0; i--) {
-    const p = particles[i];
-    p.run();
-  }
+  for (let i = particles.length - 1; i >= 0; i--) {
+    let particle = particles[i];
+    particle.run();
+    if (particle.isDead()) {
+      particles.splice(i, 1);
+    }
+  }</pre>
 
-  particles = particles.filter(particle => !particle.isDead());
-  </pre>
+
+    <p>
+      A second solution is to use something known as a “higher-order” function. A higher-order
+      function is one that receives another function as an argument (or returns a function). In the
+      case of JavaScript arrays there are many higher-order functions. A common one is
+      <code>sort()</code> which takes as its argument a function that defines how to compare two
+      elements of the array (therefore sorting the array according to that comparison.) Here, I can
+      make use of the higher order function <code>filter()</code>. <code>filter()</code> checks each
+      item in the specified array and keeps only the item(s) where the given condition is true
+      (removing those that return false).
+    </p>
+
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+  particles = particles.filter(function(particle) {
+    // Keep particles that are not dead!
+    return !particle.isDead();
+  });</pre>
+
+    <p>This is more commonly written using JavaScript's arrow notation. (To learn more, you can
+      watch this <a href="https://youtu.be/H4awPsyugS0">higher-order functions and arrow notation
+        video tutorial.)</p>
+
+    <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+  particles = particles.filter(particle => !particle.isDead());</pre>
+
+    <p>For the purposes of this book, I am going to stick with the <code>splice()</code> method, but
+      I encourage you to explore writing your code with higher-order functions and arrow notation.
+    </p>
 
     <figure class="screenshot" data-p5-sketch="https://editor.p5js.org/embed/B1tgPxW_e">
       <img alt="ch04 ex02" src="chapter04/ch04_ex02.png" />
@@ -643,15 +671,16 @@ function setup() {
 function draw() {
   background(255);
 
-  particles.push(new Particle(createVector(width / 2, 50)));
+  particles.push(new Particle(width / 2, 50);
 
   //{!1} Looping through the array backwards for deletion
-  for (let i = particles.length-1; i >= 0; i--) {
-    const p = particles[i];
-    p.run();
+  for (let i = particles.length - 1; i >= 0; i--) {
+    let particle = particles[i];
+    particle.run();
+    if (particle.isDead()) {
+      particles.splice(i, 1);
+    }
   }
-
-  particles = particles.filter(particle => !particle.isDead());
 }</pre>
   </section>
 
@@ -664,50 +693,48 @@ function draw() {
       data-type="indexterm"></a>
 
     <p>
-      OK. Now we’ve done two things. We’ve written a class to describe an
-      individual <code>Particle</code> object. We’ve conquered the
-      <code>Array</code> and used it to manage a list of many
-      <code>Particle</code> objects (with the ability to add and delete at
+      OK. Now I’ve done two things. I’ve written a class to describe an
+      individual <code>Particle</code> object. I’ve conquered the
+      array and used it to manage a list of many particles (with the ability to add and delete at
       will).
     </p>
 
     <p>
-      We could stop here. However, one additional step we can and should take is
+      I could stop here. However, one additional step I can and should take is
       to write a class to describe the list of <code>Particle</code> objects
-      itself—the <code>ParticleSystem</code> class. This will allow us to remove
-      the bulky logic of looping through all particles from the main tab, as
+      itself—the <code>ParticleSystem</code> class. This will allow me to remove
+      the bulky logic of looping through all particles from <code>draw()</code>, as
       well as open up the possibility of having more than one particle system.
     </p>
 
     <p>
-      If you recall the goal we set at the beginning of this chapter, we wanted
-      our main javascript file to look like this:
+      If you recall the goal I set at the beginning of this chapter was to write code like:
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 //{!1} Just one wee ParticleSystem!
-let ps;
+let system;
 
 function setup() {
   createCanvas(640, 360);
-  ps = new ParticleSystem();
+  system = new ParticleSystem();
 }
 
 function draw() {
   background(255);
-  ps.run();
+  system.run();
 }</pre>
 
     <p>
       Let’s take the code from Example 4.2 and review a bit of object-oriented
-      programming, looking at how each piece from the main tab can fit into the
-      <code>ParticleSystem</code> class.
+      programming, looking at how each piece <code>setup()</code> and <code>draw()</code> can fit
+      into the <code>ParticleSystem</code> class.
     </p>
 
     <table class="code">
       <tbody>
         <tr>
-          <th>Array in the main javascript file</th>
+          <th>Array in <code>setup()</code> and <code>draw()</code></th>
           <th>Array in the ParticleSystem class</th>
         </tr>
         <tr>
@@ -726,13 +753,13 @@ function draw() {
 
 
 
-  <b>for (let i = particles.length-1; i >= 0; i--) {
-    const p = particles[i];
-    p.run();
-  }
-
-  particles = particles.filter(particle => !particle.isDead());
-</b>
+  <b>for (let i = particles.length - 1; i >= 0; i--) {
+    let particles = particles[i];
+    particle.run();
+    if (particle.isDead()) {
+      particles.splice(i, 1);
+    }
+  }</b>
 }
 </pre>
           </td>
@@ -749,13 +776,13 @@ class ParticleSystem {
   }
 
   run() {
-    <b>for (let i = this.particles.length-1; i >= 0; i--) {
-      const p = this.particles[i];
-      p.run();
-    }
-
-    this.particles = this.particles.filter(particle => !particle.isDead());
-  </b>
+    <b>for (let i = this.particles.length - 1; i >= 0; i--) {
+      let particle = this.particles[i];
+      particle.run();
+      if (particle.isDead()) {
+        this.particles.splice(i, 1);
+      }
+    }</b>
   }
 }
 </pre>
@@ -768,9 +795,9 @@ class ParticleSystem {
       data-type="indexterm"></a>
 
     <p>
-      We could also add some new features to the particle system itself. For
+      I could also add new features to the particle system itself. For
       example, it might be useful for the <code>ParticleSystem</code> class to
-      keep track of an origin point where particles are made. This fits in with
+      keep track of an origin point where particles are made. This fits with
       the idea of a particle system being an “emitter,” a place where particles
       are born and sent out into the world. The origin point should be
       initialized in the constructor.
@@ -783,22 +810,22 @@ class ParticleSystem {
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class ParticleSystem {
 
-  ParticleSystem(position) {
+  ParticleSystem(x, y) {
     //{!1 .bold} This particular ParticleSystem implementation includes an origin point where each Particle begins.
-    this.origin = position.copy();
+    this.origin = createVector(x, y);
     this.particles = [];
   }
 
   addParticle() {
     //{!1 .bold}  The origin is passed to each Particle when it is added.
-    this.particles.add(new Particle(this.origin));
+    this.particles.add(new Particle(origin.x, origin.y));
   }</pre>
 
     <div data-type="exercise" id="chapter04_exercise3">
       <h5>Exercise 4.3</h5>
 
       <p>
-        Make the origin point move dynamically. Have the particles emit from the
+        Make the origin point move dynamically. Emit particles from the
         mouse position or use the concepts of velocity and acceleration to make
         the system move autonomously.
       </p>
