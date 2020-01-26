@@ -1,5 +1,5 @@
 {
-  "version":"2.0.0",
+  "version": "2.0.0",
   "name": "noc-book-2",
   "description": "Repository for the book The Nature of Code: 2nd edition",
   "author": "Daniel Shiffman",
@@ -8,7 +8,12 @@
     "type": "git",
     "url": "https://github.com/nature-of-code/noc-book-2.git"
   },
-  "keywords": ["nature of code", "creative coding", "magicbook", "p5.js"],
+  "keywords": [
+    "nature of code",
+    "creative coding",
+    "magicbook",
+    "p5.js"
+  ],
   "bugs": {
     "url": "https://github.com/nature-of-code/noc-book-2/issues"
   },
