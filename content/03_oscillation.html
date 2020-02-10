@@ -8,30 +8,30 @@
   </blockquote>
 
   <p>
-    In Chapters 1 and 2, we carefully worked out an object-oriented structure to
+    In Chapters 1 and 2, I carefully worked out an object-oriented structure to
     make something move on the screen, using the concept of a vector to
     represent position, velocity, and acceleration driven by forces in the
-    environment. We could move straight from here into topics such as particle
-    systems, steering forces, group behaviors, etc. If we did that, however,
-    we’d skip an important area of mathematics that we’re going to need:
+    environment. I could move straight from here into topics such as particle
+    systems, steering forces, group behaviors, etc. If I did that, however,
+    I’d skip an important area of mathematics that you’re going to need:
     <strong><em>trigonometry</em></strong>, or the mathematics of triangles, specifically right
     triangles.
   </p>
 
   <p>
-    Trigonometry is going to give us a lot of tools. We’ll get to think about
-    angles and angular velocity and acceleration. Trig will teach us about the
+    Trigonometry is going to give you a lot of tools. You’ll get to think about
+    angles and angular velocity and acceleration. Trig will teach you about the
     sine and cosine functions, which when used properly can yield a nice
-    ease-in, ease-out wave pattern. It’s going to allow us to calculate more
+    ease-in, ease-out wave pattern. It’s going to allow you to calculate more
     complex forces in an environment that involves angles, such as a pendulum
     swinging or a box sliding down an incline.
   </p>
 
   <p>
-    So this chapter is a bit of a mishmash. We’ll start with the basics of
-    angles in p5 and cover many trigonometric topics, tying it all into
-    forces at the end. And by taking this break now, we’ll also pave the way for
-    more advanced examples that require trig later in this book.
+    So this chapter is a bit of a mishmash. I’ll start with the basics of
+    working with angles in p5.js and cover many trigonometric topics, tying it all into
+    forces at the end. If I do it well, this will also pave the way for
+    more sophisticated examples that require trig later in this book.
   </p>
 
   <section data-type="sect1" id="chapter03_section1">
@@ -40,9 +40,9 @@
     <a data-primary="angles" data-type="indexterm"></a>
 
     <p>
-      OK. Before we can do any of this stuff, we need to make sure we understand
-      what it means to be an angle in p5. If you have experience with
-      p5, you’ve undoubtedly encountered this issue while using the
+      OK. Before you can do any of this stuff, I need to make sure you understand
+      what it means to be an angle in p5.js. If you have experience with
+      p5.js, you’ve undoubtedly encountered this issue while using the
       <code>rotate()</code> function to rotate and spin objects.
     </p>
 
@@ -50,13 +50,10 @@
     <a data-primary="degrees" data-type="indexterm"></a>
 
     <p>
-      The first order of business is to cover
-      <strong><em>radians</em></strong> and <strong><em>degrees</em></strong>. You’re probably
-      familiar with the concept
-      of an angle in
+      The first order of business is to cover <strong><em>radians</em></strong> and
+      <strong><em>degrees</em></strong>. You’re probably familiar with the concept of an angle in
       <strong><em>degrees</em></strong>. A full rotation goes from 0 to 360 degrees. 90 degrees (a
-      right angle)
-      is 1/4th of 360, shown below as two perpendicular lines.
+      right angle) is 1/4th of 360, shown below as two perpendicular lines.
     </p>
 
     <figure id="chapter03_figure1">
@@ -65,7 +62,7 @@
     </figure>
 
     <p>
-      It’s fairly intuitive for us to think of angles in terms of degrees. For
+      It’s probably more intuitive for you to think of angles in terms of degrees. For
       example, the square in Figure 3.2 is rotated 45 degrees around its center.
     </p>
 
@@ -80,10 +77,9 @@
     <a data-primary="radians" data-type="indexterm"></a>
 
     <p>
-      p5, however, requires angles to be specified in
+      By default p5.js, however, considers angles to be specified in
       <strong><em>radians</em></strong>. A radian is a unit of measurement for angles defined by the
-      ratio of
-      the length of the arc of a circle to the radius of that circle. One radian
+      ratio of the length of the arc of a circle to the radius of that circle. One radian
       is the angle at which that ratio equals one (see Figure 3.3). 180 degrees
       = PI radians, 360 degrees = 2*PI radians, 90 degrees = PI/2 radians, etc.
     </p>
@@ -105,25 +101,31 @@
     <a data-primary="radians() function (Processing)" data-type="indexterm"></a>
 
     <p>
-      Thankfully, if we prefer to think in degrees but code with radians,
-      p5 makes this easy. The <code>radians()</code> function will
-      automatically convert values from degrees to radians, and the constants
-      <code>PI</code> and <code>TWO_PI</code> provide convenient access to these
+      Thankfully, if you prefer to think of angles in degrees you can call
+      <code>angleMode(DEGREES)</code>. p5.js also includes a convenience function
+      <code>radians()</code> function to
+      automatically converts values from degrees to radians as well as the constants
+      <code>PI</code> and <code>TWO_PI</code> for access to these
       commonly used numbers (equivalent to 180 and 360 degrees, respectively).
-      The following code, for example, will rotate shapes by 60 degrees.
+      Here are two ways in p5.js to rotate a shape by 60 degrees.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-float angle = radians(60);
+let angle = 60;
+rotate(radians(angle));
+
+angleMode(DEGREES);
 rotate(angle);</pre>
 
     <a data-primary="Processing" data-secondary="rotation tutorial" data-type="indexterm"></a>
 
-    <!-- TODO: add a new reference to 2D transforms in p5 -->
     <p>
-      If you are not familiar with how rotation is implemented in p5, I
-      would suggest this tutorial:
-      <a href="http://www.processing.org/learning/transform2d/">p5 — Transform 2D</a>.
+      While the above can be useful, for the purposes of this book I‘m going to always assume
+      radians. In addition, if you are not familiar with how rotation is implemented in p5.js, I
+      would suggest <a href="http://genekogan.com/code/p5js-transformations/">this
+        transformations tutorial by Gene Kogan</a> or this <a
+        href="https://youtu.be/o9sgjuh-CBM">video series on
+        transformations in p5.js</a>.
     </p>
 
     <a data-primary="pi (π)" data-type="indexterm"></a>
@@ -173,7 +175,7 @@ rotate(angle);</pre>
     </p>
 
     <p>
-      The stuff we dedicated almost all of Chapters 1 and 2 to? Well, we can
+      The stuff we dedicated almost all of Chapters 1 and 2 to? Well, you can
       apply exactly the same logic to a rotating object.
     </p>
 
@@ -183,24 +185,25 @@ rotate(angle);</pre>
     </p>
 
     <p>
-      In fact, the above is actually simpler than what we started with because
+      In fact, the above is simpler than what I started with because
       an angle is a <em>scalar</em> quantity—a single number, not a vector!
     </p>
 
     <p>
-      Using the answer from Exercise 3.1 above, let’s say we wanted to rotate a
-      baton in p5 by some angle. We would have code like:
+      Using the answer from Exercise 3.1 above, let’s say you wanted to rotate a
+      baton in p5.js by some angle. The code might read:
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 translate(width/2, height/2);
 rotate(angle);
 line(-50, 0, 50, 0);
-ellipse(50, 0, 8, 8);
-ellipse(-50, 0, 8, 8);</pre>
+circle(50, 0, 8);
+circle(-50, 0, 8);</pre>
 
     <p>
-      Adding in our principles of motion brings us to the following example.
+      Adding in the principles of motion, I can then write the following example (the solution to
+      Exercise 3.1).
     </p>
 
     <figure class="screenshot" data-p5-sketch="https://editor.p5js.org/embed/SJSSzlWOg">
@@ -233,8 +236,8 @@ function draw() {
   translate(width/2, height/2);
   rotate(angle);
   line(-50, 0, 50, 0);
-  ellipse(50, 0, 8, 8);
-  ellipse(-50, 0, 8, 8);
+  circle(50, 0, 8);
+  circle(-50, 0, 8);
 
   // Angular equivalent of velocity.add(acceleration);
   aVelocity += aAcceleration;
@@ -247,10 +250,21 @@ function draw() {
       faster as the angle of rotation accelerates.
     </p>
 
+
+    <div data-type="exercise" id="chapter03_exerciseX">
+      <h5>Exercise 3.x-axis</h5>
+      <p>
+        Add an interaction to the spinning baton. How can you control the acceleration with the
+        mouse? Can you introduce the idea of drag, decreasing the angular velocity over time so that
+        it will always eventually come to rest?
+      </p>
+
+    </div>
+
+
     <p>
-      This idea can be incorporated into our <code>Mover</code> object. For
-      example, we can add the variables related to angular motion to our
-      <code>Mover</code>.
+      This idea can be incorporated into the <code>Mover</code> class by adding new variables
+      related to angular motion.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
@@ -270,7 +284,7 @@ class Mover {
 }</pre>
 
     <p>
-      And then in <code>update()</code>, we update both position and angle
+      And then in <code>update()</code>, position and angle are updated
       according to the same algorithm!
     </p>
 
@@ -288,14 +302,15 @@ update() {
 }</pre>
 
     <p>
-      Of course, for any of this to matter, we also would need to rotate the
-      object when displaying it.
+      Of course, for any of this to matter, I also would need to rotate the
+      object when displaying it. (I'll add drawing a line from the center to the edge of the circle
+      so that rotation is viewabale. You could also use a shape other than a circle.)
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 display() {
   stroke(0);
-  fill(175,200);
+  fill(175, 200);
   rectMode(CENTER);
   //{!1} push() and pop() are necessary so that the rotation of this shape doesn’t affect the rest of our world.
   push();
@@ -304,38 +319,38 @@ display() {
   translate(this.position.x, this.position.y);
   //{!1} Rotate by the angle.
   rotate(this.angle);
-  rect(0, 0, this.mass * 16, this.mass * 16);
+  circle(0, 0, this.radius * 2);
+  line(0, 0, this.radius, 0);
   pop();
 }</pre>
 
     <p>
-      Now, if we were to actually go ahead and run the above code, we wouldn’t
+      Now, if you were to actually go ahead and run the above code, you wouldn’t
       see anything new. This is because the angular acceleration
       (<code>this.aAcceleration = 0;</code>) is initialized
-      to zero. For the object to rotate, we need to give it an
-      acceleration! Certainly, we could hard-code in a different number.
+      to zero. For the object to rotate, it needs a non-zero
+      acceleration! Certainly, one option is to hard-code a number.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 this.aAcceleration = 0.01;</pre>
 
     <p>
-      However, we can produce a more interesting result by dynamically assigning
-      an angular acceleration according to forces in the environment. Now, we
-      could head far down this road, trying to model the physics of angular
-      acceleration using the concepts of
+      However, you can produce a more interesting result by dynamically assigning
+      an angular acceleration according to forces in the environment. Now, I
+      could head far down this road and research modeling the physics of angular
+      acceleration based on the concepts of
       <a href="http://en.wikipedia.org/wiki/Torque">torque</a> and
       <a href="http://en.wikipedia.org/wiki/Moment_of_inertia">moment of inertia</a>. Nevertheless,
-      this level of
-      simulation is beyond the scope of this
-      book. (We will see more about modeling angular acceleration with a
-      pendulum later in this chapter, as well as look at how Box2D realistically
+      this level of simulation is beyond the scope of this
+      book. (I will cover more about modeling angular acceleration with a
+      pendulum later in this chapter, as well as look at how other physics libraries realistically
       models rotational motion in Chapter 5.)
     </p>
 
     <p>
-      For now, a quick and dirty solution will do. We can produce reasonable
-      results by simply calculating angular acceleration as a function of the
+      For now, a quick and dirty solution will do. I can produce reasonable
+      results by calculating angular acceleration as a function of the
       object’s acceleration vector. Here’s one such example:
     </p>
 
@@ -405,7 +420,7 @@ this.aAcceleration = 0.01;</pre>
       data-type="indexterm"></a>
 
     <p>
-      I think it may be time. We’ve looked at angles, we’ve spun an object. It’s
+      I think it may be time. I’ve discussed angles, I’ve spun a baton. It’s
       time for: <em>sohcahtoa</em>. Yes, <em>sohcahtoa</em>. This seemingly
       nonsensical word is actually the foundation for a lot of computer graphics
       work. A basic understanding of trigonometry is essential if you want to
@@ -452,16 +467,16 @@ this.aAcceleration = 0.01;</pre>
     <a data-primary="vectors" data-secondary="as right triangles" data-type="indexterm"></a>
 
     <p>
-      See how we create a right triangle out of a vector? The vector arrow
+      See how a right triangle is created from a vector? The vector arrow
       itself is the hypotenuse and the components of the vector (<code>x</code>
       and <code>y</code>) are the sides of the triangle. The angle is an
       additional means for specifying the vector’s direction (or “heading”).
     </p>
 
     <p>
-      Because the trigonometric functions allow us to establish a relationship
+      Because the trigonometric functions establish a relationship
       between the components of a vector and its direction + magnitude, they
-      will prove very useful throughout this book. We’ll begin by looking at an
+      will prove very useful throughout this book. I’ll begin by looking at an
       example that requires the tangent function.
     </p>
   </section>
@@ -482,18 +497,17 @@ this.aAcceleration = 0.01;</pre>
     </figure>
 
     <p>
-      You might notice that almost all of the shapes we’ve been drawing so far
+      You might notice that almost all of the shapes I’ve been drawing so far
       are circles. This is convenient for a number of reasons, one of which is
-      that we don’t have to consider the question of rotation. Rotate a circle
+      that I don’t have to consider the question of rotation. Rotate a circle
       and, well, it looks exactly the same. However, there comes a time in all
       motion programmers’ lives when they want to draw something on the screen
       that points in the direction of movement. Perhaps you are drawing an ant,
-      or a car, or a spaceship. And when we say "point in the direction of
-      movement," what we are really saying is “rotate according to the velocity
+      or a car, or a spaceship. And when I say “point in the direction of
+      movement,” what I am really saying is “rotate according to the velocity
       vector.” Velocity is a vector, with an <code>x</code> and a
-      <code>y</code> component, but to rotate in p5 we need an angle, in
-      radians. Let’s draw our trigonometry diagram one more time, with an
-      object’s velocity vector (Figure 3.6).
+      <code>y</code> component, but to rotate in p5.js you need an angles. Let’s draw the
+      trigonometry diagram once more, this time with an object’s velocity vector (Figure 3.6).
     </p>
 
     <figure class="half-width-right" id="chapter03_figure6">
@@ -505,7 +519,7 @@ this.aAcceleration = 0.01;</pre>
     <a data-primary="trigonometry" data-secondary="tangent" data-type="indexterm"></a>
     <a data-primary="vectors" data-secondary="tangent" data-type="indexterm"></a>
 
-    <p>OK. We know that the definition of tangent is:</p>
+    <p>OK. I‘ve stayed the definition of tangent is:</p>
 
     <div class="equation-w-frac-big">
       <div data-type="equation">
@@ -514,12 +528,11 @@ this.aAcceleration = 0.01;</pre>
     </div>
 
     <p>
-      The problem with the above is that we know velocity, but we don’t know the
-      angle. We have to solve for the angle. This is where a special function
-      known as <em>inverse tangent</em> comes in, sometimes referred to as
+      The problem with the above is that while velocity is known, the angle of direction is not. I
+      have to solve for that angle. This is where a special function
+      known as <em>inverse tangent</em> comes in, also known to as
       <em>arctangent</em> or <em>tan<sup>-1</sup></em>. (There is also an <em>inverse sine</em> and
-      an
-      <em>inverse cosine</em>.)
+      an <em>inverse cosine</em>.)
     </p>
 
     <p>
@@ -540,8 +553,7 @@ this.aAcceleration = 0.01;</pre>
     </dl>
 
     <p>
-      See how that is the inverse? The above now allows us to solve for the
-      angle:
+      See how that is the inverse? The above now allows me to solve for the angle:
     </p>
 
     <dl>
@@ -566,15 +578,15 @@ this.aAcceleration = 0.01;</pre>
     <a data-primary="trigonometry" data-secondary="atan() function" data-type="indexterm"></a>
 
     <p>
-      Now that we have the formula, let’s see where it should go in our mover’s
-      <code>display()</code> function. Notice that in p5, the function
+      Now that I have the formula, let’s see where it should go in the mover’s
+      <code>display()</code> function. Notice that in p5.js, the function
       for arctangent is called <code>atan()</code>.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   display() {
     //{!1} Solve for angle by using atan().
-    this.angle = atan(this.velocity.y / this.velocity.x);
+    let angle = atan(this.velocity.y / this.velocity.x);
 
     stroke(0);
     fill(175);
@@ -582,14 +594,14 @@ this.aAcceleration = 0.01;</pre>
     rectMode(CENTER);
     translate(this.position.x, this.position.y);
     //{!1} Rotate according to that angle.
-    rotate(this.angle);
+    rotate(angle);
     rect(0, 0, 30, 10);
     pop();
   }</pre>
 
     <p>
-      Now the above code is pretty darn close, and almost works. We still have a
-      big problem, though. Let’s consider the two velocity vectors depicted
+      Now the above code is pretty darn close, and almost works. There is a
+      big problem, though. Consider the two velocity vectors depicted
       below.
     </p>
 
@@ -600,7 +612,7 @@ this.aAcceleration = 0.01;</pre>
 
     <p>
       Though superficially similar, the two vectors point in quite different
-      directions—opposite directions, in fact! However, if we were to apply our
+      directions—opposite directions, in fact! However, if I were to apply the
       formula to solve for the angle to each vector…
     </p>
 
@@ -616,11 +628,11 @@ this.aAcceleration = 0.01;</pre>
     <a data-primary="tangent" data-secondary="atan2() function" data-type="indexterm"></a>
 
     <p>
-      …we get the same angle for each vector. This can’t be right for both; the
+      …I get the same angle for each vector. This can’t be right for both; the
       vectors point in opposite directions! The thing is, this is a pretty
-      common problem in computer graphics. Rather than simply using
+      common problem in computer graphics. Rather than using
       <code>atan()</code> along with a bunch of conditional statements to
-      account for positive/negative scenarios, p5 (along with pretty
+      account for positive/negative scenarios, p5.js (along with pretty
       much all programming environments) has a nice function called
       <code>atan2()</code> that does it for you.
     </p>
@@ -637,7 +649,7 @@ this.aAcceleration = 0.01;</pre>
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   display() {
     //{!1} Using atan2() to account for all possible directions
-    this.angle = atan2(this.velocity.y, this.velocity.x);
+    let angle = atan2(this.velocity.y, this.velocity.x);
 
     stroke(0);
     fill(175);
@@ -645,7 +657,7 @@ this.aAcceleration = 0.01;</pre>
     rectMode(CENTER);
     translate(this.position.x, this.position.y);
     //{!1} Rotate according to that angle.
-    rotate(this.angle);
+    rotate(angle);
     rect(0, 0, 30, 10);
     pop();
   }</pre>
@@ -662,12 +674,12 @@ this.aAcceleration = 0.01;</pre>
       To simplify this even further, the <code>p5.Vector</code> class itself
       provides a function called <code>heading()</code>, which takes care of
       calling <code>atan2()</code> for you so you can get the 2D direction
-      angle, in radians, for any p5 <code>p5.Vector</code>.
+      angle, in radians, for any <code>p5.Vector</code>.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
     // The easiest way to do this!
-    this.angle = this.velocity.heading();</pre>
+    let angle = this.velocity.heading();</pre>
 
     <div data-type="exercise" id="chapter03_exercise3">
       <h5>Exercise 3.3</h5>
@@ -691,22 +703,19 @@ this.aAcceleration = 0.01;</pre>
     <a data-primary="shapes" data-secondary="displaying" data-type="indexterm"></a>
 
     <p>
-      Any time we display a shape in p5, we have to specify a pixel
+      Any time you display a shape in p5, you have to specify a pixel
       position, a set of <code>x</code> and <code>y</code> coordinates. These
       coordinates are known as <strong><em>Cartesian coordinates</em></strong>, named for René
-      Descartes, the French
-      mathematician who developed the
-      ideas behind Cartesian space.
+      Descartes, the French mathematician who developed the ideas behind Cartesian space.
     </p>
 
     <a data-primary="coordinate systems" data-secondary="polar" data-type="indexterm"></a>
     <a data-primary="polar coordinates" data-type="indexterm"></a>
 
     <p>
-      Another useful coordinate system known as
-      <strong><em>polar coordinates</em></strong> describes a point in space as
-      an angle of rotation around the origin and a radius from the origin.
-      Thinking about this in terms of a vector:
+      Another useful coordinate system known as <strong><em>polar coordinates</em></strong>
+      describes a point in space as an angle of rotation around the origin and a radius from the
+      origin. Thinking about this in terms of a vector:
     </p>
 
     <p>
@@ -718,13 +727,13 @@ this.aAcceleration = 0.01;</pre>
     <a data-primary="Processing" data-secondary="coordinate systems and" data-type="indexterm"></a>
 
     <p>
-      p5’s drawing functions, however, don’t understand polar
-      coordinates. Whenever we want to display something in p5, we have
+      p5.js’s drawing functions, however, don’t understand polar
+      coordinates. Whenever you want to display something, you have
       to specify positions as <em>(x,y)</em> Cartesian coordinates. However,
-      sometimes it is a great deal more convenient for us to think in polar
-      coordinates when designing. Happily for us, with trigonometry we can
-      convert back and forth between polar and Cartesian, which allows us to
-      design with whatever coordinate system we have in mind but always draw
+      sometimes it is much more convenient to think in polar
+      coordinates when designing. Happily for you, with trigonometry you can
+      convert back and forth between Polar and Cartesian, designing
+      with whatever coordinate system you have in mind but always drawing
       with Cartesian coordinates.
     </p>
 
@@ -737,7 +746,7 @@ this.aAcceleration = 0.01;</pre>
         src="chapter03/ch03_08.png" />
       <figcaption>
         Figure 3.8: The Greek letter θ (theta) is often used to denote an angle.
-        Since a polar coordinate is conventionally referred to as (r, θ), we’ll
+        Since a polar coordinate is conventionally referred to as (r, θ), I’ll
         use theta as a variable name when referring to an angle.&nbsp;
       </figcaption>
     </figure>
@@ -762,18 +771,18 @@ this.aAcceleration = 0.01;</pre>
 
     <p>
       For example, if <code>r</code> is 75 and <code>theta</code> is 45 degrees
-      (or PI/4 radians), we can calculate <code>x</code> and <code>y</code> as
-      below. The functions for sine and cosine in p5 are
+      (or PI/4 radians), <code>x</code> and <code>y</code> can be computed as
+      follow. (The functions for sine and cosine in p5.js are
       <code>sin()</code> and <code>cos()</code>, respectively. They each take
-      one argument, an angle measured in radians.
+      one argument, a number representing an angle.)
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-const r = 75;
-const theta = PI / 4;
+let r = 75;
+let theta = PI / 4;
 // Converting from polar (r,theta) to Cartesian (x,y)
-const x = r * cos(theta);
-const y = r * sin(theta);</pre>
+let x = r * cos(theta);
+let y = r * sin(theta);</pre>
 
     <a data-primary="shapes" data-secondary="moving with polar coordinates"
       data-type="indexterm"></a>
@@ -786,8 +795,7 @@ const y = r * sin(theta);</pre>
     </p>
 
     <p>
-      Here’s how it is done with global variables <code>r</code> and
-      <code>theta</code>.
+      Here’s how it is done with global variables <code>r</code> and <code>theta</code>.
     </p>
 
     <figure class="screenshot" data-p5-sketch="https://editor.p5js.org/embed/S1UL7gZue">
@@ -800,7 +808,7 @@ const y = r * sin(theta);</pre>
     </div>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-const r = 75;
+let r = 75;
 let theta = 0;
 
 function setup() {
@@ -810,13 +818,13 @@ function setup() {
 
 function draw() {
 
-  //{!2} Polar coordinates (r,theta) are converted to Cartesian (x,y) for use in the ellipse() function.
-  const x = r * cos(theta);
-  const y = r * sin(theta);
+  //{!2} Polar coordinates (r,theta) are converted to Cartesian (x,y) for use in the circle() function.
+  let x = r * cos(theta);
+  let y = r * sin(theta);
 
   noStroke();
   fill(0);
-  ellipse(x + width/2, y + height/2, 16, 16);
+  circle(x + width/2, y + height/2, 16);
 
   theta += 0.01;
 }</pre>
@@ -861,17 +869,16 @@ function draw() {
     <a data-primary="oscillation" data-type="indexterm"></a>
 
     <p>
-      Are you amazed yet? We’ve seen some pretty great uses of tangent (for
+      Are you amazed yet? I’ve demonstrated some pretty great uses of tangent (for
       finding the angle of a vector) and sine and cosine (for converting from
-      polar to Cartesian coordinates). We could stop right here and be
-      satisfied. But we’re not going to. This is only the beginning. What sine
+      polar to Cartesian coordinates). I could stop right here and be
+      satisfied. But I’m not going to. This is only the beginning. What sine
       and cosine can do for you goes beyond mathematical formulas and right
       triangles.
     </p>
 
     <p>
-      Let’s take a look at a graph of the sine function, where
-      <em>y = sine(x)</em>.
+      Let’s take a look at a graph of the sine function, where <em>y = sine(x)</em>.
     </p>
 
     <figure id="chapter03_figure9">
@@ -883,8 +890,7 @@ function draw() {
       You’ll notice that the output of the sine function is a smooth curve
       alternating between &minus;1 and 1. This type of a behavior is known as
       <strong><em>oscillation</em></strong>, a periodic movement between two points. Plucking a
-      guitar string,
-      swinging a pendulum, bouncing on a pogo stick—these are all examples of
+      guitar string, swinging a pendulum, bouncing on a pogo stick—these are all examples of
       oscillating motion.
     </p>
 
@@ -892,15 +898,15 @@ function draw() {
       data-type="indexterm"></a>
 
     <p>
-      And so we happily discover that we can simulate oscillation in a
-      p5 sketch by assigning the output of the sine function to an
+      And so you will happily discover that you can simulate oscillation in a
+      p5.js sketch by assigning the output of the sine function to an
       object’s position. Note that this will follow the same methodology we
       applied to Perlin noise in the <a href="#intro_section6">Introduction</a>.
     </p>
 
     <p>
-      Let’s begin with a really basic scenario. We want a circle to oscillate
-      from the left side to the right side of a p5 window.
+      Let’s begin with a really basic scenario. I want a circle to oscillate
+      from the left side to the right side of a p5.js canvas.
     </p>
 
     <figure class="screenshot" data-p5-sketch="https://editor.p5js.org/embed/BJTYQlWOe">
@@ -912,17 +918,15 @@ function draw() {
     <a data-primary="simple harmonic motion" data-type="indexterm"></a>
 
     <p>
-      This is what is known as
-      <strong><em>simple harmonic motion</em></strong> (or, to be fancier, “the
-      periodic sinusoidal oscillation of an object”). It’s going to be a simple
-      program to write, but before we get into the code, let’s familiarize
-      ourselves with some of the terminology of oscillation (and waves).
+      This is what is known as <strong><em>simple harmonic motion</em></strong> (or, to be fancier,
+      “the periodic sinusoidal oscillation of an object”). It’s going to be a simple
+      program to write, but before I get into the code, I should familiarize
+      you with some of the terminology of oscillation (and waves).
     </p>
 
     <p>
-      Simple harmonic motion can be expressed as any position (in our case, the
-      <code>x</code> position) as a function of time, with the following two
-      elements:
+      Simple harmonic motion can be expressed as any position (in this case, the
+      <code>x</code> position) as a function of time, with the following two elements:
     </p>
 
     <a data-primary="amplitude" data-type="indexterm"></a>
@@ -946,22 +950,22 @@ function draw() {
     </ul>
 
     <p>
-      Looking at the graph of sine (Figure 3.9), we can see that the amplitude
+      The graph of sine (Figure 3.9) shows that the amplitude
       is 1 and the period is <code>TWO_PI</code>; the output of sine never rises
       above 1 or below -1; and every <code>TWO_PI</code> radians (or 360
       degrees) the wave pattern repeats.
     </p>
 
     <p>
-      Now, in the p5 world we live in, what is amplitude and what is
+      Now, in a p5.js world, what is amplitude and what is
       period? Amplitude can be measured rather easily in pixels. In the case of
-      a window 200 pixels wide, we would oscillate from the center 100 pixels to
+      a window 200 pixels wide, I might choose to oscillate from the center 100 pixels to
       the right and 100 pixels to the left. Therefore:
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-// Our amplitude is measured in pixels.
-const amplitude = 100;</pre>
+// The amplitude is measured in pixels.
+let amplitude = 100;</pre>
 
     <a data-primary="millis() function (Processing)" data-type="indexterm"></a>
     <a data-primary="Processing" data-secondary="measuring time in" data-type="indexterm"></a>
@@ -971,27 +975,27 @@ const amplitude = 100;</pre>
 
     <p>
       <em>Period</em> is the amount of time it takes for one cycle, but what is
-      time in our p5 world? I mean, certainly we could say we want the
-      circle to oscillate every three seconds. And we could track the
-      milliseconds—using <code>millis()</code> —in p5 and come up with
+      time in a p5.js sketch? I mean, certainly I could say I want the
+      circle to oscillate every three seconds. And I could track the
+      milliseconds—using <code>millis()</code> —in p5.js and come up with
       an elaborate algorithm for oscillating an object according to real-world
-      time. But for us, real-world time doesn’t really matter. The real measure
-      of time in p5 is in frames. The oscillating motion should repeat
+      time. But for what I‘m trying to accomplish here, real-world time doesn’t really matter. The
+      useful measure of time in p5.js is in frames. The oscillating motion should repeat
       every 30 frames, or 50 frames, or 1000 frames, etc.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 // Period is measured in frames (the unit of time for animation).
-const period = 120;</pre>
+let period = 120;</pre>
 
     <p>
-      Once we have the amplitude and period, it’s time to write a formula to
-      calculate x as a function of time, which we now know is the current frame
+      Once I have the amplitude and period, it’s time to write a formula to
+      calculate x as a function of time, which I‘ve established as the current frame
       count.
     </p>
 
     <pre data-code-language="java" data-type="programlisting" class="codesplit">
-const x = amplitude * sin(TWO_PI * frameCount / period);</pre>
+let x = amplitude * sin(TWO_PI * frameCount / period);</pre>
 
     <a data-primary="map() function (Processing)" data-secondary="oscillation and"
       data-type="indexterm"></a>
@@ -999,10 +1003,10 @@ const x = amplitude * sin(TWO_PI * frameCount / period);</pre>
     <p>
       Let’s dissect the formula a bit more and try to understand each component.
       The first is probably the easiest. Whatever comes out of the sine function
-      we multiply by amplitude. We know that sine will oscillate between -1 and
-      1. If we take that value and multiply it by amplitude then we’ll get the
+      is multiplied by amplitude. The output of the sine function oscillates between -1 and
+      1. If you take that value and multiply it by amplitude then you’ll get the
       desired result: a value oscillating between -amplitude and amplitude.
-      (Note: this is also a place where we could use p5’s
+      (Note: this is also a place where we could use p5.js’s
       <code>map()</code> function to map the output of sine to a custom range.)
     </p>
 
@@ -1013,13 +1017,14 @@ const x = amplitude * sin(TWO_PI * frameCount / period);</pre>
     </p>
 
     <p>
-      What’s going on here? Let’s start with what we know. We know that sine
-      will repeat every 2*PI radians—i.e. it will start at 0 and repeat at 2*PI,
-      4*PI, 6*PI, etc. If the period is 120, then we want the oscillating motion
-      to repeat when the <code>frameCount</code> is at 120 frames, 240 frames,
-      360 frames, etc. <code>frameCount</code> is really the only variable; it
+      What’s going on here? Let’s start with what you know. I‘ve explained that sine
+      will repeat every <code>2*PI</code> radians—i.e. it will start at 0 and repeat at
+      <code>2*PI</code>,
+      <code>4*PI</code>, <code>6*PI</code>, etc. If the period is 120, then I want the oscillating
+      motion to repeat when the <code>frameCount</code> is at 120 frames, 240 frames,
+      360 frames, etc. <code>frameCount</code> is really the only value changing here; it
       starts at 0 and counts upward. Let’s take a look at what the formula
-      yields with those values.
+      yields as frameCount increases.
     </p>
 
     <table>
@@ -1086,15 +1091,15 @@ const x = amplitude * sin(TWO_PI * frameCount / period);</pre>
     </table>
 
     <p>
-      <code>frameCount</code> divided by <code>period</code> tells us how many
-      cycles we’ve completed—are we halfway through the first cycle? Have we
-      completed two cycles? By multiplying that number by <code>TWO_PI</code>,
-      we get the result we want, since <code>TWO_PI</code> is the number of
-      radians required for one sine (or cosine) to complete one cycle.
+      <code>frameCount</code> divided by <code>period</code> tells you how many
+      cycles have been completed—is the wave halfway through the first cycle? Have
+      two cycles completed? By multiplying that number by <code>TWO_PI</code>,
+      I get the desired result, since <code>TWO_PI</code> is the number of
+      radians required for sine (or cosine) to complete one full cycle.
     </p>
 
     <p>
-      Wrapping this all up, here’s the p5 example that oscillates the
+      Wrapping this all up, here’s the p5.js example that oscillates the
       <code>x</code> position of a circle with an amplitude of 100 pixels and a
       period of 120 frames.
     </p>
@@ -1111,15 +1116,15 @@ function setup() {
 function draw() {
   background(255);
 
-  const period = 120;
-  const amplitude = 100;
+  let period = 120;
+  let amplitude = 100;
   //{!1 .offset} Calculating horizontal position according to the formula for simple harmonic motion
-  const x = amplitude * sin(TWO_PI * frameCount / period);
+  let x = amplitude * sin(TWO_PI * frameCount / period);
   stroke(0);
   fill(175);
   translate(width/2, height/2);
   line(0, 0, x, 0);
-  ellipse(x, 0, 20, 20);
+  circle(x, 0, 20);
 }</pre>
 
     <a data-primary="frequency (of oscillations)" data-type="indexterm"></a>
@@ -1127,11 +1132,10 @@ function draw() {
 
     <p>
       It’s also worth mentioning the term <strong><em>frequency</em></strong>: the number of cycles
-      per time unit.
-      Frequency is equal to 1 divided by
+      per time unit. Frequency is equal to 1 divided by
       <code>period</code>. If the period is 120 frames, then only 1/120th of a
       cycle is completed in one frame, and so frequency = 1/120. In the above
-      example, we simply chose to define the rate of oscillation in terms of
+      example, I chose to define the rate of oscillation in terms of
       period and therefore did not need a variable for frequency.
     </p>
 
@@ -1142,7 +1146,7 @@ function draw() {
         Using the sine function, create a simulation of a weight (sometimes
         referred to as a “bob”) that hangs from a spring from the top of the
         window. Use the <code>map()</code> function to calculate the vertical
-        position of the bob. Later in this chapter, we’ll see how to recreate
+        position of the bob. Later in this chapter, I’ll demonstrate how to recreate
         this same simulation by modeling the forces of a spring according to
         Hooke’s law.
       </p>
@@ -1159,37 +1163,36 @@ function draw() {
       An understanding of the concepts of oscillation, amplitude, and
       frequency/period is often required in the course of simulating real-world
       behaviors. However, there is a slightly easier way to rewrite the above
-      example with the same result. Let’s take one more look at our oscillation
+      example with the same result. Let’s take one more look at the oscillation
       formula:
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-const x = amplitude * sin(TWO_PI * frameCount / period);</pre>
+let x = amplitude * sin(TWO_PI * frameCount / period);</pre>
 
-    <p>And let’s rewrite it a slightly different way:</p>
+    <p>Below I‘ll rewrite it a slightly different way:</p>
 
     <pre data-code-language="java" data-type="programlisting" class="codesplit">
 const x = amplitude * sin ( some value that increments slowly );</pre>
 
     <p>
-      If we care about precisely defining the period of oscillation in terms of
-      frames of animation, we might need the formula the way we first wrote it,
-      but we can just as easily rewrite our example using the concept of angular
-      velocity (and acceleration) from
-      <a href="#chapter03_section2">section 3.2</a>. Assuming:
+      If you care about precisely defining the period of oscillation in terms of
+      frames of animation, you might need the formula the way I first wrote it,
+      but I could just as easily rewrite the example using the concept of angular
+      velocity (and acceleration) from <a href="#chapter03_section2">section 3.2</a>. Assuming:
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 let angle = 0;
-const aVelocity = 0.05;</pre>
+let aVelocity = 0.05;</pre>
 
     <p>in <code>draw()</code>, we can simply say:</p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 angle += aVelocity;
-const x = amplitude * sin(angle);</pre>
+let x = amplitude * sin(angle);</pre>
 
-    <p><code>angle</code> is our “some value that increments slowly.”</p>
+    <p><code>angle</code> is “some value that increments slowly.”</p>
 
     <div data-type="example">
       <h5>Example 3.6: Simple Harmonic Motion II</h5>
@@ -1197,7 +1200,7 @@ const x = amplitude * sin(angle);</pre>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 let angle = 0;
-const aVelocity = 0.05;
+let aVelocity = 0.05;
 
 function setup() {
   createCanvas(640, 360);
@@ -1206,8 +1209,8 @@ function setup() {
 function draw() {
   background(255);
 
-  const amplitude = 100;
-  const x = amplitude * sin(angle);
+  let amplitude = 100;
+  let x = amplitude * sin(angle);
   //{!1} Using the concept of angular velocity to increment an angle variable
   angle += aVelocity;
 
@@ -1216,15 +1219,15 @@ function draw() {
   fill(175);
   translate(width/2, height/2);
   line(0, 0, x, 0);
-  ellipse(x, 0, 20, 20);
+  circle(x, 0, 20);
 }</pre>
 
     <p>
-      Just because we’re not referencing it directly doesn’t mean that we’ve
+      Just because I’m not referencing it directly doesn’t mean that I’ve
       eliminated the concept of <code>period</code>. After all, the greater the
       angular velocity, the faster the circle will oscillate (therefore lowering
-      the period). In fact, the number of times it takes to add up the angular
-      velocity to get to <code>TWO_PI</code> is the period or:
+      the period). In fact, the number of <code>draw()</code> loops to add up the angular
+      velocity all the way to <code>TWO_PI</code> is the period or:
     </p>
 
     <p><span class="formula">period = TWO_PI / angular velocity</span></p>
@@ -1233,10 +1236,10 @@ function draw() {
 
     <p>
       Let’s expand this example a bit more and create an
-      <code>Oscillator</code> class. And let’s assume we want the oscillation to
-      happen along both the x-axis (as above) and the y-axis. To do this, we’ll
+      <code>Oscillator</code> class. And let’s assume I want the oscillation to
+      happen along both the x-axis (as above) and the y-axis. To do this, I’ll
       need two angles, two angular velocities, and two amplitudes (one for each
-      axis). Another perfect opportunity for <code>p5.Vector</code>!
+      axis). Another perfect opportunity for <code>createVector()</code>!
     </p>
 
     <figure class="screenshot" data-p5-sketch="https://editor.p5js.org/embed/rJkWNeWOx">
@@ -1254,7 +1257,7 @@ class Oscillator  {
   constructor()  {
     //{!3} Using a p5.Vector to track two angles!
     this.angle = createVector();
-    this.velocity = createVector(random(-0.05,0.05),random(-0.05,0.05));
+    this.velocity = createVector(random(-0.05, 0.05),random(-0.05, 0.05));
     //{!1 .offset} Random velocities and amplitudes
     this.amplitude = createVector(random(width/2), random(height/2));
   }
@@ -1265,9 +1268,9 @@ class Oscillator  {
 
   display()  {
     // Oscillating on the x-axis
-    const x = sin(this.angle.x) * this.amplitude.x;
+    let x = sin(this.angle.x) * this.amplitude.x;
     //{!1} Oscillating on the y-axis
-    const y = sin(this.angle.y) * this.amplitude.y;
+    let y = sin(this.angle.y) * this.amplitude.y;
 
     push();
     translate(width/2, height/2);
@@ -1275,7 +1278,7 @@ class Oscillator  {
     fill(175);
     // Drawing the Oscillator as a line connecting a circle
     line(0, 0, x, y);
-    ellipse(x, y, 16, 16);
+    circle(x, y, 16);
     pop();
   }
 }</pre>
@@ -1295,8 +1298,7 @@ class Oscillator  {
       <h5>Exercise 3.8</h5>
 
       <p>
-        Incorporate angular acceleration into the
-        <code>Oscillator</code> object.
+        Incorporate angular acceleration into the <code>Oscillator</code> object.
       </p>
     </div>
   </section>
@@ -1309,11 +1311,10 @@ class Oscillator  {
 
     <p>
       If you’re saying to yourself, “Um, this is all great and everything, but
-      what I really want is to draw a wave onscreen,” well, then, the time has
-      come. The thing is, we’re about 90% there. When we oscillate a single
-      circle up and down according to the sine function, what we are doing is
-      looking at a single point along the x-axis of a wave pattern. With a
-      little panache and a <code>for</code> loop, we can place a whole bunch of
+      what I really want is to draw a wave,” well, then, the time has
+      come. When you oscillate a single circle up and down according to the sine function, what you
+      are doing is equivalent to simulating a single point along the x-axis of a wave pattern.
+      With a little panache and a <code>for</code> loop, you can place a whole bunch of
       these oscillating circles next to each other.
     </p>
 
@@ -1333,28 +1334,27 @@ class Oscillator  {
       data-type="indexterm"></a>
 
     <p>
-      Here, we’re going to encounter the same questions of amplitude (height of
-      pattern) and period. Instead of period referring to time, however, since
-      we’re looking at the full wave, we can talk about period as the width (in
-      pixels) of a full wave cycle. And just as with simple oscillation, we have
+      Here, the same questions of amplitude (height of
+      pattern) and period apply. Instead of period referring to time, however, since
+      the example renders the full wave, I‘ll refer to period as the width (in
+      pixels) of a full wave cycle. And just as with simple oscillation, you have
       the option of computing the wave pattern according to a precise period or
-      simply following the model of angular velocity.
+      following the model of angular velocity.
     </p>
 
     <p>
-      Let’s go with the simpler case, angular velocity. We know we need to start
+      Let’s go with the simpler case, angular velocity. I know I need to start
       with an angle, an angular velocity, and an amplitude:
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 let angle = 0;
-const angleVel = 0.2;
-const amplitude = 100;</pre>
+let angleVel = 0.2;
+let amplitude = 100;</pre>
 
     <p>
-      Then we’re going to loop through all of the <code>x</code> values where we
-      want to draw a point of the wave. Let’s say every 24 pixels for now. In
-      that loop, we’re going to want to do three things:
+      Then I’m going to loop through all of the <code>x</code> values for each point on the wave.
+      I’ll pick every 24 pixels for now and follow these three steps:
     </p>
 
     <ol>
@@ -1374,15 +1374,15 @@ const amplitude = 100;</pre>
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   for (let x = 0; x <= width; x += 24) {
     // 1) Calculate the y position according to amplitude and sine of the angle.
-    const y = amplitude * sin(angle);
+    let y = amplitude * sin(angle);
     // 2) Draw a circle at the (x,y) position.
-    ellipse(x, y + height/2, 48, 48);
+    circle(x, y + height/2, 48);
     // 3) Increment the angle according to angular velocity.
     angle += angleVel;
   }</pre>
 
     <p>
-      Let’s look at the results with different values for <code>angleVel</code>:
+      Here are the results with different values for <code>angleVel</code>:
     </p>
 
     <figure class="three-col" data-p5-sketch="https://editor.p5js.org/embed/B1JE_HQDX">
@@ -1401,11 +1401,11 @@ const amplitude = 100;</pre>
     </figure>
 
     <p>
-      Notice how, although we’re not precisely computing the period of the wave,
+      Although I’m not precisely computing the period of the wave,
       the higher the angular velocity, the shorter the period. It’s also worth
-      noting that as the period becomes shorter, it becomes more and more
-      difficult to make out the wave itself as the distance between the
-      individual points increases. One option we have is to use
+      noting that as the period decreases, it becomes more
+      difficult to make out the wave itself since the distance between the
+      individual points increases. One option to improve the visual quality is to use
       <code>beginShape()</code> and <code>endShape()</code> to connect the
       points with a line.
     </p>
@@ -1421,11 +1421,11 @@ const amplitude = 100;</pre>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 let angle = 0;
-const angleVel = 0.2;
-const amplitude = 100;
+let angleVel = 0.2;
+let amplitude = 100;
 
 function setup(){
-  createCanvas(400, 200);
+  createCanvas(640, 360);
   background(255);
 
   stroke(0);
@@ -1436,7 +1436,7 @@ function setup(){
   for (let x = 0; x <= width; x += 5) {
     // Here’s an example of using the map() function
     // instead.
-    const y = map(sin(angle), -1, 1, 0, height);
+    let y = map(sin(angle), -1, 1, 0, height);
     // With beginShape() and endShape(), you call
     // vertex() to set all the vertices of your shape.
     vertex(x, y);
@@ -1451,18 +1451,17 @@ function setup(){
     <p>
       You may have noticed that the above example is static. The wave never
       changes, never undulates. This additional step is a bit tricky. Your first
-      instinct might be to say: “Hey, no problem, we’ll just let theta be a
-      global variable and let it increment from one cycle through
-      <code>draw()</code> to another.”
+      instinct might be to say: “Hey, no problem, I’ll just let theta be a
+      global variable and increment it from one cycle through <code>draw()</code> to another.”
     </p>
 
     <p>
       While it’s a nice thought, it doesn’t work. If you look at the wave, the
       righthand edge doesn’t match the lefthand; where it ends in one cycle of
-      <code>draw()</code> can’t be where it starts in the next. Instead, what we
-      need to do is have a variable dedicated entirely to tracking what value of
-      angle the wave should start with. This angle (which we’ll call
-      <code>startAngle</code>) increments with its own angular velocity.
+      <code>draw()</code> can’t be where it starts in the next. Instead, what you
+      need to do is have a variable dedicated entirely to tracking the starting angle value of the
+      wave. This angle (which I’ll call <code>startAngle</code>) increments with its own angular
+      velocity.
     </p>
 
     <figure class="screenshot" data-p5-sketch="https://editor.p5js.org/embed/Byt94lW_x">
@@ -1476,10 +1475,10 @@ function setup(){
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 let startAngle = 0;
-const angleVel = 0.1;
+let angleVel = 0.1;
 
 function setup() {
-  createCanvas(400, 200);
+  createCanvas(640, 360);
 }
 
 function draw() {
@@ -1490,10 +1489,10 @@ function draw() {
   startAngle += 0.02;
 
   for (let x = 0; x <= width; x += 24) {
-    const y = map(sin(angle),-1,1,0,height);
+    const y = map(sin(angle), -1, 1, 0, height);
     stroke(0);
-    fill(0,50);
-    ellipse(x,y,48,48);
+    fill(0, 50);
+    circle(x, y, 48);
     angle += angleVel;
   }
 }</pre>
@@ -1527,7 +1526,7 @@ function draw() {
       <h5>Exercise 3.11</h5>
 
       <p>
-        More complex waves can be produced by the values of multiple waves
+        More complex waves can be produced by the summing multiple waves
         together. Create a sketch that implements this, as in the screenshot
         below.
       </p>
@@ -1553,7 +1552,7 @@ function draw() {
       you, it’s time to bring it all back home. After all, it’s been nice
       learning about triangles and tangents and waves, but really, the core of
       this book is about simulating the physics of moving bodies. Let’s take a
-      look at how trigonometry can help us with this pursuit.
+      look at how trigonometry can help with this pursuit.
     </p>
 
     <figure class="two-col-borderless" id="chapter03_figure10">
@@ -1567,9 +1566,9 @@ function draw() {
     </figure>
 
     <p>
-      A pendulum is a bob suspended from a pivot. Obviously a real-world
-      pendulum would live in a 3D space, but we’re going to look at a simpler
-      scenario, a pendulum in a 2D space—a p5 window (see Figure 3.10).
+      A pendulum is a bob suspended from a pivot. A real-world
+      pendulum would live in a 3D space, but I’m going to look at a simpler
+      scenario, a pendulum in a 2D space—a p5 canvas (see Figure 3.10).
     </p>
 
     <a data-primary="acceleration" data-secondary="angular" data-tertiary="determining"
@@ -1577,20 +1576,20 @@ function draw() {
     <a data-primary="angular acceleration" data-type="indexterm"></a>
 
     <p>
-      In Chapter 2, we learned how a force (such as the force of gravity in
+      In Chapter 2, I discussed how a force (such as the force of gravity in
       Figure 3.11) causes an object to accelerate.
       <span class="mono">F = M <code>*</code> A</span> or
       <span class="mono">A = F / M</span>. In this case, however, the pendulum
-      bob doesn’t simply fall to the ground because it is attached by an arm to
+      bob doesn’t fall to the ground because it is attached by an arm to
       the pivot point. And so, in order to determine its
-      <em>angular</em> acceleration, we not only need to look at the force of
-      gravity, but also the force at the angle of the pendulum’s arm (relative
-      to a pendulum at rest with an angle of 0).
+      <em>angular</em> acceleration, I not only need to look at the force of
+      gravity vector, but also the component of that vector relative to the angle of the pendulum’s
+      arm (which itself is an angle relative to a pendulum at rest).
     </p>
 
     <p>
       In the above case, since the pendulum’s arm is of fixed length, the only
-      variable in the scenario is the angle. We are going to simulate the
+      variable in the scenario is the angle. I am going to simulate the
       pendulum’s motion through the use of angular velocity and acceleration.
       The angular acceleration will be calculated using Newton’s second law with
       a little trigonometry twist.
@@ -1606,19 +1605,16 @@ function draw() {
     <a data-primary="gravity" data-secondary="modeling with trigonometry" data-type="indexterm"></a>
 
     <p>
-      We can see that the force of the pendulum (<code>F<sub>p</sub></code>) should point
-      perpendicular to the arm of
-      the pendulum in the direction
+      You can see that the force of the pendulum (<code>F<sub>p</sub></code>) should point
+      perpendicular to the arm of the pendulum in the direction
       that the pendulum is swinging. After all, if there were no arm, the bob
-      would just fall straight down. It’s the tension force of the arm that
+      would fall straight down. It’s the tension force of the arm that
       keeps the bob accelerating towards the pendulum’s rest state. Since the
       force of gravity (<code>F<sub>g</sub></code>) points downward, by making a right triangle out
-      of these two
-      vectors,
-      we’ve accomplished something quite magnificent. We’ve made the force of
-      gravity the hypotenuse of a right triangle and separated the vector into
+      of these two vectors, you’ll see something quite magnificent. The force of
+      gravity becomes the hypotenuse of a right triangle which can be separated into
       two components, one of which represents the force of the pendulum. Since
-      sine equals opposite over hypotenuse, we have:
+      sine equals opposite over hypotenuse, you‘ll then have:
     </p>
 
     <p>
@@ -1632,9 +1628,9 @@ function draw() {
     </p>
 
     <p>
-      Lest we forget, we’ve been doing all of this with a single question in
-      mind: What is the angular acceleration of the pendulum? Once we have the
-      angular acceleration, we’ll be able to apply our rules of motion to find
+      Lest you forget, I’ve been doing all of this with a single question in
+      mind: What is the angular acceleration of the pendulum? Once I have the
+      angular acceleration, I’ll be able to apply the rules of motion to find
       the new angle for the pendulum.
     </p>
 
@@ -1644,7 +1640,7 @@ function draw() {
     </p>
 
     <p>
-      The good news is that with Newton’s second law, we know that there is a
+      The good news is Newton’s second law states that there is a
       relationship between force and acceleration, namely F = M * A, or A = F /
       M. So if the force of the pendulum is equal to the force of gravity times
       sine of the angle, then:
@@ -1661,12 +1657,11 @@ function draw() {
       data-type="indexterm"></a>
 
     <p>
-      This is a good time to remind ourselves that we’re p5 programmers
-      and not physicists. Yes, we know that the acceleration due to gravity on
-      earth is 9.8 meters per second squared. But this number isn’t relevant to
-      us. What we have here is just an arbitrary constant (we’ll call it
-      <code>gravity</code>), one that we can use to scale the acceleration to
-      something that feels right.
+      This is a good time for a reminder that I’m a p5.js codere and not
+      a physicist. Yes, I know that the acceleration due to gravity on
+      earth is 9.8 meters per second squared. But this number isn’t relevant here. What I have
+      is just an arbitrary constant (I’ll call it <code>gravity</code>), one that we can use to
+      scale the acceleration to something that feels right.
     </p>
 
     <p>
@@ -1676,9 +1671,9 @@ function draw() {
     <p>
       Amazing. After all that, the formula is so simple. You might be wondering,
       why bother going through the derivation at all? I mean, learning is great
-      and all, but we could have easily just said, "Hey, the angular
+      and all, but I could have easily just said, "Hey, the angular
       acceleration of a pendulum is some constant times the sine of the angle."
-      This is just another moment in which we remind ourselves that the purpose
+      This is just another moment for me to emphasize that the purpose
       of the book is not to learn how pendulums swing or gravity works. The
       point is to think creatively about how things can move about the screen in
       a computationally based graphics system. The pendulum is just a case
@@ -1688,11 +1683,11 @@ function draw() {
     </p>
 
     <p>
-      Of course, we’re not finished yet. We may be happy with our simple,
-      elegant formula, but we still have to apply it in code. This is most
-      definitely a good time to practice our object-oriented programming skills
+      Of course, I’m not finished yet. I may be happy with the simple,
+      elegant formula, but I still have to apply it in code. This is most
+      definitely a good time to practice some object-oriented programming skills
       and create a <code>Pendulum</code> class. Let’s think about all the
-      properties we’ve encountered in our pendulum discussion that the class
+      properties I’ve mentioned in the pendulum discussion that the class
       will need:
     </p>
 
@@ -1726,14 +1721,14 @@ class Pendulum  {
   } </pre>
 
     <p>
-      We’ll also need to write a function <code>update()</code> to update the
-      pendulum’s angle according to our formula…
+      I’ll also need to write a function <code>update()</code> to update the
+      pendulum’s angle according to the formula…
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   update() {
     // Arbitrary constant
-    const gravity = 0.4;
+    let gravity = 0.4;
     // Calculate acceleration according to our formula.
     this.aAcceleration = -1 * gravity * sin(this.angle);
     // Increment velocity.
@@ -1748,51 +1743,50 @@ class Pendulum  {
     </figure>
 
     <p>
-      ...as well as a function <code>display()</code> to draw the pendulum in
-      the window. This begs the question: “Um, where do we draw the pendulum?”
-      We know the angle and the arm length, but how do we know the
-      <em>x,y</em> (Cartesian!) coordinates for both the pendulum’s pivot point
-      (let’s call it origin) and bob position (let’s call it position)? This may
-      be getting a little tiring, but the answer, yet again, is trigonometry.
+      ...as well as a function <code>display()</code> to draw the pendulum on the canvas. This begs
+      the question: “Um, where do you draw the pendulum?” I know the angle and the arm length, but
+      how do I calculate the <em>x,y</em> (Cartesian!) coordinates for both the pendulum’s pivot
+      point (let’s call it origin) and bob position (let’s call it position)? This may
+      be getting a little tiresome, but the answer, yet again, is trigonometry.
     </p>
 
     <p>
-      The origin is just something we make up, as is the arm length. Let’s say:
+      The origin is just something made up, as is the arm length. Let’s say:
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-this.origin = createVector(100,10);
+this.origin = createVector(100, 10);
 this.r = 125;</pre>
 
     <p>
-      We’ve got the current angle stored in our variable <code>angle</code>. So
+      I’ve got the current angle stored in the variable <code>angle</code>. So
       relative to the origin, the pendulum’s position is a polar coordinate:
-      <em>(r,angle)</em>. And we need it to be Cartesian. Luckily for us, we
+      <em>(r,angle)</em>. And I need it to be Cartesian. Luckily, I
       just spent some time (section 3.5) deriving the formula for converting
       from polar to Cartesian. And so:
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-const position = createVector(r * sin(this.angle), r* cos(this.angle));</pre>
+let position = createVector(r * sin(this.angle), r * cos(this.angle));</pre>
 
     <p>
       Note, however that <code>sin(angle)</code> is used for the x-value and
-      <code>cos(angle)</code> for the y. This is the opposite of the formula we
-      established in Chapter 3. The reason for this is that we are looking for
+      <code>cos(angle)</code> for the y. This is the opposite of the formula
+      established earlier in Chapter 3. The reason for this is that I am looking for
       the top angle of the right-triangle pointing down as depicted in Figure
       3.13.
     </p>
 
     <p>
-      Since the position is relative to wherever the origin happens to be, we
-      can just add origin to the position <code>p5.Vector</code>:
+      Since the position is relative to wherever the origin happens to be, I
+      can just add origin to the position vector:
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 this.position.add(this.origin);</pre>
 
     <p>
-      And all that remains is the little matter of drawing a line and ellipse
+      And all that remains is the little matter of drawing a line and circle
       (you should be more creative, of course).
     </p>
 
@@ -1800,24 +1794,24 @@ this.position.add(this.origin);</pre>
 stroke(0);
 fill(175);
 line(this.origin.x, this.origin.y, this.position.x, this.position.y);
-ellipse(this.position.x, this.position.y, 16, 16);</pre>
+circle(this.position.x, this.position.y, 16);</pre>
 
     <p>
-      Before we put everything together, there’s one last little detail I
+      Before I put everything together, there’s one last little detail I
       neglected to mention. Let’s think about the pendulum arm for a moment. Is
       it a metal rod? A string? A rubber band? How is it attached to the pivot
       point? How long is it? What is its mass? Is it a windy day? There are a
-      lot of questions that we could continue to ask that would affect the
-      simulation. We’re living, of course, in a fantasy world, one where the
+      lot of questions that I could continue to ask that would affect the
+      simulation. I choose to live, however, in a fantasy world, one where the
       pendulum’s arm is some idealized rod that never bends and the mass of the
       bob is concentrated in a single, infinitesimally small point.
-      Nevertheless, even though we don’t want to worry ourselves with all of the
-      questions, we should add one more variable to our calculation of angular
-      acceleration. To keep things simple, in our derivation of the pendulum’s
-      acceleration, we assumed that the length of the pendulum’s arm is 1. In
-      fact, the length of the pendulum’s arm affects the acceleration greatly:
+      Nevertheless, even though I don’t want to worry myself with all of these
+      questions, I should add one more variable to the calculation of angular
+      acceleration. To keep things simple, in the derivation of the pendulum’s
+      acceleration, I assumed that the length of the pendulum’s arm is 1. In
+      truth, the length of the pendulum’s arm affects the acceleration greatly:
       the longer the arm, the slower the acceleration. To simulate a pendulum
-      more accurately, we divide by that length, in this case <code>r</code>.
+      more accurately, I suggest dividing by that length, in this case <code>r</code>.
       For a more involved explanation, visit
       <a href="http://calculuslab.deltacollege.edu/ODE/7-A-2/7-A-2-h.html">The Simple Pendulum
         website</a>.
@@ -1833,11 +1827,11 @@ this.aAcceleration = (-1 * G * sin(this.angle)) / r;</pre>
 
     <p>
       Finally, a real-world pendulum is going to experience some amount of
-      friction (at the pivot point) and air resistance. With our code as is, the
-      pendulum would swing forever, so to make it more realistic we can use a
+      friction (at the pivot point) and air resistance. With the code as is, the
+      pendulum would swing forever, so to make it more realistic I can use a
       “damping” trick. I say <em>trick</em> because rather than model the
-      resistance forces with some degree of accuracy (as we did in Chapter 2),
-      we can achieve a similar result by simply reducing the angular velocity
+      resistance forces with some degree of accuracy (as I did in Chapter 2),
+      I can achieve a similar result by reducing the angular velocity
       during each cycle. The following code reduces the velocity by 1% (or
       multiplies it by 99%) during each frame of animation:
     </p>
@@ -1846,7 +1840,7 @@ this.aAcceleration = (-1 * G * sin(this.angle)) / r;</pre>
 this.aVelocity *= 0.99;</pre>
 
     <p>
-      Putting everything together, we have the following example (with the
+      Putting everything together, I have the following example (with the
       pendulum beginning at a 45-degree angle).
     </p>
 
@@ -1860,39 +1854,35 @@ this.aVelocity *= 0.99;</pre>
     </div>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-let p;
+let pendulum;
 
 function setup() {
   createCanvas(640, 360);
   //{!1} We make a new Pendulum object with an origin position and arm length.
-  p = new Pendulum(createVector(width/2,10),125);
+  pendulum = new Pendulum(width/2, 10, 125);
 }
 
 function draw() {
   background(255);
-  p.go();
+  pendulum.update();
+  pendulum.display();
 }</pre>
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Pendulum  {
 
-  constructor( origin_, r_) {
+  constructor(x, y, r) {
     //{!7} Many, many variables to keep track of the Pendulum’s various properties
-    this.origin = origin_.copy(); // position of arm origin
-    this.position = createVector(); // position of bob
-    this.r = r_; // Length of arm
-    this.angle = PI/4; // Pendulum arm angle
-    this.aVelocity = 0.0; // Angle velocity
-    this.aAcceleration = 0.0; // Angle acceleration
-    this.damping = 0.995; // Arbitrary damping
-  }
-
-  go() {
-    this.update();
-    this.display();
+    this.origin = createVector(x, y); // position of arm origin
+    this.position = createVector();   // position of bob
+    this.r = r;             // Length of arm
+    this.angle = PI / 4;    // Pendulum arm angle
+    this.aVelocity = 0;     // Angle velocity
+    this.aAcceleration = 0; // Angle acceleration
+    this.damping = 0.995;   // Arbitrary damping
   }
 
   update() {
-    const gravity = 0.4;
+    lete gravity = 0.4;
     //{!1 .code-wide} Formula we worked out for angular acceleration
     this.aAcceleration = (-1 * gravity / this.r) * sin(this.angle);
 
@@ -1914,7 +1904,7 @@ class Pendulum  {
     line(this.origin.x, this.origin.y, this.position.x, this.position.y);
     fill(175);
     //{!1 .code-wide} The bob
-    ellipse(this.position.x, this.position.y, 16, 16);
+    circle(this.position.x, this.position.y, 16);
   }
 }</pre>
 
@@ -1977,18 +1967,17 @@ class Pendulum  {
     <a data-primary="springs" data-type="indexterm"></a>
 
     <p>
-      In <a href="#chapter03_section6">section 3.6</a>, we looked at modeling
+      In <a href="#chapter03_section6">section 3.6</a>, I looked at modeling
       simple harmonic motion by mapping the sine wave to a pixel range.
       <a href="#chapter03_exercise6">Exercise 3.6</a> asked you to use this
       technique to create a simulation of a bob hanging from a spring. While
       using the <code>sin()</code> function is a quick-and-dirty,
-      one-line-of-code way of getting something up and running, it won’t do if
-      what we really want is to have a bob hanging from a spring in a
+      one-line-of-code way of getting such a result, it won’t do if
+      what you really want is to have a bob hanging from a spring in a
       two-dimensional space that responds to other forces in the environment
       (wind, gravity, etc.) To accomplish a simulation like this (one that is
       identical to the pendulum example, only now the arm is a springy
-      connection), we need to model the forces of a spring using
-      <code>p5.Vector</code>.
+      connection), you need to model the forces of a spring using vectors.
     </p>
 
     <figure id="chapter03_figure14">
@@ -2005,7 +1994,7 @@ class Pendulum  {
       The force of a spring is calculated according to Hooke’s law, named for
       Robert Hooke, a British physicist who developed the formula in 1660. Hooke
       originally stated the law in Latin: "<em>Ut tensio, sic vis</em>," or “As
-      the extension, so the force.” Let’s think of it this way:
+      the extension, so the force.” Think of it this way:
     </p>
 
     <p>
@@ -2050,9 +2039,9 @@ class Pendulum  {
     </ul>
 
     <p>
-      Now remember, force is a vector, so we need to calculate both magnitude
+      Now remember, force is a vector, so you need to calculate both magnitude
       and direction. Let’s look at one more diagram of the spring and label all
-      the givens we might have in a p5 sketch.
+      the givens we might have in a p5.js sketch.
     </p>
 
     <figure id="chapter03_figure16">
@@ -2061,54 +2050,53 @@ class Pendulum  {
     </figure>
 
     <p>
-      Let’s establish the following three variables as shown in Figure 3.16.
+      For the code, I‘ll start with the following three variables as shown in Figure 3.16.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-const anchor = createVector();
-const position = createVector();
-const restLength = ????;</pre>
+let anchor = createVector();
+let position = createVector();
+let restLength = ????;</pre>
 
     <a data-primary="springs" data-secondary="magnitude of force" data-tertiary="determining"
       data-type="indexterm"></a>
 
     <p>
-      First, let’s use Hooke’s law to calculate the magnitude of the force. We
-      need to know <code>k</code> and <code>x</code>. <code>k</code> is easy;
-      it’s just a constant, so let’s make something up.
+      I’ll then use Hooke’s law to calculate the magnitude of the force. I
+      need to calculate <code>k</code> and <code>x</code>. <code>k</code> is easy;
+      it’s just a constant, so I’ll make something up.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-const k = 0.1;</pre>
+let k = 0.1;</pre>
 
     <a data-primary="springs" data-secondary="rest length" data-type="indexterm"></a>
 
     <p>
-      <code>x</code> is perhaps a bit more difficult. We need to know the
+      <code>x</code> is perhaps a bit more difficult. I need to know the
       “difference between the current length and the rest length.” The rest
       length is defined as the variable <code>restLength</code>. What’s the
       current length? The distance between the anchor and the bob. And how can
-      we calculate that distance? How about the magnitude of a vector that
+      I calculate that distance? How about the magnitude of a vector that
       points from the anchor to the bob? (Note that this is exactly the same
-      process we employed when calculating distance in Example 2.9:
-      gravitational attraction.)
+      process employed when calculating distance in Example 2.9: gravitational attraction.)
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 //{!1} A vector pointing from anchor to bob gives us the current length of the spring.
-const dir = p5.Vector.sub(bob, anchor);
-const currentLength = dir.mag();
-const x = currentLength - restLength;</pre>
+let dir = p5.Vector.sub(bob, anchor);
+let currentLength = dir.mag();
+let x = currentLength - restLength;</pre>
 
     <a data-primary="springs" data-secondary="direction of force" data-tertiary="determining"
       data-type="indexterm"></a>
 
     <p>
-      Now that we’ve sorted out the elements necessary for the magnitude of the
-      force (-1 * <code>k</code> * <code>x</code>), we need to figure out the
+      Now that I’ve sorted out the elements necessary for the magnitude of the
+      force (-1 * <code>k</code> * <code>x</code>), I need to figure out the
       direction, a unit vector pointing in the direction of the force. The good
-      news is that we already have this vector. Right? Just a moment ago we
-      thought to ourselves: “How we can calculate that distance? How about the
+      news is that I already have this vector. Right? Just a moment ago I asked the question: “How
+      I can calculate that distance? How about the
       magnitude of a vector that points from the anchor to the bob?” Well, that
       is the direction of the force!
     </p>
@@ -2119,44 +2107,40 @@ const x = currentLength - restLength;</pre>
     </figure>
 
     <p>
-      In Figure 3.17, we can see that if we stretch the spring beyond its rest
+      Figure 3.17 shows that if you stretch the spring beyond its rest
       length, there should be a force pulling it back towards the anchor. And if
       it shrinks below its rest length, the force should push it away from the
       anchor. This reversal of direction is accounted for in the formula with
-      the -1. And so all we need to do is normalize the <code>p5.Vector</code> we
+      the -1. And so all I need to do is set the magnitude of the vector used
       used for the distance calculation! Let’s take a look at the code and
-      rename that <code>p5.Vector</code> variable as “force.”
+      rename that vector variable as <code>force</code>.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 //{!4} Magnitude of spring force according to Hooke’s law
-const k = 0.1;
-const force = p5.Vector.sub(bob, anchor);
-const currentLength = force.mag();
-const x = currentLength - restLength;
-
-//{!1} Direction of spring force (unit vector)
-force.normalize();
+let k = 0.1;
+let force = p5.Vector.sub(bob, anchor);
+let currentLength = force.mag();
+let x = currentLength - restLength;
 
 // Putting it together: direction and magnitude!
-force.mult(-1 * k * x);</pre>
+force.setMag(-1 * k * x);</pre>
 
     <a data-primary="object-oriented programming" data-secondary="structures"
       data-tertiary="choosing between" data-type="indexterm"></a>
 
     <p>
-      Now that we have the algorithm worked out for computing the spring force
+      Now that I have the algorithm worked out for computing the spring force
       vector, the question remains: what object-oriented programming structure
-      should we use? This, again, is one of those situations in which there is
-      no “correct” answer. There are several possibilities; which one we choose
-      depends on the program’s goals and one’s own personal coding style. Still,
-      since we’ve been working all along with a <code>Mover</code> class, let’s
-      keep going with this same framework. Let’s think of our
+      should I use? This, again, is one of those situations in which there is
+      no “correct” answer. There are several possibilities; which one I choose
+      depends on my goals and personal coding style. Since I’ve been working all along with a
+      <code>Mover</code> class, I’ll stick with this same framework. I’ll think of the
       <code>Mover</code> class as the spring’s “bob.” The bob needs
       <code>position</code>, <code>velocity</code>, and
-      <code>acceleration</code> vectors to move about the screen. Perfect—we’ve
+      <code>acceleration</code> vectors to move about the screen. Perfect—I’ve
       got that already! And perhaps the bob experiences a gravity force via the
-      <code>applyForce()</code> function. Just one more step—we need to apply
+      <code>applyForce()</code> function. Just one more step—applying
       the spring force:
     </p>
 
@@ -2168,14 +2152,14 @@ function setup() {
 }
 
 function draw()  {
-  //{!1} Our Chapter 2 “make-up-a-gravity force”
-  const gravity = createVector(0, 1);
+  //{!1} Chapter 2 “make-up-a-gravity force”
+  let gravity = createVector(0, 1);
   bob.applyForce(gravity);
-  //{!2 .bold} We need to also calculate and apply a spring force!
-  const springForce = _______________????
+  //{!2 .bold} I need to also calculate and apply a spring force!
+  let springForce = _______________????
   bob.applyForce(spring);
 
-  //{!2} Our standard update() and display() functions
+  //{!2} The standard update() and display() functions
   bob.update();
   bob.display();
 }</pre>
@@ -2195,7 +2179,7 @@ function draw()  {
       and its rest length and calculates the spring force on the bob.
     </p>
 
-    <p>This allows us to write a lovely main program as follows:</p>
+    <p>This allows me to write a lovely sketch as follows:</p>
 
     <pre data-code-language="javascript data-type=" programlisting" class="codesplit">
 let bob;
@@ -2208,7 +2192,7 @@ function setup() {
 }
 
 function draw()  {
-  const gravity = createVector(0,1);
+  let gravity = createVector(0,1);
   bob.applyForce(gravity);
 
   //{!1 .bold} This new function in the Spring class will take care of computing the force of the spring on the bob.
@@ -2220,56 +2204,55 @@ function draw()  {
 }</pre>
 
     <p>
-      You may notice here that this is quite similar to what we did in
-      <a href="#chapter02_example6">Example 2.6</a> with an attractor. There, we
-      said something like:
+      You may notice here that this is quite similar to what I did in
+      <a href="#chapter02_example6">Example 2.6</a> with an attractor. There, I
+      wrote something like:
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-  const force = attractor.attract(mover);
+  let force = attractor.attract(mover);
   mover.applyForce(force);</pre>
 
     <p>The analogous situation here with a spring would be:</p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-  const force = spring.connect(bob);
+  let force = spring.connect(bob);
   bob.applyForce(force);</pre>
 
-    <p>Nevertheless, in this example all we said was:</p>
+    <p>Nevertheless, in this example all I said was:</p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   spring.connect(bob);</pre>
 
     <p>
-      What gives? Why don’t we need to call <code>applyForce()</code> on the
-      bob? The answer is, of course, that we do need to call
+      What gives? Why don’t I need to call <code>applyForce()</code> on the
+      bob? The answer is, of course, that I do need to call
       <code>applyForce()</code> on the bob. Only instead of doing it in
-      <code>draw()</code>, we’re just demonstrating that a perfectly reasonable
+      <code>draw()</code>, I’m demonstrating that a perfectly reasonable
       (and sometimes preferable) alternative is to ask the
       <code>connect()</code> function to internally handle calling
       <code>applyForce()</code> on the bob.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-  connect(b) {
-    const force = some fancy calculations
+  connect(bob) {
+    let force = some fancy calculations
 
     //{!1} The function connect() takes care of calling applyForce() and therefore doesn’t have to return a vector to the calling area.
-    b.applyForce(force);
+    bob.applyForce(force);
   }</pre>
 
     <p>
       Why do it one way with the <code>Attractor</code> class and another way
-      with the <code>Spring</code> class? When we were first learning about
+      with the <code>Spring</code> class? When I first discussed
       forces, it was a bit clearer to show all the forces being applied in the
-      main <code>draw()</code> loop, and hopefully this helped you learn about
-      force accumulation. Now that we’re more comfortable with that, perhaps
+      <code>draw()</code> loop, and hopefully this helped you learn about
+      force accumulation. Now that you’re more comfortable with that, perhaps
       it’s simpler to embed some of the details inside the objects themselves.
     </p>
 
     <p>
-      Let’s take a look at the rest of the elements in the
-      <code>Spring</code> class.
+      Let’s take a look at the rest of the elements in the <code>Spring</code> class.
     </p>
 
     <figure class="screenshot" data-p5-sketch="https://editor.p5js.org/embed/HkzFHeZdg">
@@ -2285,48 +2268,47 @@ function draw()  {
 class Spring {
 
   //{!1} The constructor initializes the anchor point and rest length.
-  constructor( x_, y_, l_) {
-    //{!1} We need to keep track of the spring’s anchor position.
-    this.anchor = createVector(x_,y_);
+  constructor(x, y, length) {
+    //{!1} The spring’s anchor position.
+    this.anchor = createVector(x, y);
     //{!2} Rest length and spring constant variables
-    this.len = l_;
+    this.length = length;
     this.k = 0.1;
   }
 
   //{!1} Calculate spring force—our implementation of Hooke’s Law.
-  connect(b) {
+  connect(bob) {
 
     //{!1 .bold .code-wide} Get a vector pointing from anchor to Bob position.
-    const force = p5.Vector.sub(b.position, this.anchor);
+    let force = p5.Vector.sub(bob.position, this.anchor);
     //{!2 .bold} Calculate the displacement between distance and rest length.
-    const d = force.mag();
-    const stretch = d - this.len;
+    let d = force.mag();
+    let stretch = d - this.length;
 
     //{!2 .bold} Direction and magnitude together!
     force.normalize();
     force.mult(-1 * this.k * stretch);
 
     //{!1} Call applyForce() right here!
-    b.applyForce(force);
+    bob.applyForce(force);
   }
 
   //{!5} Draw the anchor.
   display() {
     fill(100);
-    rectMode(CENTER);
-    rect(this.anchor.x,this.anchor.y,10,10);
+    circle(this.anchor.x, this.anchor.y, 10);
   }
 
   //{!4} Draw the spring connection between Bob position and anchor.
   displayLine(b) {
     stroke(255);
-    line(b.position.x,b.position.y,this.anchor.x,this.anchor.y);
+    line(b.position.x, b.position.y, this.anchor.x, this.anchor.y);
   }
 }</pre>
 
     <p>
       The full code for this example is included on the book website, and the
-      Web version also incorporates two additional features: (1) the
+      that version also incorporates two additional features: (1) the
       <code>Bob</code> class includes functions for mouse interactivity so that
       the bob can be dragged around the window, and (2) the
       <code>Spring</code> object includes a function to constrain the
@@ -2344,22 +2326,20 @@ class Spring {
       <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 constrainLength(b, minlen, maxlen) {
   //{!1} Vector pointing from Bob to Anchor
-  const dir = p5.Vector.sub(______,______);
-  const d = dir.mag();
+  let dir = p5.Vector.sub(______,______);
+  let d = dir.mag();
 
   //{!1} Is it too short?
   if (d < minlen) {
-    dir.normalize();
-    dir.mult(________);
+    dir.setMag(________);
     //{!1} Keep position within constraint.
-    b.position = p5.Vector.add(______,______);
+    b.position = p5.Vector.add(______, ______);
     b.velocity.mult(0);
   //{!1} Is it too long?
   } else if (____________) {
-    dir.normalize();
-    dir.mult(_________);
+    dir.setMag(_________);
     //{!1} Keep position within constraint.
-    b.position = p5.Vector.add(______,______);
+    b.position = p5.Vector.add(______, ______);
     b.velocity.mult(0);
   }
 }</pre>
@@ -2369,8 +2349,8 @@ constrainLength(b, minlen, maxlen) {
       <h5>Exercise 3.16</h5>
 
       <p>
-        Create a system of multiple bobs and spring connections. How would you
-        have a bob connected to a bob with no fixed anchor?
+        Create a system of multiple bobs and spring connections. Try
+        connecting a bob to another bob with no fixed anchor?
       </p>
     </div>
 
