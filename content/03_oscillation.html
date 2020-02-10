@@ -198,8 +198,8 @@ rotate(angle);</pre>
 translate(width/2, height/2);
 rotate(angle);
 line(-50, 0, 50, 0);
-ellipse(50, 0, 8);
-ellipse(-50, 0, 8);</pre>
+circle(50, 0, 8);
+circle(-50, 0, 8);</pre>
 
     <p>
       Adding in the principles of motion, I can then write the following example (the solution to
@@ -236,8 +236,8 @@ function draw() {
   translate(width/2, height/2);
   rotate(angle);
   line(-50, 0, 50, 0);
-  ellipse(50, 0, 8, 8);
-  ellipse(-50, 0, 8, 8);
+  circle(50, 0, 8);
+  circle(-50, 0, 8);
 
   // Angular equivalent of velocity.add(acceleration);
   aVelocity += aAcceleration;
@@ -319,7 +319,7 @@ display() {
   translate(this.position.x, this.position.y);
   //{!1} Rotate by the angle.
   rotate(this.angle);
-  ellipse(0, 0, this.radius * 2);
+  circle(0, 0, this.radius * 2);
   line(0, 0, this.radius, 0);
   pop();
 }</pre>
@@ -818,13 +818,13 @@ function setup() {
 
 function draw() {
 
-  //{!2} Polar coordinates (r,theta) are converted to Cartesian (x,y) for use in the ellipse() function.
+  //{!2} Polar coordinates (r,theta) are converted to Cartesian (x,y) for use in the circle() function.
   let x = r * cos(theta);
   let y = r * sin(theta);
 
   noStroke();
   fill(0);
-  ellipse(x + width/2, y + height/2, 16, 16);
+  circle(x + width/2, y + height/2, 16);
 
   theta += 0.01;
 }</pre>
@@ -1124,7 +1124,7 @@ function draw() {
   fill(175);
   translate(width/2, height/2);
   line(0, 0, x, 0);
-  ellipse(x, 0, 20);
+  circle(x, 0, 20);
 }</pre>
 
     <a data-primary="frequency (of oscillations)" data-type="indexterm"></a>
@@ -1219,7 +1219,7 @@ function draw() {
   fill(175);
   translate(width/2, height/2);
   line(0, 0, x, 0);
-  ellipse(x, 0, 20);
+  circle(x, 0, 20);
 }</pre>
 
     <p>
@@ -1278,7 +1278,7 @@ class Oscillator  {
     fill(175);
     // Drawing the Oscillator as a line connecting a circle
     line(0, 0, x, y);
-    ellipse(x, y, 16);
+    circle(x, y, 16);
     pop();
   }
 }</pre>
@@ -1376,7 +1376,7 @@ let amplitude = 100;</pre>
     // 1) Calculate the y position according to amplitude and sine of the angle.
     let y = amplitude * sin(angle);
     // 2) Draw a circle at the (x,y) position.
-    ellipse(x, y + height/2, 48);
+    circle(x, y + height/2, 48);
     // 3) Increment the angle according to angular velocity.
     angle += angleVel;
   }</pre>
@@ -1489,10 +1489,10 @@ function draw() {
   startAngle += 0.02;
 
   for (let x = 0; x <= width; x += 24) {
-    const y = map(sin(angle),-1,1,0,height);
+    const y = map(sin(angle), -1, 1, 0, height);
     stroke(0);
-    fill(0,50);
-    ellipse(x,y,48,48);
+    fill(0, 50);
+    circle(x, y, 48);
     angle += angleVel;
   }
 }</pre>
@@ -1786,7 +1786,7 @@ let position = createVector(r * sin(this.angle), r * cos(this.angle));</pre>
 this.position.add(this.origin);</pre>
 
     <p>
-      And all that remains is the little matter of drawing a line and ellipse
+      And all that remains is the little matter of drawing a line and circle
       (you should be more creative, of course).
     </p>
 
@@ -1794,7 +1794,7 @@ this.position.add(this.origin);</pre>
 stroke(0);
 fill(175);
 line(this.origin.x, this.origin.y, this.position.x, this.position.y);
-ellipse(this.position.x, this.position.y, 16);</pre>
+circle(this.position.x, this.position.y, 16);</pre>
 
     <p>
       Before I put everything together, there’s one last little detail I
@@ -1904,7 +1904,7 @@ class Pendulum  {
     line(this.origin.x, this.origin.y, this.position.x, this.position.y);
     fill(175);
     //{!1 .code-wide} The bob
-    ellipse(this.position.x, this.position.y, 16);
+    circle(this.position.x, this.position.y, 16);
   }
 }</pre>
 
@@ -2296,7 +2296,7 @@ class Spring {
   //{!5} Draw the anchor.
   display() {
     fill(100);
-    ellipse(this.anchor.x, this.anchor.y, 10);
+    circle(this.anchor.x, this.anchor.y, 10);
   }
 
   //{!4} Draw the spring connection between Bob position and anchor.
