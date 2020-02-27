@@ -15,18 +15,18 @@
 
   <p>
     Believe it or not, there is a purpose. Well, at least there’s a purpose to
-    the first five chapters of this book. We could stop right here; after all,
-    we’ve looked at several different ways of modeling motion and simulating
+    the first five chapters of this book. I could stop right here; after all,
+    I’ve covered several different ways of modeling motion and simulating
     physics. Angry Birds, here we come!
   </p>
 
   <p>
-    Still, let’s think for a moment. Why are we here? The <em>nature</em> of
-    code, right? What have we been designing so far? Inanimate objects. Lifeless
-    shapes sitting on our screens that flop around when affected by forces in
-    their environment. What if we could breathe life into those shapes? What if
+    Still, let’s think for a moment. Why are you here? The <em>nature</em> of
+    code, right? What have I been demonstrating so far? Inanimate objects. Lifeless
+    shapes sitting in canvas that flop around when affected by forces in
+    their environment. What if you could breathe life into those shapes? What if
     those shapes could live by their own rules? Can shapes have hopes and dreams
-    and fears? This is what we are here in this chapter to do—develop
+    and fears? This is what I am here in this chapter to do—develop
     <em>autonomous agents</em>.
   </p>
 
@@ -38,19 +38,20 @@
     <p>
       The term <strong><em>autonomous agent</em></strong> generally refers to an
       entity that makes its own choices about how to act in its environment
-      without any influence from a leader or global plan. For us, “acting” will
-      mean moving. This addition is a significant conceptual leap. Instead of a
-      box sitting on a boundary waiting to be pushed by another falling box, we
-      are now going to design a box that has the ability and “desire” to leap
+      without any influence from a leader or global plan. For the context here,
+      “acting” will mean moving. This addition is a significant conceptual leap.
+      Instead of a
+      box sitting on a boundary waiting to be pushed by another falling box, I
+      would like to now design a box that has the ability and “desire” to leap
       out of the way of that other falling box, if it so chooses. While the
-      concept of forces that come from within is a major shift in our design
-      thinking, our code base will barely change, as these desires and actions
+      concept of forces that come from within is a major shift in design
+      thinking, the code base will barely change, as these desires and actions
       are simply that—<em>forces</em>.
     </p>
 
     <p>
-      Here are three key components of autonomous agents that we’ll want to keep
-      in mind as we build our examples.
+      Here are three key components of autonomous agents that I’ll want to keep
+      in mind as I build the examples.
     </p>
 
     <a data-primary="autonomous agents" data-secondary="key components of"
@@ -62,20 +63,20 @@
           <strong>An autonomous agent has a <em>limited</em> ability to perceive
             environment.</strong>
           It makes sense that a living, breathing being should have an awareness
-          of its environment. What does this mean for us, however? As we look at
-          examples in this chapter, we will point out programming techniques for
-          allowing objects to store references to other objects and therefore
-          “perceive” their environment. It’s also crucial that we consider the
-          word <em>limited</em> here. Are we designing an all-knowing rectangle
+          of its environment. What does this mean, however? Throughout all the
+          examples in this chapter, I will point out programming techniques for
+          objects to store references to other objects and therefore
+          “perceive” their environment. It’s also crucial to consider the
+          word <em>limited</em> here. Are you designing an all-knowing rectangle
           that flies around a p5 window, aware of everything else in
-          that window? Or are we creating a shape that can only examine any
+          that window? Or are you creating a shape that can only examine any
           other object within fifteen pixels of itself? Of course, there is no
-          right answer to this question; it all depends. We’ll explore some
-          possibilities as we move forward. For a simulation to feel more
+          right answer to this question; it all depends. I’ll explore several
+          possibilities throughout this chapter. For a simulation to feel more
           “natural,” however, limitations are a good thing. An insect, for
           example, may only be aware of the sights and smells that immediately
-          surround it. For a real-world creature, we could study the exact
-          science of these limitations. Luckily for us, we can just make stuff
+          surround it. For a real-world creature, you could study the exact
+          science of these limitations. Luckily, I can just make stuff
           up and try it out.
         </p>
       </li>
@@ -83,7 +84,7 @@
         <p>
           <strong>An autonomous agent processes the information from its environment
             and calculates an action.</strong>
-          This will be the easy part for us, as the action is a force. The
+          This will be the easy part, as the action is a force. The
           environment might tell the agent that there’s a big scary-looking
           shark swimming right at it, and the action will be a powerful force in
           the opposite direction.
@@ -92,12 +93,13 @@
       <li>
         <p>
           <strong>An autonomous agent has no leader.</strong> This third
-          principle is something we care a little less about. After all, if you
+          principle is something I care a little less about for the context here.
+          After all, if you
           are designing a system where it makes sense to have a leader barking
           commands at various entities, then that’s what you’ll want to
           implement. Nevertheless, many of these examples will have no leader
-          for an important reason. As we get to the end of this chapter and
-          examine group behaviors, we will look at designing collections of
+          for an important reason. Towards the end of this chapter, I'll
+          examine group behaviors and look at designing collections of
           autonomous agents that exhibit the properties of complex systems—
           intelligent and structured group dynamics that emerge not from a
           leader, but from the local interactions of the elements themselves.
@@ -114,7 +116,7 @@
       algorithmic steering behaviors for animated characters. These behaviors
       allowed individual elements to navigate their digital environments in a
       “lifelike” manner with strategies for fleeing, wandering, arriving,
-      pursuing, evading, etc. Used in the case of a single autonomous agent,
+      pursuing, evading, and more. Used in the case of a single autonomous agent,
       these behaviors are fairly simple to understand and implement. In
       addition, by building a system of multiple characters that steer
       themselves according to simple, locally based rules, surprising levels of
@@ -131,16 +133,16 @@
     <a data-primary="Resnick" data-secondary="Mitchel" data-type="indexterm"></a>
 
     <p>
-      Now that we understand the core concepts behind autonomous agents, we can
-      begin writing the code. There are many places where we could start.
+      Now that I‘ve discussed the core concepts behind autonomous agents, it‘s time
+      to begin writing the code. There are many places where I could start.
       Artificial simulations of ant and termite colonies are fantastic
       demonstrations of systems of autonomous agents. (For more on this topic, I
       encourage you to read <em>Turtles, Termites, and Traffic Jams</em> by
-      Mitchel Resnick.) However, we want to begin by examining agent behaviors
-      that build on the work we’ve done in the first five chapters of this book:
-      modeling motion with vectors and driving motion with forces. And so it’s
-      time to rename our <code>Mover</code> class that became our
-      <code>Particle</code> class once again. This time we are going to call it
+      Mitchel Resnick.) However, I want to begin by examining agent behaviors
+      that build on the work in the first five chapters of this book:
+      modeling motion with vectors and forces. And so it’s
+      time to once again rename the <code>Mover</code> class that became the
+      <code>Particle</code> class. This time I am going to call it
       <code>Vehicle</code>.
     </p>
 
@@ -153,14 +155,14 @@ class Vehicle {
     this.acceleration = createVector();
   }
 
-  [inline]// What else do we need to add?</pre>
+  [inline]// What else do I need to add?</pre>
 
     <a data-primary="Steering Behaviors for Autonomous Characters (Reynolds)"
       data-type="indexterm"></a>
 
     <p>
       In his 1999 paper “Steering Behaviors for Autonomous Characters,” Reynolds
-      uses the word “vehicle” to describe his autonomous agents, so we will
+      uses the word “vehicle” to describe his autonomous agents, so I will
       follow suit.
     </p>
 
@@ -178,15 +180,16 @@ class Vehicle {
         <em>Vehicles: Experiments in Synthetic Psychology</em>. Braitenberg
         argues that his extraordinarily simple mechanical vehicles manifest
         behaviors such as fear, aggression, love, foresight, and optimism.
-        Reynolds took his inspiration from Braitenberg, and we’ll take ours from
+        Reynolds took his inspiration from Braitenberg, and I’ll take mine from
         Reynolds.
       </p>
     </div>
 
     <p>
       Reynolds describes the motion of <em>idealized</em> vehicles (idealized
-      because we are not concerned with the actual engineering of such vehicles,
-      but simply assume that they exist and will respond to our rules) as a
+      because he was not concerned with the actual engineering of such vehicles,
+      but rather started with the assumption that they work and respond to the rules defined)
+      as a
       series of three layers—<strong>Action Selection</strong>,
       <strong>Steering</strong>, and <strong>Locomotion</strong>.
     </p>
@@ -201,34 +204,34 @@ class Vehicle {
         <p>
           <strong><em>Action Selection.</em></strong> A vehicle has a goal (or
           goals) and can select an action (or a combination of actions) based on
-          that goal. This is essentially where we left off with autonomous
+          that goal. This is essentially where I left off the discussion of autonomous
           agents. The vehicle takes a look at its environment and calculates an
           action based on a desire: “I see a zombie marching towards me. Since I
           don’t want my brains to be eaten, I’m going to flee from the zombie.”
           The goal is to keep one’s brains and the action is to flee. Reynolds’s
           paper describes many goals and associated actions such as: seek a
-          target, avoid an obstacle, and follow a path. In a moment, we’ll start
-          building these examples out with p5 code.
+          target, avoid an obstacle, and follow a path. In a moment, I’ll start
+          building these examples out with p5.js code.
         </p>
       </li>
       <li>
         <p>
           <strong><em>Steering.</em></strong> Once an action has been selected,
-          the vehicle has to calculate its next move. For us, the next move will
+          the vehicle has to calculate its next move. That next move will
           be a force; more specifically, a steering force. Luckily, Reynolds has
-          developed a simple steering force formula that we’ll use throughout
+          developed a simple steering force formula that I’ll use throughout
           the examples in this chapter:
-          <strong><em>steering force = desired velocity - current velocity</em></strong>. We’ll get
+          <strong><em>steering force = desired velocity - current velocity</em></strong>. I’ll get
           into the details of this formula and why it works so
           effectively in the next section.
         </p>
       </li>
       <li>
         <p>
-          <strong><em>Locomotion.</em></strong> For the most part, we’re going
+          <strong><em>Locomotion.</em></strong> For the most part, I’m going
           to ignore this third layer. In the case of fleeing zombies, the
           locomotion could be described as “left foot, right foot, left foot,
-          right foot, as fast as you can.” In our p5 world, however, a
+          right foot, as fast as you can.” In a p5 canvas, however, a
           rectangle or circle or triangle’s actual movement across a window is
           irrelevant given that it’s all an illusion in the first place.
           Nevertheless, this isn’t to say that you should ignore locomotion
@@ -247,19 +250,19 @@ class Vehicle {
     <p>
       Ultimately, the most important layer for you to consider is #1—<em>Action Selection</em>. What
       are the elements of your system and what are their goals? In this
-      chapter, we are going to look at a series of steering behaviors (i.e.
+      chapter, I am going to cover a series of steering behaviors (i.e.
       actions): seek, flee, follow a path, follow a flow field, flock with your
       neighbors, etc. It’s important to realize, however, that the point of
       understanding how to write the code for these behaviors is not because you
       should use them in all of your projects. Rather, these are a set of
       building blocks, a foundation from which you can design and develop
       vehicles with creative goals and new and exciting behaviors. And even
-      though we will think literally in this chapter (follow that pixel!), you
+      though the examples will be highly literal in this chapter (follow that pixel!), you
       should allow yourself to think more abstractly (like Braitenberg). What
       would it mean for your vehicle to have “love” or “fear” as its goal, its
-      driving force? Finally (and we’ll address this later in the chapter), you
+      driving force? Finally (and I’ll address this later in the chapter), you
       won’t get very far by developing simulations with only one action. Yes,
-      our first example will be “seek a target.” But for you to be creative—to
+      the first example will be “seek a target.” But for you to be creative—to
       make these steering behaviors <em>your own</em><code>—</code>it will all
       come down to mixing and matching multiple actions within the same vehicle.
       So view these examples not as singular behaviors to be emulated, but as
