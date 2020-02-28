@@ -276,10 +276,10 @@ class Vehicle {
     <a data-primary="forces" data-secondary="steering" data-type="indexterm"></a>
 
     <p>
-      We can entertain ourselves by discussing the theoretical principles behind
-      autonomous agents and steering as much as we like, but we can’t get
+      I could entertain you by discussing the theoretical principles behind
+      autonomous agents and steering as much as you like, but we won’t get
       anywhere without first understanding the concept of a steering force.
-      Consider the following scenario. A vehicle moving with velocity desires to
+      Consider the following scenario: a vehicle moving with velocity desires to
       seek a target.
     </p>
 
@@ -293,13 +293,13 @@ class Vehicle {
       think back to Chapter 2, you might begin by making the target an attractor
       and apply a gravitational force that pulls the vehicle to the target. This
       would be a perfectly reasonable solution, but conceptually it’s not what
-      we’re looking for here. We don’t want to simply calculate a force that
-      pushes the vehicle towards its target; rather, we are asking the vehicle
+      I’m looking for here. I don’t want to simply calculate a force that
+      pushes the vehicle towards its target; rather, I would like to ask the vehicle
       to make an intelligent decision to steer towards the target based on its
       perception of its state and environment (i.e. how fast and in what
       direction is it currently moving). The vehicle should look at how it
       desires to move (a vector pointing to the target), compare that goal with
-      how quickly it is currently moving (its velocity), and apply a force
+      how it is currently moving (its velocity), and apply a force
       accordingly.
     </p>
 
@@ -307,19 +307,19 @@ class Vehicle {
       <strong><em>steering force = desired velocity - current velocity</em></strong>
     </p>
 
-    <p>Or as we might write in p5:</p>
+    <p>Or as you might write in p5:</p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-const steer = p5.Vector.sub(desired, velocity);</pre>
+let steer = p5.Vector.sub(desired, velocity);</pre>
 
     <a data-primary="desired velocity" data-type="indexterm"></a>
     <a data-primary="steering force" data-secondary="desired velocity" data-type="indexterm"></a>
 
     <p>
-      In the above formula, velocity is no problem. After all, we’ve got a
-      variable for that. However, we don’t have the <em>desired velocity</em>;
-      this is something we have to calculate. Let’s take a look at Figure 6.2.
-      If we’ve defined the vehicle’s goal as “seeking the target,” then its
+      In the above formula, velocity is not a problem. After all, there is already a
+      variable for that. However, the <em>desired velocity</em>
+      is something that has to be calculated. Take a look at Figure 6.2.
+      If the vehicle’s goal is defined as “seeking the target,” then its
       desired velocity is a vector that points from its current position to the
       target position.
     </p>
@@ -329,17 +329,17 @@ const steer = p5.Vector.sub(desired, velocity);</pre>
       <figcaption>Figure 6.2</figcaption>
     </figure>
 
-    <p>Assuming a <code>p5.Vector</code> target, we then have:</p>
+    <p>Assuming a <code>p5.Vector</code> target, I then have:</p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-const desired = p5.Vector.sub(target, position);</pre>
+let desired = p5.Vector.sub(target, position);</pre>
 
     <p>
-      But this isn’t particularly realistic. What if we have a very
-      high-resolution window and the target is thousands of pixels away? Sure,
+      But this there is more to the story here. What if the canvas is
+      high-resolution and the target is thousands of pixels away? Sure,
       the vehicle might desire to teleport itself instantly to the target
       position with a massive velocity, but this won’t make for an effective
-      animation. What we really want to say is:
+      animation. I’ll restate the desire as follows:
     </p>
 
     <p>
@@ -347,10 +347,10 @@ const desired = p5.Vector.sub(target, position);</pre>
     </p>
 
     <p>
-      In other words, the vector should point from position to target and with a
+      In other words, the vector should point from position to target with a
       magnitude equal to maximum speed (i.e. the fastest the vehicle can go). So
-      first, we need to make sure we add a variable to our
-      <code>Vehicle</code> class that stores maximum speed.
+      first, I’ll need to make sure to add a property to the
+      <code>Vehicle</code> class for maximum speed itself.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
@@ -366,12 +366,12 @@ class Vehicle {
   </pre>
 
     <p>
-      Then, in our desired velocity calculation, we scale according to maximum
+      Then, in the desired velocity calculation, I’ll scale according to maximum
       speed.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-const desired = p5.Vector.sub(target, this.position);
+let desired = p5.Vector.sub(target, this.position);
 desired.normalize();
 desired.mult(this.maxspeed);</pre>
 
@@ -381,30 +381,30 @@ desired.mult(this.maxspeed);</pre>
     </figure>
 
     <p>
-      Putting this all together, we can write a function called
+      Putting this all together, I can now write a function called
       <code>seek()</code> that receives a <code>p5.Vector</code> target and
       calculates a steering force towards that target.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   seek(target) {
-    const desired = p5.Vector.sub(target,this.position);
+    let desired = p5.Vector.sub(target,this.position);
     desired.normalize();
     //{!1} Calculating the desired velocity
     // to target at max speed
     desired.mult(this.maxspeed);
 
     // Reynolds’s formula for steering force
-    const steer = p5.Vector.sub(desired, this.velocity);
-    //{!1} Using our physics model and applying the force
+    let steer = p5.Vector.sub(desired, this.velocity);
+    //{!1} Using the physics model and applying the force
     // to the object’s acceleration
     this.applyForce(steer);
   }</pre>
 
     <p>
-      Note how in the above function we finish by passing the steering force
-      into <code>applyForce()</code>. This assumes that we are basing this
-      example on the foundation we built in
+      Note how in the above function I finish by passing the steering force
+      into <code>applyForce()</code>. This assumes that the the code is built on top of
+      the foundation built in
       <a href="#chapter02_section2">Chapter 2</a>. However, you could just as
       easily use the steering force with Box2D’s
       <code>applyForce()</code> function or toxiclibs’
@@ -423,7 +423,7 @@ desired.mult(this.maxspeed);</pre>
 
     <p>
       Again, notice how this is not at all the same force as gravitational
-      attraction. Remember one of our principles of autonomous agents: An
+      attraction. Remember one of the principles of autonomous agents: An
       autonomous agent has a <em>limited</em> ability to perceive its
       environment. Here is that ability, subtly embedded into Reynolds’s
       steering formula. If the vehicle weren’t moving at all (zero velocity),
@@ -437,14 +437,14 @@ desired.mult(this.maxspeed);</pre>
     <a data-primary="steering force" data-secondary="magnitude of" data-type="indexterm"></a>
 
     <p>
-      In all of this excitement, however, we’ve missed one last step. What sort
+      In all of this excitement, however, I’ve missed one last step. What sort
       of vehicle is this? Is it a super sleek race car with amazing handling? Or
-      a giant Mack truck that needs a lot of advance notice to turn? A graceful
-      panda, or a lumbering elephant? Our example code, as it stands, has no
+      a large city bus that needs a lot of advance notice to turn? A graceful
+      panda, or a lumbering elephant? The example code, as it stands, has no
       feature to account for this variability in steering ability. Steering
       ability can be controlled by limiting the magnitude of the steering force.
       Let’s call that limit the “maximum force” (or <code>maxforce</code> for
-      short). And so finally, we have:
+      short). And so finally:
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
@@ -456,7 +456,7 @@ class Vehicle {
     this.acceleration = createVector();
     // Maximum speed
     this.maxspeed = ????;
-    // Now we also have maximum force.
+    // Now also have maximum force.
     this.maxforce = ????;
   }
   </pre>
@@ -465,10 +465,10 @@ class Vehicle {
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   seek(target) {
-    const desired = p5.Vector.sub(target, this.position);
+    let desired = p5.Vector.sub(target, this.position);
     desired.normalize();
     desired.mult(this.maxspeed);
-    const steer = p5.Vector.sub(desired, this.velocity);
+    let steer = p5.Vector.sub(desired, this.velocity);
 
     //{!1} Limit the magnitude of the steering force.
     steer.limit(this.maxforce);
@@ -477,16 +477,16 @@ class Vehicle {
   }</pre>
 
     <p>
-      Limiting the steering force brings up an important point. We must always
-      remember that it’s not actually our goal to get the vehicle to the target
-      as fast as possible. If that were the case, we would just say “position
-      equals target” and there the vehicle would be. Our goal, as Reynolds puts
+      Limiting the steering force brings up an important point.
+      Remember, it’s not actually the goal here to get the vehicle to the target
+      as fast as possible. If that were the case, I would just say “position
+      equals target” and there the vehicle would be. The goal, as Reynolds puts
       it, is to move the vehicle in a “lifelike and improvisational manner.”
-      We’re trying to make it appear as if the vehicle is steering its way to
-      the target, and so it’s up to us to play with the forces and variables of
+      I’m trying to make it appear as if the vehicle is steering its way to
+      the target, and so it’s up to me to play with the forces and variables of
       the system to simulate a given behavior. For example, a large maximum
       steering force would result in a very different path than a small one. One
-      is not inherently better or worse than the other; it depends on your
+      is not inherently better or worse than the other; it depends on the
       desired effect. (And of course, these values need not be fixed and could
       change based on other conditions. Perhaps a vehicle has health: the higher
       the health, the better it can steer.)
@@ -526,7 +526,7 @@ class Vehicle {
     //[end]
   }
 
-  // Our standard “Euler integration” motion model
+  // The standard “Euler integration” motion model
   update() {
     this.velocity.add(this.acceleration);
     this.velocity.limit(this.maxspeed);
@@ -539,9 +539,9 @@ class Vehicle {
     this.acceleration.add(force);
   }
 
-  // Our seek steering force algorithm
+  // The seek steering force algorithm
   seek(target) {
-    const desired = p5.Vector.sub(target, this.position);
+    let desired = p5.Vector.sub(target, this.position);
     desired.normalize();
     desired.mult(this.maxspeed);
     const steer = p5.Vector.sub(desired, this.velocity);
@@ -552,17 +552,17 @@ class Vehicle {
   display() {
     //{!1} Vehicle is a triangle pointing in
     // the direction of velocity; since it is drawn
-    // pointing up, we rotate it an additional 90 degrees.
-    const theta = this.velocity.heading() + PI/2;
+    // pointing up, rotate it an additional 90 degrees.
+    let theta = this.velocity.heading() + PI/2;
     fill(175);
     stroke(0);
     push();
     translate(this.position.x, this.position.y);
     rotate(theta);
     beginShape();
-    vertex(0, -this.r*2);
-    vertex(-this.r, this.r*2);
-    vertex(this.r, this.r*2);
+    vertex(0, -this.r * 2);
+    vertex(-this.r, this.r * 2);
+    vertex(this.r, this.r * 2);
     endShape(CLOSE);
     pop();
   }
@@ -572,8 +572,8 @@ class Vehicle {
       <h5>Exercise 6.1</h5>
 
       <p>
-        Implement a “fleeing” steering behavior (desired vector is inverse of
-        “seek”).
+        Implement a “fleeing” steering behavior (desired velocity is the same as
+        “seek” but pointed in the opposite direction).
       </p>
     </div>
 
@@ -584,7 +584,7 @@ class Vehicle {
         Implement seeking a moving target, often referred to as “pursuit.” In
         this case, your desired vector won’t point towards the object’s current
         position, but rather its “future” position as extrapolated from its
-        current velocity. We’ll see this ability for a vehicle to “predict the
+        current velocity. You’ll see this ability for a vehicle to “predict the
         future” in later examples.
       </p>
     </div>
@@ -594,7 +594,7 @@ class Vehicle {
 
       <p>
         Create a sketch where a vehicle’s maximum force and maximum speed do not
-        remain constant, but rather vary according to environmental factors.
+        remain constant, but vary according to environmental factors.
       </p>
     </div>
   </section>
@@ -609,7 +609,7 @@ class Vehicle {
     <p>
       After working for a bit with the seeking behavior, you probably are asking
       yourself, “What if I want my vehicle to slow down as it approaches the
-      target?” Before we can even begin to answer this question, we should look
+      target?” Before I can even begin to answer this question, I should look
       at the reasons behind why the seek behavior causes the vehicle to fly past
       the target so that it has to turn around and go back. Let’s consider the
       brain of a seeking vehicle. What is it thinking?
@@ -663,19 +663,19 @@ class Vehicle {
     </figure>
 
     <p>
-      How can we implement this “arriving” behavior in code? Let’s return to our
-      <code>seek()</code> function and find the line of code where we set the
+      How can you implement this “arriving” behavior in code? Let’s return to the
+      <code>seek()</code> function and find the line of code which sets the
       magnitude of the desired velocity.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-   const desired = p5.Vector.sub(target, this.position);
-   desired.normalize();
-   desired.mult(this.maxspeed);</pre>
+   let desired = p5.Vector.sub(target, this.position);
+   desired.setMag(this.maxspeed);
+</pre>
 
     <p>
-      In Example 6.1, the magnitude of the desired vector is always “maximum”
-      speed.
+      In Example 6.1, the magnitude of the desired vector is always “maximum
+      speed.”
     </p>
 
     <figure id="chapter06_figure8">
@@ -684,7 +684,7 @@ class Vehicle {
     </figure>
 
     <p>
-      What if we instead said the desired velocity is equal to half the
+      What if instead the desired velocity's magnitude were equal to half the
       distance?
     </p>
 
@@ -694,23 +694,23 @@ class Vehicle {
     </figure>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-   const desired = p5.Vector.sub(target, this.position);
+   let desired = p5.Vector.sub(target, this.position);
    desired.div(2);</pre>
 
     <p>
-      While this nicely demonstrates our goal of a desired speed tied to our
-      distance from the target, it’s not particularly reasonable. After all, 10
+      While this nicely demonstrates the goal of a desired speed tied to the
+      distance from the target, it’s not a particularly good solution. After all, 10
       pixels away is rather close and a desired speed of 5 is rather large.
       Something like a desired velocity with a magnitude of 5% of the distance
-      would work much better.
+      might work much better.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-  const desired = p5.Vector.sub(target, this.position);
+  let desired = p5.Vector.sub(target, this.position);
   desired.mult(0.05);</pre>
 
     <p>
-      Reynolds describes a more sophisticated approach. Let’s imagine a circle
+      Reynolds describes an even more sophisticated approach. Imagine a circle
       around the target with a given radius. If the vehicle is within that
       circle, it slows down—at the edge of the circle, its desired speed is
       maximum speed, and at the target itself, its desired speed is 0.
@@ -738,37 +738,35 @@ class Vehicle {
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   arrive(target) {
-    const desired = p5.Vector.sub(target,this.position);
+    let desired = p5.Vector.sub(target, this.position);
 
     //{!1} The distance is the magnitude of
     // the vector pointing from
     // position to target.
-    const d = desired.mag();
-    desired.normalize();
+    let d = desired.mag();
     //{!1} If we are closer than 100 pixels...
     if (d < 100) {
       //{!2} ...set the magnitude
       // according to how close we are.
-      const m = map(d, 0, 100, 0, this.maxspeed);
-      desired.mult(m);
+      let m = map(d, 0, 100, 0, this.maxspeed);
+      desired.setMag(m);
     } else {
       //{!1} Otherwise, proceed at maximum speed.
-      desired.mult(this.maxspeed);
+      desired.setMag(this.maxspeed);
     }
 
     //{!1} The usual steering = desired - velocity
-    const steer = p5.Vector.sub(desired, this.velocity);
+    let steer = p5.Vector.sub(desired, this.velocity);
     steer.limit(this.maxforce);
     this.applyForce(steer);
   }</pre>
 
     <p>
       The arrive behavior is a great demonstration of the magic of “desired
-      minus velocity.” Let’s examine this model again relative to how we
-      calculated forces in earlier chapters. In the “gravitational attraction”
-      examples, the force always pointed directly from the object to the target
-      (the exact direction of the desired velocity), whether the force was
-      strong or weak.
+      minus velocity.” Let’s examine this model again relative to how forces were
+      calculated in Chapter 2. In the “gravitational attraction”
+      example, the force always pointed directly from the object to the target
+      (the exact direction of the desired velocity).
     </p>
 
     <a data-primary="arriving behavior" data-secondary="steering force and"
@@ -813,10 +811,10 @@ class Vehicle {
       data-type="indexterm"></a>
 
     <p>
-      The first two examples we’ve covered—seek and arrive—boil down to
+      The first two examples I’ve covered—seek and arrive—boil down to
       calculating a single vector for each behavior: the
       <em>desired</em> velocity. And in fact, every single one of Reynolds’s
-      steering behaviors follows this same pattern. In this chapter, we’re going
+      steering behaviors follows this same pattern. In this chapter, I’m going
       to walk through several more of Reynolds’s behaviors—flow field,
       path-following, flocking. First, however, I want to emphasize again that
       these are <em>examples</em>—demonstrations of common steering behaviors
@@ -861,9 +859,9 @@ class Vehicle {
       Figure 6.12 illustrates how the vehicle predicts its future position as a
       fixed distance in front of it (in the direction of its velocity), draws a
       circle with radius <code>r</code> at that position, and picks a random
-      point along the circumference of the circle. That random point moves
-      randomly around the circle in each frame of animation. And that random
-      point is the vehicle’s target, its desired vector pointing in that
+      point along the circumference of the circle. That point moves
+      randomly around the circle in each frame of animation. And that
+      point is the vehicle’s target, its desired velocity pointing in that
       direction.
     </p>
 
@@ -872,7 +870,7 @@ class Vehicle {
       fact, this is a very clever and thoughtful solution—it uses randomness to
       drive a vehicle’s steering, but constrains that randomness along the path
       of a circle to keep the vehicle’s movement from appearing jittery, and,
-      well, random.
+      well, totally random.
     </p>
 
     <p>
@@ -897,8 +895,8 @@ class Vehicle {
     </div>
 
     <p>
-      Let’s say we want to create a steering behavior called “stay within
-      walls.” We’ll define the desired velocity as:
+      Let’s say I wanted to create a steering behavior called “stay within
+      walls.” I’ll define the desired velocity as:
     </p>
 
     <p>
@@ -913,8 +911,9 @@ class Vehicle {
     </figure>
 
     <p>
-      If we define the walls of the space as the edges of a p5 window
-      and the distance <code>d</code> as 25, the code is rather simple.
+      If I define the walls of the space as the edges of a p5.js canvas
+      and the distance <code>d</code> as 25, I can write the code for this with a series of
+      <code>if</code> statements.
     </p>
 
     <figure class="screenshot" data-p5-sketch="https://editor.p5js.org/embed/ByOTB3Q_e">
@@ -931,8 +930,8 @@ if (this.position.x > 25) {
   //{.offset !1} Make a desired vector that retains the y direction of
   // the vehicle but points the x direction directly away from
   // the window’s left edge.
-  const desired = createVector(this.maxspeed,this.velocity.y);
-  const steer = p5.Vector.sub(desired, this.velocity);
+  let desired = createVector(this.maxspeed, this.velocity.y);
+  let steer = p5.Vector.sub(desired, this.velocity);
   steer.limit(this.maxforce);
   this.applyForce(steer);
 }</pre>
@@ -959,9 +958,9 @@ if (this.position.x > 25) {
     <p>
       Now back to the task at hand. Let’s examine a couple more of Reynolds’s
       steering behaviors. First, <strong><em>flow field following</em></strong>. What is a flow
-      field? Think of your p5 window as a grid. In
+      field? Think of your canvas as a grid. In
       each cell of the grid lives an arrow pointing in some direction—you know,
-      a vector. As a vehicle moves around the screen, it asks, “Hey, what arrow
+      a vector. As a vehicle moves around the canvas, it asks, “Hey, what arrow
       is beneath me? That’s my desired velocity!”
     </p>
 
@@ -973,22 +972,21 @@ if (this.position.x > 25) {
     <p>
       Reynolds’s flow field following example has the vehicle predicting its
       future position and following the vector at that spot, but for
-      simplicity’s sake, we’ll have the vehicle simply look to the vector at its
+      simplicity’s sake, I’ll have the vehicle simply look to the vector at its
       current position.
     </p>
 
     <a data-primary="arrays (2D)" data-type="indexterm"></a>
 
     <p>
-      Before we can write the additional code for our
-      <code>Vehicle</code> class, we’ll need to build a class that describes the
+      Before I can write the additional code for the
+      <code>Vehicle</code> class, I’ll need to build a class that describes the
       flow field itself, the grid of vectors. A two-dimensional array is a
       convenient data structure in which to store a grid of information. If you
-      are not familiar with 2D arrays, I suggest reviewing this online
-      p5 tutorial:
-      <a href="http://processing.org/learning/2darray/">2D array</a>. The 2D
-      array is convenient because we reference each element with two indices,
-      which we can think of as columns and rows.
+      are not familiar with 2D arrays, I suggest reviewing this video:
+      <a href="https://youtu.be/OTNpiLUSiB4">2D Arrays in JavaScript - p5.js Tutorial</a>. The 2D
+      array is convenient because I can reference each element with two indices,
+      and think of these as columns and rows.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
@@ -1014,29 +1012,27 @@ class FlowField {
 
     <p>
       Notice how we are defining a third variable called
-      <code>resolution</code> above. What is this variable? Let’s say we have a
-      p5 window that is 200 pixels wide by 200 pixels high. We could
-      make a flow field that has a <code>p5.Vector</code> object for every single
-      pixel, or 40,000 <code>p5.Vector</code><code>s</code> (200 * 200). This
-      isn’t terribly unreasonable, but in our case, it’s overkill. We don’t need
-      a <code>p5.Vector</code> for every single pixel; we can achieve the same
-      effect by having, say, one every ten pixels (20 * 20 = 400). We use this
+      <code>resolution</code> above. What is this variable? Let’s say I have a
+      p5.js canvas that is 200 pixels wide by 200 pixels high. I could
+      make a flow field that has a vector for every single
+      pixel, or 40,000 vectors (200 * 200). This
+      isn’t terribly unreasonable, but in this context, it’s overkill. I don’t need
+      a vector for every single pixel; I can achieve the same
+      effect by having, say, one every ten pixels (20 * 20 = 400). I’ll use this
       resolution to define the number of columns and rows based on the size of
-      the window divided by resolution:
+      the canvas divided by resolution:
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   constructor(){
     this.resolution = 10;
     // Total columns equals width divided by resolution.
-    this.cols = width/this.resolution;
+    this.cols = width / this.resolution;
     //{!1} Total rows equals height divided by resolution.
-    this.rows = height/this.resolution;
+    this.rows = height / this.resolution;
     this.resolution = ????;
     // field will be a 2D array of vectors
     this.field = [];
-
-    // create a 2D array out of the field
     for (let i = 0; i < this.cols; i++) {
       this.field[i] = [];
     }
@@ -1047,9 +1043,9 @@ class FlowField {
       data-type="indexterm"></a>
 
     <p>
-      Now that we’ve set up the flow field’s data structures, it’s time to
-      compute the vectors in the flow field itself. How do we do that? However
-      we feel like it! Perhaps we want to have every vector in the flow field
+      Now that I’ve set up the flow field’s data structures, it’s time to
+      compute the vectors in the flow field itself. How do you do that? However
+      you feel like it! Perhaps you want to have every vector in the flow field
       pointing to the right.
     </p>
 
@@ -1068,7 +1064,7 @@ for (let i = 0; i < this.cols; i++) {
   }
 }</pre>
 
-    <p>Or perhaps we want the vectors to point in random directions.</p>
+    <p>Or perhaps you want the vectors to point in random directions.</p>
 
     <figure id="chapter06_figure16">
       <img alt="Figure 6.16" src="chapter06/ch06_16.png" />
@@ -1084,7 +1080,7 @@ for (let i = 0; i < this.cols; i++) {
   }
 }</pre>
 
-    <p>What if we use 2D Perlin noise (mapped to an angle)?</p>
+    <p>What if you use 2D Perlin noise (mapped to an angle)?</p>
 
     <a data-primary="Perlin noise" data-secondary="flow field following and"
       data-type="indexterm"></a>
@@ -1100,17 +1096,17 @@ for (let i = 0; i < this.cols; i++) {
   let yoff = 0;
   for (let j = 0; j < this.rows; j++) {
     //{!1 .offset-top} 2D Noise
-    const theta = map(noise(xoff, yoff),0, 1, 0, TWO_PI);
-    this.field[i][j] = createVector(cos(theta), sin(theta));
+    let angle = map(noise(xoff, yoff), 0, 1, 0, TWO_PI);
+    this.field[i][j] = p5.Vector.fromAngle(angle);
     yoff += 0.1;
   }
   xoff += 0.1;
 }</pre>
 
     <p>
-      Now we’re getting somewhere. Flow fields can be used for simulating
+      Now I’m getting somewhere. Flow fields can be used for simulating
       various effects, such as an irregular gust of wind or the meandering path
-      of a river. Calculating the direction of your vectors using Perlin noise
+      of a river. Calculating the direction of vectors using Perlin noise
       is one way to achieve such an effect. Of course, there’s no “correct” way
       to calculate the vectors of a flow field; it’s really up to you to decide
       what you’re looking to simulate.
@@ -1136,43 +1132,43 @@ this.field[i][j] = v;</pre>
     </div>
 
     <p>
-      Now that we have a two-dimensional array storing all of the flow field
-      vectors, we need a way for a vehicle to look up its desired vector in the
-      flow field. Let’s say we have a vehicle that lives at a
-      <code>p5.Vector</code>: its position. We first need to divide by the
+      Now that I have a two-dimensional array storing all of the flow field
+      vectors, I need a way for a vehicle to look up its desired velocity in the
+      flow field. Let’s say there is a vehicle that lives at a
+      <code>p5.Vector</code>: its position. I first need to divide that position by the
       resolution of the grid. For example, if the resolution is 10 and the
-      vehicle is at <em>(100,50)</em>, we need to look up column 10 and row 5.
+      vehicle is at <em>(100, 50)</em>, I’ll want to look up column 10 and row 5.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-const column = int(this.position.x/this.resolution);
-const row = int(this.position.y/this.resolution);</pre>
+let column = floor(this.position.x / this.resolution);
+let row = floor(this.position.y / this.resolution);</pre>
 
     <a data-primary="constrain() function (Processing)" data-type="indexterm"></a>
 
     <p>
-      Because a vehicle could theoretically wander off the p5 window,
-      it’s also useful for us to employ the <code>constrain()</code> function to
-      make sure we don’t look outside of the flow field array. Here is a
-      function we’ll call <code>lookup()</code> that goes in the
-      <code>FlowField</code> class—it receives a
-      <code>p5.Vector</code> (presumably the position of our vehicle) and returns
-      the corresponding flow field <code>p5.Vector</code> for that position.
+      Because a vehicle could theoretically wander off the p5 canvas,
+      it’s also useful to employ the <code>constrain()</code> function to
+      make sure I don’t look outside the bounds of flow field array. Here is a
+      function I’ll call <code>lookup()</code>, part of the
+      <code>FlowField</code> class, that receives a
+      vector (presumably the position of the vehicle) and returns
+      the corresponding flow field vector for that position.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   lookup(lookup) {
     //{!2 .offset-top} Using constrain()
-    let column = Math.floor(constrain(lookup.x / this.resolution, 0, this.cols - 1));
-    let row = Math.floor(constrain(lookup.y / this.resolution, 0, this.rows - 1));
+    let column = constrain(floor(lookup.x / this.resolution), 0, this.cols - 1));
+    let row    = constrain(floor(lookup.y / this.resolution), 0, this.rows - 1));
 
     //{!1} Note the use of copy() to ensure
-    // we return a copy of the PVector.
+    // a copy of the p5.Vector is returned.
     return this.field[column][row].copy();
   }</pre>
 
     <p>
-      Before we move on to the <code>Vehicle</code> class, let’s take a look at
+      Before I move on to the <code>Vehicle</code> class, let’s take a look at
       the <code>FlowField</code> class all together.
     </p>
 
@@ -1182,36 +1178,24 @@ class FlowField {
   constructor(r) {
     this.resolution = r;
     //{!2} Determine the number of columns and rows.
-    this.cols = width/this.resolution;
-    this.rows = height/this.resolution;
-    //{!1} A flow field is a two-dimensional array of PVectors.
-    this.field = this.make2Darray(this.cols);
+    this.cols = width / this.resolution;
+    this.rows = height / this.resolution;
+    //{!1} A flow field is a two-dimensional array of vectors. The example includes as separate function to create that array
+    this.field = make2Darray(this.cols, this.row);
     init();
   }
 
-  // we make a function to create our 2D array
-  make2Darray(n) {
-    let array = [];
-    for (let i = 0; i < n; i++) {
-      array[i] = [];
-    }
-    return array;
-  }
-
-  // we use this init() function to fill our 2D array
+  // The init() function to fill our 2D array
   init() {
-    // Reseed noise so we get a new flow field every time
-    // Need to get noise working
-    noiseSeed(Math.floor(random(10000)));
+    // Reseed noise for a new flow field every time
+    noiseSeed(random(10000));
     let xoff = 0;
     for (let i = 0; i < this.cols; i++) {
       let yoff = 0;
       for (let j = 0; j < this.rows; j++) {
-        //{.code-wide} In this example, we use Perlin noise to seed the vectors.
-        let theta = map(noise(xoff, yoff), 0, 1, 0, TWO_PI);
-        //let theta = map(sin(xoff)+cos(yoff),-2,2,0,TWO_PI);
-        // Polar to cartesian coordinate transformation to get x and y components of the vector
-        this.field[i][j] = createVector(cos(theta), sin(theta));
+        //{.code-wide} In this example, use Perlin noise to create the vectors.
+        let angle = map(noise(xoff, yoff), 0, 1, 0, TWO_PI);
+        this.field[i][j] = p5.Vector.fromAngle(angle);
         yoff += 0.1;
       }
       xoff += 0.1;
@@ -1220,18 +1204,17 @@ class FlowField {
 
   //{.code-wide} A function to return a p5.Vector based on a position
   lookup(lookup) {
-    let column = Math.floor(constrain(lookup.x / this.resolution, 0, this.cols - 1));
-    let row = Math.floor(constrain(lookup.y / this.resolution, 0, this.rows - 1));
-    //println(lookup.x);
+    let column = constrain(floor(lookup.x / this.resolution), 0, this.cols - 1));
+    let row = constrain(floor(lookup.y / this.resolution), 0, this.rows - 1));
     return this.field[column][row].copy();
   }
 
 }</pre>
 
     <p>
-      So let’s assume we have a <code>FlowField</code> object called “flow”.
-      Using the <code>lookup()</code> function above, our vehicle can then
-      retrieve a desired vector from the flow field and use Reynolds’s rules
+      So let’s assume there is a <code>FlowField</code> object called “flow”.
+      Using the <code>lookup()</code> function above, a vehicle can then
+      retrieve a desired velocity from the flow field and use Reynolds’s rules
       (steering = desired - velocity) to calculate a steering force.
     </p>
 
@@ -1249,11 +1232,11 @@ class Vehicle {
 
   follow(flow) {
     // What is the vector at that spot in the flow field?
-    const desired = flow.lookup(this.position);
-    desired.mult(this.maxspeed);
+    let desired = flow.lookup(this.position);
+    desired.setMag(this.maxspeed);
 
     //{!3} Steering is desired minus velocity
-    const steer = p5.Vector.sub(desired, this.velocity);
+    let steer = p5.Vector.sub(desired, this.velocity);
     steer.limit(this.maxforce);
     this.applyForce(steer);
   }</pre>
@@ -1262,9 +1245,8 @@ class Vehicle {
       <h5>Exercise 6.7</h5>
 
       <p>
-        Adapt the flow field example so that the <code>p5.Vector</code><code>s</code> change over
-        time. (Hint: try using the third dimension
-        of Perlin noise!)
+        Adapt the flow field example so that the vectors change over
+        time. (Hint: try using the third dimension of Perlin noise!).
       </p>
     </div>
 
@@ -1272,8 +1254,8 @@ class Vehicle {
       <h5>Exercise 6.8</h5>
 
       <p>
-        Can you seed a flow field from a <code>p5.Image</code>? For example, try
-        having the <code>p5.Vector</code><code>s</code> point from dark to light
+        Can you create a flow field from an image? For example, try
+        having the vectors point from dark to light
         colors (or vice versa).
       </p>
     </div>
@@ -1287,19 +1269,19 @@ class Vehicle {
     <a data-primary="vectors" data-secondary="dot product" data-type="indexterm"></a>
 
     <p>
-      In a moment, we’re going to work through the algorithm (along with
+      In a moment, I’re going to work through the algorithm (along with
       accompanying mathematics) and code for another of Craig Reynolds’s
       steering behaviors:
-      <a href="http://www.red3d.com/cwr/steer/PathFollow.html">Path Following</a>. Before we can do
-      this, however, we have to spend some time learning
-      about another piece of vector math that we skipped in Chapter 1—the dot
-      product. We haven’t needed it yet, but it’s likely going to prove quite
-      useful for you (beyond just this path-following example), so we’ll go over
-      it in detail now.
+      <a href="http://www.red3d.com/cwr/steer/PathFollow.html">Path Following</a>.
+      Before I can do
+      this, however, I would like to spend some time discussing
+      another piece of vector math that I skipped over in Chapter 1—the dot
+      product. I haven’t needed it yet, but it’s likely going to prove quite
+      useful for you (beyond just this path-following example).
     </p>
 
     <p>
-      Remember all the basic vector math we covered in Chapter 1? Add, subtract,
+      Remember all the basic vector math covered in Chapter 1? Add, subtract,
       multiply, and divide?
     </p>
 
@@ -1310,17 +1292,19 @@ class Vehicle {
 
     <p>
       Notice how in the above diagram, vector multiplication involves
-      multiplying a vector by a scalar value. This makes sense; when we want a
-      vector to be twice as large (but facing the same direction), we multiply
-      it by 2. When we want it to be half the size, we multiply it by 0.5.
+      multiplying a vector by a scalar value? This makes sense; when you want a
+      vector to be twice as large (but facing the same direction), multiply
+      it by 2. When you want it to be half the size, multiply it by 0.5.
     </p>
 
     <a data-primary="dot product (PVector)" data-secondary="defined" data-type="indexterm"></a>
 
     <p>
-      However, there are two other <em>multiplication-like</em> operations with
-      vectors that are useful in certain scenarios—the dot product and the cross
-      product. For now we’re going to focus on the dot product, which is defined
+      However, there are several other <em>multiplication-like</em> operations with
+      vectors that are useful in certain scenarios—the dot product, the cross
+      product, and something called a Hadamard product.
+      For now I’m going to focus on the dot
+      product, defined
       as follows. Assume vectors <span data-type="equation">\vec{A}</span> and
       <span data-type="equation">\vec{B}</span>:
     </p>
@@ -1335,7 +1319,7 @@ class Vehicle {
       <span data-type="equation">\vec{A}\cdot\vec{B}=a_x\times b_x + a_y\times b_y</span>
     </p>
 
-    <p>For example, if we have the following two vectors:</p>
+    <p>For example, assuming the following two vectors:</p>
 
     <div class="narrow">
       <div data-type="equation">\vec{A}=(-3,5)</div>
@@ -1351,7 +1335,7 @@ class Vehicle {
       number) and not a vector.
     </p>
 
-    <p>In p5, this would translate to:</p>
+    <p>In p5.js, this would translate to:</p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 const a = createVector(-3, 5);
@@ -1362,24 +1346,24 @@ const b = createVector(10, 1);
 const n = a.dot(b);</pre>
 
     <p>
-      And if we were to look in the guts of the <code>p5.Vector</code> source,
-      we’d find a pretty simple implementation of this function:
+      And if you were to look in the guts of the <code>p5.Vector</code> source,
+      you’d find a pretty simple implementation of this function:
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 function dot(v) {
-  return this.x*v.x + this.y*v.y + this.z*v.z;
+  return this.x * v.x + this.y * v.y + this.z * v.z;
 }</pre>
 
     <p>
-      This is simple enough, but why do we need the dot product, and when is it
-      going to be useful for us in code?
+      This is simple enough, but why do you need the dot product, and when is it
+      useful in coding?
     </p>
 
     <p>
       One of the more common uses of the dot product is to find the angle
-      between two vectors. Another way in which the dot product can be expressed
-      is:
+      between two vectors. The dot product can also be be expressed
+      as:
     </p>
 
     <div data-type="equation">
@@ -1398,7 +1382,7 @@ function dot(v) {
     <p>
       The two formulas for dot product can be derived from one another with
       <a href="http://mathworld.wolfram.com/DotProduct.html">trigonometry</a>,
-      but for our purposes we can be happy with operating on the assumption
+      but for the context here I am happy to simply operate on the assumption
       that:
     </p>
 
@@ -1411,7 +1395,7 @@ function dot(v) {
       </div>
     </div>
 
-    <p>both hold true and therefore:</p>
+    <p>and therefore:</p>
 
     <div data-type="equation">
       a_x\times b_x + a_y\times
@@ -1424,7 +1408,7 @@ function dot(v) {
     </figure>
 
     <p>
-      Now, let’s start with the following problem. We have the vectors A and B:
+      Now, let’s start with the following problem. Assuming, again, the vectors A and B:
     </p>
 
     <div class="narrow">
@@ -1433,9 +1417,10 @@ function dot(v) {
     </div>
 
     <p>
-      We now have a situation in which we know everything except for theta. We
+      I now have a situation in which I know everything except for the angle between—theta.
+      I
       know the components of the vector and can calculate the magnitude of each
-      vector. We can therefore solve for cosine of theta:
+      vector. Therefore I can solve for cosine of theta:
     </p>
 
     <div data-type="equation">
@@ -1443,7 +1428,7 @@ function dot(v) {
     </div>
 
     <p>
-      To solve for theta, we can take the inverse cosine (often expressed as
+      To solve for theta, I can then take the inverse cosine (often expressed as
       <em>cosine<sup>-1</sup></em> or <em>arccosine</em>).
     </p>
 
@@ -1451,7 +1436,7 @@ function dot(v) {
       \theta=\cos^{-1}((\vec{A}\cdot\vec{B}) / (||\vec{A}||\times||\vec{B}||))
     </div>
 
-    <p>Let’s now do the math with actual numbers:</p>
+    <p>Doing the math now with actual numbers:</p>
 
     <div class="narrow">
       <div data-type="equation">||\vec{A}||=10.2</div>
@@ -1468,22 +1453,22 @@ function dot(v) {
       <div data-type="equation">\theta=\sim48^\circ</div>
     </div>
 
-    <p>The p5 version of this would be:</p>
+    <p>The p5.js version of this would be:</p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-const a = createVector(10, 2);
-const b = createVector(4, -3);
-const theta = acos(a.dot(b) / (a.mag() * b.mag()));</pre>
+let a = createVector(10, 2);
+let b = createVector(4, -3);
+let theta = acos(a.dot(b) / (a.mag() * b.mag()));</pre>
 
     <p>
-      And, again, if we were to dig into the guts of the p5 source code,
-      we would see a function that implements this exact algorithm.
+      And, again, if you were to dig into the guts of the p5.js source code,
+      you would see a function that implements this exact algorithm.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   function angleBetween(v1, v2) {
-    const dot = v1.dot(v2);
-    const theta = Math.acos(dot / (v1.mag() * v2.mag()));
+    let dot = v1.dot(v2);
+    let theta = Math.acos(dot / (v1.mag() * v2.mag()));
     return theta;
   }</pre>
 
@@ -1497,7 +1482,7 @@ const theta = acos(a.dot(b) / (a.mag() * b.mag()));</pre>
 
       <p>
         Create a sketch that displays the angle between two
-        <code>p5.Vector</code> objects.
+        vectors.
       </p>
 
       <figure>
@@ -1540,18 +1525,19 @@ const theta = acos(a.dot(b) / (a.mag() * b.mag()));</pre>
       data-type="indexterm"></a>
 
     <p>
-      Now that we’ve got a basic understanding of the dot product under our
-      belt, we can return to a discussion of Craig Reynolds’s path-following
-      algorithm. Let’s quickly clarify something. We are talking about path
+      Now that I’ve covered the fundamentals of the dot product, I’d like to
+      return to a discussion of
+      Craig Reynolds’s path-following
+      algorithm. Let’s quickly clarify something. I am talking about path
       <em>following</em>, not path <em>finding</em>. Pathfinding refers to a
-      research topic (commonly studied in artificial intelligence) that involves
+      algorithm (commonly studied in artificial intelligence) that involves
       solving for the shortest distance between two points, often in a maze.
-      With <strong><em>path following</em></strong>, the path already exists and we’re asking a
-      vehicle to follow that path.
+      With <strong><em>path following</em></strong>, the path already exists and the vehicle just
+      trieds to follow it.
     </p>
 
     <p>
-      Before we work out the individual pieces, let’s take a look at the overall
+      Before we work out the individual pieces, however, let’s take a look at the overall
       algorithm for path following, as defined by Reynolds.
     </p>
 
@@ -1563,8 +1549,8 @@ const theta = acos(a.dot(b) / (a.mag() * b.mag()));</pre>
     <a data-primary="path" data-type="indexterm"></a>
 
     <p>
-      We’ll first define what we mean by a path. There are many ways we could
-      implement a path, but for us, a simple way will be to define a path as a
+      I’ll start by defining what I mean by a path. There are many ways you could
+      implement a path, but one simple way is to define a path as a
       series of connected points:
     </p>
 
@@ -1573,7 +1559,7 @@ const theta = acos(a.dot(b) / (a.mag() * b.mag()));</pre>
       <figcaption>Figure 6.21: Path&nbsp;</figcaption>
     </figure>
 
-    <p>An even simpler path would be a line between two points.</p>
+    <p>The simplest version of this path would be a line between two points.</p>
 
     <figure id="chapter06_figure22">
       <img alt="Figure 6.22: Simple path" src="chapter06/ch06_22.png" />
@@ -1581,13 +1567,13 @@ const theta = acos(a.dot(b) / (a.mag() * b.mag()));</pre>
     </figure>
 
     <p>
-      We’re also going to consider a path to have a radius. If we think of the
+      I’m also going to consider a path to have a radius. Thinking of the
       path as a road, the radius determines the road’s width. With a smaller
-      radius, our vehicles will have to follow the path more closely; a wider
+      radius, the vehicles will have to follow the path more closely; a wider
       radius will allow them to stray a bit more.
     </p>
 
-    <p>Putting this into a class, we have:</p>
+    <p>Putting this into a class:</p>
 
     <figure class="screenshot">
       <img alt="ch06 ex5 a" src="chapter06/ch06_ex5_a.png" />
