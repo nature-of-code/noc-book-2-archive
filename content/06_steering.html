@@ -2640,16 +2640,16 @@ separate (vehicles) {
 
     <p>
       The previous two exercises hint at what is perhaps the most important
-      aspect of this chapter. After all, what is a p5 sketch with one
-      steering force compared to one with many? How could we even begin to
-      simulate emergence in our sketches with only one rule? The most exciting
+      aspect of this chapter. After all, what is a p5.js sketch with one
+      steering force compared to many? How could I even begin to
+      simulate emergence in a sketch with only one rule? The most exciting
       and intriguing behaviors will come from mixing and matching multiple
-      steering forces, and we’ll need a mechanism for doing so.
+      steering forces, and I’ll need a mechanism for doing so.
     </p>
 
     <p>
-      You may be thinking, “Duh, this is nothing new. We do this all the time.”
-      You would be right. In fact, we did this as early as Chapter 2.
+      You may be thinking, “This is nothing new. We do this all the time.”
+      You would be right. In fact, this technique appeared as early as Chapter 2.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
@@ -2659,10 +2659,10 @@ separate (vehicles) {
   mover.applyForce(gravity);</pre>
 
     <p>
-      Here we have a mover that responds to two forces. This all works nicely
-      because of the way we designed the <code>Mover</code> class to accumulate
+      Here there is a mover that responds to two forces. This all works nicely
+      because of the way the <code>Mover</code> class was designed to accumulate
       the force vectors into its acceleration vector. In this chapter, however,
-      our forces stem from internal desires of the movers (now called vehicles).
+      the forces stem from internal desires of the movers (now called vehicles).
       And those desires can be weighted. Let’s consider a sketch where all
       vehicles have two desires:
     </p>
@@ -2681,8 +2681,8 @@ separate (vehicles) {
     </ul>
 
     <p>
-      We might begin by adding a function to the <code>Vehicle</code> class that
-      manages all of the behaviors. Let’s call it <code>applyBehaviors()</code>.
+      I might begin by adding a function to the <code>Vehicle</code> class that
+      manages all of the behaviors. I’ll call it <code>applyBehaviors()</code>.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
@@ -2692,20 +2692,20 @@ applyBehaviors(vehicles) {
 }</pre>
 
     <p>
-      Here we see how a single function takes care of calling the other
+      Here a single function takes care of calling the other
       functions that apply the forces—<code>separate()</code> and
-      <code>seek()</code>. We could start mucking around with those functions
-      and see if we can adjust the strength of the forces they are calculating.
-      But it would be easier for us to ask those functions to return the forces
-      so that we can adjust their strength before applying them to the vehicle’s
+      <code>seek()</code>. I could start mucking around with those functions
+      and adjust the strength of the forces they are calculating.
+      But it might be easier to ask those functions to return the forces
+      so that I can adjust their strength before applying them to the vehicle’s
       acceleration.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   applyBehaviors(vehicles) {
-    const separate = this.separate(vehicles);
-    const seek = this.seek(createVector(mouseX,mouseY));
-    //{!2} We have to apply the force here since seek() and separate() no longer do so.
+    let separate = this.separate(vehicles);
+    let seek = this.seek(createVector(mouseX, mouseY));
+    //{!2} Apply the force here since seek() and separate() no longer do so.
     this.applyForce(separate);
     this.applyForce(seek);
   }</pre>
@@ -2714,21 +2714,21 @@ applyBehaviors(vehicles) {
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   seek(target) {
-    const desired = p5.Vector.sub(target,loc);
+    let desired = p5.Vector.sub(target, loc);
     desired.normalize();
     desired.mult(this.maxspeed);
-    const steer = p5.Vector.sub(desired,vel);
+    const steer = p5.Vector.sub(desired, vel);
     steer.limit(this.maxforce);
 
     //{!1 .line-through}
     this.applyForce(steer);
-		//{!1} Instead of applying the force we return the PVector.
+		//{!1} Instead of applying the force return the vector.
     return steer;
   }</pre>
 
     <p>
-      This is a subtle change, but incredibly important for us: it allows us to
-      alter the strength of these forces in one place.
+      This is a subtle change, but incredibly important: it allows
+      the strength of these forces to be weighted all in one place.
     </p>
 
     <figure class="screenshot" data-p5-sketch="https://editor.p5js.org/embed/Byr_DhXul">
@@ -2742,8 +2742,8 @@ applyBehaviors(vehicles) {
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 applyBehaviors(vehicles) {
-  const separate = this.separate(vehicles);
-  const seek = this.seek(createVector(mouseX,mouseY));
+  let separate = this.separate(vehicles);
+  let seek = this.seek(createVector(mouseX, mouseY));
   //{!2 .bold} These values can be whatever you want them to be!
   // They can be variables that are customized for
   // each vehicle, or they can change over time.
@@ -2782,25 +2782,25 @@ applyBehaviors(vehicles) {
       creatures, such as birds, fish, and insects. In 1986, Craig Reynolds
       created a computer simulation of flocking behavior and documented the
       algorithm in his paper, “Flocks, Herds, and Schools: A Distributed
-      Behavioral Model.” Recreating this simulation in p5 will bring
+      Behavioral Model.” Recreating this simulation in p5.js will bring
       together all the concepts in this chapter.
     </p>
 
     <ol>
       <li>
         <p>
-          <em>We will use the steering force formula (steer = desired - velocity)
+          <em>I will use the steering force formula (steer = desired - velocity)
             to implement the rules of flocking.</em>
         </p>
       </li>
       <li>
         <p>
-          <em>These steering forces will be group behaviors and require each
+          <em>These steering forces are be group behaviors and will require each
             vehicle to look at all the other vehicles.</em>
         </p>
       </li>
       <li>
-        <p><em>We will combine and weight multiple forces.</em></p>
+        <p><em>I will combine and weight multiple forces.</em></p>
       </li>
       <li>
         <p>
@@ -2812,19 +2812,19 @@ applyBehaviors(vehicles) {
     </ol>
 
     <p>
-      The good news is, we’ve already done items 1 through 3 in this chapter, so
-      this section will be about just putting it all together and seeing the
+      The good news is, I’ve already done items 1 through 3 in this chapter, so
+      this section can be just about putting it all together and seeing the
       result.
     </p>
 
     <p>
-      Before we begin, I should mention that we’re going to change the name of
-      our <code>Vehicle</code> class (yet again). Reynolds uses the term “boid”
+      Before I begin, I should mention that I’m going to change the name of
+      the <code>Vehicle</code> class (yet again). Reynolds uses the term “boid”
       (a made-up word that refers to a bird-like object) to describe the
-      elements of a flocking system and we will do the same.
+      elements of a flocking system and I will do the same.
     </p>
 
-    <p>Let’s take an overview of the three rules of flocking.</p>
+    <p>Here’s an overview of the three rules of flocking.</p>
 
     <a data-primary="alignment (flocking)" data-type="indexterm"></a>
     <a data-primary="cohesion (flocking)" data-type="indexterm"></a>
@@ -2858,17 +2858,17 @@ applyBehaviors(vehicles) {
     </figure>
 
     <p>
-      Just as we did with our separate and seek example, we’ll want our
+      Just as with the separate and seek example, I’ll want the
       <code>Boid</code> objects to have a single function that manages all the
-      above behaviors. We’ll call this function <code>flock()</code>.
+      above behaviors. I’ll call this function <code>flock()</code>.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
   flock(boids) {
     //{!3} The three flocking rules
-    const sep = this.separate(boids);
-    const ali = this.align(boids);
-    const coh = this.cohesion(boids);
+    let sep = this.separate(boids);
+    let ali = this.align(boids);
+    let coh = this.cohesion(boids);
 
     //{!3} Arbitrary weights for these forces
     // (Try different ones!)
@@ -2883,16 +2883,16 @@ applyBehaviors(vehicles) {
   }</pre>
 
     <p>
-      Now, it’s just a matter of implementing the three rules. We did separation
-      before; it’s identical to our previous example. Let’s take a look at
+      Now, it’s just a matter of implementing the three rules. I did separation
+      before; it’s identical to the previous example. Let’s take a look at
       alignment, or steering in the same direction as your neighbors. As with
-      all of our steering behaviors, we’ve got to boil down this concept into a
+      all of the steering behaviors, I’ve got to boil down this concept into a
       desire: the boid’s desired velocity is the average velocity of its
       neighbors.
     </p>
 
     <p>
-      So our algorithm is to calculate the average velocity of all the other
+      So the algorithm is to calculate the average velocity of all the other
       boids and set that to desired.
     </p>
 
@@ -2903,7 +2903,7 @@ applyBehaviors(vehicles) {
     // Add up all the velocities
     // and divide by the total
     // to calculate the average velocity.
-    const sum = createVector(0,0);
+    let sum = createVector(0, 0);
     for (let other of boids) {
       sum.add(other.velocity);
     }
@@ -2915,7 +2915,7 @@ applyBehaviors(vehicles) {
 
     //{!3} Reynolds’s steering
     // force formula
-    const steer = p5.Vector.sub(sum,velocity);
+    let steer = p5.Vector.sub(sum,velocity);
     steer.limit(this.maxforce);
     return steer;
   }</pre>
@@ -2935,9 +2935,9 @@ applyBehaviors(vehicles) {
     </p>
 
     <p>
-      In our alignment function, we’re taking the average velocity of all the
-      boids, whereas we should really only be looking at the boids within a
-      certain distance. That distance threshold is up to you, of course. You
+      In the alignment function, I’m taking the average velocity of all the
+      boids, whereas I should really only be looking at the boids within a
+      certain distance. That distance threshold can be variable, of course. You
       could design boids that can see only twenty pixels away or boids that can
       see a hundred pixels away.
     </p>
@@ -2948,8 +2948,9 @@ applyBehaviors(vehicles) {
     </figure>
 
     <p>
-      Much like we did with separation (only calculating a force for others
-      within a certain distance), we’ll want to do the same with alignment (and
+      The solution is much like what I did with separation
+      (calculating a force for others
+      within a certain distance), I’ll want to apply the same logic to alignment (and
       cohesion).
     </p>
 
@@ -2959,11 +2960,11 @@ applyBehaviors(vehicles) {
   align (boids) {
     //{!1} This is an arbitrary value and could
     // vary from boid to boid.
-    const neighbordist = 50;
-    const sum = createVector(0,0);
+    let neighbordist = 50;
+    let sum = createVector(0, 0);
     let count = 0;
     for (let other of boids) {
-      const d = p5.Vector.dist(this.position,other.position);
+      let d = p5.Vector.dist(this.position, other.position);
       if ((d > 0) && (d < neighbordist)) {
         sum.add(other.velocity);
         //{!1} For an average, we need to keep track of
@@ -2973,13 +2974,13 @@ applyBehaviors(vehicles) {
     }
     if (count > 0) {
       sum.setMag(this.maxspeed);
-      const steer = p5.Vector.sub(sum, this.velocity);
+      let steer = p5.Vector.sub(sum, this.velocity);
       steer.limit(this.maxforce);
       return steer;
     //{!3} If we don’t find any close boids,
     // the steering force is zero.
     } else {
-      return createVector(0,0);
+      return createVector(0, 0);
     }
   }</pre>
 
@@ -2992,7 +2993,7 @@ applyBehaviors(vehicles) {
       </figure>
 
       <p>
-        Can you write the above code so that boids can only see other boids that
+        Can you write the above code so that boids only see other boids that
         are actually within their “peripheral” vision (as if they had eyes)?
       </p>
 
@@ -3005,19 +3006,19 @@ applyBehaviors(vehicles) {
     <a data-primary="cohesion (flocking)" data-secondary="implementing" data-type="indexterm"></a>
 
     <p>
-      Finally, we are ready for cohesion. Here our code is virtually identical
+      Finally, I am ready for cohesion. Here the code is virtually identical
       to that for alignment—only instead of calculating the average velocity of
-      the boid’s neighbors, we want to calculate the average position of the
+      the boid’s neighbors, I want to calculate the average position of the
       boid’s neighbors (and use that as a target to seek).
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-  cohesion (boids) {
-    const neighbordist = 50;
-    const sum = createVector(0, 0);
+  cohesion(boids) {
+    let neighbordist = 50;
+    let sum = createVector(0, 0);
     let count = 0;
     for (let other of boids) {
-      const d = p5.Vector.dist(this.position, other.position);
+      let d = p5.Vector.dist(this.position, other.position);
       if ((d > 0) && (d < neighbordist)) {
         //{!2} Adding up all the others’ positions
         sum.add(other.position);
@@ -3039,10 +3040,10 @@ applyBehaviors(vehicles) {
     <p>
       It’s also worth taking the time to write a class called
       <code>Flock</code>, which will be virtually identical to the
-      <code>ParticleSystem</code> class we wrote in Chapter 4 with only one tiny
-      change: When we call <code>run()</code> on each <code>Boid</code> object
-      (as we did to each <code>Particle</code> object), we’ll pass in a
-      reference to the entire <code>Array</code> of boids.
+      <code>ParticleSystem</code> class in Chapter 4 with only one tiny
+      change: When I call <code>run()</code> on each <code>Boid</code> object
+      (as I did to each <code>Particle</code> object), I’ll pass in a
+      reference to the entire array of boids.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
@@ -3053,19 +3054,19 @@ Flock {
   }
 
   run() {
-    for (let b of this.boids) {
+    for (let boid of this.boids) {
       //{!1 .bold} Each Boid object must know about
       // all the other Boids.
-      b.run(this.boids);
+      boid.run(this.boids);
     }
   }
 
-  addBoid(b) {
-    this.boids.push(b);
+  addBoid(boid) {
+    this.boids.push(boid);
   }
 }</pre>
 
-    <p>And our main program will look like:</p>
+    <p>And <code>setup()</code>> and <code>draw()</code> will look like:</p>
 
     <figure class="screenshot" data-p5-sketch="https://editor.p5js.org/embed/BJ12w2mOx">
       <img alt="ch06 ex9" src="chapter06/ch06_ex9.png" />
@@ -3085,9 +3086,9 @@ function setup() {
   createCanvas(300, 200);
   flock = new Flock();
   for (let i = 0; i < 100; i++) {
-    const b = new Boid(width/2,height/2);
+    let boid = new Boid(width / 2, height / 2);
     //{!1} The Flock starts out with 100 Boids.
-    flock.addBoid(b);
+    flock.addBoid(boid);
   }
 }
 
@@ -3099,7 +3100,7 @@ function draw() {
     <div data-type="exercise" id="chapter06_exercise16">
       <h5>Exercise 6.16</h5>
 
-      <p>Combine flocking with some other steering behaviors.</p>
+      <p>Combine flocking with other steering behaviors.</p>
     </div>
 
     <div data-type="exercise" id="chapter06_exercise17">
@@ -3135,8 +3136,7 @@ function draw() {
         <em>cohesion weight</em>, <em>alignment weight</em>,
         <em>maximum force</em>, <em>maximum speed</em>) change over time. They
         could be controlled by Perlin noise or by user interaction. (For
-        example, you could use a library such as
-        <a href="http://www.sojamo.de/libraries/controlP5/">controlp5</a> to tie
+        example, you could use the p5.js <code>createSlider()</code>> function to tie
         the values to slider positions.)
       </p>
     </div>
@@ -3149,19 +3149,19 @@ function draw() {
   </section>
 
   <section data-type="sect1" id="chapter06_section14">
-    <h2>6.14 Algorithmic Efficiency (or: Why does my $@(*%! run so slowly?)</h2>
+    <h2>6.14 Algorithmic Efficiency (or: Why does my sketch run so slowly?)</h2>
 
     <a data-primary="efficiency" data-type="indexterm"></a>
     <a data-primary="performance" data-type="indexterm"></a>
 
     <p>
-      I would like to hide the dark truth behind we’ve just done, because I
+      I would like to hide the dark truth behind what I’ve just done, because I
       would like you to be happy and live a fulfilling and meaningful life. But
       I also would like to be able to sleep at night without worrying about you
       so much. So it is with a heavy heart that I must bring up this topic.
-      Group behaviors are wonderful. But they can be slow, and the more elements
-      in the group, the slower they can be. Usually, when we talk about
-      p5 sketches running slowly, it’s because drawing to the screen can
+      yes, group behaviors are wonderful. But they can be slow, and the more elements
+      in the group, the slower they can be. Usually, when I talk about
+      p5.js sketches running slowly, it’s because drawing to the canvas can
       be slow—the more you draw, the slower your sketch runs. This is actually a
       case, however, where the slowness derives from the algorithm itself. Let’s
       discuss.
@@ -3175,26 +3175,26 @@ function draw() {
     <p>
       Computer scientists classify algorithms with something called “Big O
       notation,” which describes the efficiency of an algorithm: how many
-      computational cycles does it require to complete? Let’s consider a simple
+      computational cycles does e it require to complete? Let’s consider a simple
       analog search problem. You have a basket containing one hundred chocolate
       treats, only one of which is pure dark chocolate. That’s the one you want
       to eat. To find it, you pick the chocolates out of the basket one by one.
       Sure, you might be lucky and find it on the first try, but in the
-      worst-case scenario you have to check all one hundred before you find the
+      worst-case scenario you havto check all one hundred before you find the
       dark chocolate. To find one thing in one hundred, you have to check one
       hundred things (or to find one thing in N things, you have to check N
       times.) Your Big O Notation is N. This, incidentally, is the Big O
-      Notation that describes our simple particle system. If we have N
-      particles, we have to run and display those particles N times.
+      Notation that describes the simple particle system. If you have N
+      particles, you have to run and display those particles N times.
     </p>
 
     <p>
       Now, let’s think about a group behavior (such as flocking). For every
-      <code>Boid</code> object, we have to check every other
-      <code>Boid</code> object (for its velocity and position). Let’s say we
-      have one hundred boids. For boid #1, we need to check one hundred boids;
-      for boid #2, we need to check one hundred boids, and so on and so forth.
-      For one hundred boids, we need to perform one hundred times one hundred
+      <code>Boid</code> object, you have to check every other
+      <code>Boid</code> object (for its velocity and position). Let’s say you
+      have one hundred boids. For boid #1, you need to check one hundred boids;
+      for boid #2, you need to check one hundred boids, and so on and so forth.
+      For one hundred boids, you need to perform one hundred times one hundred
       checks, or ten thousand. No problem: computers are fast and can do things
       ten thousand times pretty easily. Let’s try one thousand.
     </p>
@@ -3208,7 +3208,7 @@ function draw() {
 
     <p>10,000 x 10,000 elements = 100,000,000 cycles.</p>
 
-    <p>Now, we’re really getting slow. Really, really, really slow.</p>
+    <p>Now, things are really getting slow. Really, really, really slow.</p>
 
     <a data-primary="Big O Notation N-Squared" data-type="indexterm"></a>
     <a data-primary="efficiency" data-secondary="Big O Notation N-Squared"
@@ -3217,7 +3217,7 @@ function draw() {
       data-type="indexterm"></a>
 
     <p>
-      Notice something odd? As the number of elements increases by a factor of
+      Notice something? As the number of elements increases by a factor of
       10, the number of required cycles increases by a factor of 100. Or as the
       number of elements increases by a factor of N, the cycles increase by a
       factor of N times N. This is known as Big O Notation N-Squared.
@@ -3225,19 +3225,19 @@ function draw() {
 
     <p>
       I know what you are thinking. You are thinking: “No problem; with
-      flocking, we only need to consider the boids that are close to other
-      boids. So even if we have 1,000 boids, we can just look at, say, the 5
-      closest boids and then we only have 5,000 cycles.” You pause for a moment,
+      flocking, I only need to consider the boids that are close to other
+      boids. So even if I have 1,000 boids, I can just look at, say, the 5
+      closest boids and then I only have 5,000 cycles.” You pause for a moment,
       and then start thinking: “So for each boid I just need to check all the
       boids and find the five closest ones and I’m good!” See the catch-22? Even
-      if we only want to look at the close ones, the only way to know what the
+      if you only want to look at the close ones, the only way to know what the
       close ones are would be to check all of them.
     </p>
 
     <p>Or is there another way?</p>
 
     <p>
-      Let’s take a number that we might actually want to use, but would still
+      Let’s take a number that you might actually want to use, but would still
       run too slowly: 2,000 (4,000,000 cycles required).
     </p>
 
@@ -3250,8 +3250,8 @@ function draw() {
       data-type="indexterm"></a>
 
     <p>
-      What if we could divide the screen into a grid? We would take all 2,000
-      boids and assign each boid to a cell within that grid. We would then be
+      What if you could divide the screen into a grid? You would take all 2,000
+      boids and assign each boid to a cell within that grid. You would then be
       able to look at each boid and compare it to its neighbors within that cell
       at any given moment. Imagine a 10 x 10 grid. In a system of 2,000
       elements, on average, approximately 20 elements would be found in each
@@ -3272,38 +3272,39 @@ function draw() {
       This technique is known as “bin-lattice spatial subdivision” and is
       outlined in more detail in (surprise, surprise) Reynolds’s 2000 paper,
       <a href="http://www.red3d.com/cwr/papers/2000/pip.pdf">“Interaction with Groups of Autonomous
-        Characters”</a>. How do we implement such an algorithm in p5? One way is to keep
-      multiple <code>Array</code><code>s</code>. One
-      <code>Array</code> would keep track of all the boids, just like in our
+        Characters”</a>. How do you implement such an algorithm in p5.js?
+      The sollution I’ll describe below uses
+      multiple arrays. One array to track of all the boids, just like in the
       flocking example.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-let boids;</pre>
+let boids = [];</pre>
 
     <p>
-      In addition to that <code>Array</code>, we store an additional
+      In addition to that array, I’ll store an additional
       reference to each <code>Boid</code> object in a two-dimensional
-      <code>Array</code>. For each cell in the grid, there is an
-      <code>Array</code> that tracks the objects in that cell.
+      array (repurposing the <code>make2DArray</code> function from
+      Example X.X: Flow Field Following). For each cell in the grid, an
+      additional array tracks the objects in that particular cell.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-let grid;</pre>
+let grid = make2Darray(this.cols, this.rows);</pre>
 
     <p>
-      In the main <code>draw()</code> loop, each <code>Boid</code> object then
+      In the <code>draw()</code>, each <code>Boid</code> object then
       registers itself in the appropriate cell according to its position.
     </p>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-const column = int(boid.x) / this.resolution;
-const row    = int(boid.y) / this.resolution;
+let column = floor(boid.x) / this.resolution;
+let row    = floor(boid.y) / this.resolution;
 grid[column][row] = boid;</pre>
 
     <p>
       Then when it comes time to have the boids check for neighbors, they can
-      look at only those in their particular cell (in truth, we also need to
+      look at only those in their particular cell (in truth, I also need to
       check neighboring cells to deal with border cases).
     </p>
 
@@ -3312,14 +3313,14 @@ grid[column][row] = boid;</pre>
     </div>
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-const column = int(boid.x) / this.resolution;
-const row    = int(boid.y) / this.resolution;
+let column = floor(boid.x) / this.resolution;
+let row    = floor(boid.y) / this.resolution;
 // Instead of looking at all
 // the boids, just this cell
 boid.flock(grid[column][row]);</pre>
 
     <p>
-      We’re only covering the basics here; for the full code, check the book’s
+      I’re only covering the basics here; for the full code, check the book’s
       website.
     </p>
 
@@ -3333,8 +3334,21 @@ boid.flock(grid[column][row]);</pre>
       The good news is that this need for optimization is a common one and there
       are a wide variety of similar techniques out there. For us, it’s likely
       that a basic approach will be good enough (in most cases, you won’t need
-      one at all.) For another, more sophisticated approach, check out
-      <a href="http://toxiclibs.org/2010/02/new-package-simutils/">toxiclibs' Octree examples</a>.
+      one at all.) I cover another, more sophisticated approach,
+      in my [tutorial series about building a
+      QuadTree](https://thecodingtrain.com/CodingChallenges/098.1-quadtree.html)
+      in p5.js. A QuadTree employs the exact same methodology as bin-lattice
+      spatial subdivison, only the cells themselves are not sized equally but
+      rather according to the distribution density of the elements themselves.
+
+      TODO: QUAD TREE DIAGRAM https://github.com/nature-of-code/noc-book-2/issues/101
+
+      The accompanying
+      [QuadTree p5.js library](https://github.com/CodingTrain/QuadTree) also includes a
+      flocking example.
+
+
+      </a>.
     </p>
   </section>
 
@@ -3347,12 +3361,12 @@ boid.flock(grid[column][row]);</pre>
 
     <p>
       This is something of a momentous occasion. The end of Chapter 6 marks the
-      end of our story of motion (in the context of this book, that is). We
+      end of the story of motion (in the context of this book, that is). I
       started with the concept of a vector, moved on to forces, designed systems
       of many elements, examined physics libraries, built entities with hopes
       and dreams and fears, and simulated emergence. The story doesn’t end here,
       but it does take a bit of a turn. The next two chapters won’t focus on
-      moving bodies, but rather on systems of rules. Before we get there, I have
+      moving bodies, but rather on systems of rules. Before you get there, I have
       a few quick items I’d like to mention that are important when working with
       the examples in Chapters 1 through 6. They also relate to optimizing your
       code, which fits in with the previous section.
@@ -3368,7 +3382,7 @@ boid.flock(grid[column][row]);</pre>
 
       <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 function mag() {
-  return sqrt(x*x + y*y);
+  return sqrt(x * x + y * y);
 }</pre>
 
       <p>
@@ -3378,7 +3392,7 @@ function mag() {
         if you could somehow skip using the square root, your code would run
         faster. Let’s consider a situation where you just want to know the
         relative magnitude of a vector. For example, is the magnitude greater
-        than ten? (Assume a <code>PVector</code> <code>v</code>.)
+        than ten? (Assume a vector <code>v</code>.)
       </p>
 
       <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
@@ -3397,7 +3411,7 @@ if (v.magSq() > 100) {
 
       <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 function magSq() {
-  return x*x + y*y;
+  return x * x + y * y;
 }</pre>
 
       <a data-primary="efficiency" data-secondary="magSq() function (PVector class)."
@@ -3412,9 +3426,9 @@ function magSq() {
 
       <p>
         Same as magnitude, but without the square root. In the case of a single
-        <code>p5.Vector</code> object, this will never make a significant
-        difference on a p5 sketch. However, if you are computing the
-        magnitude of thousands of <code>p5.Vector</code> objects each time through
+        vector, this will never make a significant
+        difference on a p5.js sketch. However, if you are computing the
+        magnitude of thousands of vectors each time through
         <code>draw()</code>, using <code>magSq()</code> instead of
         <code>mag()</code> could help your code run a wee bit faster.
       </p>
@@ -3456,26 +3470,28 @@ function draw() {
         that stores the results of sine and cosine at angles between 0 and
         <code>TWO_PI</code> and just look up the values when you need them. For
         example, here are two arrays that store the sine and cosine values for
-        every angle, 0 to 359 degrees.
+        every angle, 0 to 359 degrees. I’ll use <code>angleMode(DEGREES)</code>
+        here to simplify the discussion but the same technique can be applied with radians.
       </p>
 
       <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
+angleMode(DEGREES);
 let sinvalues = [];
 let cosvalues = [];
 for (let i = 0; i < 360; i++) {
-  sinvalues[i] = sin(radians(i));
-  cosvalues[i] = cos(radians(i));
+  sinvalues[i] = sin(i);
+  cosvalues[i] = cos(i);
 }</pre>
 
-      <p>Now, what if you need the value of sine of pi?</p>
+      <p>Now, what if you need the value of sine of pi (or 180 degrees)?</p>
 
       <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-const angle = int(degrees(PI));
-const answer = sinvalues[angle];</pre>
+let angle = 180;
+let answer = sinvalues[angle];</pre>
 
       <p>
-        A more sophisticated example of this technique is available on the
-        <a href="http://wiki.processing.org/w/Sin/Cos_look-up_table">p5 wiki</a>.
+        A full example using this technique can be found TODO:
+        https://github.com/nature-of-code/noc-book-2/issues/102.
       </p>
     </section>
 
@@ -3499,13 +3515,13 @@ const answer = sinvalues[angle];</pre>
       <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 function draw() {
   for (let v of vehicles) {
-   const mouse = createVector(mouseX, mouseY);
+   let mouse = createVector(mouseX, mouseY);
    v.seek(mouse);
   }
 }</pre>
 
       <p>
-        Let’s say our <code>Array</code> of vehicles has one thousand
+        Let’s say the of vehicles has one thousand
         vehicles in it. We just made one thousand new
         <code>p5.Vector</code> objects every single time through
         <code>draw()</code>. Now, on any ol’ laptop or desktop computer you’ve
@@ -3524,20 +3540,24 @@ function draw() {
 
       <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 function draw() {
-  const mouse = createVector(mouseX, mouseY);
+  let mouse = createVector(mouseX, mouseY);
   for (let v of vehicles) {
    v.seek(mouse);
   }
 }</pre>
 
       <p>
-        Now you’ve made just one <code>p5.Vector</code> instead of one thousand.
-        Even better, you could turn the <code>p5.Vector</code> into a global
+        Now you’ve made just one vector instead of one thousand.
+        Even better, you could turn the vector into a global
         variable and just assign the <code>x</code> and <code>y</code> value:
       </p>
 
       <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-const mouse = createVector();
+let mouse;
+
+function setup() {
+  mouse = createVector();
+}
 
 function draw() {
   mouse.x = mouseX;
@@ -3548,48 +3568,49 @@ function draw() {
 }</pre>
 
       <p>
-        Now you never make a new <code>p5.Vector</code>; you use just one over the
+        Now you never make a new <code>p5.Vector</code> boject;
+        you use just one over the
         length of your sketch!
       </p>
 
       <p>
         Throughout the book’s examples, you can find lots of opportunities to
         reduce the number of temporary objects. Let’s look at one more. Here is
-        a snippet from our <code>seek()</code> function.
+        a snippet from the <code>seek()</code> function.
       </p>
 
       <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-    const desired = p5.Vector.sub(target, this.position);
+    let desired = p5.Vector.sub(target, this.position);
     desired.normalize();
     desired.mult(this.maxspeed);
 
-    //{!1 .bold} Create a new p5.Vector to store the steering force.
-    const steer = p5.Vector.sub(desired,this.velocity);
+    //{!1 .bold} Create a new vector to store the steering force.
+    let steer = p5.Vector.sub(desired,this.velocity);
     steer.limit(this.maxforce);
     return steer;</pre>
 
       <p>
-        See how we’ve made two <code>p5.Vector</code> objects? First, we figure
-        out the desired vector, then we calculate the steering force. Notice how
-        we could rewrite this to create only one <code>p5.Vector</code>.
+        See how I’ve made two vector objects? First, I calculate
+        the desired vector, then the steering force. Notice how
+        you could rewrite this to create only one vector!
       </p>
 
       <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
-    const desired = p5.Vector.sub(target, this.position);
+    let desired = p5.Vector.sub(target, this.position);
     desired.normalize();
     desired.mult(this.maxspeed);
 
-    //{!3 .bold} Calculate the steering force in the desired PVector.
+    //{!3 .bold} Calculate the steering force in the desired vector.
     desired.sub(this.velocity);
     desired.limit(this.maxforce);
     return desired;</pre>
 
       <p>
-        We don’t actually need a second <code>p5.Vector</code> called
-        <code>steer</code>. We could just use the desired
-        <code>p5.Vector</code> object and turn it into the steering force by
+        I don’t actually need a second vector called
+        <code>steer</code>. I could just re-use the desired
+        vector object and turn it into the steering force by
         subtracting velocity. I didn’t do this in my example because it is more
-        confusing to read. But in some cases, it may be greatly more efficient.
+        confusing to read. But in some cases, it may improve efficiency.
       </p>
 
       <div data-type="exercise" id="chapter06_exercise20">
@@ -3604,7 +3625,6 @@ function draw() {
 
       <div data-type="exercise" id="chapter06_exercise21">
         <h5>Exercise 6.21</h5>
-
         <p>Use steering behaviors with Box2D or toxiclibs.</p>
       </div>
 
