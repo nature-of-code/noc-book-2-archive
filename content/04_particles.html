@@ -21,7 +21,7 @@
     revolves around the Genesis Device, a torpedo that when shot at a barren,
     lifeless planet has the ability to reorganize matter and create a habitable
     world for colonization. During the sequence, a wall of fire ripples over the
-    planet while it is being “terraformed”. The term <strong><em>particle system</em></strong>, an
+    planet while it is being “terraformed.” The term <strong><em>particle system</em></strong>, an
     incredibly common and useful technique in computer graphics, was coined in the creation of this
     particular effect.
   </p>
@@ -123,7 +123,7 @@ function draw() {
       tackle two other object-oriented programming techniques:
       inheritance and polymorphism. With the examples you’ve seen up until now,
       I’ve always used an array of a single type of object, like "movers" or
-      “oscillators”. With inheritance (and polymorphism), I’ll demonstrate a
+      “oscillators.” With inheritance (and polymorphism), I’ll demonstrate a
       convenient way to store a single list containing objects of different
       types. This way, a particle system need not only be a system of a single
       type of particle.
@@ -164,7 +164,7 @@ function draw() {
 
     <pre data-code-language="javascript" data-type="programlisting" class="codesplit">
 class Particle {
-  //{!5} A “Particle” object is just another name for our “Mover”. It has position, velocity, and acceleration.
+  //{!5} A “Particle” object is just another name for our “Mover.” It has position, velocity, and acceleration.
   Particle(x, y) {
     this.position = createVector(x, y);
     this.acceleration = createVector();
@@ -215,7 +215,7 @@ class Particle {
       canvas. For this first <code>Particle</code> class, I’ll choose to add a
       <code>lifespan</code> variable that acts like a countdown timer.
       The timer will start at 255
-      and count down to 0, when the particle will be considered “dead”. The code for this in the
+      and count down to 0, when the particle will be considered “dead.” The code for this in the
       <code>Particle</code> class as:
     </p>
 
@@ -798,7 +798,7 @@ class ParticleSystem {
       I could also add new features to the particle system itself. For
       example, it might be useful for the <code>ParticleSystem</code> class to
       keep track of an origin point where particles are made. This fits with
-      the idea of a particle system being an “emitter”, a place where particles
+      the idea of a particle system being an “emitter,” a place where particles
       are born and sent out into the world. The origin point could be
       initialized in the constructor.
     </p>
@@ -853,7 +853,7 @@ class ParticleSystem {
       Let’s take a moment to recap what I’ve covered so far. I described an
       individual <code>Particle</code> object. I also described a
       system of <code>Particle</code> objects, and this we call a “particle
-      system”. And I’ve defined a particle system as a collection of
+      system.” And I’ve defined a particle system as a collection of
       independent objects. But isn’t a particle system itself an object? If
       that’s the case (which it is), there’s no reason why I couldn’t also build
       a collection of many particle systems, i.e. a system of systems.
@@ -1207,7 +1207,7 @@ class Cat {
       all variables and functions from the parent (<strong><em>superclass</em></strong>), but can
       also include functions
       and variables not found in the parent.
-      Like a phylogenetic "tree of life", inheritance follows a tree structure.
+      Like a phylogenetic "tree of life," inheritance follows a tree structure.
       Dogs inherit from mammals, which inherit from animals, etc.
     </p>
 
@@ -2142,7 +2142,7 @@ class Repeller {
       computer graphics and design, I don’t think I would be able to live with
       myself if I finished a discussion of particle systems and never
       once looked at an example that involves texturing each particle with an
-      image. The way you choose to draw a particle is the “juice”, a key piece of the puzzle
+      image. The way you choose to draw a particle is the “juice,” a key piece of the puzzle
       in terms of designing certain types of visual effects.
     </p>
 
@@ -2288,7 +2288,7 @@ function draw() {
     <p>
       Finally, it’s worth noting that there are many different algorithms for
       blending colors in computer graphics. These are often referred to as
-      “blend modes”. By default, when you draw something on top of something else
+      “blend modes.” By default, when you draw something on top of something else
       in p5, you only see the top layer—this is the default
       “blend” behavior. When pixels have alpha transparency (as they do
       in the smoke example), p5 uses an alpha compositing algorithm that
@@ -2304,7 +2304,7 @@ function draw() {
 
     <p>
       However, it’s possible to draw using other blend modes, and a much loved
-      blend mode for particle systems is “additive”. Additive blending in Processing with
+      blend mode for particle systems is “additive.” Additive blending in Processing with
       particle systems was pioneered by
       <a href="http://roberthodgin.com/">Robert Hodgin</a> in his famous
       particle system and forces exploration, Magnetosphere, which later became
