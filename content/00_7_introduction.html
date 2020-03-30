@@ -819,10 +819,8 @@
 
     <pre data-code-language="java" data-type="programlisting" class="codesplit">
   void draw() {
-    //{!1} Note that randomGaussian() without arguments returns a value from the
-    standard normal distribution with mean 0 and standard deviation 1, which can
-    be positive or negative.
-    float x = randomGaussian(60, 320);
+    //{!1} Here, x is a draw from a normal distribution with mean 320 and standard deviation 60
+    float x = randomGaussian(320, 60);
     noStroke();
     fill(0,10);
     ellipse(x, 180, 16, 16);
