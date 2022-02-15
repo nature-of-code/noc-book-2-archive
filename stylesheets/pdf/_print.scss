@@ -67,7 +67,7 @@ h2 {
     font-size: $font-XL;
     margin-top: 2em;
 }
-h3, h4, h5, 
+h3, h4, h5,
 section[data-type="sect2"] h2,
 section[data-type="sect3"] h2,
 section[data-type="sect4"] h2 {
@@ -182,8 +182,9 @@ ul, ol {
 // 6. Code
 pre, tt, code {
     font-family: $monospace;
-    margin: 0;
+    margin: 30px;
     padding: 0;
+    background: #ebebeb;
 }
 
 p code, li code {
@@ -291,9 +292,9 @@ figure {
         line-height: 12pt;
     }
     img {
-        width: 100%;
+        width: 10%;
         max-width: 100%;
-        margin: 0;
+        margin: 0px;
     }
 }
 

@@ -2,7 +2,7 @@
   "title": "The Nature of Code",
   "destination": "build/:build",
   "files": [
-    "content/*.html"
+    "content/*.md"
   ],
   "addPlugins": [
     "./plugins/addP5.js",
@@ -34,13 +34,13 @@
       "format":"html",
        "layout":"layouts/html.html",
        "stylesheets":{
-          "files": [ 
+          "files": [
             "stylesheets/html.scss"
           ],
           "destination" : "stylesheets/"
        },
        "javascripts" : {
-         "files" : [ 
+         "files" : [
            "context/noc_html/javascripts/*.js"
           ],
          "destination" : "javascripts/"
